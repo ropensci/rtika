@@ -1,0 +1,14 @@
+Package: rtika
+Type: Package
+Title: R Interface to Apache Tika 
+Version: 0.1.0
+Author: Sasha Goodman <goodmansasha@gmail.com>
+Maintainer: Sasha Goodman <goodmansasha@gmail.com>
+Description: Extract plain text and metadata from many, many types of documents.  Tika parses over a thousand types, which is incredible but true. See supported input formats at: https://tika.apache.org/1.17/formats.html. 
+Depends: sys
+License: Apache License 2.0
+Encoding: UTF-8
+LazyData: true
+Suggests: XML, xml2, jsonlite
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1

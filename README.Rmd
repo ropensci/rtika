@@ -1,0 +1,50 @@
+---
+output: github_document
+---
+# What is this?
+Apache Tika gives one the power to take a directory filled with almost any type of file and extract the text and metadata from the files. This is an R Interface to Tika.
+
+According to Wikipedia: "Apache Tika is a content detection and analysis framework, written in Java, stewarded at the Apache Software Foundation. It detects and extracts metadata and text from over a thousand different file types, and as well as providing a Java library, has server and command-line editions suitable for use from other programming languages .... For most of the more common and popular formats, Tika then provides content extraction, metadata extraction and language identification capabilities." (Accessed Jan 18, 2018. See <https://en.wikipedia.org/wiki/Apache_Tika>.)
+
+Once you have Java 8 installed on your system, you are ready to install and load this R package, which includes the Tika program. You do not need the 'rJava' package.
+
+```{r,results = "hide",message = FALSE }
+# to install easily from github, use devtools 'install_github()'
+# install.packages('devtools', repos='https://cloud.r-project.org'); 
+# devtools::install_github('predict-r/tika');"
+require('rtika')
+```
+
+
+
+# Extract Plain Text
+Put some documents to a folder. Put in almost any type, such as .pdf, .doc, .docx, .rtf, or an arbitrary mix of those. Relax, because Tika will handle it.
+```{r,results = "hide",warning = FALSE}
+dir = file.path(getwd(),'tika-example'); # create a directory called 'tika-example' in R's working directory
+dir.create(dir); 
+url = 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
+download.file(url, file.path(dir,'R-data.pdf')) # download a .pdf 
+
+```
+
+Extract the plain text using Tika.
+```{r,results = "hide",message = FALSE}
+text = tika(dir) # magic happens
+
+```
+Display a snippet of the extracted text using con**cat**enate.  
+```{r,comment=NA }
+cat(substr(text[1],45,450)) # sub-string of the text
+
+```
+# Get Metadata
+You can get metadata about a document by chosing json as the output format.  Other options that get metadata are 'xml' or 'html'. 
+```{r,results = "hide",warning = FALSE,message = FALSE}
+require('jsonlite')
+json = tika(dir,'J') # 'J' is a shortcut for 'jsonRecursive'
+metadata = fromJSON(json[1])
+```
+View the structure of it.
+```{r,comment=NA}
+str(metadata) #data.frame of metadata
+```
