@@ -6,7 +6,7 @@
 \usage{
 tika(inputDir, output = c("text", "jsonRecursive", "xml", "html")[1],
   outputDir = "", nchars = 1e+07, java = "java",
-  jar = system.file("java", "tika-app-1.17.jar", package = "tika"),
+  jar = system.file("java", "tika-app-1.17.jar", package = "rtika"),
   threads = as.integer(1), options = character())
 }
 \arguments{
