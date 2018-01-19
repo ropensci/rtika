@@ -38,8 +38,9 @@
 #' @section Configuration:
 #' The first version of this package includes the \code{tika-app-X.XX.jar}. This jar works with Java 7. Tika in mid-2018 need Java 8. By default, this R package internally invokes Java by calling the \code{java} command from the command line. To change this, set the \code{java} attribute to call it another way (e.g. the full path to the location of a particular version of java).
 
-tika <- function(inputDir, output=c('text','jsonRecursive','xml','html')[1], outputDir="", nchars=1e+07, java = 'java',jar=system.file("java", "tika-app-1.17.jar", package = "tika"), threads=as.integer(1),options=character()) {
+tika <- function(inputDir, output=c('text','jsonRecursive','xml','html')[1], outputDir="", nchars=1e+07, java = 'java',jar=system.file("java", "tika-app-1.17.jar", package = "rtika"), threads=as.integer(1),options=character()) {
   # generate pdf with system('R CMD Rd2pdf ~/rtika')
+  # used this excellent intro to git: http://r-pkgs.had.co.nz/git.html
   # java will require the full path
   inputDir = tools::file_path_as_absolute(inputDir)
  
