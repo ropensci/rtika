@@ -10,8 +10,8 @@ Once you have Java 8 installed on your system, you are ready to install and load
 
 ```{r,results = "hide",message = FALSE }
 # to install easily from github, use devtools 'install_github()'
-# install.packages('devtools', repos='https://cloud.r-project.org'); 
-# devtools::install_github('predict-r/tika');"
+# install.packages('devtools', repos='https://cloud.r-project.org') 
+# devtools::install_github('predict-r/rtika')
 require('rtika')
 ```
 
@@ -47,4 +47,7 @@ metadata = fromJSON(json[1])
 View the structure of it.
 ```{r,comment=NA}
 str(metadata) #data.frame of metadata
+```
+```{r,echo=FALSE}
+unlink(dir,recursive = TRUE)
 ```
