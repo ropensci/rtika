@@ -6,7 +6,7 @@ Apache Tika gives one the power to take a directory filled with almost any type 
 
 According to Wikipedia: "Apache Tika is a content detection and analysis framework, written in Java, stewarded at the Apache Software Foundation. It detects and extracts metadata and text from over a thousand different file types, and as well as providing a Java library, has server and command-line editions suitable for use from other programming languages .... For most of the more common and popular formats, Tika then provides content extraction, metadata extraction and language identification capabilities." (Accessed Jan 18, 2018. See <https://en.wikipedia.org/wiki/Apache_Tika>.)
 
-Once you have Java 8 installed on your system, you are ready to install and load this R package, which includes the Tika program. You do not need the 'rJava' package.
+Once you have Java 7 installed on your system, you are ready to install and load this R package, which includes the Tika program. You do not need the 'rJava' package.
 
 ``` r
 # to install easily from github, use devtools 'install_github()'
@@ -84,7 +84,7 @@ str(metadata) #data.frame of metadata
       ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
      $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
      $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-     $ X-TIKA:parse_time_millis                   : chr "1015"
+     $ X-TIKA:parse_time_millis                   : chr "1085"
      $ access_permission:assemble_document        : chr "true"
      $ access_permission:can_modify               : chr "true"
      $ access_permission:can_print                : chr "true"
