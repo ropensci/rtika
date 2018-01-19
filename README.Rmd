@@ -9,10 +9,10 @@ According to Wikipedia: "Apache Tika is a content detection and analysis framewo
 Once you have Java 7 installed on your system, you are ready to install and load this R package, which includes the Tika program. You do not need the 'rJava' package.
 
 ```{r,results = "hide",message = FALSE }
-# to install easily from github, use devtools 'install_github()'
-# install.packages('devtools', repos='https://cloud.r-project.org') 
-# devtools::install_github('predict-r/rtika')
-require('rtika')
+# if devtools is not installed, install.
+if(!library('devtools',logical.return=TRUE)){ install.packages('devtools', repos='https://cloud.r-project.org') }
+# if rtika is not installed, install.
+if(!library('rtika',logical.return=TRUE)){ devtools::install_github('predict-r/rtika') } 
 ```
 
 
