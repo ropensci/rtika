@@ -7,7 +7,7 @@
 tika(inputDir, output = c("text", "jsonRecursive", "xml", "html")[1],
   outputDir = "", nchars = 1e+07, java = "java",
   jar = system.file("java", "tika-app-1.17.jar", package = "rtika"),
-  threads = as.integer(1), options = character())
+  threads = as.integer(1), args = character(), quiet = TRUE)
 }
 \arguments{
 \item{inputDir}{Directory where the files to be processed are. Each file in the directory will be read and analyzed but not changed.}
@@ -24,7 +24,9 @@ tika(inputDir, output = c("text", "jsonRecursive", "xml", "html")[1],
 
 \item{threads}{Integer of the number of file consumer threads Tika uses. Defaults to 1.}
 
-\item{options}{Optional character vector of additional options for Tika not yet implemented in R, in the pattern of \code{c('-option1','setting1','-option2','setting2')}. Settable options include \code{-timeoutThresholdMillis} (Number of milliseconds allowed to a parse before the process is killed and restarted), \code{-maxRestarts} (Maximum number of times the watchdog process will restart the child process), \code{-includeFilePat} (Regular expression to determine which files to process, e.g. "(?i)\.pdf"), \code{-excludeFilePat}, and \code{-maxFileSizeBytes}. These are documented in the .jar --help command.}
+\item{args}{Optional character vector of additional arguments for Tika, that are not yet implemented in this R interface, in the pattern of \code{c('-arg1','setting1','-arg2','setting2')}. Settable arguments include \code{-timeoutThresholdMillis} (Number of milliseconds allowed to a parse before the process is killed and restarted), \code{-maxRestarts} (Maximum number of times the watchdog process will restart the child process), \code{-includeFilePat} (Regular expression to determine which files to process, e.g. "(?i)\.pdf"), \code{-excludeFilePat}, and \code{-maxFileSizeBytes}. These are documented in the .jar --help command.}
+
+\item{quiet}{Logical if Tika command line messages and errors are to be supressed.}
 }
 \value{
 A character vector, where each string corresponds to a file in the \code{inputDir}. The order is the same as that produced by \code{list.files(inputDir)}. If a file is not processed, the result will be NA. Also see the \code{output} options, above.
@@ -63,5 +65,5 @@ str(metadata) #data.frame of metadata
 metadata$'Content-Type' # [1] "application/pdf"
 metadata$producer # [1] "pdfTeX-1.40.18"
 metadata$'Creation-Date' # [1] "2017-11-30T13:39:02Z"
-# unlink(dir, recursive=TRUE) #remove the downloaded file
+#don't forget to remove the downloaded test file 
 }

@@ -1,0 +1,5 @@
+0.1.0
+-Initial release.
+-R interface to Apache Tika batch processing CLI, found to be the most efficient CLI option.
+-tika function returns processing results as a character vector.
+-includes the Tika App .jar and source

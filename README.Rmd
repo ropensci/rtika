@@ -1,24 +1,32 @@
 ---
 output: github_document
 ---
-# What is this?
-Apache Tika gives one the power to take a directory filled with almost any type of file and extract the text and metadata from the files. This is an R Interface to Tika.
+# rtika
+An R interface to Apache Tika, which extracts text and metadata from almost any file.
 
 According to Wikipedia: "Apache Tika is a content detection and analysis framework, written in Java, stewarded at the Apache Software Foundation. It detects and extracts metadata and text from over a thousand different file types, and as well as providing a Java library, has server and command-line editions suitable for use from other programming languages .... For most of the more common and popular formats, Tika then provides content extraction, metadata extraction and language identification capabilities." (Accessed Jan 18, 2018. See <https://en.wikipedia.org/wiki/Apache_Tika>.)
 
-Once you have Java 7 installed on your system, you are ready to install and load this R package, which includes the Tika program. You do not need the 'rJava' package.
+## Installation
+For `rtika` to work, you need at least `Java 7` or `OpenJDK 1.7`. To check, you can run the command `java -version` from a terminal. If it's not there, try <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>.
+
+Next, install the `rtika` package. 
 
 ```{r,results = "hide",message = FALSE }
-# if devtools is not installed, install.
-if(!library('devtools',logical.return=TRUE)){ install.packages('devtools', repos='https://cloud.r-project.org') }
-# if rtika is not installed, install.
-if(!library('rtika',logical.return=TRUE)){ devtools::install_github('predict-r/rtika') } 
+# devtools allows installation directly from github. if devtools is not installed, install it.
+if(!library('devtools',logical.return=TRUE,quietly=TRUE)){ 
+    install.packages('devtools', repos='https://cloud.r-project.org')
+  }
+# Install rtika from github
+if(!library('rtika',logical.return=TRUE,quietly=TRUE)){
+    devtools::install_github('predict-r/rtika') 
+  } 
+library('rtika')
 ```
 
 
 
-# Extract Plain Text
-Put some documents to a folder. Put in almost any type, such as .pdf, .doc, .docx, .rtf, or an arbitrary mix of those. Relax, because Tika will handle it.
+## Extract Plain Text
+Put some documents to a folder. Include almost any file type, such as `.pdf`, `.doc`, `.docx`, `.rtf`, `.ppt`, or a mix. Relax, because Tika will handle it.
 ```{r,results = "hide",warning = FALSE}
 dir = file.path(getwd(),'tika-example'); # create a directory called 'tika-example' in R's working directory
 dir.create(dir); 
@@ -32,22 +40,29 @@ Extract the plain text using Tika.
 text = tika(dir) # magic happens
 
 ```
-Display a snippet of the extracted text using con**cat**enate.  
+The `text` will be a character vector, in the order of `list.files(dir)`. Display a snippet using `cat`.  
 ```{r,comment=NA }
 cat(substr(text[1],45,450)) # sub-string of the text
 
 ```
-# Get Metadata
-You can get metadata about a document by chosing json as the output format.  Other options that get metadata are 'xml' or 'html'. 
+## Get Metadata
+You can get metadata about a document by chosing json as the output format.  Other options that get metadata are `xml` or `html`. A side effect is more document structure is retained, such as table cells.
 ```{r,results = "hide",warning = FALSE,message = FALSE}
 require('jsonlite')
 json = tika(dir,'J') # 'J' is a shortcut for 'jsonRecursive'
 metadata = fromJSON(json[1])
 ```
-View the structure of it.
+Overview of the metadata structure.
 ```{r,comment=NA}
 str(metadata) #data.frame of metadata
 ```
 ```{r,echo=FALSE}
 unlink(dir,recursive = TRUE)
 ```
+## Similar Packages
+
+In March 2012, I created a repository on `r-forge` called `r-tika` (See: <https://r-forge.r-project.org/projects/r-tika/>). While no code was publicly released, my initial codebase used low-level functions from the `rjava` package to interface with the Tika library. I halted development after discovering that the Tika command line interface (CLI) served my purposes. 
+
+In September 2017, user *kyusque* released `tikaR`, which uses the `rjava` package to interact with Tika (See: <https://github.com/kyusque/tikaR>). As of writing, it provided a `xml` parser and metadata extraction. 
+
+With  `rtika`, I chose to interface with the Tika CLI and its 'batch processor' tool. Much of the batch processor is implemented in Tika 1.17 (See: <https://wiki.apache.org/tika/TikaBatchOverview>). The Tika batch processor has good efficiency when processing tens of thousands of documents, is not too slow for a single document, and handles errors gracefully. Further, connecting `R` to the Tika CLI batch processor is relatively easy to maintain, because the `R` code is simple. I anticipate that various researchers will need plain text output, while others want json output. These are implemented in the CLI and hence in `rtika` (although apparently not in `tikaR`). Multiple theads are supported in both the CLI and `rtika`. The `rtika` package anticipates future features with the `args` attribute of the `tika` funtion, that allows access to the Tika CLI. Another motivation was that `rJava` had once been difficult to get working on Ubuntu and CentOS, especially around when Java was not open sourced, although that probably is no longer the case.

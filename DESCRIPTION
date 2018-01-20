@@ -2,14 +2,15 @@ Package: rtika
 Type: Package
 Title: R Interface to Apache Tika 
 Version: 0.1.0
-Author: Sasha Goodman <goodmansasha@gmail.com>
+Author: Sasha Goodman <goodmansasha@gmail.com>[aut], The Apache Software Foundation [aut,cph]
 Maintainer: Sasha Goodman <goodmansasha@gmail.com>
-Description: Extract plain text and metadata from many, many types of documents.  Tika parses over a thousand types, which is incredible but true. See supported input formats at: https://tika.apache.org/1.17/formats.html. 
+License: Apache License 2.0 | file LICENSE
+SystemRequirements: Java (>=7) | openjdk-7-jre (via apt) | java-1.7.0-openjdk (via yum) | openjdk-8-jre (via apt) | java-1.8.0-openjdk (via yum) 
+Description: Extract plain text and metadata from many, many types of documents.  Tika parses over a thousand types, which is incredible but true. Read more at https://tika.apache.org/. 
 Depends: sys
-License: Apache License 2.0
 Encoding: UTF-8
 LazyData: true
-Suggests: XML, xml2, jsonlite
+Suggests: xml2, jsonlite, knitr
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
 URL: http://github.com/predict-r/rtika
