@@ -54,7 +54,8 @@ library('jsonlite')
 json = tika(dir,'J') # 'J' is a shortcut for 'jsonRecursive'
 metadata = fromJSON(json[1])
 ```
-Overview of the metadata structure.
+Structure of the metadata, or meta-meta-data 🤯 .
+
 ```{r,comment=NA}
 str(metadata) #data.frame of metadata
 ```
