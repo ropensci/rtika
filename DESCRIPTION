@@ -4,6 +4,7 @@ Title: R Interface to Apache Tika
 Version: 0.1.0
 Author: Sasha Goodman <goodmansasha@gmail.com>[aut], The Apache Software Foundation [aut,cph]
 Maintainer: Sasha Goodman <goodmansasha@gmail.com>
+Imports: sys
 License: Apache License 2.0 | file LICENSE
 SystemRequirements: Java (>=7) | openjdk-7-jre (via apt) | java-1.7.0-openjdk (via yum) | openjdk-8-jre (via apt) | java-1.8.0-openjdk (via yum) 
 Description: Extract plain text and metadata from many, many types of documents.  Tika parses over a thousand types, which is incredible but true. Read more at https://tika.apache.org/. 

@@ -6,5 +6,5 @@
       message('Please check that you have at least Java 7 or OpenJDK above 1.7 accessible from the command line! Type ?tika for configuration tips.\n')
     }
   }
-  tmp= sys::exec_wait('java','-version', std_err = check_version)
+  tmp= exec_wait('java','-version', std_err = check_version)
 }
