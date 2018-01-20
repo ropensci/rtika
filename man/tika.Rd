@@ -48,8 +48,10 @@ The first version of this package includes the \code{tika-app-X.XX.jar}. This ja
 
 \examples{
 # download file to some accessible directory
-dir = file.path(getwd(),'tika-example'); dir.create(dir); 
-download.file('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf',file.path(dir,'R-data.pdf'))
+dir = file.path(getwd(),'tika-example'); 
+dir.create(dir); 
+url = 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
+download.file(url,file.path(dir,'R-data.pdf'))
 
 #extract text 
 text = tika(dir)

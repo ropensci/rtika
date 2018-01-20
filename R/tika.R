@@ -16,8 +16,10 @@
 #' @return A character vector, where each string corresponds to a file in the \code{inputDir}. The order is the same as that produced by \code{list.files(inputDir)}. If a file is not processed, the result will be NA. Also see the \code{output} options, above.
 #' @examples
 #' # download file to some accessible directory
-#' dir = file.path(getwd(),'tika-example'); dir.create(dir); 
-#' download.file('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf',file.path(dir,'R-data.pdf'))
+#' dir = file.path(getwd(),'tika-example'); 
+#' dir.create(dir); 
+#' url = 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
+#' download.file(url,file.path(dir,'R-data.pdf'))
 #'
 #' #extract text 
 #' text = tika(dir)
