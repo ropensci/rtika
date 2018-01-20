@@ -4,3 +4,4 @@ addons:
   apt:
     packages:
     - libapparmor-dev
+    - openjdk-7-jre
