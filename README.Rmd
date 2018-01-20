@@ -54,7 +54,7 @@ library('jsonlite')
 json = tika(dir,'J') # 'J' is a shortcut for 'jsonRecursive'
 metadata = fromJSON(json[1])
 ```
-Structure of the metadata, or meta-meta-data 🤯 .
+Structure of the metadata, or meta-metadata 🤯 .
 
 ```{r,comment=NA}
 str(metadata) #data.frame of metadata
@@ -64,7 +64,7 @@ str(metadata) #data.frame of metadata
 ```
 ## Similar Packages
 
-In March 2012, I created a repository on `r-forge` called `r-tika` (See: <https://r-forge.r-project.org/projects/r-tika/>). While no code was publicly released, my initial code-base used low-level functions from the `rJava` package to interface with the Tika library. I halted development after discovering that the Tika command line interface (CLI) served my purposes. 
+In March 2012, I created a repository on `r-forge` called `r-tika` (See: <https://r-forge.r-project.org/projects/r-tika/>) to interface with Apache Tika (See:< https://tika.apache.org/>). While no code was publicly released, my initial code-base used low-level functions from the `rJava` package to interface with the Tika library. I halted development after discovering that the Tika command line interface (CLI) served my purposes. 
 
 In September 2017, user *kyusque* released `tikaR`, which uses the `rJava` package to interact with Tika (See: <https://github.com/kyusque/tikaR>). As of writing, it provided a `xml` parser and metadata extraction. 
 
