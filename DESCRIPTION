@@ -9,7 +9,6 @@ SystemRequirements: Java (>=7) | openjdk-7-jre (via apt) | java-1.7.0-openjdk (v
 Description: Extract plain text and metadata from many, many types of documents.  Tika parses over a thousand types, which is incredible but true. Read more at https://tika.apache.org/. 
 Encoding: UTF-8
 LazyData: true
-Suggests: sys, xml2, jsonlite
 RoxygenNote: 6.0.1
 URL: http://github.com/predict-r/rtika
 BugReports: http://github.com/predict-r/rtika/issues
