@@ -1,4 +1,6 @@
 language: r
 cache: packages
-r_github_packages:
-- jeroen/sys
+addons:
+  apt:
+    packages:
+    - libapparmor-dev
