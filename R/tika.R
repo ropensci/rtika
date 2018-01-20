@@ -79,7 +79,7 @@ tika <- function(inputDir, output=c('text','jsonRecursive','xml','html')[1], out
   # if(!library('sys',logical.return=TRUE,quietly=TRUE)){
   #   system2(command=java[1] , args=c('-jar',jar,'-numConsumers', as.integer(threads), args, output_flag,'-i',inputDir,'-o',outputDir) ,stdout=!quiet, stderr=!quiet )
   # } else {
-    exec_wait(cmd=java[1] , args=c('-jar',jar,'-numConsumers', as.integer(threads), args, output_flag,'-i',inputDir,'-o',outputDir),std_out=!quiet, std_err=!quiet )
+    sys::exec_wait(cmd=java[1] , args=c('-jar',jar,'-numConsumers', as.integer(threads), args, output_flag,'-i',inputDir,'-o',outputDir),std_out=!quiet, std_err=!quiet )
   # }
    # prepare the output character vector
   out = character()
