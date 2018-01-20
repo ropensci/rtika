@@ -75,11 +75,11 @@ tika <- function(inputDir, output=c('text','jsonRecursive','xml','html')[1], out
   output_flag = ifelse(output=='xml'|output=='x','-x',output_flag)
   output_flag = ifelse(output=='html'|output=='h','-h',output_flag)
   
-  # I recall that compared to system, sys ran without problems.
-  # The java is either the full path to java or the commandline shortcut
+  # Compared to system2, sys is much quicker. 
+  #system2(command=java[1] , args=c('-jar',jar,'-numConsumers', as.integer(threads), args, output_flag,'-i',inputDir,'-o',outputDir) ,stdout=!quiet, stderr=!quiet )
   sys::exec_wait(cmd=java[1] , args=c('-jar',jar,'-numConsumers', as.integer(threads), args, output_flag,'-i',inputDir,'-o',outputDir),std_out=!quiet, std_err=!quiet )
   
-  # prepare the output character vector
+   # prepare the output character vector
   out = character()
   
   output_file_affix = '.txt'
