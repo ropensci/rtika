@@ -2,7 +2,9 @@
 output: github_document
 ---
 # rtika
-An R interface to Apache Tika, which extracts text and metadata from almost any file.
+***An R interface to Apache Tika, which extracts text and metadata from almost any file.***
+
+[![Travis-CI Build Status](https://travis-ci.org/predict-r/rtika.svg?branch=master)](https://travis-ci.org/predict-r/rtika)
 
 According to Wikipedia: "Apache Tika is a content detection and analysis framework, written in Java, stewarded at the Apache Software Foundation. It detects and extracts metadata and text from over a thousand different file types, and as well as providing a Java library, has server and command-line editions suitable for use from other programming languages .... For most of the more common and popular formats, Tika then provides content extraction, metadata extraction and language identification capabilities." (Accessed Jan 18, 2018. See <https://en.wikipedia.org/wiki/Apache_Tika>.)
 

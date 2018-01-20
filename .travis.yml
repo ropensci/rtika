@@ -1,6 +1,2 @@
 language: r
 cache: packages
-addons:
-  apt:
-    packages:
-      - openjdk-7-jre
