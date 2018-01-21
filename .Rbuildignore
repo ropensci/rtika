@@ -2,3 +2,5 @@
 ^\.Rproj\.user$
 ^java
 ^\.travis\.yml$
+^README.Rmd$
+^tika-example$

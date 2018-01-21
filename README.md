@@ -2,7 +2,7 @@
 rtika
 =====
 
-***An R interface to Apache Tika, which extracts text and metadata from almost any file.***
+***Extract text and metadata from almost any file.***
 
 [![Travis-CI Build Status](https://travis-ci.org/predict-r/rtika.svg?branch=master)](https://travis-ci.org/predict-r/rtika)
 
@@ -12,40 +12,42 @@ From Wikipedia:
 
 > For most of the more common and popular formats, Tika then provides content extraction, metadata extraction and language identification capabilities. (Accessed Jan 18, 2018. See <https://en.wikipedia.org/wiki/Apache_Tika>.)
 
+This R interface includes the Tika software.
+
 Installation
 ------------
 
-You need at least `Java 7` or `OpenJDK 1.7`. To check if it's installed, you can run the command `java -version` from a terminal. If not, try <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>.
+You need at least `Java 7` or `OpenJDK 1.7`. To check, run the command `java -version` from a terminal. Get Java installation help at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>.
 
-Next, install the `rtika` package.
+Next, install the `rtika` package from Github.com.
 
 ``` r
-# devtools allows installation directly from github. if devtools is not installed, install it.
-if(!require('devtools')){ install.packages('devtools', repos='https://cloud.r-project.org') }
+# devtools simplifies installation from Github.
+if(!requireNamespace('devtools')){ install.packages('devtools', repos='https://cloud.r-project.org') }
 # Install rtika from github
-if(!require('rtika')){ devtools::install_github('predict-r/rtika') } 
+if(!requireNamespace('rtika')){ devtools::install_github('predict-r/rtika') } 
 library('rtika')
 ```
 
 Extract Plain Text
 ------------------
 
-Put some documents to a folder. Include almost any file type, such as `.pdf`, `.doc`, `.docx`, `.rtf`, `.ppt`, or a mix. Relax, because Tika will handle it.
+Put text documents in a folder, such as `.pdf`, `.doc`, `.docx`, `.rtf`, `.ppt`, or a mix.
 
 ``` r
-dir = file.path(getwd(),'tika-example'); # create a directory called 'tika-example' in R's working directory
-dir.create(dir); 
+input_dir = file.path(getwd(),'tika-example'); # create a directory called 'tika-example' in R's working directory
+dir.create(input_dir); 
 url = 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
-download.file(url, file.path(dir,'R-data.pdf')) # download a .pdf 
+download.file(url, file.path(input_dir,'R-data.pdf')) # download a .pdf 
 ```
 
-Extract the plain text using Tika.
+Extract the plain text with the `tika()` function. Relax, it will probably work!
 
 ``` r
-text = tika(dir) # magic happens
+text = tika(input_dir) # magic happens
 ```
 
-The `text` will be a character vector, in the order of `list.files(dir)`. Display a snippet using `cat`.
+The `text` will be a character vector, in the order of `list.files(input_dir)`. Display a snippet using `cat`.
 
 ``` r
 cat(substr(text[1],45,450)) # sub-string of the text
@@ -71,15 +73,15 @@ cat(substr(text[1],45,450)) # sub-string of the text
 Get Metadata
 ------------
 
-You can get metadata about a document by choosing json as the output format. Other options that get metadata are `xml` or `html`. A side effect is more document structure is retained, such as table cells.
+Metadata comes with the `json` output option, as well as `xml` and `html`. A side effect is the text document structure is also retained, like table cells.
 
 ``` r
 library('jsonlite')
-json = tika(dir,'J') # 'J' is a shortcut for 'jsonRecursive'
+json = tika(input_dir,'J') # 'J' is a shortcut for 'jsonRecursive'
 metadata = fromJSON(json[1])
 ```
 
-Structure of the metadata, or meta-metadata 🤯 .
+See the structure of the metadata, or meta-metadata 🤯 .
 
 ``` r
 str(metadata) #data.frame of metadata
@@ -96,7 +98,7 @@ str(metadata) #data.frame of metadata
       ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
      $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
      $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-     $ X-TIKA:parse_time_millis                   : chr "933"
+     $ X-TIKA:parse_time_millis                   : chr "1041"
      $ access_permission:assemble_document        : chr "true"
      $ access_permission:can_modify               : chr "true"
      $ access_permission:can_print                : chr "true"

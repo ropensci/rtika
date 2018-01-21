@@ -2,21 +2,21 @@
 % Please edit documentation in R/tika.R
 \name{tika}
 \alias{tika}
-\title{R Interface to Apache Tika}
+\title{R Interface to 'Apache Tika'}
 \usage{
-tika(inputDir, output = c("text", "jsonRecursive", "xml", "html")[1],
-  outputDir = "", nchars = 1e+07, java = "java",
+tika(input_dir, output = c("text", "jsonRecursive", "xml", "html")[1],
+  output_dir = "", n_chars = 1e+07, java = "java",
   jar = system.file("java", "tika-app-1.17.jar", package = "rtika"),
   threads = as.integer(1), args = character(), quiet = TRUE)
 }
 \arguments{
-\item{inputDir}{Directory where the files to be processed are. Each file in the directory will be read and analyzed but not changed.}
+\item{input_dir}{Directory where the files to be processed are. Each file in the directory will be read and analyzed but not changed.}
 
 \item{output}{Optional text format of the output. By default, \code{output = "text"}. That produces plain text without metadata. Use \code{output="jsonRecursive"} or \code{output="J"} to output metadata and content from the file and any embedded files, which can be parsed with the \code{jsonlite} package. Setting it to \code{output="xml"} or \code{output="x"} means the result of each file is XHTML, that can be parsed with other tools like the \code{XML} or \code{xml2} packages. The \code{output = "html"} or \code{output = "h"} is HTML, similar to XHTML.}
 
-\item{outputDir}{Optional directory path to save the result as files, as a side effect. Otherwise they are saved to a tmp directory R creates at startup and will be taken care of when R shuts down. Files are \code{.txt} by default, but can be \code{.json}, \code{.xml}, or \code{.html} depending on the \code{output} setting.}
+\item{output_dir}{Optional directory path to save the result as files, as a side effect. Otherwise they are saved to a tmp directory R creates at startup and will be taken care of when R shuts down. Files are \code{.txt} by default, but can be \code{.json}, \code{.xml}, or \code{.html} depending on the \code{output} setting.}
 
-\item{nchars}{Optional single integer specifying the maximum number of characters returned for each document, returned by the \code{readChar} function. The default is 1e+07. Higher numbers may be needed for exceptionally large files. There appears to be no advantage to lowering this, and no efficiency loss to raising it.}
+\item{n_chars}{Optional single integer specifying the maximum number of characters returned for each document, returned by the \code{readChar} function. The default is 1e+07. Higher numbers may be needed for exceptionally large files. There appears to be no advantage to lowering this, and no efficiency loss to raising it.}
 
 \item{java}{Optional alternative command to invoke Java. For example, it could be changed to the full path of a particular Java version. See the Configuration section below.}
 
@@ -29,11 +29,11 @@ tika(inputDir, output = c("text", "jsonRecursive", "xml", "html")[1],
 \item{quiet}{Logical if Tika command line messages and errors are to be supressed.}
 }
 \value{
-A character vector, where each string corresponds to a file in the \code{inputDir}. The order is the same as that produced by \code{list.files(inputDir)}. If a file is not processed, the result will be NA. Also see the \code{output} options, above.
+A character vector, where each string corresponds to a file in the \code{input_dir}. The order is the same as that produced by \code{list.files(input_dir)}. If a file is not processed, the result will be NA. Also see the \code{output} options, above.
 }
 \description{
-Get plain text from many, many types of documents. Apache Tika parses more than a thousand types, which is incredible but true. 
-Optionally, it can return metadata in \code{json}, \code{xml}, or \code{html}. For example, it will try to identify the \code{Content-Type} from pictures, videos, audio, code, and textual documents when \code{output="jsonRecursive"}, \code{output="xml"}, or \code{output="html"}.
+Extract text and metadata from almost any file. Apache Tika parses over a thousand types, which is incredible but true. This R interface includes the Tika program. 
+In addition to returning plain text, \code{rtika} can return partly structured text and metadata in \code{json}, \code{xml}, or \code{html}. For example, it will try to identify the \code{Content-Type} from pictures, videos, audio, code, and textual documents when \code{output="jsonRecursive"}, \code{output="xml"}, or \code{output="html"}.
 It automatically detects and parses several versions of Word, OpenOffice, rtf, iWorks, WordPerfect, pdf, epub, and more. It detects the character encodings of plain text files. It gets Exif from jpeg and tiff. It parses email mail boxes as well. See all the supported input formats here: \url{https://tika.apache.org/1.17/formats.html}.
 }
 \section{Background}{
@@ -44,6 +44,8 @@ Tika is a foundational library for several Apache projects, such as the Apache S
 \section{Configuration}{
 
 The first version of this package includes the \code{tika-app-X.XX.jar}. This jar works with Java 7. Tika in mid-2018 need Java 8. By default, this R package internally invokes Java by calling the \code{java} command from the command line. To change this, set the \code{java} attribute to call it another way (e.g. the full path to the location of a particular version of java).
+
+Having the  \code{sys} package is suggested but not required.   \code{sys} speeds up calls to java and handles messaging much better. However, it requires the  \code{libapparmor-dev} by default on unix variants, which must be installed before. Installing  \code{sys} after  \code{rtika} will work as well as installing it before.
 }
 
 \examples{
@@ -58,14 +60,16 @@ text = tika(dir)
 cat(substr(text,1,2000))
 
 #get metadata
-require('jsonlite')
-json = tika(dir,'jsonRecursive')
+if(requireNamespace('jsonlite')){
+  json = tika(dir,'jsonRecursive')
 
-metadata = fromJSON(json[1])
-str(metadata) #data.frame of metadata
 
-metadata$'Content-Type' # [1] "application/pdf"
-metadata$producer # [1] "pdfTeX-1.40.18"
-metadata$'Creation-Date' # [1] "2017-11-30T13:39:02Z"
+  metadata = jsonlite::fromJSON(json[1])
+  str(metadata) #data.frame of metadata
+
+  metadata$'Content-Type' # [1] "application/pdf"
+  metadata$producer # [1] "pdfTeX-1.40.18"
+  metadata$'Creation-Date' # [1] "2017-11-30T13:39:02Z"
+}
 #don't forget to remove the downloaded test file 
 }
