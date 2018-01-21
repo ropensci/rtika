@@ -17,7 +17,7 @@ This R interface includes the Tika software.
 Installation
 ------------
 
-You need at least `Java 7` or `OpenJDK 1.7`. To check, run the command `java -version` from a terminal. Get Java installation help at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>.
+You need at least `Java 7` or `OpenJDK 1.7`. To check, run the command `java -version` from a terminal. Get Java installation tips at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>.
 
 Next, install the `rtika` package from Github.com.
 
@@ -73,7 +73,7 @@ cat(substr(text[1],45,450)) # sub-string of the text
 Get Metadata
 ------------
 
-Metadata comes with the `json` output option, as well as `xml` and `html`. A side effect is the text document structure is also retained, like table cells.
+Metadata comes with the `json`,`xml` and `html` output options. A side effect is that Tika retains more document structure, like table cells.
 
 ``` r
 library('jsonlite')
@@ -98,7 +98,7 @@ str(metadata) #data.frame of metadata
       ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
      $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
      $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-     $ X-TIKA:parse_time_millis                   : chr "1041"
+     $ X-TIKA:parse_time_millis                   : chr "939"
      $ access_permission:assemble_document        : chr "true"
      $ access_permission:can_modify               : chr "true"
      $ access_permission:can_print                : chr "true"
@@ -134,7 +134,7 @@ str(metadata) #data.frame of metadata
 Similar Packages
 ----------------
 
-In March 2012, I created a repository on `r-forge` called `r-tika` (See: <https://r-forge.r-project.org/projects/r-tika/>) to interface with Apache Tika (See:&lt; <https://tika.apache.org/>&gt;). While no code was publicly released, my initial code-base used low-level functions from the `rJava` package to interface with the Tika library. I halted development after discovering that the Tika command line interface (CLI) served my purposes.
+In March 2012, I created a repository on `r-forge` called `r-tika` (See: <https://r-forge.r-project.org/projects/r-tika/>) to interface with Apache Tika (See: <https://tika.apache.org/>). While no code was publicly released, my initial code-base used low-level functions from the `rJava` package to interface with the Tika library. I halted development after discovering that the Tika command line interface (CLI) served my purposes.
 
 In September 2017, user *kyusque* released `tikaR`, which uses the `rJava` package to interact with Tika (See: <https://github.com/kyusque/tikaR>). As of writing, it provided a `xml` parser and metadata extraction.
 

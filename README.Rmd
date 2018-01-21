@@ -15,7 +15,7 @@ From Wikipedia:
 This R interface includes the Tika software.
 
 ## Installation
-You need at least `Java 7` or `OpenJDK 1.7`. To check, run the command `java -version` from a terminal. Get Java installation help at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>.
+You need at least `Java 7` or `OpenJDK 1.7`. To check, run the command `java -version` from a terminal. Get Java installation tips at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>.
 
 Next, install the `rtika` package from Github.com. 
 
@@ -50,7 +50,7 @@ cat(substr(text[1],45,450)) # sub-string of the text
 
 ```
 ## Get Metadata
-Metadata comes with the `json` output option, as well as `xml` and `html`. A side effect is the text document structure is also retained, like table cells.
+Metadata comes with the `json`,`xml` and `html` output options. A side effect is that Tika retains more document structure, like table cells.
 ```{r,results = "hide",warning = FALSE,message = FALSE}
 library('jsonlite')
 json = tika(input_dir,'J') # 'J' is a shortcut for 'jsonRecursive'
@@ -66,7 +66,7 @@ str(metadata) #data.frame of metadata
 ```
 ## Similar Packages
 
-In March 2012, I created a repository on `r-forge` called `r-tika` (See: <https://r-forge.r-project.org/projects/r-tika/>) to interface with Apache Tika (See:< https://tika.apache.org/>). While no code was publicly released, my initial code-base used low-level functions from the `rJava` package to interface with the Tika library. I halted development after discovering that the Tika command line interface (CLI) served my purposes. 
+In March 2012, I created a repository on `r-forge` called `r-tika` (See: <https://r-forge.r-project.org/projects/r-tika/>) to interface with Apache Tika (See: <https://tika.apache.org/>). While no code was publicly released, my initial code-base used low-level functions from the `rJava` package to interface with the Tika library. I halted development after discovering that the Tika command line interface (CLI) served my purposes. 
 
 In September 2017, user *kyusque* released `tikaR`, which uses the `rJava` package to interact with Tika (See: <https://github.com/kyusque/tikaR>). As of writing, it provided a `xml` parser and metadata extraction. 
 
