@@ -41,9 +41,9 @@
 #' @section Background:
 #' Tika is a foundational library for several Apache projects, such as the Apache Solr search engine. This R interface produces a big payoff for R users. The most efficient way I've found to process tens of thousands of documents is Tika's 'batch' mode, which is used. There is more to do, given enough time and attention, because Apache Tika includes many other libraries and methods. The source is available at: \url{https://tika.apache.org/}. 
 #' @section Configuration:
-#' The first version of this package includes the \code{tika-app-X.XX.jar}. This jar works with Java 7. Tika in mid-2018 need Java 8. By default, this R package internally invokes Java by calling the \code{java} command from the command line. To change this, set the \code{java} attribute to call it another way (e.g. the full path to the location of a particular version of java).
+#' The first version of this package includes the \code{tika-app-X.XX.jar}. This jar works with Java 7. Tika in mid-2018 needs Java 8. By default, this R package internally invokes Java by calling the \code{java} command from the command line. To change this, set the \code{java} attribute to call it another way (e.g. the full path to the location of a particular version of java).
 #' 
-#' Having the  \code{sys} package is suggested but not required.   \code{sys} speeds up calls to java and handles messaging much better. However, it requires the  \code{libapparmor-dev} by default on unix variants, which must be installed before. Installing  \code{sys} after  \code{rtika} will work as well as installing it before.
+#' Having the  \code{sys} package is suggested but not required.   \code{sys} dramatically speeds up calls to java, and handles messaging much better. Installing  \code{sys} after  \code{rtika} will work as well as installing it before.
 
 tika <- function(input_dir, output=c('text','jsonRecursive','xml','html')[1], output_dir="", n_chars=1e+07, java = 'java',jar=system.file("java", "tika-app-1.17.jar", package = "rtika"), threads=as.integer(1),args=character(), quiet=TRUE) {
   # generate pdf with system('R CMD Rd2pdf ~/rtika')

@@ -43,9 +43,9 @@ Tika is a foundational library for several Apache projects, such as the Apache S
 
 \section{Configuration}{
 
-The first version of this package includes the \code{tika-app-X.XX.jar}. This jar works with Java 7. Tika in mid-2018 need Java 8. By default, this R package internally invokes Java by calling the \code{java} command from the command line. To change this, set the \code{java} attribute to call it another way (e.g. the full path to the location of a particular version of java).
+The first version of this package includes the \code{tika-app-X.XX.jar}. This jar works with Java 7. Tika in mid-2018 needs Java 8. By default, this R package internally invokes Java by calling the \code{java} command from the command line. To change this, set the \code{java} attribute to call it another way (e.g. the full path to the location of a particular version of java).
 
-Having the  \code{sys} package is suggested but not required.   \code{sys} speeds up calls to java and handles messaging much better. However, it requires the  \code{libapparmor-dev} by default on unix variants, which must be installed before. Installing  \code{sys} after  \code{rtika} will work as well as installing it before.
+Having the  \code{sys} package is suggested but not required.   \code{sys} dramatically speeds up calls to java, and handles messaging much better. Installing  \code{sys} after  \code{rtika} will work as well as installing it before.
 }
 
 \examples{
