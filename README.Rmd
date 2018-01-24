@@ -2,7 +2,7 @@
 output: github_document
 ---
 # rtika
-***Extract text and metadata from almost any file.***
+***Extract text and metadata from over a thousand file types.***
 
 [![Travis-CI Build Status](https://travis-ci.org/predict-r/rtika.svg?branch=master)](https://travis-ci.org/predict-r/rtika)
 
@@ -32,16 +32,15 @@ library('rtika')
 ## Extract Plain Text
 Put text documents in a folder, such as `.pdf`, `.doc`, `.docx`, `.rtf`, `.ppt`, or a mix. 
 ```{r,results = "hide",warning = FALSE}
-input_dir = file.path(getwd(),'tika-example'); # create a directory called 'tika-example' in R's working directory
-dir.create(input_dir); 
-url = 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
-download.file(url, file.path(input_dir,'R-data.pdf')) # download a .pdf 
+dir.create(file.path(getwd(),'tests')); 
+input = file.path(getwd(),'tests','R-data.pdf')
+download.file('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf',input)
 
 ```
 
 Extract the plain text with the `tika()` function. Relax, it will probably work! 
 ```{r,results = "hide",message = FALSE}
-text = tika(input_dir) # magic happens
+text = tika(input) # magic happens
 
 ```
 The `text` will be a character vector, in the order of `list.files(input_dir)`. Display a snippet using `cat`.  
@@ -53,7 +52,7 @@ cat(substr(text[1],45,450)) # sub-string of the text
 Metadata comes with the `json`,`xml` and `html` output options. A side effect is that Tika retains more document structure, like table cells.
 ```{r,results = "hide",warning = FALSE,message = FALSE}
 library('jsonlite')
-json = tika(input_dir,'J') # 'J' is a shortcut for 'jsonRecursive'
+json = tika(input,'J') # 'J' is a shortcut for 'jsonRecursive'
 metadata = fromJSON(json[1])
 ```
 See the structure of the metadata, or meta-metadata 🤯 .

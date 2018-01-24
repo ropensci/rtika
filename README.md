@@ -35,17 +35,19 @@ Extract Plain Text
 Put text documents in a folder, such as `.pdf`, `.doc`, `.docx`, `.rtf`, `.ppt`, or a mix.
 
 ``` r
-input_dir = file.path(getwd(),'tika-example'); # create a directory called 'tika-example' in R's working directory
-dir.create(input_dir); 
-url = 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
-download.file(url, file.path(input_dir,'R-data.pdf')) # download a .pdf 
+dir.create(file.path(getwd(),'tests')); 
+input = file.path(getwd(),'tests','R-data.pdf')
+download.file('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf',input)
 ```
 
 Extract the plain text with the `tika()` function. Relax, it will probably work!
 
 ``` r
-text = tika(input_dir) # magic happens
+text = tika(input) # magic happens
 ```
+
+    ## Warning in normalizePath(file.path(tempdir(), "tika-fileList.csv")):
+    ## path[1]="/tmp/RtmpyAkt5C/tika-fileList.csv": No such file or directory
 
 The `text` will be a character vector, in the order of `list.files(input_dir)`. Display a snippet using `cat`.
 
@@ -77,7 +79,7 @@ Metadata comes with the `json`,`xml` and `html` output options. A side effect is
 
 ``` r
 library('jsonlite')
-json = tika(input_dir,'J') # 'J' is a shortcut for 'jsonRecursive'
+json = tika(input,'J') # 'J' is a shortcut for 'jsonRecursive'
 metadata = fromJSON(json[1])
 ```
 
@@ -98,7 +100,7 @@ str(metadata) #data.frame of metadata
       ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
      $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
      $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-     $ X-TIKA:parse_time_millis                   : chr "939"
+     $ X-TIKA:parse_time_millis                   : chr "1018"
      $ access_permission:assemble_document        : chr "true"
      $ access_permission:can_modify               : chr "true"
      $ access_permission:can_print                : chr "true"
@@ -126,7 +128,7 @@ str(metadata) #data.frame of metadata
      $ producer                                   : chr "pdfTeX-1.40.18"
      $ resourceName                               : chr "R-data.pdf"
      $ tika:file_ext                              : chr "pdf"
-     $ tika_batch_fs:relative_path                : chr "R-data.pdf"
+     $ tika_batch_fs:relative_path                : chr "home/project/rtika/tests/R-data.pdf"
      $ trapped                                    : chr "False"
      $ xmp:CreatorTool                            : chr "TeX"
      $ xmpTPg:NPages                              : chr "37"

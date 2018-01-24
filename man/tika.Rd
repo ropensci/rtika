@@ -4,68 +4,89 @@
 \alias{tika}
 \title{R Interface to 'Apache Tika'}
 \usage{
-tika(input_dir, output = c("text", "jsonRecursive", "xml", "html")[1],
+tika(input, output = c("text", "jsonRecursive", "xml", "html")[1],
   output_dir = "", n_chars = 1e+07, java = "java",
   jar = system.file("java", "tika-app-1.17.jar", package = "rtika"),
-  threads = as.integer(1), args = character(), quiet = TRUE)
+  threads = 1, args = character(), quiet = TRUE)
 }
 \arguments{
-\item{input_dir}{Directory where the files to be processed are. Each file in the directory will be read and analyzed but not changed.}
+\item{input}{Character vector of the path(s) to file(s). Each file will be analyzed but not changed.}
 
-\item{output}{Optional text format of the output. By default, \code{output = "text"}. That produces plain text without metadata. Use \code{output="jsonRecursive"} or \code{output="J"} to output metadata and content from the file and any embedded files, which can be parsed with the \code{jsonlite} package. Setting it to \code{output="xml"} or \code{output="x"} means the result of each file is XHTML, that can be parsed with other tools like the \code{XML} or \code{xml2} packages. The \code{output = "html"} or \code{output = "h"} is HTML, similar to XHTML.}
+\item{output}{Optional character vector of the output format. By default, \code{"text"} gets plain text without metadata. \code{"xml"} and \code{"html"} get \code{XHTML} text with metadata. \code{"jsonRecursive"} gets \code{XHTML} text and \code{json} metadata. \code{c("jsonRecursive","text")} or \code{c("J","t")} gets plain text and \code{json} metadata. See the 'Output Details' section.}
 
-\item{output_dir}{Optional directory path to save the result as files, as a side effect. Otherwise they are saved to a tmp directory R creates at startup and will be taken care of when R shuts down. Files are \code{.txt} by default, but can be \code{.json}, \code{.xml}, or \code{.html} depending on the \code{output} setting.}
+\item{output_dir}{Optional directory path to save the converted files in, as a side effect. See the 'Output Details' section.}
 
-\item{n_chars}{Optional single integer specifying the maximum number of characters returned for each document, returned by the \code{readChar} function. The default is 1e+07. Higher numbers may be needed for exceptionally large files. There appears to be no advantage to lowering this, and no efficiency loss to raising it.}
+\item{n_chars}{Optional integer specifying the maximum number of characters returned for each document. The default is 1e+07. Higher numbers may be needed for exceptionally large files.}
 
-\item{java}{Optional alternative command to invoke Java. For example, it could be changed to the full path of a particular Java version. See the Configuration section below.}
+\item{java}{Optional command to invoke Java. For example, it could be to the full path of a particular Java version. See the Configuration section below.}
 
-\item{jar}{Optional alternative path to the \code{tika-app-X.XX.jar}. Useful if the included version becomes out of date.}
+\item{jar}{Optional alternative path to a \code{tika-app-X.XX.jar}. Useful if this package becomes out of date.}
 
 \item{threads}{Integer of the number of file consumer threads Tika uses. Defaults to 1.}
 
-\item{args}{Optional character vector of additional arguments for Tika, that are not yet implemented in this R interface, in the pattern of \code{c('-arg1','setting1','-arg2','setting2')}. Settable arguments include \code{-timeoutThresholdMillis} (Number of milliseconds allowed to a parse before the process is killed and restarted), \code{-maxRestarts} (Maximum number of times the watchdog process will restart the child process), \code{-includeFilePat} (Regular expression to determine which files to process, e.g. "(?i)\.pdf"), \code{-excludeFilePat}, and \code{-maxFileSizeBytes}. These are documented in the .jar --help command.}
+\item{args}{Optional character vector of additional arguments for Tika, that are not yet implemented in this R interface, in the pattern of \code{c('-arg1','setting1','-arg2','setting2')}. Currently settable arguments include \code{-timeoutThresholdMillis} (Number of milliseconds allowed to a parse before the process is killed and restarted), \code{-maxRestarts} (Maximum number of times the watchdog process will restart the child process), \code{-includeFilePat} (Regular expression to determine which files to process, e.g. \code{"(?i)\.pdf"}), \code{-excludeFilePat}, and \code{-maxFileSizeBytes}. These are documented in the .jar --help command.}
 
-\item{quiet}{Logical if Tika command line messages and errors are to be supressed.}
+\item{quiet}{Logical if Tika command line messages and errors are to be supressed. Defaults to TRUE.}
 }
 \value{
-A character vector, where each string corresponds to a file in the \code{input_dir}. The order is the same as that produced by \code{list.files(input_dir)}. If a file is not processed, the result will be NA. Also see the \code{output} options, above.
+A character vector the same length and order as the input. If a particular file was not processed, the value at that position is an empty string. See the Output Details section below.
 }
 \description{
-Extract text and metadata from almost any file. Apache Tika parses over a thousand types, which is incredible but true. This R interface includes the Tika program. 
-In addition to returning plain text, \code{rtika} can return partly structured text and metadata in \code{json}, \code{xml}, or \code{html}. For example, it will try to identify the \code{Content-Type} from pictures, videos, audio, code, and textual documents when \code{output="jsonRecursive"}, \code{output="xml"}, or \code{output="html"}.
-It automatically detects and parses several versions of Word, OpenOffice, rtf, iWorks, WordPerfect, pdf, epub, and more. It detects the character encodings of plain text files. It gets Exif from jpeg and tiff. It parses email mail boxes as well. See all the supported input formats here: \url{https://tika.apache.org/1.17/formats.html}.
+Extract text and metadata from over a thousand file types.
+Get either plain text or structured \code{XHTML}.
+Metadata includes \code{Content-Type}, character encoding, and Exif data from jpeg or tiff images. See the supported file types: \url{https://tika.apache.org/1.17/formats.html}.
 }
+\section{Output Details}{
+
+Empty output strings occur if an input file did not exist, it was a directory, or Tika could not process it. 
+
+By default, \code{output = "text"} and this produces plain text but no metadata. Some formatting is preserved using tabs, newlines and spaces.
+
+Setting \code{output} to either \code{"xml"} or the shortcut \code{"x"} will produce a strict form of \code{HTML} known as \code{XHTML}, with metadata in the \code{head} element of the \code{XHTML} and formatted text in the \code{body}.
+Content retains more formatting than \code{"text"}. For example, a Word or Excel table will become a HTML \code{table}, with data in the \code{td} elements, as text nodes. The \code{"html"} option and its shortcut \code{"h"} seem to produce the same result as \code{"xml"}.
+Parse XHTML with \code{xml2::read_html}. 
+
+Setting \code{output} to \code{"jsonRecursive"} or its shortcut \code{"J"} produces a tree structure. Metadata fields are at the top level. The text will be found in the \code{X-TIKA:content} field. By default the text is \code{XHTML}. This can be changed to plain text by adding a second value, like this: \code{output=c("jsonRecursive","text")} or \code{output=c("J","t")}. Parse \code{json} with \code{jsonlite::fromJSON}. 
+
+ If \code{output_dir} is specified, then the converted files will also be saved to this directory. One way to get a list of the processed files is to use \code{list.files} with \code{recursive=TRUE}. The file locations within the \code{output_dir} maintain the same paths as the input files. The paths are now relative to \code{output_dir}.  Files are appended with \code{.txt} by default, but can be \code{.json}, \code{.xml}, or \code{.html} depending on the \code{output} setting.
+ If \code{output_dir} is not specified, files are saved to a volatile tmp directory named by \code{tmpdir()} and will be taken care of when R shuts down.
+}
+
 \section{Background}{
 
-Tika is a foundational library for several Apache projects, such as the Apache Solr search engine. This R interface produces a big payoff for R users. The most efficient way I've found to process tens of thousands of documents is Tika's 'batch' mode, which is used. There is more to do, given enough time and attention, because Apache Tika includes many other libraries and methods. The source is available at: \url{https://tika.apache.org/}.
+Tika is a foundational library for several large Apache projects such as the Apache Solr search engine. It has been in development for many years. The most efficient way I've found to process tens of thousands of documents is Tika's 'batch' mode, which is used. There is more to do, given enough time and attention, because Apache Tika includes many libraries and methods accessible from Java. The source is available at: \url{https://tika.apache.org/}.
 }
 
 \section{Configuration}{
 
-The first version of this package includes the \code{tika-app-X.XX.jar}. This jar works with Java 7. Tika in mid-2018 needs Java 8. By default, this R package internally invokes Java by calling the \code{java} command from the command line. To change this, set the \code{java} attribute to call it another way (e.g. the full path to the location of a particular version of java).
+This package includes the \code{tika-app-X.XX.jar}. This jar works with Java 7. Tika in mid-2018 needs Java 8, so it's best to install that version if possible.
 
-Having the  \code{sys} package is suggested but not required.   \code{sys} dramatically speeds up calls to java, and handles messaging much better. Installing  \code{sys} after  \code{rtika} will work as well as installing it before.
+By default, this R package internally invokes Java by calling the \code{java} command from the command line. To specify the path to a particular Java version, set the path in \code{java}.
+
+Other command line arguments can be set with \code{args}. See the options for version 1.17 here: \url{https://tika.apache.org/1.17/gettingstarted.html}
+
+Having the \code{sys} package is suggested but not required. The \code{sys} package can dramatically speed up the initial call to Java each time this function is run, which is useful if you are calling this function again and again. Installing  \code{sys} after  \code{rtika} will work as well as installing it before. If you find yourself calling \code{tika} repeatedly, consider supplying a long character vector of files to \code{input} instead of an individual file each time.
+
+Having the \code{data.table} package installed will slightly speed up the communication between R and Tika, but especially if there are hundreds of thousands of documents to process.
 }
 
 \examples{
-# download file to some accessible directory
-dir = file.path(getwd(),'tika-example'); 
-dir.create(dir); 
-url = 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
-download.file(url,file.path(dir,'R-data.pdf'))
+# download file to some accessible directory. Will add it to 'tests'
+dir.create(file.path(getwd(),'tests')); 
+input = file.path(getwd(),'tests','R-data.pdf')
+download.file('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf',input)
 
 #extract text 
-text = tika(dir)
+text = tika(input)
 cat(substr(text,1,2000))
 
 #get metadata
 if(requireNamespace('jsonlite')){
-  json = tika(dir,'jsonRecursive')
+  json = tika(input,'J') # capital J is shortcut for jsonRecursive
 
 
   metadata = jsonlite::fromJSON(json[1])
-  str(metadata) #data.frame of metadata
+  str(metadata) #meta meta-data
 
   metadata$'Content-Type' # [1] "application/pdf"
   metadata$producer # [1] "pdfTeX-1.40.18"
