@@ -76,12 +76,14 @@ tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output
   inputFiles = normalizePath(input[file_exists])
   
   # create a file list that will be passed to Tika. Files with commas and quotes appear to work with the settings below.
-  fileList = normalizePath(file.path(tempdir(),'tika-fileList.csv'))
+  fileList = file.path(tempdir(),'tika-fileList.csv')
+  
   if(requireNamespace('data.table',quietly = TRUE)){
     data.table::fwrite( data.table::data.table(inputFiles) ,fileList ,row.names = FALSE,col.names = FALSE, sep=',', quote=FALSE )
   } else {
-    write.table( inputFiles ,fileList ,row.names = FALSE,col.names = FALSE, sep=',', quote=FALSE) 
+    utils::write.table( inputFiles ,fileList ,row.names = FALSE,col.names = FALSE, sep=',', quote=FALSE) 
   }
+  fileList = normalizePath(fileList)
  
   # if the output directory is missing or empty, create a tmp folder
   if(missing(output_dir)||length(output_dir)==0||output_dir==""){
@@ -103,7 +105,7 @@ tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output
   output_flag = c(output_flag, ifelse('text' %in% output|'t' %in% output,'-t',NA) )
   output_flag = c(output_flag, ifelse('xml' %in% output|'x' %in% output,'-x',NA) )
   output_flag = c(output_flag, ifelse('html' %in% output|'h' %in% output,'-h',NA) )
-  output_flag = as.character(na.omit(output_flag ))
+  output_flag = as.character(stats::na.omit(output_flag ))
 
   root = normalizePath('/') # how to handle on windows? if( .Platform$OS.type == "windows" ) path <- "d:\\MyStatistics"
 
