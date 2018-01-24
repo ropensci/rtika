@@ -54,14 +54,14 @@ Setting \code{output} to \code{"jsonRecursive"} or its shortcut \code{"J"} produ
 
 \section{Background}{
 
-Tika is a foundational library for several large Apache projects such as the Apache Solr search engine. It has been in development for many years. The most efficient way I've found to process tens of thousands of documents is Tika's 'batch' mode, which is used. There is more to do, given enough time and attention, because Apache Tika includes many libraries and methods accessible from Java. The source is available at: \url{https://tika.apache.org/}.
+Tika is a foundational library for several large Apache projects such as the Apache Solr search engine. It has been in development since at least 2007. The most efficient way I've found to process tens of thousands of documents is Tika's 'batch' mode, which is used. There are potentially more things that can be done with this package, given enough time and attention, because Apache Tika includes many libraries and methods in its .jar file. The source is available at: \url{https://tika.apache.org/}.
 }
 
 \section{Configuration}{
 
 This package includes the \code{tika-app-X.XX.jar}. This jar works with Java 7. Tika in mid-2018 needs Java 8, so it's best to install that version if possible.
 
-By default, this R package internally invokes Java by calling the \code{java} command from the command line. To specify the path to a particular Java version, set the path in \code{java}.
+By default, this R package internally invokes Java by calling the \code{java} command from the command line. To specify the path to a particular Java version, set the path in the \code{java} attribute of the \code{tika} function.
 
 Other command line arguments can be set with \code{args}. See the options for version 1.17 here: \url{https://tika.apache.org/1.17/gettingstarted.html}
 
@@ -71,19 +71,16 @@ Having the \code{data.table} package installed will slightly speed up the commun
 }
 
 \examples{
-# download file to some accessible directory. Will add it to 'tests'
-dir.create(file.path(getwd(),'tests')); 
-input = file.path(getwd(),'tests','R-data.pdf')
+input = tempfile('test_tika') # path to a file. Could be character vector of many files.
 download.file('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf',input)
 
 #extract text 
 text = tika(input)
-cat(substr(text,1,2000))
+cat(substr(text[1],45,450))
 
 #get metadata
 if(requireNamespace('jsonlite')){
   json = tika(input,'J') # capital J is shortcut for jsonRecursive
-
 
   metadata = jsonlite::fromJSON(json[1])
   str(metadata) #meta meta-data
@@ -92,5 +89,4 @@ if(requireNamespace('jsonlite')){
   metadata$producer # [1] "pdfTeX-1.40.18"
   metadata$'Creation-Date' # [1] "2017-11-30T13:39:02Z"
 }
-#don't forget to remove the downloaded test file 
 }

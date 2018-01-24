@@ -15,19 +15,16 @@
 #' @param quiet Logical if Tika command line messages and errors are to be supressed. Defaults to TRUE.
 #' @return A character vector the same length and order as the input. If a particular file was not processed, the value at that position is an empty string. See the Output Details section below.
 #' @examples
-#' # download file to some accessible directory. Will add it to 'tests'
-#' dir.create(file.path(getwd(),'tests')); 
-#' input = file.path(getwd(),'tests','R-data.pdf')
+#' input = tempfile('test_tika') # path to a file. Could be character vector of many files.
 #' download.file('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf',input)
 #'
 #' #extract text 
 #' text = tika(input)
-#' cat(substr(text,1,2000))
+#' cat(substr(text[1],45,450))
 #' 
 #' #get metadata
 #' if(requireNamespace('jsonlite')){
 #'   json = tika(input,'J') # capital J is shortcut for jsonRecursive
-#' 
 #' 
 #'   metadata = jsonlite::fromJSON(json[1])
 #'   str(metadata) #meta meta-data
@@ -36,7 +33,6 @@
 #'   metadata$producer # [1] "pdfTeX-1.40.18"
 #'   metadata$'Creation-Date' # [1] "2017-11-30T13:39:02Z"
 #' }
-#' #don't forget to remove the downloaded test file 
 #' @section Output Details:
 #' Empty output strings occur if an input file did not exist, it was a directory, or Tika could not process it. 
 #' 
@@ -51,11 +47,11 @@
 #'  If \code{output_dir} is specified, then the converted files will also be saved to this directory. One way to get a list of the processed files is to use \code{list.files} with \code{recursive=TRUE}. The file locations within the \code{output_dir} maintain the same paths as the input files. The paths are now relative to \code{output_dir}.  Files are appended with \code{.txt} by default, but can be \code{.json}, \code{.xml}, or \code{.html} depending on the \code{output} setting.
 #'  If \code{output_dir} is not specified, files are saved to a volatile tmp directory named by \code{tmpdir()} and will be taken care of when R shuts down. 
 #' @section Background:
-#' Tika is a foundational library for several large Apache projects such as the Apache Solr search engine. It has been in development for many years. The most efficient way I've found to process tens of thousands of documents is Tika's 'batch' mode, which is used. There is more to do, given enough time and attention, because Apache Tika includes many libraries and methods accessible from Java. The source is available at: \url{https://tika.apache.org/}. 
+#' Tika is a foundational library for several large Apache projects such as the Apache Solr search engine. It has been in development since at least 2007. The most efficient way I've found to process tens of thousands of documents is Tika's 'batch' mode, which is used. There are potentially more things that can be done with this package, given enough time and attention, because Apache Tika includes many libraries and methods in its .jar file. The source is available at: \url{https://tika.apache.org/}. 
 #' @section Configuration:
 #' This package includes the \code{tika-app-X.XX.jar}. This jar works with Java 7. Tika in mid-2018 needs Java 8, so it's best to install that version if possible.
 #' 
-#' By default, this R package internally invokes Java by calling the \code{java} command from the command line. To specify the path to a particular Java version, set the path in \code{java}.
+#' By default, this R package internally invokes Java by calling the \code{java} command from the command line. To specify the path to a particular Java version, set the path in the \code{java} attribute of the \code{tika} function.
 #' 
 #' Other command line arguments can be set with \code{args}. See the options for version 1.17 here: \url{https://tika.apache.org/1.17/gettingstarted.html}
 #' 
@@ -65,7 +61,7 @@
 
 tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output_dir="", n_chars=1e+07, java = 'java',jar=system.file("java", "tika-app-1.17.jar", package = "rtika"), threads=1,args=character(), quiet=TRUE) {
   # Special thanks to Hadley for the nice git tutorial at: http://r-pkgs.had.co.nz/git.html
-  # generate pdf with system('R CMD Rd2pdf ~/rtika')
+  # system('R CMD Rd2pdf ~/rtika')
  
   # TODO: config file for fine grained control over parsers, see: https://tika.apache.org/1.17/configuring.html
   
