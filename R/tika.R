@@ -97,16 +97,7 @@ tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output
   # if the output directory is missing or empty, create a tmp folder
   if(missing(output_dir)||length(output_dir)==0||output_dir==""){
     #each time we will create an empty folder within the tmp folder.
-    #output_dir = tempfile('tika-out')
-    output_dir = file.path(tempdir(),'rtika-dir')
-    # if(file.exists(output_dir)){
-    #   #unlink means delete. Recursive is needed to remove a directory.
-    #   if(unlink(output_dir,recursive= TRUE, force=TRUE)==1) {
-    #     # 1 for failure
-    #     warning('could not delete prior tmp output folder. Creating one with random name.')
-    #     output_dir = tempfile('tika-out')
-    #   }
-    # }
+    output_dir = tempfile('rtika-dir')
     dir.create(output_dir)
   } else {
     # if an output directory is provided, check it exists.
@@ -122,7 +113,6 @@ tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output
   output_flag = c(output_flag, ifelse('xml' %in% output|'x' %in% output,'-x',NA) )
   output_flag = c(output_flag, ifelse('html' %in% output|'h' %in% output,'-h',NA) )
   output_flag = as.character(stats::na.omit(output_flag ))
-
 
   if(.Platform$OS.type=='windows'){
     java_args = c('-jar',shQuote(jar),'-numConsumers', as.integer(threads), args, output_flag,'-i',root,'-o',shQuote(output_dir),'-fileList',shQuote(fileList))
@@ -144,12 +134,13 @@ tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output
   output_file_affix = ifelse('jsonRecursive' %in% output|'J' %in% output,'.json',output_file_affix)
   out = character(length(input))
   n = 0
+  
   for(i in seq_along(input)){
     if(file_exists[i]){
       n = n + 1
       #get the full path
       fp = normalizePath(file.path(output_dir,paste0(inputFiles[n],output_file_affix)))
-      if(file.exists(fp)){
+      if(file.exists(fp) && file.info(fp)$size>0){
         out[i] = readChar(fp,nchars=n_chars[1]) 
       } 
     }
@@ -163,7 +154,11 @@ tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output
  
   trash_dir = file.path(tempdir(),list.files(tempdir(),pattern='^rtika\\-dir'))
   if(length(trash_dir)>0) { # paranoid.
-    tmp=  unlink( trash_dir, recursive =TRUE) # does not seem to work unless force=TRUE on windows.
+    # if(.Platform$OS.type=='windows'){
+    #   tmp=  unlink( trash_dir, recursive =TRUE, force=TRUE) # does not seem to work unless force=TRUE on windows.
+    # } else {
+      tmp=  unlink( trash_dir, recursive =TRUE) 
+    # }
   }
  
   # I believe Tika's default output is UTF-16 but UTF-8 is the most supported in R
