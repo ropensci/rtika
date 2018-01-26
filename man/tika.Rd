@@ -5,8 +5,8 @@
 \title{R Interface to 'Apache Tika'}
 \usage{
 tika(input, output = c("text", "jsonRecursive", "xml", "html")[1],
-  output_dir = "", n_chars = 1e+07, java = "java", jar = paste0("'",
-  system.file("java", "tika-app-1.17.jar", package = "rtika"), "'"),
+  output_dir = "", n_chars = 1e+07, java = "java", jar = paste0("\\"",
+  system.file("java", "tika-app-1.17.jar", package = "rtika"), "\\""),
   threads = 1, args = character(), quiet = TRUE)
 }
 \arguments{

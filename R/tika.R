@@ -58,28 +58,32 @@
 #'
 #' Having the \code{data.table} package installed will slightly speed up the communication between R and Tika, but especially if there are hundreds of thousands of documents to process.
 
-tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output_dir="", n_chars=1e+07, java = 'java',jar=paste0("'",system.file("java", "tika-app-1.17.jar", package = "rtika"),"'"), threads=1,args=character(), quiet=TRUE) {
+tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output_dir="", n_chars=1e+07, java = 'java',jar=system.file("java", "tika-app-1.17.jar", package = "rtika"), threads=1,args=character(), quiet=TRUE) {
   # Special thanks to Hadley for the nice git tutorial at: http://r-pkgs.had.co.nz/git.html
   # devtools::build_vignettes()
   # system('R CMD Rd2pdf ~/rtika')
+  
+  root = normalizePath('/',winslash = "/") 
  
-  # download files
+  # download files, add absolute paths to input
   toDownload = grep('^(https?://|ftp://)',input, ignore.case=TRUE)
   if(length(toDownload)>0){
     rtika_download = function(url){ out = tempfile('rtika_download') ;  download.file(url,out) ; return(out) }
     urls = input[toDownload]
-    tempfiles = normalizePath(sapply(urls, rtika_download))
+    tempfiles =  sapply(urls, rtika_download)
     input[toDownload]<- tempfiles
   }
   
   # TODO: config file for fine grained control over parsers, see: https://tika.apache.org/1.17/configuring.html
-  
-  
+
   # check if the input files exists and are not directories
   file_exists = file.exists(input) & !dir.exists(input)
   if(!any(file_exists)) stop('No files are found.')
   if(!all(file_exists)) warning('Some files do not exist or are directories.')
-  inputFiles = normalizePath(input[file_exists])
+  inputFiles = normalizePath(input[file_exists] , winslash = '/')
+ 
+   #Tika expects files to be relative to root
+  inputFiles = sub(root,'',inputFiles,fixed = TRUE)
   
   # name a file list that will be passed to Tika. Files with commas and quotes appear to work with the settings below.
   fileList = file.path(tempdir(),'tika-fileList.csv')
@@ -89,14 +93,18 @@ tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output
   } else {
     utils::write.table( inputFiles ,fileList ,row.names = FALSE,col.names = FALSE, sep=',', quote=FALSE) 
   }
- 
+  fileList = normalizePath(fileList)
   # if the output directory is missing or empty, create a tmp folder
   if(missing(output_dir)||length(output_dir)==0||output_dir==""){
     #each time we will create an empty folder within the tmp folder.
     output_dir = file.path(tempdir(),'tika-out')
     if(file.exists(output_dir)){
       #unlink means delete. Recursive is needed to remove a directory.
-      unlink(output_dir,recursive= TRUE)
+      if(unlink(output_dir,recursive= TRUE, force=TRUE)==1) {
+        # 1 for failure
+        warning('could not delete prior tmp output folder. Creating one with random name.')
+        output_dir = tempfile('tika-out')
+      }
     }
     dir.create(output_dir)
   } else {
@@ -104,6 +112,8 @@ tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output
     output_dir = tools::file_path_as_absolute(output_dir)
     if(!file.exists(output_dir)) stop('output_dir does not exist')
   }
+  
+  output_dir = normalizePath(output_dir, winslash = '/')
  
   output_flag= character()
   output_flag = ifelse('jsonRecursive' %in% output|'J' %in% output,'-J', output_flag) # goes first
@@ -112,9 +122,13 @@ tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output
   output_flag = c(output_flag, ifelse('html' %in% output|'h' %in% output,'-h',NA) )
   output_flag = as.character(stats::na.omit(output_flag ))
 
-  root = normalizePath('/') # how to handle on windows? if( .Platform$OS.type == "windows" ) path <- "d:\\MyStatistics"
 
-  java_args = c('-jar',jar,'-numConsumers', as.integer(threads), args, output_flag,'-i',root,'-o',output_dir,'-fileList',fileList)
+  if(.Platform$OS.type=='windows'){
+    java_args = c('-jar',shQuote(jar),'-numConsumers', as.integer(threads), args, output_flag,'-i',root,'-o',shQuote(output_dir),'-fileList',shQuote(fileList))
+  } else {
+    java_args = c('-jar',jar,'-numConsumers', as.integer(threads), args, output_flag,'-i',root,'-o',output_dir,'-fileList',fileList)
+  }
+
   # Compared to system2, sys is much quicker when making a small number of calls. 
   if(requireNamespace('sys',quietly = TRUE)){
     sys::exec_wait(cmd=java[1] , args=java_args ,std_out=!quiet, std_err=!quiet )
@@ -127,7 +141,6 @@ tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output
   output_file_affix = ifelse('xml' %in% output|'x' %in% output,'.xml',output_file_affix)
   output_file_affix = ifelse('html' %in% output|'h' %in% output,'.html',output_file_affix)
   output_file_affix = ifelse('jsonRecursive' %in% output|'J' %in% output,'.json',output_file_affix)
-  
   out = character(length(input))
   n = 0
   for(i in seq_along(input)){
