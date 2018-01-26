@@ -97,15 +97,16 @@ tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output
   # if the output directory is missing or empty, create a tmp folder
   if(missing(output_dir)||length(output_dir)==0||output_dir==""){
     #each time we will create an empty folder within the tmp folder.
+    #output_dir = tempfile('tika-out')
     output_dir = file.path(tempdir(),'tika-out')
-    if(file.exists(output_dir)){
-      #unlink means delete. Recursive is needed to remove a directory.
-      if(unlink(output_dir,recursive= TRUE, force=TRUE)==1) {
-        # 1 for failure
-        warning('could not delete prior tmp output folder. Creating one with random name.')
-        output_dir = tempfile('tika-out')
-      }
-    }
+    # if(file.exists(output_dir)){
+    #   #unlink means delete. Recursive is needed to remove a directory.
+    #   if(unlink(output_dir,recursive= TRUE, force=TRUE)==1) {
+    #     # 1 for failure
+    #     warning('could not delete prior tmp output folder. Creating one with random name.')
+    #     output_dir = tempfile('tika-out')
+    #   }
+    # }
     dir.create(output_dir)
   } else {
     # if an output directory is provided, check it exists.
