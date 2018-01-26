@@ -4,7 +4,7 @@
 #' Get either plain text or structured \code{XHTML}.
 #' Metadata includes \code{Content-Type}, character encoding, and Exif data from jpeg or tiff images. See the supported file types: \url{https://tika.apache.org/1.17/formats.html}.
 #' 
-#' @param input Character vector of the path(s) to file(s). Each file will be analyzed but not changed.
+#' @param input Character vector of paths to the input documents. Strings starting with 'http://','https://', or 'ftp://' are downloaded to a temporary directory first. Each file will be analyzed but not changed.
 #' @param output Optional character vector of the output format. By default, \code{"text"} gets plain text without metadata. \code{"xml"} and \code{"html"} get \code{XHTML} text with metadata. \code{"jsonRecursive"} gets \code{XHTML} text and \code{json} metadata. \code{c("jsonRecursive","text")} or \code{c("J","t")} gets plain text and \code{json} metadata. See the 'Output Details' section.
 #' @param output_dir Optional directory path to save the converted files in, as a side effect. See the 'Output Details' section.
 #' @param n_chars Optional integer specifying the maximum number of characters returned for each document. The default is 1e+07. Higher numbers may be needed for exceptionally large files. 
@@ -15,8 +15,7 @@
 #' @param quiet Logical if Tika command line messages and errors are to be supressed. Defaults to TRUE.
 #' @return A character vector the same length and order as the input. If a particular file was not processed, the value at that position is an empty string. See the Output Details section below.
 #' @examples
-#' input = tempfile('test_tika') # path to a file. Could be character vector of many files.
-#' download.file('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf',input)
+#' input= 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
 #'
 #' #extract text 
 #' text = tika(input)
@@ -61,9 +60,20 @@
 
 tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output_dir="", n_chars=1e+07, java = 'java',jar=system.file("java", "tika-app-1.17.jar", package = "rtika"), threads=1,args=character(), quiet=TRUE) {
   # Special thanks to Hadley for the nice git tutorial at: http://r-pkgs.had.co.nz/git.html
+  # devtools::build_vignettes()
   # system('R CMD Rd2pdf ~/rtika')
  
+  # download files
+  toDownload = grep('^(https?://|ftp://)',input, ignore.case=TRUE)
+  if(length(toDownload)>0){
+    rtika_download = function(url){ out = tempfile('rtika_download') ;  download.file(url,out) ; return(out) }
+    urls = input[toDownload]
+    tempfiles = normalizePath(sapply(urls, rtika_download))
+    input[toDownload]<- tempfiles
+  }
+  
   # TODO: config file for fine grained control over parsers, see: https://tika.apache.org/1.17/configuring.html
+  
   
   # check if the input files exists and are not directories
   file_exists = file.exists(input) & !dir.exists(input)
@@ -71,7 +81,7 @@ tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output
   if(!all(file_exists)) warning('Some files do not exist or are directories.')
   inputFiles = normalizePath(input[file_exists])
   
-  # create a file list that will be passed to Tika. Files with commas and quotes appear to work with the settings below.
+  # name a file list that will be passed to Tika. Files with commas and quotes appear to work with the settings below.
   fileList = file.path(tempdir(),'tika-fileList.csv')
   
   if(requireNamespace('data.table',quietly = TRUE)){
@@ -79,7 +89,6 @@ tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output
   } else {
     utils::write.table( inputFiles ,fileList ,row.names = FALSE,col.names = FALSE, sep=',', quote=FALSE) 
   }
-  fileList = normalizePath(fileList)
  
   # if the output directory is missing or empty, create a tmp folder
   if(missing(output_dir)||length(output_dir)==0||output_dir==""){
@@ -127,10 +136,11 @@ tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output
       #get the full path
       fp = normalizePath(file.path(output_dir,paste0(inputFiles[n],output_file_affix)))
       if(file.exists(fp)){
-        out[i] = readChar(fp,nchars=n_chars[1])
+        out[i] = readChar(fp,nchars=n_chars[1]) 
       } 
     }
   }
+  # I believe Tika's default output is UTF-16 but UTF-8 is the most supported in R
+  return(enc2utf8(out))
   
-  return(out)
 }

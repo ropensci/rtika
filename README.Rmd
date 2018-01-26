@@ -32,8 +32,7 @@ library('rtika')
 ## Extract Plain Text
 Get a text document, such as `.pdf`, `.doc`, `.docx`, `.rtf`, `.ppt`, or a mix. 
 ```{r,results = "hide",warning = FALSE}
-input = tempfile('test_tika') # path to a file. Could be character vector of many files.
-download.file('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf',input)
+input = 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
 ```
 
 Extract the plain text with the `tika()` function. Relax, it will probably work! 

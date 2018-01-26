@@ -1,17 +1,23 @@
 Package: rtika
 Type: Package
 Title: R Interface to 'Apache Tika' 
-Version: 0.1.0
+Version: 0.1.1
 Author: Sasha Goodman <goodmansasha@gmail.com>[aut], The Apache Software Foundation [aut,cph]
 Maintainer: Sasha Goodman <goodmansasha@gmail.com>
-Suggests: sys, jsonlite, xml2, data.table,
-    testthat
+Suggests: sys, 
+    jsonlite, 
+    xml2, 
+    data.table,
+    testthat,
+    knitr,
+    rmarkdown
 License: Apache License 2.0 | file LICENSE
 SystemRequirements: Java (>=7) | openjdk-7-jre (via apt) | java-1.7.0-openjdk (via yum) | openjdk-8-jre (via apt) | java-1.8.0-openjdk (via yum) 
-Description: Extract text and metadata from over a thousand file types. Get either plain text or structured XHTML. This R interface includes the Tika program. Its source is available at https://tika.apache.org/. 
+Description: Extract text and metadata from over a thousand file types. Get either plain text or structured XHTML. This R interface includes the Tika software. Its source is available at https://github.com/apache/tika. 
 Depends: R (>= 3.1.0)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
 URL: http://github.com/predict-r/rtika
 BugReports: http://github.com/predict-r/rtika/issues
+VignetteBuilder: knitr

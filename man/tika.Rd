@@ -10,7 +10,7 @@ tika(input, output = c("text", "jsonRecursive", "xml", "html")[1],
   threads = 1, args = character(), quiet = TRUE)
 }
 \arguments{
-\item{input}{Character vector of the path(s) to file(s). Each file will be analyzed but not changed.}
+\item{input}{Character vector of paths to the input documents. Strings starting with 'http://','https://', or 'ftp://' are downloaded to a temporary directory first. Each file will be analyzed but not changed.}
 
 \item{output}{Optional character vector of the output format. By default, \code{"text"} gets plain text without metadata. \code{"xml"} and \code{"html"} get \code{XHTML} text with metadata. \code{"jsonRecursive"} gets \code{XHTML} text and \code{json} metadata. \code{c("jsonRecursive","text")} or \code{c("J","t")} gets plain text and \code{json} metadata. See the 'Output Details' section.}
 
@@ -71,8 +71,7 @@ Having the \code{data.table} package installed will slightly speed up the commun
 }
 
 \examples{
-input = tempfile('test_tika') # path to a file. Could be character vector of many files.
-download.file('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf',input)
+input= 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
 
 #extract text 
 text = tika(input)
