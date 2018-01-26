@@ -58,7 +58,7 @@
 #'
 #' Having the \code{data.table} package installed will slightly speed up the communication between R and Tika, but especially if there are hundreds of thousands of documents to process.
 
-tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output_dir="", n_chars=1e+07, java = 'java',jar=system.file("java", "tika-app-1.17.jar", package = "rtika"), threads=1,args=character(), quiet=TRUE) {
+tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output_dir="", n_chars=1e+07, java = 'java',jar=paste0("'",system.file("java", "tika-app-1.17.jar", package = "rtika"),"'"), threads=1,args=character(), quiet=TRUE) {
   # Special thanks to Hadley for the nice git tutorial at: http://r-pkgs.had.co.nz/git.html
   # devtools::build_vignettes()
   # system('R CMD Rd2pdf ~/rtika')
