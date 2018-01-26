@@ -68,7 +68,7 @@ tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output
   # download files, add absolute paths to input
   toDownload = grep('^(https?://|ftp://)',input, ignore.case=TRUE)
   if(length(toDownload)>0){
-    rtika_download = function(url){ out = tempfile('rtika_download') ;  download.file(url,out) ; return(out) }
+    rtika_download = function(url){ out = tempfile('rtika-file') ;  download.file(url,out) ; return(out) }
     urls = input[toDownload]
     tempfiles =  sapply(urls, rtika_download)
     input[toDownload]<- tempfiles
@@ -86,7 +86,7 @@ tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output
   inputFiles = sub(root,'',inputFiles,fixed = TRUE)
   
   # name a file list that will be passed to Tika. Files with commas and quotes appear to work with the settings below.
-  fileList = file.path(tempdir(),'tika-fileList.csv')
+  fileList = tempfile('rtika-file')
   
   if(requireNamespace('data.table',quietly = TRUE)){
     data.table::fwrite( data.table::data.table(inputFiles) ,fileList ,row.names = FALSE,col.names = FALSE, sep=',', quote=FALSE )
@@ -98,7 +98,7 @@ tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output
   if(missing(output_dir)||length(output_dir)==0||output_dir==""){
     #each time we will create an empty folder within the tmp folder.
     #output_dir = tempfile('tika-out')
-    output_dir = file.path(tempdir(),'tika-out')
+    output_dir = file.path(tempdir(),'rtika-dir')
     # if(file.exists(output_dir)){
     #   #unlink means delete. Recursive is needed to remove a directory.
     #   if(unlink(output_dir,recursive= TRUE, force=TRUE)==1) {
@@ -154,6 +154,18 @@ tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output
       } 
     }
   }
+  # remove tempfiles.
+  
+  trash_file = file.path(tempdir(),list.files(tempdir(),pattern='^rtika\\-file'))
+  if(length(trash_file)>0){
+     tmp= file.remove(trash_file)
+  }
+ 
+  trash_dir = file.path(tempdir(),list.files(tempdir(),pattern='^rtika\\-dir'))
+  if(length(trash_dir)>0) { # paranoid.
+    tmp=  unlink( trash_dir, recursive =TRUE) # does not seem to work unless force=TRUE on windows.
+  }
+ 
   # I believe Tika's default output is UTF-16 but UTF-8 is the most supported in R
   return(enc2utf8(out))
   
