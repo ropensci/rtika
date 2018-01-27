@@ -6,7 +6,7 @@ rtika
 
 [![Travis-CI Build Status](https://travis-ci.org/predict-r/rtika.svg?branch=master)](https://travis-ci.org/predict-r/rtika)
 
-From Wikipedia:
+What is Apache Tika? From Wikipedia:
 
 > Apache Tika is a content detection and analysis framework, written in Java, stewarded at the Apache Software Foundation. It detects and extracts metadata and text from over a thousand different file types, and as well as providing a Java library, has server and command-line editions suitable for use from other programming languages ...
 
@@ -98,7 +98,7 @@ str(metadata) #data.frame of metadata
       ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
      $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
      $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-     $ X-TIKA:parse_time_millis                   : chr "923"
+     $ X-TIKA:parse_time_millis                   : chr "998"
      $ access_permission:assemble_document        : chr "true"
      $ access_permission:can_modify               : chr "true"
      $ access_permission:can_print                : chr "true"
@@ -124,9 +124,9 @@ str(metadata) #data.frame of metadata
      $ pdf:docinfo:trapped                        : chr "False"
      $ pdf:encrypted                              : chr "false"
      $ producer                                   : chr "pdfTeX-1.40.18"
-     $ resourceName                               : chr "rtika_file74d2cc139be"
+     $ resourceName                               : chr "rtika_file87230a84e43"
      $ tika:file_ext                              : chr ""
-     $ tika_batch_fs:relative_path                : chr "tmp/RtmphvGIH0/rtika_file74d2cc139be"
+     $ tika_batch_fs:relative_path                : chr "tmp/RtmpjXzLrx/rtika_file87230a84e43"
      $ trapped                                    : chr "False"
      $ xmp:CreatorTool                            : chr "TeX"
      $ xmpTPg:NPages                              : chr "37"

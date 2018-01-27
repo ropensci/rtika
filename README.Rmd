@@ -6,7 +6,7 @@ output: github_document
 
 [![Travis-CI Build Status](https://travis-ci.org/predict-r/rtika.svg?branch=master)](https://travis-ci.org/predict-r/rtika)
 
-From Wikipedia: 
+What is Apache Tika? From Wikipedia: 
 
 >Apache Tika is a content detection and analysis framework, written in Java, stewarded at the Apache Software Foundation. It detects and extracts metadata and text from over a thousand different file types, and as well as providing a Java library, has server and command-line editions suitable for use from other programming languages ...
 
