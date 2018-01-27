@@ -22,8 +22,8 @@ You need at least `Java 7` or `OpenJDK 1.7`. To check, run the command `java -ve
 On Windows, optionally install the `curl` package.
 
 ``` r
-if(.Platform$OS.type=='windows'){
-    if(!requireNamespace('curl')){install.packages('curl', repos='https://cloud.r-project.org')}
+if(.Platform$OS.type=='windows' && !requireNamespace('curl')){
+   install.packages('curl', repos='https://cloud.r-project.org')
 }
 ```
 
@@ -98,7 +98,7 @@ str(metadata) #data.frame of metadata
       ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
      $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
      $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-     $ X-TIKA:parse_time_millis                   : chr "998"
+     $ X-TIKA:parse_time_millis                   : chr "1052"
      $ access_permission:assemble_document        : chr "true"
      $ access_permission:can_modify               : chr "true"
      $ access_permission:can_print                : chr "true"
@@ -124,9 +124,9 @@ str(metadata) #data.frame of metadata
      $ pdf:docinfo:trapped                        : chr "False"
      $ pdf:encrypted                              : chr "false"
      $ producer                                   : chr "pdfTeX-1.40.18"
-     $ resourceName                               : chr "rtika_file87230a84e43"
+     $ resourceName                               : chr "rtika_file981137230fd"
      $ tika:file_ext                              : chr ""
-     $ tika_batch_fs:relative_path                : chr "tmp/RtmpjXzLrx/rtika_file87230a84e43"
+     $ tika_batch_fs:relative_path                : chr "tmp/RtmphpUJhL/rtika_file981137230fd"
      $ trapped                                    : chr "False"
      $ xmp:CreatorTool                            : chr "TeX"
      $ xmpTPg:NPages                              : chr "37"
@@ -138,4 +138,4 @@ In March 2012, I created a repository on `r-forge` called `r-tika` (See: <https:
 
 In September 2017, user *kyusque* released `tikaR`, which uses the `rJava` package to interact with Tika (See: <https://github.com/kyusque/tikaR>). As of writing, it provided a `xml` parser and metadata extraction.
 
-With `rtika`, I chose to interface with the Tika CLI and its 'batch processor' tool. Much of the batch processor is implemented in Tika 1.17 (See: <https://wiki.apache.org/tika/TikaBatchOverview>). The Tika batch processor has good efficiency when processing tens of thousands of documents, is not too slow for a single document, and handles errors gracefully. Further, connecting `R` to the Tika CLI batch processor is relatively easy to maintain, because the `R` code is simple. I anticipate that various researchers will need plain text output, while others want json output. These are implemented in the CLI and hence in `rtika` (although apparently not in `tikaR`). Multiple threads are supported in both the CLI and `rtika`. The `rtika` package anticipates future features with the `args` attribute of the `tika` function, that allows access to the Tika CLI. Another motivation was that `rJava` hwasonce bifficult to get working on Ubuntu and CentOS, especially around wthe time hen Java was not open sourced, although that probably ihas improved
+With `rtika`, I chose to interface with the Tika CLI and its 'batch processor' tool. Much of the batch processor is implemented in Tika 1.17 (See: <https://wiki.apache.org/tika/TikaBatchOverview>). The Tika batch processor has good efficiency when processing tens of thousands of documents, is not too slow for a single document, and handles errors gracefully. Further, connecting `R` to the Tika CLI batch processor is relatively easy to maintain, because the `R` code is simple. I anticipate that various researchers will need plain text output, while others want json output. These are implemented in the CLI and hence in `rtika` (although apparently not in `tikaR`). Multiple threads are supported in both the CLI and `rtika`. The `rtika` package anticipates future features with the `args` attribute of the `tika` function, that allows access to the Tika CLI. Another motivation was that `rJava` was once difficult to get working on Ubuntu and CentOS, especially around the time hen Java was not open sourced, although that probably has improved
