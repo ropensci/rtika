@@ -15,7 +15,14 @@ From Wikipedia:
 This R interface includes the Tika software.
 
 ## Installation
-You need at least `Java 7` or `OpenJDK 1.7`. To check, run the command `java -version` from a terminal. Get Java installation tips at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>.
+You need at least `Java 7` or `OpenJDK 1.7`. To check, run the command `java -version` from a terminal. Get Java installation tips at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>. 
+
+On Windows, optionally install the `curl` package.
+```{r}
+if(.Platform$OS.type=='windows'){
+    if(!requireNamespace('curl')){install.packages('curl', repos='https://cloud.r-project.org')}
+}
+```
 
 Next, install the `rtika` package from Github.com. 
 
