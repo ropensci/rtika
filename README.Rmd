@@ -30,16 +30,12 @@ library('rtika')
 
 
 ## Extract Plain Text
-Get a text document, such as `.pdf`, `.doc`, `.docx`, `.rtf`, `.ppt`, or a mix. 
+Get a text document, such as `.pdf`, `.doc`, `.docx`, `.rtf`, `.ppt`, or a mix. Then, extract the plain text with the `tika()` function. Relax, it will probably work! 
 ```{r,results = "hide",warning = FALSE}
 input = 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
-```
-
-Extract the plain text with the `tika()` function. Relax, it will probably work! 
-```{r,results = "hide",message = FALSE}
 text = tika(input) # magic happens
-
 ```
+
 The `text` will be a character vector, in the same order as `input`. Display a snippet using `cat`.  
 ```{r,comment=NA }
 cat(substr(text[1],45,450)) # sub-string of the text

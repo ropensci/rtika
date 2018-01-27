@@ -32,15 +32,10 @@ library('rtika')
 Extract Plain Text
 ------------------
 
-Get a text document, such as `.pdf`, `.doc`, `.docx`, `.rtf`, `.ppt`, or a mix.
+Get a text document, such as `.pdf`, `.doc`, `.docx`, `.rtf`, `.ppt`, or a mix. Then, extract the plain text with the `tika()` function. Relax, it will probably work!
 
 ``` r
 input = 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
-```
-
-Extract the plain text with the `tika()` function. Relax, it will probably work!
-
-``` r
 text = tika(input) # magic happens
 ```
 
@@ -95,7 +90,7 @@ str(metadata) #data.frame of metadata
       ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
      $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
      $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-     $ X-TIKA:parse_time_millis                   : chr "1525"
+     $ X-TIKA:parse_time_millis                   : chr "1002"
      $ access_permission:assemble_document        : chr "true"
      $ access_permission:can_modify               : chr "true"
      $ access_permission:can_print                : chr "true"
@@ -121,9 +116,9 @@ str(metadata) #data.frame of metadata
      $ pdf:docinfo:trapped                        : chr "False"
      $ pdf:encrypted                              : chr "false"
      $ producer                                   : chr "pdfTeX-1.40.18"
-     $ resourceName                               : chr "rtika_download3e7c3bab9673"
+     $ resourceName                               : chr "rtika_file778a177d613c"
      $ tika:file_ext                              : chr ""
-     $ tika_batch_fs:relative_path                : chr "tmp/RtmpyjkMTf/rtika_download3e7c3bab9673"
+     $ tika_batch_fs:relative_path                : chr "tmp/Rtmp3rNd6C/rtika_file778a177d613c"
      $ trapped                                    : chr "False"
      $ xmp:CreatorTool                            : chr "TeX"
      $ xmpTPg:NPages                              : chr "37"
