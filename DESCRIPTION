@@ -8,6 +8,7 @@ Suggests: sys,
     jsonlite, 
     xml2, 
     data.table,
+    curl,
     testthat,
     knitr,
     rmarkdown

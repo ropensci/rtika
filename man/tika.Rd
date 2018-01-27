@@ -7,7 +7,8 @@
 tika(input, output = c("text", "jsonRecursive", "xml", "html")[1],
   output_dir = "", n_chars = 1e+07, java = "java",
   jar = system.file("java", "tika-app-1.17.jar", package = "rtika"),
-  threads = 1, args = character(), quiet = TRUE)
+  threads = 1, args = character(), quiet = TRUE,
+  remove_tempfiles = FALSE)
 }
 \arguments{
 \item{input}{Character vector of paths to the input documents. Strings starting with 'http://','https://', or 'ftp://' are downloaded to a temporary directory first. Each file will be analyzed but not changed.}
@@ -27,6 +28,8 @@ tika(input, output = c("text", "jsonRecursive", "xml", "html")[1],
 \item{args}{Optional character vector of additional arguments for Tika, that are not yet implemented in this R interface, in the pattern of \code{c('-arg1','setting1','-arg2','setting2')}. Currently settable arguments include \code{-timeoutThresholdMillis} (Number of milliseconds allowed to a parse before the process is killed and restarted), \code{-maxRestarts} (Maximum number of times the watchdog process will restart the child process), \code{-includeFilePat} (Regular expression to determine which files to process, e.g. \code{"(?i)\.pdf"}), \code{-excludeFilePat}, and \code{-maxFileSizeBytes}. These are documented in the .jar --help command.}
 
 \item{quiet}{Logical if Tika command line messages and errors are to be supressed. Defaults to TRUE.}
+
+\item{remove_tempfiles}{Logical to clean up temporary files after running the command, which can accumulate. They are in \code{tempdir()}. These files normally be removed at the end of the R session anyhow.}
 }
 \value{
 A character vector the same length and order as the input. If a particular file was not processed, the value at that position is an empty string. See the Output Details section below.
@@ -68,12 +71,13 @@ Other command line arguments can be set with \code{args}. See the options for ve
 Having the \code{sys} package is suggested but not required. The \code{sys} package can dramatically speed up the initial call to Java each time this function is run, which is useful if you are calling this function again and again. Installing  \code{sys} after  \code{rtika} will work as well as installing it before. If you find yourself calling \code{tika} repeatedly, consider supplying a long character vector of files to \code{input} instead of an individual file each time.
 
 Having the \code{data.table} package installed will slightly speed up the communication between R and Tika, but especially if there are hundreds of thousands of documents to process.
+
+The \code{curl} package downloads files quickly, if the user includes urls in the \code{input}. In testing, \code{curl} is required on Windows to avoid errors, and more work may still be needed to make Windows parse reliably.
 }
 
 \examples{
+#' #extract text 
 input= 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
-
-#extract text 
 text = tika(input)
 cat(substr(text[1],45,450))
 

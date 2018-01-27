@@ -13,11 +13,11 @@
 #' @param threads Integer of the number of file consumer threads Tika uses. Defaults to 1.
 #' @param args Optional character vector of additional arguments for Tika, that are not yet implemented in this R interface, in the pattern of \code{c('-arg1','setting1','-arg2','setting2')}. Currently settable arguments include \code{-timeoutThresholdMillis} (Number of milliseconds allowed to a parse before the process is killed and restarted), \code{-maxRestarts} (Maximum number of times the watchdog process will restart the child process), \code{-includeFilePat} (Regular expression to determine which files to process, e.g. \code{"(?i)\.pdf"}), \code{-excludeFilePat}, and \code{-maxFileSizeBytes}. These are documented in the .jar --help command.
 #' @param quiet Logical if Tika command line messages and errors are to be supressed. Defaults to TRUE.
+#' @param remove_tempfiles Logical to clean up temporary files after running the command, which can accumulate. They are in \code{tempdir()}. These files normally be removed at the end of the R session anyhow.
 #' @return A character vector the same length and order as the input. If a particular file was not processed, the value at that position is an empty string. See the Output Details section below.
 #' @examples
+#' #' #extract text 
 #' input= 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
-#'
-#' #extract text 
 #' text = tika(input)
 #' cat(substr(text[1],45,450))
 #' 
@@ -57,18 +57,62 @@
 #' Having the \code{sys} package is suggested but not required. The \code{sys} package can dramatically speed up the initial call to Java each time this function is run, which is useful if you are calling this function again and again. Installing  \code{sys} after  \code{rtika} will work as well as installing it before. If you find yourself calling \code{tika} repeatedly, consider supplying a long character vector of files to \code{input} instead of an individual file each time.
 #'
 #' Having the \code{data.table} package installed will slightly speed up the communication between R and Tika, but especially if there are hundreds of thousands of documents to process.
+#' 
+#' The \code{curl} package downloads files quickly, if the user includes urls in the \code{input}. In testing, \code{curl} is required on Windows to avoid errors, and more work may still be needed to make Windows parse reliably. 
 
-tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output_dir="", n_chars=1e+07, java = 'java',jar=system.file("java", "tika-app-1.17.jar", package = "rtika"), threads=1,args=character(), quiet=TRUE) {
+tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output_dir="", n_chars=1e+07, java = 'java',jar=system.file("java", "tika-app-1.17.jar", package = "rtika"), threads=1,args=character(), quiet=TRUE,remove_tempfiles=FALSE) {
   # Special thanks to Hadley for the nice git tutorial at: http://r-pkgs.had.co.nz/git.html
   # devtools::build_vignettes()
   # system('R CMD Rd2pdf ~/rtika')
-  
+ 
   root = normalizePath('/',winslash = "/") 
  
-  # download files, add absolute paths to input
-  toDownload = grep('^(https?://|ftp://)',input, ignore.case=TRUE)
+  # download files to temp directory, then add relative local paths to input
+  toDownload = grep('^(https?:/|ftp:/|file:/)',input, ignore.case=TRUE)
   if(length(toDownload)>0){
-    rtika_download = function(url){ out = tempfile('rtika-file') ;  download.file(url,out) ; return(out) }
+  
+    if(requireNamespace('curl',quietly = TRUE)){
+      rtika_download = function(url){ 
+        out = tempfile('rtika_file') ; 
+        req = curl::curl_fetch_disk(url,out) 
+        if(req$status_code!=200){
+          warning('could not download:', url)
+        }
+        # OS X and ubuntu nicely record content-type in file extended attributes. I checked in tempdir() with cmd: file --mime-type -b rtika_file*
+        # However, on windows, neither download.file and curl record content type as an extended attribute or file affix.
+        # the type can be appended as a file affix using the curl package.
+        # headers = parse_headers(req$headers)
+        # ctype <- headers[grepl("^content-type", headers, ignore.case = TRUE)]
+        # https://github.com/jeroen/curl/blob/974495cd4880771a934b486530d11dd82aa743dd/examples/sitemap.R
+        # then map mime type to file extions.
+        #  use Tika's content type xml file to map content-types like 'applicaton/pdf' to .pdf file affix
+        # https://raw.githubusercontent.com/apache/tika/master/tika-core/src/main/resources/org/apache/tika/mime/tika-mimetypes.xml
+        # or ubuntu has a list in: also ubuntu /etc/mime.types
+        # otherwise, if server does not provide content type (is this possible? relying on cache maybe?), could fail over to less reliable path affix of URL maybe. 
+        # this is often missing or wrong (e.g. .php, .cfm typically produce .html)
+        #       # path  = xml2::url_parse(url)$path
+        #       # regex pattern based on known extensions of Tika. Note that extension like .php, .cfm producing .html or other formats may or may not be an issue with tika. If it is, its worth using your own downloader. THis is just a convenience downloader.
+        #        # xml = xml2::read_xml('https://raw.githubusercontent.com/apache/tika/master/tika-core/src/main/resources/org/apache/tika/mime/tika-mimetypes.xml')
+        #       # ext = sort(xml2::xml_attr(xml_find_all(xml,'//glob'),'pattern'))
+        #       # max(nchar(ext[grepl('*.', ext,fixed=T)])-1) # 12
+        #       # sort(unique(unlist(strsplit(ext[grepl('*.', ext,fixed=T)],''))))
+        #       # paste( sort(unique(unlist(strsplit(ext[grepl('*.', ext,fixed=T)],'')))) , collapse = ' ') 
+        #       # ext = tolower(regmatches(path, regexpr('\\.[A-Za-z0-9\\-_+]{1,12}$',path)))
+
+        return(out)
+      }
+    } else {
+      rtika_download = function(url){ 
+        out = tempfile('rtika_file') ; 
+        req =  utils::download.file(url,out, method='libcurl') ;
+        if(req != 0){
+          warning('could not download:', url)
+        }
+        return(out)
+      }
+    }
+   
+    
     urls = input[toDownload]
     tempfiles =  sapply(urls, rtika_download)
     input[toDownload]<- tempfiles
@@ -76,28 +120,30 @@ tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output
   
   # TODO: config file for fine grained control over parsers, see: https://tika.apache.org/1.17/configuring.html
 
-  # check if the input files exists and are not directories
+  # check if the input files exist and are not directories
   file_exists = file.exists(input) & !dir.exists(input)
-  if(!any(file_exists)) stop('No files are found.')
-  if(!all(file_exists)) warning('Some files do not exist or are directories.')
+  if(!any(file_exists)) stop('No files found locally.')
+  if(!all(file_exists)) warning('Some local files do not exist or are directories.')
   inputFiles = normalizePath(input[file_exists] , winslash = '/')
- 
+
    #Tika expects files to be relative to root
-  inputFiles = sub(root,'',inputFiles,fixed = TRUE)
+  # inputFiles = sub(paste0('^',root),'',inputFiles) # requires a funciton to turn root into regex
+  inputFiles = sub(root,'',inputFiles, fixed=TRUE)
   
   # name a file list that will be passed to Tika. Files with commas and quotes appear to work with the settings below.
-  fileList = tempfile('rtika-file')
+  fileList = tempfile('rtika_file')
   
   if(requireNamespace('data.table',quietly = TRUE)){
     data.table::fwrite( data.table::data.table(inputFiles) ,fileList ,row.names = FALSE,col.names = FALSE, sep=',', quote=FALSE )
   } else {
     utils::write.table( inputFiles ,fileList ,row.names = FALSE,col.names = FALSE, sep=',', quote=FALSE) 
   }
-  fileList = normalizePath(fileList)
+  fileList = normalizePath(fileList) # winslash? 
+  
   # if the output directory is missing or empty, create a tmp folder
   if(missing(output_dir)||length(output_dir)==0||output_dir==""){
     #each time we will create an empty folder within the tmp folder.
-    output_dir = tempfile('rtika-dir')
+    output_dir = tempfile('rtika_dir')
     dir.create(output_dir)
   } else {
     # if an output directory is provided, check it exists.
@@ -115,12 +161,13 @@ tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output
   output_flag = as.character(stats::na.omit(output_flag ))
 
   if(.Platform$OS.type=='windows'){
+    # windows requires quoting, but others run into problems with quoting
     java_args = c('-jar',shQuote(jar),'-numConsumers', as.integer(threads), args, output_flag,'-i',root,'-o',shQuote(output_dir),'-fileList',shQuote(fileList))
   } else {
     java_args = c('-jar',jar,'-numConsumers', as.integer(threads), args, output_flag,'-i',root,'-o',output_dir,'-fileList',fileList)
   }
 
-  # Compared to system2, sys is much quicker when making a small number of calls. 
+  # Compared to system2, sys is much quicker when making the call to java. Not sure why
   if(requireNamespace('sys',quietly = TRUE)){
     sys::exec_wait(cmd=java[1] , args=java_args ,std_out=!quiet, std_err=!quiet )
   } else {
@@ -140,28 +187,36 @@ tika <- function(input, output=c('text','jsonRecursive','xml','html')[1], output
       n = n + 1
       #get the full path
       fp = normalizePath(file.path(output_dir,paste0(inputFiles[n],output_file_affix)))
-      if(file.exists(fp) && file.info(fp)$size>0){
-        out[i] = readChar(fp,nchars=n_chars[1]) 
+      if(file.exists(fp)){
+        chars = readChar(fp,nchars=n_chars[1]) 
+        if(length(chars)>0){
+          out[i] = chars
+        }
+       
       } 
     }
   }
   # remove tempfiles.
-  
-  trash_file = file.path(tempdir(),list.files(tempdir(),pattern='^rtika\\-file'))
-  if(length(trash_file)>0){
-     tmp= file.remove(trash_file)
-  }
- 
-  trash_dir = file.path(tempdir(),list.files(tempdir(),pattern='^rtika\\-dir'))
-  if(length(trash_dir)>0) { # paranoid.
-    # if(.Platform$OS.type=='windows'){
-    #   tmp=  unlink( trash_dir, recursive =TRUE, force=TRUE) # does not seem to work unless force=TRUE on windows.
-    # } else {
+  if(remove_tempfiles){
+    trash_file = file.path(tempdir(),list.files(tempdir(),pattern='^rtika_file'))
+    if(length(trash_file)>0){
+      tmp= file.remove(trash_file)
+    }
+    
+    trash_dir = file.path(tempdir(),list.files(tempdir(),pattern='^rtika_dir'))
+    if(length(trash_dir)>0) { # paranoid.
+      # if(.Platform$OS.type=='windows'){
+      #   tmp=  unlink( trash_dir, recursive =TRUE, force=TRUE) # does not seem to work unless force=TRUE on windows.
+      # } else {
       tmp=  unlink( trash_dir, recursive =TRUE) 
-    # }
+      # }
+    }
   }
- 
-  # I believe Tika's default output is UTF-16 but UTF-8 is the most supported in R
+  
+  # I believe Tika's default output is Java's UTF-16 but UTF-8 is the most supported in R and the world
   return(enc2utf8(out))
   
 }
+
+
+
