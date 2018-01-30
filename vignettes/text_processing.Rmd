@@ -154,7 +154,7 @@ The famous Titan computer built in 2012 for $60 million has 693.5 tebibyte of RA
 Fortunately, R comes with a `Matrix` library that stores many 0s efficiently. Instead of memorizing every cell in the matrix, it just memorizes the non-0 ones.
 
 ```{r}
-require('Matrix')
+library('Matrix')
 sparse_matrix_of_numbers = sparse.model.matrix(as.formula("~ word_1 + word_2 + word_3"), data=document_1)
 
 which(sparse_matrix_of_numbers[1,]==1)
@@ -207,7 +207,7 @@ dim(matrix_of_numbers)
 The `data.table` package was developed to handle huge tabular data in RAM, and is sometimes an order of magnitude faster than R's built in data.frame. `data.table` will come in handy for counting lots of words. The syntax is succinct.
 
 ```{r}
-require('data.table')
+library('data.table')
 ```
 Let's get word counts. Recall that `text` is a character vector of two long strings, one for each document parsed by `tika` :
 ```{r}

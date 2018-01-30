@@ -6,7 +6,6 @@ output: github_document
 
 [![Travis-CI Build Status](https://travis-ci.org/predict-r/rtika.svg?branch=master)](https://travis-ci.org/predict-r/rtika)
 
-What is Apache Tika? From Wikipedia: 
 
 >Apache Tika is a content detection and analysis framework, written in Java, stewarded at the Apache Software Foundation. It detects and extracts metadata and text from over a thousand different file types, and as well as providing a Java library, has server and command-line editions suitable for use from other programming languages ...
 
@@ -17,7 +16,7 @@ This R interface includes the Tika software.
 ## Installation
 You need at least `Java 7` or `OpenJDK 1.7`. To check, run the command `java -version` from a terminal. Get Java installation tips at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>. 
 
-On Windows, optionally install the `curl` package.
+On Windows, the `curl` package is currently suggested if the documents to process are on a remote server.
 ```{r}
 if(.Platform$OS.type=='windows' && !requireNamespace('curl')){
    install.packages('curl', repos='https://cloud.r-project.org')
@@ -47,6 +46,13 @@ The `text` will be a character vector, in the same order as `input`. Display a s
 ```{r,comment=NA }
 cat(substr(text[1],45,450)) # sub-string of the text
 
+```
+Get the words:
+```{r,comment=NA}
+words = strsplit(tolower(text[1]), split='[^a-zA-Z]+')[[1]]
+# Next, remove any pesky empty strings
+words = words[words!='']
+words[1:7] 
 ```
 ## Get Metadata
 Metadata comes with the `json`,`xml` and `html` output options. A side effect is that Tika retains more document structure, like table cells.

@@ -6,8 +6,6 @@ rtika
 
 [![Travis-CI Build Status](https://travis-ci.org/predict-r/rtika.svg?branch=master)](https://travis-ci.org/predict-r/rtika)
 
-What is Apache Tika? From Wikipedia:
-
 > Apache Tika is a content detection and analysis framework, written in Java, stewarded at the Apache Software Foundation. It detects and extracts metadata and text from over a thousand different file types, and as well as providing a Java library, has server and command-line editions suitable for use from other programming languages ...
 
 > For most of the more common and popular formats, Tika then provides content extraction, metadata extraction and language identification capabilities. (Accessed Jan 18, 2018. See <https://en.wikipedia.org/wiki/Apache_Tika>.)
@@ -19,7 +17,7 @@ Installation
 
 You need at least `Java 7` or `OpenJDK 1.7`. To check, run the command `java -version` from a terminal. Get Java installation tips at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>.
 
-On Windows, optionally install the `curl` package.
+On Windows, the `curl` package is currently suggested if the documents to process are on a remote server.
 
 ``` r
 if(.Platform$OS.type=='windows' && !requireNamespace('curl')){
@@ -70,6 +68,17 @@ cat(substr(text[1],45,450)) # sub-string of the text
     Permission is granted to copy and distribute modified versions of this manual under
     the cond
 
+Get the words:
+
+``` r
+words = strsplit(tolower(text[1]), split='[^a-zA-Z]+')[[1]]
+# Next, remove any pesky empty strings
+words = words[words!='']
+words[1:7] 
+```
+
+    [1] "r"       "data"    "import"  "export"  "version" "r"       "core"   
+
 Get Metadata
 ------------
 
@@ -98,7 +107,7 @@ str(metadata) #data.frame of metadata
       ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
      $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
      $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-     $ X-TIKA:parse_time_millis                   : chr "1163"
+     $ X-TIKA:parse_time_millis                   : chr "1185"
      $ access_permission:assemble_document        : chr "true"
      $ access_permission:can_modify               : chr "true"
      $ access_permission:can_print                : chr "true"
@@ -124,9 +133,9 @@ str(metadata) #data.frame of metadata
      $ pdf:docinfo:trapped                        : chr "False"
      $ pdf:encrypted                              : chr "false"
      $ producer                                   : chr "pdfTeX-1.40.18"
-     $ resourceName                               : chr "rtika_file47a351f6e771"
+     $ resourceName                               : chr "rtika_file60f895c84f9"
      $ tika:file_ext                              : chr ""
-     $ tika_batch_fs:relative_path                : chr "tmp/RtmpQc0DfW/rtika_file47a351f6e771"
+     $ tika_batch_fs:relative_path                : chr "tmp/Rtmpqv4298/rtika_file60f895c84f9"
      $ trapped                                    : chr "False"
      $ xmp:CreatorTool                            : chr "TeX"
      $ xmpTPg:NPages                              : chr "37"
