@@ -6,3 +6,7 @@ addons:
     - libapparmor-dev
     - libcurl4-openssl-dev
     - openjdk-7-jre
+r_github_packages:
+  - r-lib/covr
+after_success:
+  - Rscript -e 'covr::codecov()'
