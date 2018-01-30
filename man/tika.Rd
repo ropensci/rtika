@@ -5,19 +5,16 @@
 \title{R Interface to 'Apache Tika'}
 \usage{
 tika(input, output = c("text", "jsonRecursive", "xml", "html")[1],
-  output_dir = "", n_chars = 1e+07, java = "java",
-  jar = system.file("java", "tika-app-1.17.jar", package = "rtika"),
-  threads = 1, args = character(), quiet = TRUE,
-  remove_tempfiles = FALSE)
+  output_dir = "", java = "java", jar = system.file("java",
+  "tika-app-1.17.jar", package = "rtika"), threads = 1, args = character(),
+  quiet = TRUE, cleanup = FALSE, lib.loc = .libPaths())
 }
 \arguments{
 \item{input}{Character vector of paths to the input documents. Strings starting with 'http://','https://', or 'ftp://' are downloaded to a temporary directory first. Each file will be analyzed but not changed.}
 
 \item{output}{Optional character vector of the output format. By default, \code{"text"} gets plain text without metadata. \code{"xml"} and \code{"html"} get \code{XHTML} text with metadata. \code{"jsonRecursive"} gets \code{XHTML} text and \code{json} metadata. \code{c("jsonRecursive","text")} or \code{c("J","t")} gets plain text and \code{json} metadata. See the 'Output Details' section.}
 
-\item{output_dir}{Optional directory path to save the converted files in, as a side effect. See the 'Output Details' section.}
-
-\item{n_chars}{Optional integer specifying the maximum number of characters returned for each document. The default is 1e+07. Higher numbers may be needed for exceptionally large files.}
+\item{output_dir}{Optional directory path to save the converted files in. Tika may overwrite files so an empty directory is best. See the 'Output Details' section before using.}
 
 \item{java}{Optional command to invoke Java. For example, it could be to the full path of a particular Java version. See the Configuration section below.}
 
@@ -29,10 +26,12 @@ tika(input, output = c("text", "jsonRecursive", "xml", "html")[1],
 
 \item{quiet}{Logical if Tika command line messages and errors are to be supressed. Defaults to TRUE.}
 
-\item{remove_tempfiles}{Logical to clean up temporary files after running the command, which can accumulate. They are in \code{tempdir()}. These files normally be removed at the end of the R session anyhow.}
+\item{cleanup}{Logical to clean up temporary files after running the command, which can accumulate. They are in \code{tempdir()}. These files normally be removed at the end of the R session anyhow.}
+
+\item{lib.loc}{Optional character vector describing the library path(s) containing \code{curl}, \code{data.table} or \code{sys} packages. Normally, it's best to install the packages and leave this parameter alone. The parameter is included mainly for package testing.}
 }
 \value{
-A character vector the same length and order as the input. If a particular file was not processed, the value at that position is an empty string. See the Output Details section below.
+A character vector in the same order as the input, and the same lenth. Unprocessed files are NA. See the Output Details section below.
 }
 \description{
 Extract text and metadata from over a thousand file types.
@@ -41,23 +40,24 @@ Metadata includes \code{Content-Type}, character encoding, and Exif data from jp
 }
 \section{Output Details}{
 
-Empty output strings occur if an input file did not exist, it was a directory, or Tika could not process it. 
+If an input file did not exist, could not be downloaded, was a directory, or Tika could not process it, the result will be an NA for that file. This should not disrupt the processing of other files in the input, although there may be warnings if it was Tika's fault.
 
-By default, \code{output = "text"} and this produces plain text but no metadata. Some formatting is preserved using tabs, newlines and spaces.
+By default, \code{output = "text"} and this produces plain text with no metadata. Some formatting is preserved using tabs, newlines and spaces.
 
-Setting \code{output} to either \code{"xml"} or the shortcut \code{"x"} will produce a strict form of \code{HTML} known as \code{XHTML}, with metadata in the \code{head} element of the \code{XHTML} and formatted text in the \code{body}.
-Content retains more formatting than \code{"text"}. For example, a Word or Excel table will become a HTML \code{table}, with data in the \code{td} elements, as text nodes. The \code{"html"} option and its shortcut \code{"h"} seem to produce the same result as \code{"xml"}.
-Parse XHTML with \code{xml2::read_html}. 
+Setting \code{output} to either \code{"xml"} or the shortcut \code{"x"} will produce a strict form of \code{HTML} known as \code{XHTML}, with metadata in the \code{head} node and formatted text in the \code{body}.
+Content retains more formatting with \code{"xml"}. For example, a Word or Excel table will become a HTML \code{table}, with table data as text in \code{td} elements. The \code{"html"} option and its shortcut \code{"h"} seem to produce the same result as \code{"xml"}.
+Parse XHTML output with \code{xml2::read_html}. 
 
-Setting \code{output} to \code{"jsonRecursive"} or its shortcut \code{"J"} produces a tree structure. Metadata fields are at the top level. The text will be found in the \code{X-TIKA:content} field. By default the text is \code{XHTML}. This can be changed to plain text by adding a second value, like this: \code{output=c("jsonRecursive","text")} or \code{output=c("J","t")}. Parse \code{json} with \code{jsonlite::fromJSON}. 
+Setting \code{output} to \code{"jsonRecursive"} or its shortcut \code{"J"} produces a tree structure in `json`. Metadata fields are at the top level. The \code{XHTML} or plain text will be found in the \code{X-TIKA:content} field. By default the text is \code{XHTML}. This can be changed to plain text like this: \code{output=c("jsonRecursive","text")} or \code{output=c("J","t")}. This syntax is meant to mirror Tika's. Parse \code{json} with \code{jsonlite::fromJSON}. 
 
- If \code{output_dir} is specified, then the converted files will also be saved to this directory. One way to get a list of the processed files is to use \code{list.files} with \code{recursive=TRUE}. The file locations within the \code{output_dir} maintain the same paths as the input files. The paths are now relative to \code{output_dir}.  Files are appended with \code{.txt} by default, but can be \code{.json}, \code{.xml}, or \code{.html} depending on the \code{output} setting.
- If \code{output_dir} is not specified, files are saved to a volatile tmp directory named by \code{tmpdir()} and will be taken care of when R shuts down.
+ If \code{output_dir} is specified, then the converted files will also be saved to this directory. It's best to use an empty directory because Tika may overwrite existing files. Tika seems to add an extra file extension to each file to reduce the chance, but it's still best to use an empty directory. The file locations within the \code{output_dir} maintain the same general path structure as the input files. Downloaded files have a path similar to the `tempdir()` that R uses. The original paths are now relative to \code{output_dir}.  Files are appended with \code{.txt} for the default plain text, but can be \code{.json}, \code{.xml}, or \code{.html} depending on the \code{output} setting. One way to get a list of the processed files is to use \code{list.files} with \code{recursive=TRUE}.
+ If \code{output_dir} is not specified, files are saved to a volatile temp directory named by \code{tmpdir()} and will be deleted when R shuts down. If this function will be run on very large batches repeatedly, these temporary files can be cleaned up every time by adding 
+ \code{cleanup=TRUE}.
 }
 
 \section{Background}{
 
-Tika is a foundational library for several large Apache projects such as the Apache Solr search engine. It has been in development since at least 2007. The most efficient way I've found to process tens of thousands of documents is Tika's 'batch' mode, which is used. There are potentially more things that can be done with this package, given enough time and attention, because Apache Tika includes many libraries and methods in its .jar file. The source is available at: \url{https://tika.apache.org/}.
+Tika is a foundational library for several Apache projects such as the Apache Solr search engine. It has been in development since at least 2007. The most efficient way I've found to process many thousands of documents is Tika's 'batch' mode, which is the only mode used in `rtika`. There are potentially more things that can be done with this package, given enough time and attention, because Apache Tika includes many libraries and methods in its .jar file. The source is available at: \url{https://tika.apache.org/}.
 }
 
 \section{Configuration}{

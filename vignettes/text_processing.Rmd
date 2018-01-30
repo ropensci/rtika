@@ -1,5 +1,5 @@
 ---
-title: "Basic Text Processing Vignette"
+title: "rtika and Basic Text Processing"
 author: "Sasha Goodman"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -16,119 +16,127 @@ knitr::opts_chunk$set(
 )
 ```
 
-While parsing text from documents is often necessary, text by itself is not very useful data. This vignette focuses on slicing documents into 'words', and then producing tables from those words. It's sometimes good to start simple. 
+This vignette describes using `rtika` to get plain text from `.pdf` documents, and presents a simple way of slicing each document into "words" (tokenization) for further analysis. 
 
-This vignette illustrates how `rtika` will help grab text from a `.pdf`. It introduces a function to create tables of words from the text (tokenization), and includes an efficient recipe for doing this with many documents.
 
-## Words
+## English Words
 
-First, let's get some plain old text. The R manuals are in `.pdf` format, and in general, `.pdf` can be a pain to access. The same goes with `.doc`, `.docx`, and many common file types. Each type uses idiosyncratic conventions to represent formatting such as font size, bold text and italic text. Yet, text can retain much of its meaning without those particular kinds of formatting features. Text without those is known as plain text. As I'll demonstrate, plain text is relatively easy to work with in R. The `tika` function parses dozens of file types to produce it. 
+Many interesting words are hidden away in `.pdf`s. The same goes with `.doc`, `.docx`, `.html`, `.epub`, `.rtf` and common file types. Each type uses special conventions to represent formatting such as margin size, font size, bold text and italic text. Yet, some researchers only need to access the words. As I'll demonstrate, the words are relatively easy to get using `rtika`, which parses dozens of file types and produces "plain text" as one output option. 
+
+ According to Wikipedia, "plain text" is: 
+
+>... the data (e.g. file contents) that represent only characters of readable material but not its graphical representation nor other objects (images, etc.). It may also include a limited number of characters that control simple arrangement of text, such as line breaks or tabulation characters. Plain text is different from formatted text, where style information is included, and from "binary files" in which some portions must be interpreted as binary objects (encoded integers, real numbers, images, etc.). (See: <https://en.wikipedia.org/wiki/Plain_text>, accessed 2018-01-30)
+
+ 
 
 ```{r}
 library('rtika')
+
 # download two documents 
 documents= c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-admin.pdf')
-# input is the path to the documents. Use the first document path.
+
+# input is the path to the documents.
 text = tika(documents)
 ```
-To see formatted plain text in R, use the `cat` function. Here, I'll grab a snipped of the first ext using `substr` and show you:
-```{r,comment=NA }
+Tika has detected that the file format, parsed it appropriately, and extracted plain text. Use the `cat` function to see the characters as well as the blank lines:
+```{r,comment= "#>" }
+#  Display a substring of the first text for this example.
 cat(substr(text[1],45,450))
 ```
 
-As you can see, this plain text has some formatting, such as blank lines. One approach for English langauge documents is to assume that words are merely groups of letters separated by other characters. By "other characters", I mean punctuation, line breaks, paragraph indentions, and non alpha-numeric characters. Fortunately, in base R we can implement this general idea in a line of code using an old computer language called regular expressions:
+The `#>` are not part of the text and are used in this vignette to indicate R's output. The plain text to the right of the `#>` reveals textual content that retains only minimal formatting, such as empty lines. In a sense, it's an anti-format. It ignores most formatting. 
+
+Behind the scenes, each character in every word is encoded in UTF-8. That is the standard character encoding in most R installations. It's the dominant encoding on the Internet (See: <https://en.wikipedia.org/wiki/UTF-8>).
+
+One approach for studying words in English is to assume that words are merely groups of letters separated by other characters. By "other characters", I mean punctuation, line breaks, paragraph indentions, and non alpha-numeric characters. UTF-8 can represent 1,112,064 codes, and only a small number are in English letters. Fortunately, in base R we can implement the idea in a line of code using an old computer language called regular expressions:
 
 ```{r}
 words = strsplit(tolower(text[1]), split='\\W+')[[1]]
-```
-
-There is a lot of computing action in a small space. From the innermost function to the outside, the `tolower` function turns all the text to lowercase text. This implies that capitalization changes in a word don't change the meaning of that word enough to care. It is one of several simplifying assumptions we will make here.
-
-Next, the `strsplit` function takes the now lowercase `text` string, and *splits* it into many individual "words" The split parameter `\\W+` is a regular expression that takes any character that is *not* part of an alpha-numeric word and considers it a meaningless delimiter between words. Note that the `[[1]]`  grabs the first character vector from the `list`  produced by `strsplit`.
-
-Lets take a peak at the first few words:
-
-```{r}
- words[1:7] 
-```
-
-Nice! It was pretty easy to get words from plain text. Consider how difficult it would be with `HTML`, which uses code like `<b>word</b> <i>word</i>` to stylize and `<div>word</div><div>word</div>` to format lines. Parsing these reliably requires knowing how a web browser will "render" it to the screen (for more details, see: <https://html.spec.whatwg.org/multipage/dom.html#the-innertext-idl-attribute>).
-
-
-So far, we have a list of words. However, these words also contain numbers that we might not consider real words. If we want to ignore numbers, we change the regular expression. Before, we split with `\\W+`. That regular expression means *not* alpha-numeric (it's a shortcut for  regular expression `[^A-Za-z0-9]+`), but we can change our code to mean *not* a character:
-
-```{r}
-words = strsplit(tolower(text[1]), split='[^a-zA-Z]+')[[1]]
 words[1:7] 
 ```
 
-Here, the regular expression `[^a-zA-Z]+` means that anything that is *not* a lowercase letter is considered a meaningless delimiter. This might seem too harsh. Another option is to replace numbers with a special character:  `strsplit(gsub('[0-9]','N',tolower(text[1])), split='[^a-zA-Z]+')[[1]]`.
+Nice start! It was pretty easy to get words from plain text. There is a lot of computing action in a small space. From the innermost function to the outside, the `tolower` function turns all the text to lowercase. This implies that capitalization changes in a word don't change the meaning of that word enough to account for. It is one of several simplifying assumptions.
 
-At this point, we are going to say that words as made of letters only. Next, remove any pesky empty strings, `""`.
+Next, the `strsplit` function takes the now lowercase `text` string, and *splits* it into many individual "words". The split parameter `\\W+` is a regular expression that takes any character that is *not* part of an English alpha-numeric word and considers it a meaningless delimiter between words. Note that the `[[1]]`  grabs the first character vector from the `list`  produced by `strsplit`.
+
+This would be more difficult if it were not plain text. Consider `HTML`, the dominant document of the internet. `HTML` uses code like `<b>word</b> <i>word</i>` to stylize and `<div>word</div><div>word</div>` to format lines. Getting the words requires knowing something about how a web browser displays it (for more details on `HTML` to text rendering, see: <https://html.spec.whatwg.org/multipage/dom.html#the-innertext-idl-attribute>).
+
+So far, we have a list of words. However, these words contain numbers that we might not consider real words. To ignore numbers, we can change the regular expression. Before, we split with `\\W+`. That means *not* alpha-numeric (it's a shortcut for  regular expression `[^A-Za-z0-9]+`), and we can change our code to mean *not* a character:
+
 ```{r}
+words = strsplit(tolower(text[1]), split='[^a-zA-Z]+')[[1]]
+# Next, remove any pesky empty strings
 words = words[words!='']
-
+words[1:7] 
 ```
 
+In English, the regular expression `[^a-zA-Z]+` means split on anything that is *not* a letter. Note that if we were working with a different language, we might use a different character range in the regular expression (Google to find the UTF-8 character ranges of other languages. E.g. <https://www.regular-expressions.info/unicode.html>, <http://jrgraphix.net/research/unicode.php>). 
 
-Now that we have the entire sequence of words in a character vector, What do we do with all of them? One thing is to count:
+Another option for English is to replace numbers with a special character first:  `strsplit(gsub('[0-9]','N',tolower(text[1])), split='[^a-zA-Z]+')[[1]]`.
+
+Now that we have the entire sequence of words in a character vector, What do we do with all of them? Consider stopping for a few minutes to think about it. One thing is to count:
 
 ```{r}
 length(words) 
 ```
 
-That is nice to know. Before moving on, let's package this tokenizer into a function for use later:
+That is nice to know. Before moving on, let's package the tokenizer into a function for later on:
 ```{r}
 my_tokenizer = function(text){ 
     words = strsplit(tolower(text[1]), split='[^a-zA-Z]+')[[1]] ; 
     return( words[words!='']) 
   }
-
+# run again
 words = my_tokenizer(text[1])
-
+# double check its the same as before
 length(words) 
 ```
 
 
-## Words as "Big" Categorical Data
+## Words as Categorical Data
 
- It would be nice if the computer understood the meaning of words, but that is not the case. Eventually, a quantitative analysis must represent a word as a number, and unfortunately, numbers tend to lose meaning and context. We have to make the most of these numbers, but I suggest starting with low expectations when doing text analysis, because you are more likely to be surprised by how much can be done. 
- 
-The most direct and archaic route for turning words into numbers is the `factor` class. 
+Eventually, almost every quantitative analysis must represent words as numbers. One intuitive way is R's `factor` class. 
 
 ```{r}
 words = as.factor(words)
 ```
- A factor typically represents words and other categorical data. It creates an implicit dictionary, where each word is defined by a different  integer. You can see this dictionary using the `level` command. By the way, it's worth thinking about the concept of mapping categories to numbers and to read  `?factor` help.
+ A factor represents words and other categorical data. It creates an implicit dictionary, where the unique words are first put into alphabetical order and then each is assigned an integer to identify it. You can see this dictionary using the `level` command on a factor. By the way, it's worth spending a few minutes reading the  `?factor` help.
 
 ```{r}
-dictionary = levels(words) #level produces a character vector 
+#level produces a character vector of unique words in alphabetical order
+dictionary = levels(words) 
+dictionary[1:7]
 length(dictionary)
 ```
-There are well over 1,000 different words in this particular document's dictionary. It's worth asking, Will I be working with multiple documents? That will probably be the case, so the dictionary should be constructed from the text of all the documents. The recipe at the end of this vignette does that. I hope this is starting to feel a bit like "big data".
+There are well over 1,000 different words in this particular document. It's worth asking, Will I be working with multiple documents? That will probably be the case, so the dictionary should be constructed from the text of all the documents. A recipe at the end of this vignette does just that. I hope this is starting to feel a bit like "big data".
 
- To look up a word's number, pick some words and try:
+ To look up a word's number:
 ```{r}
 which(dictionary=='big')
 which(dictionary=='data')
 ```
 
-Text is a sequence of categories, so what if we wanted to create a model on the the first `N` words of the document? I'm going to create a hypothetical case that demonstrates why this is an issue. Let's start small and make `N=3`, and put these three words in a table.
+Text is a sequence of categories. What if we create a model of the the first words in the document? I'm going to create a hypothetical case that demonstrates why this is an issue. Let's start small with the first `n` words, say `n=3`, and put them into a table for analysis.
 
 ```{r}
 document_1 = data.frame(word_1 = words[1], word_2 = words[2], word_3 = words[3])
 document_1
 ```
-Next, reshape the words in a matrix of numbers. This usually happens in software without having to think about it. It happens in almost any model, including linear, machine learning, neural network and clustering.
+Next, we turn the table into a matrix of numbers. This would be implicitly calculated in most R models. This usually happens without having to think about it. It happens in almost any model, including linear, machine learning, neural network and clustering.
 ```{r}
-matrix_of_numbers = model.matrix(~ word_1 + word_2  +word_3, document_1)
+matrix_of_numbers = model.matrix(as.formula("~ word_1 + word_2 + word_3"), data= document_1)
 ```
-Alright, lets peek at the size of this matrix.
+Alright, lets take a peek at this matrix.
 ```{r}
+#which words are 'flagged' with 1?
+which(matrix_of_numbers[1,]==1)
+
 dim(matrix_of_numbers)
 ```
 
-Wow! That is around three times the size of the dictionary. While not a large number, what makes this an issue is that many models need RAM that is an exponent of the data size. This brings us to a warning about analyzing categorical data. Text is a sequence of categories, and the potential combinations are really immense. When a large sequence of words is naively represented this way (it's called 'one-hot encoding' or using a 'dummy variable'), computational problem emerge. One-hot encoding simply means that a word is represented by a vector of 0s as long as the dictionary, with the exception of the word itself which is flagged by a 1. In this case, the first word in a document would be represented by a vector as wide as the dictionary (over a thousand variables), and this is repeated for each word in the document up to `N` words. The second word gets a dictionary sized vector, the third, and so on. There are big implications for computation. A super-naive way of representing large sequences would cause a linear model to run out of RAM, even on a supercomputer. 
+Notice the dimensions of the matrix. The second number is the column count, and is around three times the size of the dictionary! While not a large number by itself, what makes this a potential problem is that R models have traditionally needed an amount of RAM memory that is an exponent of the data size. That is a really big deal.
+
+This brings us to a warning about analyzing categorical data. Text is a sequence of categories, and the potential combinations are immense. When a large sequence of words is naively represented this way (it's called 'one-hot encoding' or a 'dummy variable', in sequence), computational problems emerge. One-hot encoding simply means that a word is represented by a vector of 0s as long as the dictionary, with the exception of the word itself that is flagged by a 1. In this case, the first word in a document is represented by a vector as wide as the dictionary (over a thousand variables), and then this is repeated for each word in the document up to `n` words. The second word gets a dictionary sized vector, the third, and so on. These are concatenated together in the model's matrix. There are big implications for computation. This super-naive way of representing long sequences would cause a linear model to run out of RAM, even on a supercomputer. 
 ```{r}
 #approximate number of parameters for this document:
 length(words) * length(dictionary)  
@@ -141,32 +149,50 @@ length(words) * length(dictionary) - length(dictionary)
 # R's default double precision covariance matrix memory in *tebibyte* of RAM
 ((length(words) * length(dictionary) - length(dictionary) )^2 * 8 ) / 2^40
 ```
-The Titan computer built in 2012 for around $60 million dollars has 693.5 tebibyte of RAM <https://en.wikipedia.org/wiki/Titan_(supercomputer)>, and so a smarter approach is needed. Computational costs are not ignorable. Even though this single document is small, sequences of categories have big implications. Only a handful of models will handle them, such as sparse matrix methods and recurrent neural networks.
+The famous Titan computer built in 2012 for $60 million has 693.5 tebibyte of RAM (See: <https://en.wikipedia.org/wiki/Titan_(supercomputer)>), which is still not enough. A smarter approach is needed. Only a handful of models can handle big data gracefully, such as sparse matrix methods and recurrent neural networks. 
 
-## Word Count Data
+Fortunately, R comes with a `Matrix` library that stores many 0s efficiently. Instead of memorizing every cell in the matrix, it just memorizes the non-0 ones.
 
-A dictionary can still be helpful when working with documents. Consider word counts:
+```{r}
+require('Matrix')
+sparse_matrix_of_numbers = sparse.model.matrix(as.formula("~ word_1 + word_2 + word_3"), data=document_1)
+
+which(sparse_matrix_of_numbers[1,]==1)
+
+# this sparse_matrix_of_numbers contains the matrix coordinates of non-zero elements.
+triplet_format = as(sparse_matrix_of_numbers,'TsparseMatrix')
+triplet_format@i + 1
+triplet_format@j + 1
+triplet_format@x 
+# this triplet requires three fields with only 4 numbers each. This is usually better if more than a third of the matrix is zero.
+```
+
+There are some models in R that optimize sparce matrixes directly, such as `XGBoost`, `MatrixModels`, or `Glmnet`. A more general technique is to divide data into subsets of observations, and optimize bit by bit. This latter method can be done in the `keras` and `h2o` packages. 
+
+
+## Counting Words
+
+As suggested earlier, it's best to be smart about dummy variables. One of the simplest alternatives is to count each word in the dictionary, at the document level:
 ```{r}
 
 document_word_frequency  = sort(table(words), decreasing=T)[1:9]
 document_word_frequency
 ```
 
-
-As suggested in the previous section, it's best to be smart about dummy variables. One of the simplest alternatives is to count each word in the dictionary, at the document level. It simplifies an analysis dramatically, although it assumes word order does not matter enough to warrant the cost. Given the $60 million dollar supercomputer mentioned above, that might be the case. Let's count how many times certain words are in this document:
+This simplifies an analysis dramatically. It assumes word order does not matter enough to warrant the cost, but given the cost of a supercomputer, that might be the case. Let's count how many times words are in this document:
 ```{r}
 # How many times are the words used.
 length(which(words=="big"))
 length(which(words=="data"))
 ```
-One can then represent the words as count data:
+These can still go into a simple table to represent the words:
 
 ```{r}
 document_word_frequency=  data.frame(big = length(which(words=="big")) ,  data= length(which(words=="data")) , DOCUMENT_LENGTH = length(words) ) 
 document_word_frequency
 ```
 
-Document word counts will use a lot fewer parameters in your model than one-hot encoding.
+Word counts will use a lot fewer parameters in your model. This one uses less than a kilobyte of RAM, instead of terrabytes.
 
 ```{r}
 matrix_of_numbers = model.matrix(~ big + data  +DOCUMENT_LENGTH, document_word_frequency)
@@ -176,9 +202,9 @@ dim(matrix_of_numbers)
 ```
 
 
-## Recipe for Efficient Word Counting 
+## A Recipe for Efficient Word Counting 
 
-The `data.table` package was initially developed for computational finance, where big tabular data needed to be processed quickly. `data.table` is sometimes an order of magnitude faster than R's built in data.frame, and will come in handy counting lots of words. Like regular expressions, the syntax is succinct.
+The `data.table` package was developed to handle huge tabular data in RAM, and is sometimes an order of magnitude faster than R's built in data.frame. `data.table` will come in handy for counting lots of words. The syntax is succinct.
 
 ```{r}
 require('data.table')
@@ -186,53 +212,55 @@ require('data.table')
 Let's get word counts. Recall that `text` is a character vector of two long strings, one for each document parsed by `tika` :
 ```{r}
 started.at=proc.time()
-# a table at the 'document' level, with one row per document.
+# a table at the 'document' level, with one row per document. Give each document a name.
 documents = data.table(document=paste0('document_',1:2), text=text)
 
-# see 2 documents and two columns:
+# there are 2 documents and two columns:
 dim(documents) 
 
-# derive a LONG-style table, at the 'document-word' level.
-# the data.table 'by' acts something like SQL 'GROUP BY'.
+# derive a LONG-style table with many rows, at the 'document-word' level.
+# the data.table 'by' acts like R's apply function here.
 document_words = documents[, list(word = my_tokenizer(text)), by=document]
 
-# see words and two columns:
+# see document words:
 document_words
 
-# reshape this into a WIDE-style table, at the 'document' level with words counted
-document_wordcounts = dcast(document_words
+# reshape this into a WIDE-style table, at the 'document' level again
+documents = dcast(document_words
                                 , as.formula("document ~ word")
                                 , fill=0
                                 , value.var='word'
                                 , fun.aggregate=length)
 
-# two documents with columns of word counts 
-dim(document_wordcounts) 
-#see the results of a few columns:
-document_wordcounts[,c('document', 'big','text','data','package')]
+# there are now columns for every word in the documents.
+dim(documents) 
+#select a few columns:
+documents[,c('document', 'big','text','data','package')]
 
-# other ideas include counting words at different levels with the 'document_words' table:
-# document_words[, DOCUMENT_LENGTH:=.N, by="document"]
-# document_words[, WORD_FREQUENCY:=.N, by="word"]
-# document_words[, WORD_DOCUMENT_FREQUENCY:=.N, by=c('word','document')]
-# document_words[, ADJUSTED_WORD_DOCUMENT_FREQUENCY:=.N/DOCUMENT_LENGTH, by=c('word','document')]
+# other ideas include counting words at various levels in the 'document_words' table:
+document_words[, DOCUMENT_LENGTH:=.N, by="document"]
+document_words[, WORD_FREQUENCY:=.N, by="word"]
+document_words[, WORD_DOCUMENT_FREQUENCY:=.N, by=c('word','document')]
+document_words[, ADJUSTED_WORD_DOCUMENT_FREQUENCY:=.N/DOCUMENT_LENGTH, by=c('word','document')]
 
-# you can carry over any of these variables to the WIDE data using 'dcast'.
-# document_adjusted_wordcounts = dcast(document_words
-#               , as.formula("document ~ word") 
-#               , fill=0 
-#               , value.var='ADJUSTED_WORD_DOCUMENT_FREQUENCY'
-#               , fun.aggregate=as.numeric)
+# you can use any of these variables instead
+documents = dcast(document_words
+              , as.formula("document ~ word")
+              , fill=0
+              , value.var='ADJUSTED_WORD_DOCUMENT_FREQUENCY'
+              , fun.aggregate=as.numeric)
+documents[,c('document', 'big','text','data','package')]
 
-# you can also carry over document level variables by adding them to the left of the '~' symbol.
-# document_wordcounts = dcast(document_words
-#             , as.formula("DOCUMENT_LENGTH + document ~ word") 
-#             , fill=0 
-#             , value.var='WORD_DOCUMENT_FREQUENCY'
-#             , fun.aggregate=as.integer)
+# you can include document-level columns by adding them to the left of the '~' symbol.
+documents = dcast(document_words
+            , as.formula("DOCUMENT_LENGTH + document ~ word")
+            , fill=0
+            , value.var='WORD_DOCUMENT_FREQUENCY'
+            , fun.aggregate=as.integer)
+documents[,c('document', 'DOCUMENT_LENGTH', 'big','text','data','package')]
 
 cat("Finished in",timetaken(started.at))
 ```
 ## Conclusion
 
-Plain text has a lot of potential for researchers, and I hope this contributed to your interest. For those that think text formatting is still too important to give up, `tika` can retain much more formatting from with its `xml` output mode. That is a topic for later. 
+Previously unavailable text has a lot of research potential, and I hope this aroused your interest. For those that are working with documents that have embedded tables, or are interested in document structure and metadata, `tika` can retain much more information with its `json` and `xml` output modes.

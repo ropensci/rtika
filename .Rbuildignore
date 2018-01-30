@@ -4,3 +4,5 @@
 ^\.travis\.yml$
 ^README.Rmd$
 ^tika-example$
+^codecov\.yml$
+.Rhistory
