@@ -2,7 +2,7 @@
 rtika
 =====
 
-***Extract text and metadata from over a thousand file types.***
+***Extract text or metadata from over a thousand file types.***
 
 [![Travis-CI Build Status](https://travis-ci.org/predict-r/rtika.svg?branch=master)](https://travis-ci.org/predict-r/rtika) [![Coverage status](https://codecov.io/gh/predict-r/rtika/branch/master/graph/badge.svg)](https://codecov.io/github/predict-r/rtika?branch=master)
 
@@ -15,17 +15,11 @@ This R interface includes the Tika software.
 Installation
 ------------
 
-You need at least `Java 7` or `OpenJDK 1.7`. To check, run the command `java -version` from a terminal. Get Java installation tips at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>.
+You only need `Java 7` or `OpenJDK 1.7`. Higher versions also work. To check, run the command `java -version` from a terminal. Get Java installation tips at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>.
 
-On Windows, the `curl` package is currently suggested if the documents to process are on a remote server.
+On Windows, the `curl` package is suggested if there are documents to process on a remote server.
 
-``` r
-if(.Platform$OS.type=='windows' && !requireNamespace('curl')){
-   install.packages('curl', repos='https://cloud.r-project.org')
-}
-```
-
-Next, install the `rtika` package from Github.com.
+Next, install the `rtika` package from github.com. It has no other dependencies.
 
 ``` r
 # devtools simplifies installation from Github.
@@ -38,14 +32,14 @@ library('rtika')
 Extract Plain Text
 ------------------
 
-Get a text document, such as `.pdf`, `.doc`, `.docx`, `.rtf`, `.ppt`, or a mix. Then, extract the plain text with the `tika()` function. Relax, it will probably work!
+Describe the paths to documents that contain text, such as `.pdf`, `.doc`, `.docx`, `.rtf`, `.ppt`, or a mix. Then, Tika will identify the file format, parse it, and return a plain text rendition.
 
 ``` r
 input = 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
 text = tika(input) # magic happens
 ```
 
-The `text` will be a character vector, in the same order as `input`. Display a snippet using `cat`.
+The `text` will be a UTF-8 character vector, in the same order as the `input`. Display a snippet using `cat`.
 
 ``` r
 cat(substr(text[1],45,450)) # sub-string of the text
@@ -72,7 +66,7 @@ Get the words:
 
 ``` r
 words = strsplit(tolower(text[1]), split='[^a-zA-Z]+')[[1]]
-# Next, remove any pesky empty strings
+# remove pesky empty strings
 words = words[words!='']
 words[1:7] 
 ```
@@ -82,7 +76,7 @@ words[1:7]
 Get Metadata
 ------------
 
-Metadata comes with the `json`,`xml` and `html` output options. A side effect is that Tika retains more document structure, like table cells.
+Metadata comes with the `json`,`xml` and `html` output options. A side effect is that Tika retains more document structure, such as table cells.
 
 ``` r
 library('jsonlite')
@@ -107,7 +101,7 @@ str(metadata) #data.frame of metadata
       ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
      $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
      $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-     $ X-TIKA:parse_time_millis                   : chr "1116"
+     $ X-TIKA:parse_time_millis                   : chr "1301"
      $ access_permission:assemble_document        : chr "true"
      $ access_permission:can_modify               : chr "true"
      $ access_permission:can_print                : chr "true"
@@ -133,9 +127,9 @@ str(metadata) #data.frame of metadata
      $ pdf:docinfo:trapped                        : chr "False"
      $ pdf:encrypted                              : chr "false"
      $ producer                                   : chr "pdfTeX-1.40.18"
-     $ resourceName                               : chr "rtika_file65ea2944093d"
+     $ resourceName                               : chr "rtika_file706d33c40772"
      $ tika:file_ext                              : chr ""
-     $ tika_batch_fs:relative_path                : chr "tmp/Rtmpk5FB2v/rtika_file65ea2944093d"
+     $ tika_batch_fs:relative_path                : chr "tmp/RtmpOUGkGw/rtika_file706d33c40772"
      $ trapped                                    : chr "False"
      $ xmp:CreatorTool                            : chr "TeX"
      $ xmpTPg:NPages                              : chr "37"
@@ -143,8 +137,10 @@ str(metadata) #data.frame of metadata
 Similar Packages
 ----------------
 
-In March 2012, I created a repository on `r-forge` called `r-tika` (See: <https://r-forge.r-project.org/projects/r-tika/>) to interface with Apache Tika (See: <https://tika.apache.org/>). While no code was publicly released, my initial code-base used low-level functions from the `rJava` package to interface with the Tika library. I halted development after discovering that the Tika command line interface (CLI) served my purposes.
+There is some overlap with many other text parsers, such as the R interface to antiword (See: <https://github.com/ropensci/antiword>). Listing all of them would take a huge amount of space, since Apache Tika processes over a thousand file types (See: <https://tika.apache.org/>). The main difference is that instead of specializing on a single format, Tika integrates dozens of specialist libraries from the Apache Foundation. Tika's unified approach offers a bit less control, and in return eases the parsing of digital archives filled with possibly unpredictable file types.
 
-In September 2017, user *kyusque* released `tikaR`, which uses the `rJava` package to interact with Tika (See: <https://github.com/kyusque/tikaR>). As of writing, it provided a `xml` parser and metadata extraction.
+In September 2017, github.com user *kyusque* released `tikaR`, which uses the `rJava` package to interact with Tika (See: <https://github.com/kyusque/tikaR>). As of writing, it provided similar text and metadata extraction, but only `xml` output.
 
-With `rtika`, I chose to interface with the Tika CLI and its 'batch processor' tool. Much of the batch processor is implemented in Tika 1.17 (See: <https://wiki.apache.org/tika/TikaBatchOverview>). The Tika batch processor has good efficiency when processing tens of thousands of documents, is not too slow for a single document, and handles errors gracefully. Further, connecting `R` to the Tika CLI batch processor is relatively easy to maintain, because the `R` code is simple. I anticipate that various researchers will need plain text output, while others want json output. These are implemented in the CLI and hence in `rtika` (although apparently not in `tikaR`). Multiple threads are supported in both the CLI and `rtika`. The `rtika` package anticipates future features with the `args` attribute of the `tika` function, that allows access to the Tika CLI. Another motivation was that `rJava` was once difficult to get working on Ubuntu and CentOS, especially around the time hen Java was not open sourced, although that probably has improved
+Back in March 2012, I started a similar project to interface with Apache Tika. My code also used low-level functions from the `rJava` package. I halted development after discovering that the Tika command line interface (CLI) was easier to use. My empty repository is at <https://r-forge.r-project.org/projects/r-tika/>.
+
+I chose to finally develop this package after getting excited by Tika's new 'batch processor' module, written in Java. I'found the batch processor has very good efficiency when processing tens of thousands of documents. Further, it is not too slow for a single document either, and handles errors gracefully. Connecting `R` to the Tika batch processor turned out to be relatively simple, because the `R` code is simple. It uses the CLI to point Tika to the files. Simplicity, along with continuous testing, should ease integration. I anticipate that some researchers will need plain text output, while others will want `json` output. Some will want multiple processing threads to speed things up. These features are now implemented in `rtika`, although apparently not in `tikaR` yet.
