@@ -40,18 +40,18 @@ Metadata includes \code{Content-Type}, character encoding, and Exif data from jp
 }
 \section{Output Details}{
 
-If an input file did not exist, could not be downloaded, was a directory, or Tika could not process it, the result will be \code{as.character(NA)} for that file. 
+If an input file did not exist, could not be downloaded, was a directory, or Tika could not process it, the result will be \code{as.character(NA)} for that file.
 
 By default, \code{output = "text"} and this produces plain text with no metadata. Some formatting is preserved in this case using tabs, newlines and spaces.
 
 Setting \code{output} to either \code{"xml"} or the shortcut \code{"x"} will produce a strict form of \code{HTML} known as \code{XHTML}, with metadata in the \code{head} node and formatted text in the \code{body}.
 Content retains more formatting with \code{"xml"}. For example, a Word or Excel table will become a HTML \code{table}, with table data as text in \code{td} elements. The \code{"html"} option and its shortcut \code{"h"} seem to produce the same result as \code{"xml"}.
-Parse XHTML output with \code{xml2::read_html}. 
+Parse XHTML output with \code{xml2::read_html}.
 
-Setting \code{output} to \code{"jsonRecursive"} or its shortcut \code{"J"} produces a tree structure in `json`. Metadata fields are at the top level. The \code{XHTML} or plain text will be found in the \code{X-TIKA:content} field. By default the text is \code{XHTML}. This can be changed to plain text like this: \code{output=c("jsonRecursive","text")} or \code{output=c("J","t")}. This syntax is meant to mirror Tika's. Parse \code{json} with \code{jsonlite::fromJSON}. 
+Setting \code{output} to \code{"jsonRecursive"} or its shortcut \code{"J"} produces a tree structure in `json`. Metadata fields are at the top level. The \code{XHTML} or plain text will be found in the \code{X-TIKA:content} field. By default the text is \code{XHTML}. This can be changed to plain text like this: \code{output=c("jsonRecursive","text")} or \code{output=c("J","t")}. This syntax is meant to mirror Tika's. Parse \code{json} with \code{jsonlite::fromJSON}.
 
  If \code{output_dir} is specified, then the converted files will also be saved to this directory. It's best to use an empty directory because Tika may overwrite existing files. Tika seems to add an extra file extension to each file to reduce the chance, but it's still best to use an empty directory. The file locations within the \code{output_dir} maintain the same general path structure as the input files. Downloaded files have a path similar to the `tempdir()` that R uses. The original paths are now relative to \code{output_dir}.  Files are appended with \code{.txt} for the default plain text, but can be \code{.json}, \code{.xml}, or \code{.html} depending on the \code{output} setting. One way to get a list of the processed files is to use \code{list.files} with \code{recursive=TRUE}.
- If \code{output_dir} is not specified, files are saved to a volatile temp directory named by \code{tmpdir()} and will be deleted when R shuts down. If this function will be run on very large batches repeatedly, these temporary files can be cleaned up every time by adding 
+ If \code{output_dir} is not specified, files are saved to a volatile temp directory named by \code{tmpdir()} and will be deleted when R shuts down. If this function will be run on very large batches repeatedly, these temporary files can be cleaned up every time by adding
  \code{cleanup=TRUE}.
 }
 
@@ -76,7 +76,7 @@ The \code{curl} package downloads files quickly, if the user includes urls in th
 }
 
 \examples{
-#' #extract text 
+#' #extract text
 input= 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
 text = tika(input)
 cat(substr(text[1],45,450))
