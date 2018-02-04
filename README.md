@@ -15,7 +15,7 @@ This R interface includes the Tika software.
 Installation
 ------------
 
-You only need `Java 7` or `OpenJDK 1.7`. Higher versions also work. To check, run the command `java -version` from a terminal. Get Java installation tips at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>.
+You only need `Java 7` or `OpenJDK 1.7`. Higher versions work. To check your version, run the command `java -version` from a terminal. Get Java installation tips at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>.
 
 On Windows, the `curl` package is suggested if there are documents to process on a remote server.
 
@@ -26,17 +26,20 @@ Next, install the `rtika` package from github.com. It has no other dependencies.
 if(!requireNamespace('devtools')){ install.packages('devtools', repos='https://cloud.r-project.org') }
 # Install rtika from github
 if(!requireNamespace('rtika')){ devtools::install_github('predict-r/rtika') } 
-library('rtika')
+library('rtika') 
+# There are no other dependencies, but curl, sys and magrittr are suggested.
+library("magrittr")
 ```
 
 Extract Plain Text
 ------------------
 
-Describe the paths to documents that contain text, such as `.pdf`, `.doc`, `.docx`, `.rtf`, `.ppt`, or a mix. Then, Tika will identify the file format, parse it, and return a plain text rendition.
+Describe the paths to files that contain text, such as `.pdf`, `.doc`, `.docx`, `.rtf`, `.ppt`, or a mix. Tika reads each selected file, identifies the format, parses the `.pdf` in this case, and return a plain text rendition.
 
 ``` r
-input = 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
-text = tika(input) # magic happens
+files_or_urls = 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
+text = files_or_urls %>%  tika()
+# text = tika(files_or_urls) # also works
 ```
 
 The `text` will be a UTF-8 character vector, in the same order as the `input`. Display a snippet using `cat`.
@@ -65,9 +68,8 @@ cat(substr(text[1],45,450)) # sub-string of the text
 Get the words:
 
 ``` r
-words = strsplit(tolower(text[1]), split='[^a-zA-Z]+')[[1]]
-# remove pesky empty strings
-words = words[words!='']
+tokenize_words <- function(txt){w =strsplit(tolower(txt[1]),split='[^a-zA-Z]+')[[1]]; w[w!='']}
+words = text %>% tokenize_words()
 words[1:7] 
 ```
 
@@ -79,9 +81,8 @@ Get Metadata
 Metadata comes with the `json`,`xml` and `html` output options. A side effect is that Tika retains more document structure, such as table cells.
 
 ``` r
-library('jsonlite')
-json = tika(input,'J') # 'J' is a shortcut for 'jsonRecursive'
-metadata = fromJSON(json[1])
+# 'J' is a shortcut for 'jsonRecursive'
+metadata = files_or_urls %>% tika('J') %>% jsonlite::fromJSON()
 ```
 
 See the structure of the metadata, or meta-metadata 🤯 .
@@ -101,7 +102,7 @@ str(metadata) #data.frame of metadata
       ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
      $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
      $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-     $ X-TIKA:parse_time_millis                   : chr "1216"
+     $ X-TIKA:parse_time_millis                   : chr "960"
      $ access_permission:assemble_document        : chr "true"
      $ access_permission:can_modify               : chr "true"
      $ access_permission:can_print                : chr "true"
@@ -127,9 +128,9 @@ str(metadata) #data.frame of metadata
      $ pdf:docinfo:trapped                        : chr "False"
      $ pdf:encrypted                              : chr "false"
      $ producer                                   : chr "pdfTeX-1.40.18"
-     $ resourceName                               : chr "rtika_file7aa561292522"
+     $ resourceName                               : chr "rtika_file69e26713c69"
      $ tika:file_ext                              : chr ""
-     $ tika_batch_fs:relative_path                : chr "tmp/Rtmp2JGjtJ/rtika_file7aa561292522"
+     $ tika_batch_fs:relative_path                : chr "tmp/RtmpFrYxuO/rtika_file69e26713c69"
      $ trapped                                    : chr "False"
      $ xmp:CreatorTool                            : chr "TeX"
      $ xmpTPg:NPages                              : chr "37"

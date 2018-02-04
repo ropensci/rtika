@@ -14,7 +14,8 @@ Suggests:
     knitr,
     rmarkdown,
     covr,
-    Matrix
+    Matrix,
+    magrittr
 License: Apache License 2.0 | file LICENSE
 SystemRequirements: Java (>=7) | openjdk-7-jre (via apt) | java-1.7.0-openjdk (via yum) | openjdk-8-jre (via apt) | java-1.8.0-openjdk (via yum) 
 Description: Extract text or metadata from over a thousand file types. Get either plain text or structured XHTML. This R interface includes the Tika software. Its source is available at https://github.com/apache/tika. 
