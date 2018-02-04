@@ -27,7 +27,8 @@ if(!requireNamespace('devtools')){install.packages('devtools', repos='https://cl
 if(!requireNamespace('rtika')){devtools::install_github('predict-r/rtika') } 
 library('rtika') 
 
-# There are no other dependencies, but curl, sys, data.table and magrittr are suggested.
+# There are no other dependencies, but curl, sys, data.table are suggested.
+# magrittr is suggested for it's pipe function %>%
 library("magrittr")
 ```
 
@@ -40,10 +41,10 @@ Describe the paths to files that contain text, such as PDF, Microsoft Office (`.
 #files or urls to text
 text = {
   'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf' %>%
-  tika() 
+  tika_text() 
 }
 # also works:
-# text = tika('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf') 
+# text = tika('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf', 'text') 
 ```
 
 In this case, the input is a single url, and so the `text` is of length 1. Display a snippet using `cat`.
@@ -85,10 +86,10 @@ Get Metadata
 Metadata comes with the `jsonRecursive`,`xml` and `html` output options. The text with these will be HTML by default and retain more formatting, such as table cells. With `jsonRecursive`, the text will be in the `X-TIKA:content` field.
 
 ``` r
-# 'J' is a shortcut for 'jsonRecursive'
+# 'json' is a shortcut for 'jsonRecursive' mode
 metadata = {
   'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf' %>% 
-  tika('J') %>% 
+  tika_json() %>% 
   jsonlite::fromJSON()
 }
 ```
@@ -110,7 +111,7 @@ str(metadata) #data.frame of metadata
       ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
      $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
      $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-     $ X-TIKA:parse_time_millis                   : chr "1228"
+     $ X-TIKA:parse_time_millis                   : chr "1146"
      $ access_permission:assemble_document        : chr "true"
      $ access_permission:can_modify               : chr "true"
      $ access_permission:can_print                : chr "true"
@@ -136,9 +137,9 @@ str(metadata) #data.frame of metadata
      $ pdf:docinfo:trapped                        : chr "False"
      $ pdf:encrypted                              : chr "false"
      $ producer                                   : chr "pdfTeX-1.40.18"
-     $ resourceName                               : chr "rtika_file1822b1f21c9"
+     $ resourceName                               : chr "rtika_file194352ad1a8"
      $ tika:file_ext                              : chr ""
-     $ tika_batch_fs:relative_path                : chr "tmp/Rtmp52L0uO/rtika_file1822b1f21c9"
+     $ tika_batch_fs:relative_path                : chr "tmp/RtmpUEWCYu/rtika_file194352ad1a8"
      $ trapped                                    : chr "False"
      $ xmp:CreatorTool                            : chr "TeX"
      $ xmpTPg:NPages                              : chr "37"

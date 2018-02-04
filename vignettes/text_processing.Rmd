@@ -38,12 +38,12 @@ library('rtika')
 documents= c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-admin.pdf')
 
 # input is the path to the documents.
-text = tika(documents)
+text = tika_text(documents)
 ```
 Tika has detected the file format, parsed it appropriately, and extracted a plain text rendition. Use the `cat` function to see the characters as well as the blank lines:
 ```{r,comment= "#>" }
 #  Display a substring of the first text for this example.
-cat(substr(text[1],45,450))
+cat(substr(text[1],45,160))
 ```
 
 The `#>` are not part of the text and are used in this vignette to indicate R's output. The plain text to the right of the `#>` reveals textual content that retains only minimal formatting, such as empty lines.

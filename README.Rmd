@@ -27,7 +27,8 @@ if(!requireNamespace('devtools')){install.packages('devtools', repos='https://cl
 if(!requireNamespace('rtika')){devtools::install_github('predict-r/rtika') } 
 library('rtika') 
 
-# There are no other dependencies, but curl, sys, data.table and magrittr are suggested.
+# There are no other dependencies, but curl, sys, data.table are suggested.
+# magrittr is suggested for it's pipe function %>%
 library("magrittr")
 ```
 
@@ -39,7 +40,7 @@ Describe the paths to files that contain text, such as PDF, Microsoft Office (`.
 #files or urls to text
 text = {
   'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf' %>%
-  tika() 
+  tika_text() 
 }
 # also works:
 # text = tika('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf') 
@@ -65,17 +66,17 @@ words[1:7]
 ## Get Metadata
 Metadata comes with the `jsonRecursive`,`xml` and `html` output options. The text with these will be HTML by default and retain more formatting, such as table cells.  With `jsonRecursive`, the text will be in the `X-TIKA:content` field.
 ```{r,results = "hide",warning = FALSE,message = FALSE}
-# 'J' is a shortcut for 'jsonRecursive'
+# 'tika_json()' is a shortcut for 'jsonRecursive' mode
 metadata = {
-  'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf' %>% 
-  tika('J') %>% 
+  'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf' %>%
+  tika_json() %>%
   jsonlite::fromJSON()
 }
 ```
 See the structure of the metadata, or meta-metadata 🤯 .
 
 ```{r,comment=NA}
-str(metadata) #data.frame of metadata
+strr(metadata)d# ata.frame of metadata
 ```
 ```{r,echo=FALSE}
 # unlink(dinput_ir,recursive = TRUE)
