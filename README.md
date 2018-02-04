@@ -17,9 +17,9 @@ Installation
 
 You only need `Java 7` or `OpenJDK 1.7`. Higher versions work. To check your version, run the command `java -version` from a terminal. Get Java installation tips at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>.
 
-On Windows, the `curl` package is suggested if there are documents to process on a remote server.
+On Windows, the `curl` package is suggested if the documents are described by urls.
 
-Next, install the `rtika` package from github.com. It has no other dependencies.
+Next, install the `rtika` package from github.com. `rtika` has no other dependencies.
 
 ``` r
 # devtools simplifies installation from Github.
@@ -27,14 +27,14 @@ if(!requireNamespace('devtools')){ install.packages('devtools', repos='https://c
 # Install rtika from github
 if(!requireNamespace('rtika')){ devtools::install_github('predict-r/rtika') } 
 library('rtika') 
-# There are no other dependencies, but curl, sys and magrittr are suggested.
+# There are no other dependencies, but curl, sys, data.table and magrittr are suggested.
 library("magrittr")
 ```
 
 Extract Plain Text
 ------------------
 
-Describe the paths to files that contain text, such as `.pdf`, `.doc`, `.docx`, `.rtf`, `.ppt`, or a mix. Tika reads each selected file, identifies the format, parses the `.pdf` in this case, and return a plain text rendition.
+Describe the paths to files that contain text, such as PDF, Microsoft Office (`.doc`, `docx`, `.ppt`, etc.), `.rtf`, or a mix. Tika reads each file, identifies the format, invokes a specialized parser, and returns a plain text rendition.
 
 ``` r
 files_or_urls = 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
@@ -42,10 +42,10 @@ text = files_or_urls %>%  tika()
 # text = tika(files_or_urls) # also works
 ```
 
-The `text` will be a UTF-8 character vector, in the same order as the `input`. Display a snippet using `cat`.
+In this case, the input is a single url, and so the `text` is of length 1. Display a snippet using `cat`.
 
 ``` r
-cat(substr(text[1],45,450)) # sub-string of the text
+cat(substr(text[1],45,160)) # sub-string of the text
 ```
 
 
@@ -58,14 +58,9 @@ cat(substr(text[1],45,450)) # sub-string of the text
 
     This manual is for R, version 3.4.3 (2017-11-30).
 
-    Copyright c© 2000–2016 R Core Team
-    Permission is granted to make and distribute verbatim copies of this manual provided
-    the copyright notice and this permission notice are preserved on all copies.
+If instead a batch of files or urls was sent to `tika`, the text would be in a longer vector with the same order and length as the input. In fact, Tika processes batches of documents quite efficiently, and I recommend batches. Tika takes a tiny bit of time to spin up each time, and that will get annoying with hundreds of separate calls.
 
-    Permission is granted to copy and distribute modified versions of this manual under
-    the cond
-
-Get the words:
+Now that we have plain text, getting the words is relatively easy:
 
 ``` r
 tokenize_words <- function(txt){w =strsplit(tolower(txt[1]),split='[^a-zA-Z]+')[[1]]; w[w!='']}
@@ -78,7 +73,7 @@ words[1:7]
 Get Metadata
 ------------
 
-Metadata comes with the `json`,`xml` and `html` output options. A side effect is that Tika retains more document structure, such as table cells.
+Metadata comes with the `jsonRecursive`,`xml` and `html` output options. The text with these will be HTML by default and retain more formatting, such as table cells. With `jsonRecursive`, the text will be in the `X-TIKA:content` field.
 
 ``` r
 # 'J' is a shortcut for 'jsonRecursive'
@@ -102,7 +97,7 @@ str(metadata) #data.frame of metadata
       ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
      $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
      $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-     $ X-TIKA:parse_time_millis                   : chr "960"
+     $ X-TIKA:parse_time_millis                   : chr "1055"
      $ access_permission:assemble_document        : chr "true"
      $ access_permission:can_modify               : chr "true"
      $ access_permission:can_print                : chr "true"
@@ -128,9 +123,9 @@ str(metadata) #data.frame of metadata
      $ pdf:docinfo:trapped                        : chr "False"
      $ pdf:encrypted                              : chr "false"
      $ producer                                   : chr "pdfTeX-1.40.18"
-     $ resourceName                               : chr "rtika_file69e26713c69"
+     $ resourceName                               : chr "rtika_file12132e9bdd36"
      $ tika:file_ext                              : chr ""
-     $ tika_batch_fs:relative_path                : chr "tmp/RtmpFrYxuO/rtika_file69e26713c69"
+     $ tika_batch_fs:relative_path                : chr "tmp/RtmpbD4YB0/rtika_file12132e9bdd36"
      $ trapped                                    : chr "False"
      $ xmp:CreatorTool                            : chr "TeX"
      $ xmpTPg:NPages                              : chr "37"
