@@ -18,3 +18,8 @@
 -integrated the covr package 
 -for Windows users, the curl package is recommended to prevent base R download.file from corrupting files.
 -removed onLoad.R that checked java version in order to speed package loading and simplify code coverage testing.
+
+0.1.2 (2018-02-04)
+=========================
+-added convenience functions that advertise output format: tika_xml(), tika_json(), tika_text(), tika_html()
+-README examples use magrittr pipe

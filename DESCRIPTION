@@ -1,7 +1,7 @@
 Package: rtika
 Type: Package
 Title: R Interface to 'Apache Tika' 
-Version: 0.1.2
+Version: 0.1.3
 Author: Sasha Goodman <goodmansasha@gmail.com>[aut], The Apache Software Foundation [aut,cph]
 Maintainer: Sasha Goodman <goodmansasha@gmail.com>
 Suggests: 
