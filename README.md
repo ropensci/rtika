@@ -38,7 +38,7 @@ Describe the paths to files that contain text, such as PDF, Microsoft Office (`.
 
 ``` r
 #files or urls to text
-text <- {
+text = {
   'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf' %>%
   tika() 
 }
@@ -67,9 +67,9 @@ If instead of a single file, a batch of files or urls was sent to `tika`, the te
 Now that we have plain text, getting the words is relatively easy:
 
 ``` r
-tokenize_words <- function(txt){w =strsplit(tolower(txt[1]),split='[^a-zA-Z]+')[[1]]; w[w!='']}
+tokenize_words = function(txt){w =strsplit(tolower(txt[1]),split='[^a-zA-Z]+')[[1]]; w[w!='']}
 
-words <- {
+words = {
   text %>% 
   tokenize_words() 
 }
@@ -86,7 +86,7 @@ Metadata comes with the `jsonRecursive`,`xml` and `html` output options. The tex
 
 ``` r
 # 'J' is a shortcut for 'jsonRecursive'
-metadata <- {
+metadata = {
   'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf' %>% 
   tika('J') %>% 
   jsonlite::fromJSON()
@@ -110,7 +110,7 @@ str(metadata) #data.frame of metadata
       ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
      $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
      $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-     $ X-TIKA:parse_time_millis                   : chr "1106"
+     $ X-TIKA:parse_time_millis                   : chr "1228"
      $ access_permission:assemble_document        : chr "true"
      $ access_permission:can_modify               : chr "true"
      $ access_permission:can_print                : chr "true"
@@ -136,9 +136,9 @@ str(metadata) #data.frame of metadata
      $ pdf:docinfo:trapped                        : chr "False"
      $ pdf:encrypted                              : chr "false"
      $ producer                                   : chr "pdfTeX-1.40.18"
-     $ resourceName                               : chr "rtika_file17334c8545c1"
+     $ resourceName                               : chr "rtika_file1822b1f21c9"
      $ tika:file_ext                              : chr ""
-     $ tika_batch_fs:relative_path                : chr "tmp/Rtmpyml3hK/rtika_file17334c8545c1"
+     $ tika_batch_fs:relative_path                : chr "tmp/Rtmp52L0uO/rtika_file1822b1f21c9"
      $ trapped                                    : chr "False"
      $ xmp:CreatorTool                            : chr "TeX"
      $ xmpTPg:NPages                              : chr "37"

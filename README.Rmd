@@ -37,7 +37,7 @@ library("magrittr")
 Describe the paths to files that contain text, such as PDF, Microsoft Office (`.doc`, `docx`, `.ppt`, etc.), `.rtf`, or a mix. Tika reads each file, identifies the format, invokes a specialized parser, and returns a plain text rendition.
 ```{r,results = "hide",warning = FALSE}
 #files or urls to text
-text <- {
+text = {
   'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf' %>%
   tika() 
 }
@@ -53,9 +53,9 @@ If instead of a single file, a batch of files or urls was sent to `tika`, the te
  
  Now that we have plain text, getting the words is relatively easy:
 ```{r,comment=NA}
-tokenize_words <- function(txt){w =strsplit(tolower(txt[1]),split='[^a-zA-Z]+')[[1]]; w[w!='']}
+tokenize_words = function(txt){w =strsplit(tolower(txt[1]),split='[^a-zA-Z]+')[[1]]; w[w!='']}
 
-words <- {
+words = {
   text %>% 
   tokenize_words() 
 }
@@ -66,7 +66,7 @@ words[1:7]
 Metadata comes with the `jsonRecursive`,`xml` and `html` output options. The text with these will be HTML by default and retain more formatting, such as table cells.  With `jsonRecursive`, the text will be in the `X-TIKA:content` field.
 ```{r,results = "hide",warning = FALSE,message = FALSE}
 # 'J' is a shortcut for 'jsonRecursive'
-metadata <- {
+metadata = {
   'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf' %>% 
   tika('J') %>% 
   jsonlite::fromJSON()
