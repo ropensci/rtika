@@ -67,18 +67,19 @@ words[1:7]
 Metadata comes with the `jsonRecursive`,`xml` and `html` output options. The text with these will be HTML by default and retain more formatting, such as table cells.  With `jsonRecursive`, the text will be in the `X-TIKA:content` field.
 ```{r,results = "hide",warning = FALSE,message = FALSE}
 # 'tika_json()' is a shortcut for 'jsonRecursive' mode'
-
+# this time, get two documents
 metadata = {
   c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-lang.html') %>%
   tika_json() %>%
-  sapply(jsonlite::fromJSON)
+  ifelse(is.na(.),'',.)  %>% # failures (NA) become empty strings for fromJSON
+  lapply(jsonlite::fromJSON)
 }
 
 ```
 See the structure of the metadata, or meta-metadata.
 
 ```{r,comment=NA}
-str(metadata[[1]]) #list of data.frames, one for each document
+str(metadata[[1]]) #list of data.frames. Examine the first one.
 ```
 
 ## Similar Packages

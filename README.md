@@ -87,18 +87,19 @@ Metadata comes with the `jsonRecursive`,`xml` and `html` output options. The tex
 
 ``` r
 # 'tika_json()' is a shortcut for 'jsonRecursive' mode'
-
+# this time, get two documents
 metadata = {
   c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-lang.html') %>%
   tika_json() %>%
-  sapply(jsonlite::fromJSON)
+  ifelse(is.na(.),'',.)  %>% # failures (NA) become empty strings for fromJSON
+  lapply(jsonlite::fromJSON)
 }
 ```
 
 See the structure of the metadata, or meta-metadata.
 
 ``` r
-str(metadata[[1]]) #list of data.frames, one for each document
+str(metadata[[1]]) #list of data.frames. Examine the first one.
 ```
 
     'data.frame':   1 obs. of  41 variables:
@@ -112,7 +113,7 @@ str(metadata[[1]]) #list of data.frames, one for each document
       ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
      $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
      $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-     $ X-TIKA:parse_time_millis                   : chr "1408"
+     $ X-TIKA:parse_time_millis                   : chr "1467"
      $ access_permission:assemble_document        : chr "true"
      $ access_permission:can_modify               : chr "true"
      $ access_permission:can_print                : chr "true"
@@ -138,9 +139,9 @@ str(metadata[[1]]) #list of data.frames, one for each document
      $ pdf:docinfo:trapped                        : chr "False"
      $ pdf:encrypted                              : chr "false"
      $ producer                                   : chr "pdfTeX-1.40.18"
-     $ resourceName                               : chr "rtika_file56755e87bddb"
+     $ resourceName                               : chr "rtika_file79aa655d5b25"
      $ tika:file_ext                              : chr ""
-     $ tika_batch_fs:relative_path                : chr "tmp/Rtmpks3d05/rtika_file56755e87bddb"
+     $ tika_batch_fs:relative_path                : chr "tmp/Rtmp4WSDvS/rtika_file79aa655d5b25"
      $ trapped                                    : chr "False"
      $ xmp:CreatorTool                            : chr "TeX"
      $ xmpTPg:NPages                              : chr "37"
