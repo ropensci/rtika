@@ -45,7 +45,7 @@ library("magrittr")
 Describe the paths to files that can contain text, such as `.pdf`, Microsoft Office (`.doc`, `docx`, `.ppt`, etc.), `.rtf`, or a mix. Tika reads each file, identifies the format, invokes a specialized parser, and then `tika_text()` returns a plain text rendition for you.
 ```{r}
 # Files or urls
-batch = c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
+batch <- c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
 
 # A short data pipleine, shown with magrittr:
 text <- {

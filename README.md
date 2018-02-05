@@ -42,10 +42,10 @@ Describe the paths to files that can contain text, such as `.pdf`, Microsoft Off
 
 ``` r
 # Files or urls
-batch = c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
+batch <- c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
 
 # A short data pipleine, shown with magrittr:
-text = {
+text <- {
   batch %>%
   tika_text() 
 }
@@ -81,7 +81,7 @@ Now we have some plain text. If there was a problem, the result would be `as.cha
 tokenize_words = function(x){w=base::strsplit(base::tolower(x[1]),split='[^a-zA-Z]+')[[1]];w[w!='']}
 
 # Make a List of documents, each with a word vector
-words = {
+words <- {
   text %>% 
   base::lapply(tokenize_words)
 }
@@ -110,10 +110,10 @@ Metadata comes with the `jsonRecursive`,`xml` and `html` output options. In addi
 
 ``` r
 # Input vector of length two:
-batch = c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
+batch <- c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
 
 # With tika_json(), text will be XHTML in the `X-TIKA:content` field.
-metadata = {
+metadata <- {
   batch %>%
   tika_json() %>% # output is a character with as.character(NA) failures
   base::ifelse(is.na(.),'[{"X-TIKA:content":""}]',.)  %>% # typical failures handled
@@ -137,7 +137,7 @@ utils::str(metadata[[1]])
 #>   ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
 #>  $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
 #>  $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-#>  $ X-TIKA:parse_time_millis                   : chr "1181"
+#>  $ X-TIKA:parse_time_millis                   : chr "1182"
 #>  $ access_permission:assemble_document        : chr "true"
 #>  $ access_permission:can_modify               : chr "true"
 #>  $ access_permission:can_print                : chr "true"
@@ -163,9 +163,9 @@ utils::str(metadata[[1]])
 #>  $ pdf:docinfo:trapped                        : chr "False"
 #>  $ pdf:encrypted                              : chr "false"
 #>  $ producer                                   : chr "pdfTeX-1.40.18"
-#>  $ resourceName                               : chr "rtika_filef392d61bbc4"
+#>  $ resourceName                               : chr "rtika_file1a311eba1712"
 #>  $ tika:file_ext                              : chr ""
-#>  $ tika_batch_fs:relative_path                : chr "tmp/Rtmp64f1AE/rtika_filef392d61bbc4"
+#>  $ tika_batch_fs:relative_path                : chr "tmp/RtmpihbgwO/rtika_file1a311eba1712"
 #>  $ trapped                                    : chr "False"
 #>  $ xmp:CreatorTool                            : chr "TeX"
 #>  $ xmpTPg:NPages                              : chr "37"
