@@ -15,136 +15,163 @@ This R interface includes the Tika software.
 Installation
 ------------
 
-You only need `Java 7` or `OpenJDK 1.7`. Higher versions work. To check your version, run the command `java -version` from a terminal. Get Java installation tips at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>.
+You only need `OpenJDK 1.7` or `Java 7`. Higher versions work. To check your version, run the command `java -version` from a terminal. Get Java installation tips at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>.
 
-On Windows, the `curl` package is suggested if the documents are described by urls.
+On Windows, the `curl` package is suggested if you feed `rtika` functions with urls instead of local documents.
 
-Next, install the `rtika` package from github.com. `rtika` has no other dependencies.
+Next, install the `rtika` package from github.com.
 
 ``` r
-# install
-if(!requireNamespace('devtools')){install.packages('devtools', repos='https://cloud.r-project.org') }
-if(!requireNamespace('rtika')){devtools::install_github('predict-r/rtika') } 
-library('rtika') 
+# Install and setup
+if(!base::requireNamespace('devtools')){base::install.packages('devtools',repos='https://cloud.r-project.org')};
+if(!base::requireNamespace('rtika')){devtools::install_github('predict-r/rtika')};
+library('rtika')  
+```
 
-# There are no other dependencies, but curl, sys, data.table are suggested.
-# magrittr is suggested for it's pipe function %>%
+There are no dependencies other than `java`. It's nice that `rtika` is enhanced by suggested packages.
+
+``` r
+# The curl, sys, and data.table packages enhance rtika. Magrittr helps document long pipelines.
 library("magrittr")
 ```
 
 Extract Plain Text
 ------------------
 
-Describe the paths to files that contain text, such as PDF, Microsoft Office (`.doc`, `docx`, `.ppt`, etc.), `.rtf`, or a mix. Tika reads each file, identifies the format, invokes a specialized parser, and returns a plain text rendition.
+Describe the paths to files that can contain text, such as `.pdf`, Microsoft Office (`.doc`, `docx`, `.ppt`, etc.), `.rtf`, or a mix. Tika reads each file, identifies the format, invokes a specialized parser, and then `tika_text()` returns a plain text rendition for you.
 
 ``` r
-#files or urls to text
+# Files or urls
+batch = c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
+
+# A short data pipleine, shown with magrittr:
 text = {
-  'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf' %>%
+  batch %>%
   tika_text() 
 }
-# also works:
-# text = tika('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf') 
+
+# Normal syntax works, e.g. text = tika(input)
+
+# Look at the structure. It's a character vector:
+utils::str(text)
+#>  chr [1:2] "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nR Data Import/Export\"| __truncated__ ...
 ```
 
-In this case, the input is a single url, and so the `text` is of length 1. Display a snippet using `cat`.
+In this case, the batch is two urls, and the output `text` is a character vector of two documents. See a snippet of the first document using `base::cat()`.
 
 ``` r
-cat(substr(text[1],45,160)) # sub-string of the text
+# Look at a snippet from the long first document:
+base::cat(base::substr(text[1],45,160)) 
+#> 
+#> R Data Import/Export
+#> Version 3.4.3 (2017-11-30)
+#> 
+#> R Core Team
+#> 
+#> 
+#> 
+#> This manual is for R, version 3.4.3 (2017-11-30).
 ```
 
+**The `rtika` package processes batches of documents efficiently**, so I recommend batches. Currently, all the `rtika` functions take a tiny bit of time to spin up, and that will get annoying with hundreds of separate calls to `tika_text()` and the others.
 
-    R Data Import/Export
-    Version 3.4.3 (2017-11-30)
-
-    R Core Team
-
-
-
-    This manual is for R, version 3.4.3 (2017-11-30).
-
-If instead of a single file, a batch of files or urls was sent to `tika`, the text would be in a longer vector with the same order and length as the input. In fact, Tika processes batches of documents efficiently, and I recommend batches. Tika takes a tiny bit of time to spin up each time, and that will get annoying with hundreds of separate calls.
-
-Now that we have plain text, getting the words is relatively easy:
+Now we have some plain text. If there was a problem, the result would be `as.character(NA)`. Now, getting the words is relatively easy:
 
 ``` r
-tokenize_words = function(txt){w =strsplit(tolower(txt[1]),split='[^a-zA-Z]+')[[1]]; w[w!='']}
+tokenize_words = function(x){w=base::strsplit(base::tolower(x[1]),split='[^a-zA-Z]+')[[1]];w[w!='']}
 
+# Make a List of documents, each with a word vector
 words = {
   text %>% 
-  tokenize_words() 
+  base::lapply(tokenize_words)
 }
 
-words[1:7] 
+# Look at the structure
+str(words)
+#> List of 2
+#>  $ : chr [1:14267] "r" "data" "import" "export" ...
+#>  $ : chr [1:24949] "r" "language" "definition" "r" ...
 ```
 
-    [1] "r"       "data"    "import"  "export"  "version" "r"       "core"   
+Access at the first document in the `List` with the `[[` syntax. Each contains words:
+
+``` r
+words[[1]][1:7] 
+#> [1] "r"       "data"    "import"  "export"  "version" "r"       "core"
+words[[2]][1:7] 
+#> [1] "r"          "language"   "definition" "r"          "language"  
+#> [6] "definition" "table"
+```
 
 Get Metadata
 ------------
 
-Metadata comes with the `jsonRecursive`,`xml` and `html` output options. The text with these will be HTML by default and retain more formatting, such as table cells. With `jsonRecursive`, the text will be in the `X-TIKA:content` field.
+Metadata comes with the `jsonRecursive`,`xml` and `html` output options. In addition, text will be in strict `HTML` called `XHTML`, which retains more information than plain text. This is nice for extracting tables and table cells. The special `jsonRecursive` mode can also process compressed archives of documents. It is quickly accessed with `tika_json()`.
 
 ``` r
-# 'tika_json()' is a shortcut for 'jsonRecursive' mode'
-# this time, get two documents
+# Input vector of length two:
+batch = c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
+
+# With tika_json(), text will be XHTML in the `X-TIKA:content` field.
 metadata = {
-  c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-lang.html') %>%
-  tika_json() %>%
-  ifelse(is.na(.),'',.)  %>% # failures (NA) become empty strings for fromJSON
-  lapply(jsonlite::fromJSON)
+  batch %>%
+  tika_json() %>% # output is a character with as.character(NA) failures
+  base::ifelse(is.na(.),'[{"X-TIKA:content":""}]',.)  %>% # typical failures handled
+  base::lapply(jsonlite::fromJSON) # list of data.frames
 }
 ```
 
 See the structure of the metadata, or meta-metadata.
 
 ``` r
-str(metadata[[1]]) #list of data.frames. Examine the first one.
+# The first document's metadata:
+utils::str(metadata[[1]])
+#> 'data.frame':    1 obs. of  41 variables:
+#>  $ Content-Length                             : chr "309939"
+#>  $ Content-Type                               : chr "application/pdf"
+#>  $ Creation-Date                              : chr "2017-11-30T13:39:02Z"
+#>  $ Last-Modified                              : chr "2017-11-30T13:39:02Z"
+#>  $ Last-Save-Date                             : chr "2017-11-30T13:39:02Z"
+#>  $ PTEX.Fullbanner                            : chr "This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) kpathsea version 6.2.3"
+#>  $ X-Parsed-By                                :List of 1
+#>   ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
+#>  $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
+#>  $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
+#>  $ X-TIKA:parse_time_millis                   : chr "1181"
+#>  $ access_permission:assemble_document        : chr "true"
+#>  $ access_permission:can_modify               : chr "true"
+#>  $ access_permission:can_print                : chr "true"
+#>  $ access_permission:can_print_degraded       : chr "true"
+#>  $ access_permission:extract_content          : chr "true"
+#>  $ access_permission:extract_for_accessibility: chr "true"
+#>  $ access_permission:fill_in_form             : chr "true"
+#>  $ access_permission:modify_annotations       : chr "true"
+#>  $ created                                    : chr "Thu Nov 30 05:39:02 PST 2017"
+#>  $ date                                       : chr "2017-11-30T13:39:02Z"
+#>  $ dc:format                                  : chr "application/pdf; version=1.5"
+#>  $ dcterms:created                            : chr "2017-11-30T13:39:02Z"
+#>  $ dcterms:modified                           : chr "2017-11-30T13:39:02Z"
+#>  $ meta:creation-date                         : chr "2017-11-30T13:39:02Z"
+#>  $ meta:save-date                             : chr "2017-11-30T13:39:02Z"
+#>  $ modified                                   : chr "2017-11-30T13:39:02Z"
+#>  $ pdf:PDFVersion                             : chr "1.5"
+#>  $ pdf:docinfo:created                        : chr "2017-11-30T13:39:02Z"
+#>  $ pdf:docinfo:creator_tool                   : chr "TeX"
+#>  $ pdf:docinfo:custom:PTEX.Fullbanner         : chr "This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) kpathsea version 6.2.3"
+#>  $ pdf:docinfo:modified                       : chr "2017-11-30T13:39:02Z"
+#>  $ pdf:docinfo:producer                       : chr "pdfTeX-1.40.18"
+#>  $ pdf:docinfo:trapped                        : chr "False"
+#>  $ pdf:encrypted                              : chr "false"
+#>  $ producer                                   : chr "pdfTeX-1.40.18"
+#>  $ resourceName                               : chr "rtika_filef392d61bbc4"
+#>  $ tika:file_ext                              : chr ""
+#>  $ tika_batch_fs:relative_path                : chr "tmp/Rtmp64f1AE/rtika_filef392d61bbc4"
+#>  $ trapped                                    : chr "False"
+#>  $ xmp:CreatorTool                            : chr "TeX"
+#>  $ xmpTPg:NPages                              : chr "37"
 ```
 
-    'data.frame':   1 obs. of  41 variables:
-     $ Content-Length                             : chr "309939"
-     $ Content-Type                               : chr "application/pdf"
-     $ Creation-Date                              : chr "2017-11-30T13:39:02Z"
-     $ Last-Modified                              : chr "2017-11-30T13:39:02Z"
-     $ Last-Save-Date                             : chr "2017-11-30T13:39:02Z"
-     $ PTEX.Fullbanner                            : chr "This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) kpathsea version 6.2.3"
-     $ X-Parsed-By                                :List of 1
-      ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
-     $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
-     $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-     $ X-TIKA:parse_time_millis                   : chr "1467"
-     $ access_permission:assemble_document        : chr "true"
-     $ access_permission:can_modify               : chr "true"
-     $ access_permission:can_print                : chr "true"
-     $ access_permission:can_print_degraded       : chr "true"
-     $ access_permission:extract_content          : chr "true"
-     $ access_permission:extract_for_accessibility: chr "true"
-     $ access_permission:fill_in_form             : chr "true"
-     $ access_permission:modify_annotations       : chr "true"
-     $ created                                    : chr "Thu Nov 30 05:39:02 PST 2017"
-     $ date                                       : chr "2017-11-30T13:39:02Z"
-     $ dc:format                                  : chr "application/pdf; version=1.5"
-     $ dcterms:created                            : chr "2017-11-30T13:39:02Z"
-     $ dcterms:modified                           : chr "2017-11-30T13:39:02Z"
-     $ meta:creation-date                         : chr "2017-11-30T13:39:02Z"
-     $ meta:save-date                             : chr "2017-11-30T13:39:02Z"
-     $ modified                                   : chr "2017-11-30T13:39:02Z"
-     $ pdf:PDFVersion                             : chr "1.5"
-     $ pdf:docinfo:created                        : chr "2017-11-30T13:39:02Z"
-     $ pdf:docinfo:creator_tool                   : chr "TeX"
-     $ pdf:docinfo:custom:PTEX.Fullbanner         : chr "This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) kpathsea version 6.2.3"
-     $ pdf:docinfo:modified                       : chr "2017-11-30T13:39:02Z"
-     $ pdf:docinfo:producer                       : chr "pdfTeX-1.40.18"
-     $ pdf:docinfo:trapped                        : chr "False"
-     $ pdf:encrypted                              : chr "false"
-     $ producer                                   : chr "pdfTeX-1.40.18"
-     $ resourceName                               : chr "rtika_file79aa655d5b25"
-     $ tika:file_ext                              : chr ""
-     $ tika_batch_fs:relative_path                : chr "tmp/Rtmp4WSDvS/rtika_file79aa655d5b25"
-     $ trapped                                    : chr "False"
-     $ xmp:CreatorTool                            : chr "TeX"
-     $ xmpTPg:NPages                              : chr "37"
+To remind the reader, `rtika` is efficient for batches. To further increase efficiency for large jobs, increase the number of parallel system threads. For example: `tika_json(threads=3)`. This works on all `rtika` functions.
 
 Similar Packages
 ----------------
