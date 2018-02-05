@@ -9,6 +9,6 @@
 #' cat(output)
 
 
-tika_xml = function(input, ...){
+tika_xml <- function(input, ...){
   tika(input=input, output="xml", ...)
 }

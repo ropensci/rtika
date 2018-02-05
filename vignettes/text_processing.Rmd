@@ -34,15 +34,15 @@ As I'll demonstrate, the words are relatively easy to get using `rtika`, which p
 ```{r}
 library('rtika')
 
-# download two documents 
-documents= c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-admin.pdf')
+# Download two documents 
+documents <- c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-admin.pdf')
 
-# input is the path to the documents.
-text = tika_text(documents)
+# Input is the path to the documents.
+text <- tika_text(documents)
 ```
 Tika has detected the file format, parsed it appropriately, and extracted a plain text rendition. Use the `cat` function to see the characters as well as the blank lines:
 ```{r,comment= "#>" }
-#  Display a substring of the first text for this example.
+# Display a substring of the first text for this example.
 cat(substr(text[1],45,160))
 ```
 
@@ -53,7 +53,7 @@ Behind the scenes, each character in every word is encoded in UTF-8. That is a s
 One approach for studying words in English is to assume that words are merely groups of letters separated by other characters. By "other characters", I mean punctuation, line breaks, paragraph indentions, and non alpha-numeric characters. UTF-8 can represent 1,112,064 codes, and only a small number are in English letters. Fortunately, in base R we can implement the general idea in a line of code using an old computer language called regular expressions:
 
 ```{r}
-words = strsplit(tolower(text[1]), split='\\W+')[[1]]
+words <- strsplit(tolower(text[1]), split='\\W+')[[1]]
 words[1:7] 
 ```
 
@@ -66,9 +66,9 @@ This would be more difficult if it were not plain text. Consider `HTML`, the mos
 So far, we have a list of words that includes numbers. To ignore numbers, we can change the regular expression. Before, we split with `\\W+`. That means *not* alpha-numeric (it's a shortcut for  regular expression `[^A-Za-z0-9]+`), and we can change our code to mean *not* a character:
 
 ```{r}
-words = strsplit(tolower(text[1]), split='[^a-zA-Z]+')[[1]]
+words <- strsplit(tolower(text[1]), split='[^a-zA-Z]+')[[1]]
 # Next, remove any pesky empty strings
-words = words[words!='']
+words <- words[words!='']
 words[1:7] 
 ```
 
@@ -84,13 +84,13 @@ length(words)
 
 That is nice to know. Before moving on, let's package the tokenizer into a function for later on:
 ```{r}
-my_tokenizer = function(text){ 
-    words = strsplit(tolower(text[1]), split='[^a-zA-Z]+')[[1]] ; 
+my_tokenizer <- function(text){ 
+    words <- strsplit(tolower(text[1]), split='[^a-zA-Z]+')[[1]] ; 
     return( words[words!='']) 
   }
-# run again
-words = my_tokenizer(text[1])
-# double check its the same as before
+# Run again
+words <- my_tokenizer(text[1])
+# Double check its the same as before
 length(words) 
 ```
 
@@ -100,13 +100,13 @@ length(words)
 Eventually, almost every quantitative analysis must represent words as numbers. One intuitive way is R's `factor` class. 
 
 ```{r}
-words = as.factor(words)
+words <- as.factor(words)
 ```
  A factor represents words and other categorical data. It creates an implicit dictionary, where each unique word is put into alphabetical order and then assigned an integer to identify it. You can see this dictionary using the `level` command on a factor. By the way, it's worth spending a few minutes reading the  `?factor` help.
 
 ```{r}
-#level produces a character vector of unique words in alphabetical order
-dictionary = levels(words) 
+# Level produces a character vector of unique words in alphabetical order
+dictionary <- levels(words) 
 dictionary[1:7]
 length(dictionary)
 ```
@@ -121,16 +121,16 @@ which(dictionary=='data')
 Text is a sequence of categories. What if we create a model of the the first words in the document? I'm going to create a hypothetical case that demonstrates why this is tricky. Let's start small with the first `n` words, say `n=3`, and put them into a table for analysis.
 
 ```{r}
-document_1 = data.frame(word_1 = words[1], word_2 = words[2], word_3 = words[3])
+document_1 <- data.frame(word_1 = words[1], word_2 = words[2], word_3 = words[3])
 document_1
 ```
 Next, we turn the table into a matrix of numbers. This is implicitly done in most R models. It usually happens without having to think about it, in almost any model, including linear, machine learning, neural network and clustering.
 ```{r}
-matrix_of_numbers = model.matrix(as.formula("~ word_1 + word_2 + word_3"), data= document_1)
+matrix_of_numbers <- model.matrix(as.formula("~ word_1 + word_2 + word_3"), data= document_1)
 ```
 Alright, lets take a peek at this matrix.
 ```{r}
-#which words are 'flagged' with 1?
+# Which words are 'flagged' with 1?
 which(matrix_of_numbers[1,]==1)
 
 dim(matrix_of_numbers)
@@ -140,11 +140,11 @@ Notice the dimensions of the matrix. The second number is the column count, and 
 
 This brings us to a warning about analyzing categorical data. Text is a sequence of categories, and the potential combinations are immense. When a large sequence of words is naively represented this way (it's called 'one-hot encoding' or a 'dummy variable', in sequence), computational problems emerge. One-hot encoding simply means that a word is represented by a vector of 0s as long as the dictionary, with the exception of the word itself that is flagged by a 1. In this case, the first word in a document is represented by a vector as wide as the dictionary (over a thousand variables), and this is repeated for each word in the document up to `n` words. The second word gets a dictionary sized vector, the third, and so on. These are concatenated together in the model's matrix. This super-naive way of representing long sequences would cause a linear model to run out of RAM, even on a supercomputer. 
 ```{r}
-#approximate number of parameters for this document:
+# Approximate number of parameters for this document:
 length(words) * length(dictionary)  
-# parameters in a linear model with one reference category:
+# Parameters in a linear model with one reference category:
 length(words) * length(dictionary) - length(dictionary) 
-# covariance matrix cells
+# Covariance matrix cells
 (length(words) * length(dictionary) - length(dictionary) )^2
 # R's default double precision covariance matrix memory in *terrabytes* of RAM
 ((length(words) * length(dictionary) - length(dictionary) )^2 * 8 ) / 1e+12
@@ -157,16 +157,16 @@ Fortunately, R comes with a `Matrix` library that stores many 0s efficiently. In
 
 ```{r}
 library('Matrix')
-sparse_matrix_of_numbers = sparse.model.matrix(as.formula("~ word_1 + word_2 + word_3"), data=document_1)
+sparse_matrix_of_numbers <- sparse.model.matrix(as.formula("~ word_1 + word_2 + word_3"), data=document_1)
 
 which(sparse_matrix_of_numbers[1,]==1)
 
-# this sparse_matrix_of_numbers contains the matrix coordinates of non-zero elements.
-triplet_format = as(sparse_matrix_of_numbers,'TsparseMatrix')
+# This sparse_matrix_of_numbers contains the matrix coordinates of non-zero elements.
+triplet_format <- as(sparse_matrix_of_numbers,'TsparseMatrix')
 triplet_format@i + 1
 triplet_format@j + 1
 triplet_format@x 
-# this triplet requires three fields with only 4 numbers each. This is usually better if more than a third of the matrix is zero.
+# This triplet requires three fields with only 4 numbers each. This is usually better if more than a third of the matrix is zero.
 ```
 
 There are some models in R that use sparse matrices, such as `XGBoost`, `MatrixModels`, or `Glmnet`. A more general technique is to divide the data into smaller subsets of observations, and optimize bit by bit. This latter method can be done in the `keras` and `h2o` packages. 
@@ -177,7 +177,7 @@ There are some models in R that use sparse matrices, such as `XGBoost`, `MatrixM
 As suggested earlier, it's best to be smart about dummy variables. One of the simplest alternatives is to count each word in the dictionary, at the document level:
 ```{r}
 
-document_word_frequency  = sort(table(words), decreasing=T)[1:9]
+document_word_frequency  <- sort(table(words), decreasing=T)[1:9]
 document_word_frequency
 ```
 
@@ -190,16 +190,16 @@ length(which(words=="data"))
 These can still go into a simple table to represent the words:
 
 ```{r}
-document_word_frequency=  data.frame(big = length(which(words=="big")) ,  data= length(which(words=="data")) , DOCUMENT_LENGTH = length(words) ) 
+document_word_frequency <-  data.frame(big = length(which(words=="big")) ,  data= length(which(words=="data")) , DOCUMENT_LENGTH = length(words) ) 
 document_word_frequency
 ```
 
 Word counts will use fewer parameters in your model. This one uses less than a kilobyte of RAM, instead of many terabytes.
 
 ```{r}
-matrix_of_numbers = model.matrix(~ big + data  +DOCUMENT_LENGTH, document_word_frequency)
+matrix_of_numbers <- model.matrix(~ big + data  +DOCUMENT_LENGTH, document_word_frequency)
 dim(matrix_of_numbers)
-# double precision covariance matrix memory in *kilobytes* of RAM
+# Double precision covariance matrix memory in *kilobytes* of RAM
 (ncol(matrix_of_numbers) * ncol(matrix_of_numbers) * 8 ) / 2^10
 ```
 
@@ -213,48 +213,48 @@ library('data.table')
 ```
 Let's get word counts. Recall that the `text` is a character vector of two long strings, one for each document:
 ```{r}
-started.at=proc.time()
-# a table at the 'document' level, with one row per document. Give each document a short name.
+started.at <- proc.time()
+# A table at the 'document' level, with one row per document. Give each document a short name.
 documents = data.table(document=paste0('document_',1:2), text=text)
 
-# there are 2 documents and two columns:
+# There are 2 documents and two columns:
 dim(documents) 
 
-# derive a LONG-style table with many rows, at the 'document-word' level.
-# the data.table 'by' acts like R's apply function here.
-document_words = documents[, list(word = my_tokenizer(text)), by=document]
+# Derive a LONG-style table with many rows, at the 'document-word' level.
+# The data.table 'by' acts like R's apply function here.
+document_words <- documents[, list(word = my_tokenizer(text)), by=document]
 
-# see document words:
+# See document words:
 document_words
 
 # reshape this into a WIDE-style table, at the 'document' level again
-documents = dcast(document_words
+documents <- dcast(document_words
                                 , as.formula("document ~ word")
                                 , fill=0
                                 , value.var='word'
                                 , fun.aggregate=length)
 
-# there are now columns for every word in the documents.
+# There are now columns for every word in the documents.
 dim(documents) 
-#select a few columns:
+# Select a few columns:
 documents[,c('document', 'big','text','data','package')]
 
-# other ideas include counting words at various levels in the 'document_words' table:
+# Other ideas include counting words at various levels in the 'document_words' table:
 document_words[, DOCUMENT_LENGTH:=.N, by="document"]
 document_words[, WORD_FREQUENCY:=.N, by="word"]
 document_words[, WORD_DOCUMENT_FREQUENCY:=.N, by=c('word','document')]
 document_words[, ADJUSTED_WORD_DOCUMENT_FREQUENCY:=.N/DOCUMENT_LENGTH, by=c('word','document')]
 
-# you can use any of these variables instead
-documents = dcast(document_words
+# You can use any of these variables this way:
+documents <- dcast(document_words
               , as.formula("document ~ word")
               , fill=0
               , value.var='ADJUSTED_WORD_DOCUMENT_FREQUENCY'
               , fun.aggregate=as.numeric)
 documents[,c('document', 'big','text','data','package')]
 
-# you can include document-level columns by adding them to the left of the '~' symbol.
-documents = dcast(document_words
+# You can include document-level columns by adding them to the left of the '~' symbol.
+documents <- dcast(document_words
             , as.formula("DOCUMENT_LENGTH + document ~ word")
             , fill=0
             , value.var='WORD_DOCUMENT_FREQUENCY'

@@ -13,6 +13,6 @@
 #' output = tika_json(input)
 #' cat(output)
 #' 
-tika_json = function(input, ...){
+tika_json <- function(input, ...){
   tika(input=input, output="jsonRecursive", ...)
 }

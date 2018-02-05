@@ -9,6 +9,6 @@
 #' output = tika_text(input)
 #' cat(output)
 
-tika_text = function(input, ...){
+tika_text <- function(input, ...){
   tika(input=input, output="text", ...)
 }

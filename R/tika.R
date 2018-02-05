@@ -73,8 +73,7 @@ tika <- function(input
                  , lib.loc=.libPaths()) {
 
   # Special thanks to Hadley for the nice git tutorial at: http://r-pkgs.had.co.nz/git.html
-  # devtools::build_vignettes()
-  # system('R CMD Rd2pdf ~/rtika')
+  # devtools::build_vignettes() ; system('R CMD Rd2pdf ~/rtika')
 
   # Parameter sanity check --------------------------------------------------------
   stopifnot(

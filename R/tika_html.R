@@ -8,6 +8,6 @@
 #' output = tika_html(input)
 #' cat(output)
 
-tika_html = function(input, ...){
+tika_html <- function(input, ...){
   tika(input=input, output="html", ...)
 }

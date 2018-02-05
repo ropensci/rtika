@@ -48,7 +48,7 @@ Describe the paths to files that can contain text, such as `.pdf`, Microsoft Off
 batch = c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
 
 # A short data pipleine, shown with magrittr:
-text = {
+text <- {
   batch %>%
   tika_text() 
 }
@@ -72,7 +72,7 @@ base::cat(base::substr(text[1],45,160))
 tokenize_words = function(x){w=base::strsplit(base::tolower(x[1]),split='[^a-zA-Z]+')[[1]];w[w!='']}
 
 # Make a List of documents, each with a word vector
-words = {
+words <- {
   text %>% 
   base::lapply(tokenize_words)
 }
@@ -89,10 +89,10 @@ words[[2]][1:7]
 Metadata comes with the `jsonRecursive`,`xml` and `html` output options. In addition, text will be in strict `HTML` called `XHTML`, which retains more information than plain text. This is nice for extracting tables and table cells. The special `jsonRecursive` mode can also process compressed archives of documents. It is quickly accessed with `tika_json()`.
 ```{r}
 # Input vector of length two:
-batch = c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
+batch <- c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
 
 # With tika_json(), text will be XHTML in the `X-TIKA:content` field.
-metadata = {
+metadata <- {
   batch %>%
   tika_json() %>% # output is a character with as.character(NA) failures
   base::ifelse(is.na(.),'[{"X-TIKA:content":""}]',.)  %>% # typical failures handled
