@@ -78,12 +78,12 @@ base::cat(base::substr(text[1],45,160))
 Now we have some plain text. If there was a problem, the result would be `as.character(NA)`. Now, getting the words is relatively easy:
 
 ``` r
-tokenize_words = function(x){w=base::strsplit(base::tolower(x[1]),split='[^a-zA-Z]+')[[1]];w[w!='']}
+tokenize_words = function(x){w=base::strsplit(base::tolower(x),split='[^a-zA-Z]+');base::lapply(w, function(x) x[x!=''])}
 
 # Make a List of documents, each with a word vector
 words <- {
   text %>% 
-  base::lapply(tokenize_words)
+  tokenize_words()
 }
 
 # Look at the structure
@@ -137,7 +137,7 @@ utils::str(metadata[[1]])
 #>   ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
 #>  $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
 #>  $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-#>  $ X-TIKA:parse_time_millis                   : chr "1182"
+#>  $ X-TIKA:parse_time_millis                   : chr "1101"
 #>  $ access_permission:assemble_document        : chr "true"
 #>  $ access_permission:can_modify               : chr "true"
 #>  $ access_permission:can_print                : chr "true"
@@ -163,9 +163,9 @@ utils::str(metadata[[1]])
 #>  $ pdf:docinfo:trapped                        : chr "False"
 #>  $ pdf:encrypted                              : chr "false"
 #>  $ producer                                   : chr "pdfTeX-1.40.18"
-#>  $ resourceName                               : chr "rtika_file1a311eba1712"
+#>  $ resourceName                               : chr "rtika_file1b6a332fe59e"
 #>  $ tika:file_ext                              : chr ""
-#>  $ tika_batch_fs:relative_path                : chr "tmp/RtmpihbgwO/rtika_file1a311eba1712"
+#>  $ tika_batch_fs:relative_path                : chr "tmp/RtmpWQV4Ka/rtika_file1b6a332fe59e"
 #>  $ trapped                                    : chr "False"
 #>  $ xmp:CreatorTool                            : chr "TeX"
 #>  $ xmpTPg:NPages                              : chr "37"

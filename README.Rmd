@@ -69,18 +69,18 @@ base::cat(base::substr(text[1],45,160))
  
  Now we have some plain text. If there was a problem, the result would be `as.character(NA)`. Now, getting the words is relatively easy:
 ```{r}
-tokenize_words = function(x){w=base::strsplit(base::tolower(x[1]),split='[^a-zA-Z]+')[[1]];w[w!='']}
+tokenize_words = function(x){w=base::strsplit(base::tolower(x),split='[^a-zA-Z]+');base::lapply(w, function(x) x[x!=''])}
 
 # Make a List of documents, each with a word vector
 words <- {
   text %>% 
-  base::lapply(tokenize_words)
+  tokenize_words()
 }
 
 # Look at the structure
 str(words)
 ```
-Access at the first document in the `List` with the `[[` syntax. Each contains words:
+Access the first document in the `List` with the `[[` syntax. Each contains words:
 ```{r}
 words[[1]][1:7] 
 words[[2]][1:7] 
