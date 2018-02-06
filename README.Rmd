@@ -22,27 +22,30 @@ knitr::opts_chunk$set(
 This R interface includes the Tika software.
 
 ## Installation
-You only need `OpenJDK 1.7` or `Java 7`. Higher versions work. To check your version, run the command `java -version` from a terminal. Get Java installation tips at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>. 
+You only need R and either `OpenJDK 1.7` or `Java 7`. Higher versions work. To check your version, run the command `java -version` from a terminal. Get Java installation tips at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>. 
 
-On Windows, the `curl` package is suggested if you feed `rtika` functions with urls instead of local documents.
+On Windows, the `curl` package is suggested if you feed `rtika` functions with urls instead of local documents. 
 
-Next, install the `rtika` package from github.com. 
+Next, install the `rtika` package from github.com.
 
 ```{r,results = "hide",message = FALSE }
-# Install and setup
+# Okay, we also need devtools to easily install from github, until this package is on CRAN 
 if(!base::requireNamespace('devtools')){base::install.packages('devtools',repos='https://cloud.r-project.org')};
+# Install and setup
 if(!base::requireNamespace('rtika')){devtools::install_github('predict-r/rtika')};
 library('rtika')  
 ```
 
-There are no dependencies other than `java`. It's nice that `rtika` is enhanced by suggested packages.
+There are no dependencies other than `java`. It's nice that `rtika` is enhanced by other packages.
 ```{r,results = "hide",message = FALSE }
 # The curl, sys, and data.table packages enhance rtika. Magrittr helps document long pipelines.
 library("magrittr")
 ```
 
 ## Extract Plain Text
-Describe the paths to files that can contain text, such as `.pdf`, Microsoft Office (`.doc`, `docx`, `.ppt`, etc.), `.rtf`, or a mix. Tika reads each file, identifies the format, invokes a specialized parser, and then `tika_text()` returns a plain text rendition for you.
+Describe the paths to files that can contain text, such as `.pdf`, Microsoft Office (`.doc`, `docx`, `.ppt`, etc.), `.rtf`, or a mix. Tika reads each file, identifies the format, invokes a specialized parser, and then `tika_text()` returns a plain text rendition for you. 
+
+**The `rtika` package processes batches of documents efficiently**, so I recommend batches. Currently, all the `rtika` functions take a tiny bit of time to spin up, and that will get annoying with hundreds of separate calls to `tika_text()` and the others. 
 ```{r}
 # Files or urls
 batch <- c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
@@ -60,16 +63,16 @@ utils::str(text)
 
 ```
 
-In this case, the batch is two urls, and the output `text` is a character vector of two documents. See a snippet of the first document using `base::cat()`.
+The batch is two urls, and the output `text` is a character vector of two documents. See a snippet of the first document using `base::cat()`.
 ```{r}
 # Look at a snippet from the long first document:
 base::cat(base::substr(text[1],45,160)) 
 ```
-**The `rtika` package processes batches of documents efficiently**, so I recommend batches. Currently, all the `rtika` functions take a tiny bit of time to spin up, and that will get annoying with hundreds of separate calls to `tika_text()` and the others. 
+
  
- Now we have some plain text. If there was a problem, the result would be `as.character(NA)`. Now, getting the words is relatively easy:
+ Now we have some plain text. If there was a problem, the result would be `as.character(NA)`. Plain text can be easy to tokenize. 
 ```{r}
-tokenize_words = function(x){w=base::strsplit(base::tolower(x),split='[^a-zA-Z]+');base::lapply(w, function(x) x[x!=''])}
+tokenize_words <- function(x){w=base::strsplit(base::tolower(x),split='[^a-zA-Z]+');base::lapply(w,function(x)x[x!=''])}
 
 # Make a List of documents, each with a word vector
 words <- {
@@ -85,8 +88,16 @@ Access the first document in the `List` with the `[[` syntax. Each contains word
 words[[1]][1:7] 
 words[[2]][1:7] 
 ```
+While `rtika` is efficient for batches, to further reduce the time for very large jobs, increase the number of parallel system threads. For example: `tika_text(threads=2)`. This works on all `rtika` functions.
+```{r}
+text <- {
+  batch %>%
+  tika_text(threads=2) 
+}
+```
+
 ## Get Metadata
-Metadata comes with the `jsonRecursive`,`xml` and `html` output options. In addition, text will be in strict `HTML` called `XHTML`, which retains more information than plain text. This is nice for extracting tables and table cells. The special `jsonRecursive` mode can also process compressed archives of documents. It is quickly accessed with `tika_json()`.
+Metadata comes with the `jsonRecursive`,`xml` and `html` output options. In addition, text will be in `XHTML`, the stricter `HTML`. That retains more information than plain text, and is nice for extracting tables and table cells. The special `jsonRecursive` mode can also process compressed archives of documents. It is quickly accessed with `tika_json()`.
 ```{r}
 # Input vector of length two:
 batch <- c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
@@ -106,7 +117,7 @@ See the structure of the metadata, or meta-metadata.
 # The first document's metadata:
 utils::str(metadata[[1]])
 ```
-To remind the reader, `rtika` is efficient for batches. To further increase efficiency for large jobs, increase the number of parallel system threads. For example: `tika_json(threads=3)`. This works on all `rtika` functions.
+
 
 ## Similar Packages
 

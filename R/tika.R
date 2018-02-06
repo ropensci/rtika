@@ -74,6 +74,8 @@ tika <- function(input
 
   # Special thanks to Hadley for the nice git tutorial at: http://r-pkgs.had.co.nz/git.html
   # devtools::build_vignettes() ; system('R CMD Rd2pdf ~/rtika')
+  # TODO:  memory setting with java -Xmx1024m -jar. Probably adjust child process -JXmx4g
+
 
   # Parameter sanity check --------------------------------------------------------
   stopifnot(
