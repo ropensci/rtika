@@ -23,16 +23,19 @@ Next, install the `rtika` package from github.com.
 
 ``` r
 # Okay, we also need devtools to easily install from github, until this package is on CRAN 
-if(!base::requireNamespace('devtools')){base::install.packages('devtools',repos='https://cloud.r-project.org')};
+if(!requireNamespace('devtools')){
+  install.packages('devtools',repos='https://cloud.r-project.org')};
 # Install and setup
-if(!base::requireNamespace('rtika')){devtools::install_github('predict-r/rtika')};
+if(!requireNamespace('rtika')){
+  devtools::install_github('predict-r/rtika')};
 library('rtika')  
 ```
 
 There are no dependencies other than `java`. It's nice that `rtika` is enhanced by other packages.
 
 ``` r
-# The curl, sys, and data.table packages enhance rtika. Magrittr helps document long pipelines.
+# The curl, sys, and data.table packages enhance rtika.
+# Magrittr helps document long pipelines.
 library("magrittr")
 ```
 
@@ -45,7 +48,8 @@ Describe the paths to files that can contain text, such as `.pdf`, Microsoft Off
 
 ``` r
 # Files or urls
-batch <- c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
+batch <- c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
+           ,'https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
 
 # A short data pipleine, shown with magrittr:
 text <- {
@@ -79,7 +83,9 @@ base::cat(base::substr(text[1],45,160))
 Now we have some plain text. If there was a problem, the result would be `as.character(NA)`. Plain text can be easy to tokenize.
 
 ``` r
-tokenize_words <- function(x){w=base::strsplit(base::tolower(x),split='[^a-zA-Z]+');base::lapply(w,function(x)x[x!=''])}
+tokenize_words <- function(x){
+  w=base::strsplit(base::tolower(x),split='[^a-zA-Z]+')
+  base::lapply(w,function(x)x[x!=''])}
 
 # Make a List of documents, each with a word vector
 words <- {
@@ -120,7 +126,8 @@ Metadata comes with the `jsonRecursive`,`xml` and `html` output options. In addi
 
 ``` r
 # Input vector of length two:
-batch <- c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
+batch <- c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
+           ,'https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
 
 # With tika_json(), text will be XHTML in the `X-TIKA:content` field.
 metadata <- {
@@ -147,7 +154,7 @@ utils::str(metadata[[1]])
 #>   ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
 #>  $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
 #>  $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-#>  $ X-TIKA:parse_time_millis                   : chr "1234"
+#>  $ X-TIKA:parse_time_millis                   : chr "1232"
 #>  $ access_permission:assemble_document        : chr "true"
 #>  $ access_permission:can_modify               : chr "true"
 #>  $ access_permission:can_print                : chr "true"
@@ -173,9 +180,9 @@ utils::str(metadata[[1]])
 #>  $ pdf:docinfo:trapped                        : chr "False"
 #>  $ pdf:encrypted                              : chr "false"
 #>  $ producer                                   : chr "pdfTeX-1.40.18"
-#>  $ resourceName                               : chr "rtika_file6c211130d793"
+#>  $ resourceName                               : chr "rtika_file280332d11ecb"
 #>  $ tika:file_ext                              : chr ""
-#>  $ tika_batch_fs:relative_path                : chr "tmp/RtmpECv0T9/rtika_file6c211130d793"
+#>  $ tika_batch_fs:relative_path                : chr "tmp/Rtmpj19tio/rtika_file280332d11ecb"
 #>  $ trapped                                    : chr "False"
 #>  $ xmp:CreatorTool                            : chr "TeX"
 #>  $ xmpTPg:NPages                              : chr "37"
@@ -190,4 +197,4 @@ In September 2017, github.com user *kyusque* released `tikaR`, which uses the `r
 
 Back in March 2012, I started a similar project to interface with Apache Tika. My code also used low-level functions from the `rJava` package. I halted development after discovering that the Tika command line interface (CLI) was easier to use. My empty repository is at <https://r-forge.r-project.org/projects/r-tika/>.
 
-I chose to finally develop this package after getting excited by Tika's new 'batch processor' module, written in Java. I found the batch processor has very good efficiency when processing tens of thousands of documents. Further, it is not too slow for a single document either, and handles errors gracefully. Connecting `R` to the Tika batch processor turned out to be relatively simple, because the `R` code is simple. It uses the CLI to point Tika to the files. Simplicity, along with continuous testing, should ease integration. I anticipate that some researchers will need plain text output, while others will want `json` output. Some will want multiple processing threads to speed things up. These features are now implemented in `rtika`, although apparently not in `tikaR` yet.
+I chose to finally develop this package after getting excited by Tika's new 'batch processor' module, written in Java. The batch processor has very good efficiency when processing tens of thousands of documents. Further, it is not too slow for a single document either, and handles errors gracefully. Connecting `R` to the Tika batch processor turned out to be relatively simple, because the `R` code is simple. It uses the CLI to point Tika to the files. Simplicity, along with continuous testing, should ease integration. I anticipate that some researchers will need plain text output, while others will want `json` output. Some will want multiple processing threads to speed things up. These features are now implemented in `rtika`, although apparently not in `tikaR` yet.

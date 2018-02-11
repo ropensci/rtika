@@ -22,7 +22,8 @@ knitr::opts_chunk$set(
 This R interface includes the Tika software.
 
 ## Installation
-You only need R and either `OpenJDK 1.7` or `Java 7`. Higher versions work. To check your version, run the command `java -version` from a terminal. Get Java installation tips at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>. 
+You only need R and either `OpenJDK 1.7` or `Java 7`. Higher versions work. To check your version, run the command `java -version` from a terminal. 
+Get Java installation tips at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>. 
 
 On Windows, the `curl` package is suggested if you feed `rtika` with urls instead of local documents. 
 
@@ -30,25 +31,31 @@ Next, install the `rtika` package from github.com.
 
 ```{r,results = "hide",message = FALSE }
 # Okay, we also need devtools to easily install from github, until this package is on CRAN 
-if(!base::requireNamespace('devtools')){base::install.packages('devtools',repos='https://cloud.r-project.org')};
+if(!requireNamespace('devtools')){
+  install.packages('devtools',repos='https://cloud.r-project.org')};
 # Install and setup
-if(!base::requireNamespace('rtika')){devtools::install_github('predict-r/rtika')};
+if(!requireNamespace('rtika')){
+  devtools::install_github('predict-r/rtika')};
 library('rtika')  
 ```
 
 There are no dependencies other than `java`. It's nice that `rtika` is enhanced by other packages.
 ```{r,results = "hide",message = FALSE }
-# The curl, sys, and data.table packages enhance rtika. Magrittr helps document long pipelines.
+# The curl, sys, and data.table packages enhance rtika.
+# Here, magrittr helps document long pipelines.
 library("magrittr")
 ```
 
 ## Extract Plain Text
-Describe the paths to files that can contain text, such as `.pdf`, Microsoft Office (`.doc`, `docx`, `.ppt`, etc.), `.rtf`, or a mix. Tika reads each file, identifies the format, invokes a specialized parser, and then `tika_text()` returns a plain text rendition for you. 
+Describe the paths to files that can contain text, such as `.pdf`, Microsoft Office (`.doc`, `docx`, `.ppt`, etc.), `.rtf`, or a mix.
+Tika reads each file, identifies the format, invokes a specialized parser, and then `tika_text()` returns a plain text rendition for you. 
 
-**The `rtika` package processes batches of documents efficiently**, so I recommend batches. Currently, all the `rtika` functions take a tiny bit of time to spin up, and that will get annoying with hundreds of separate calls to `tika_text()` and the others. 
+**The `rtika` package processes batches of documents efficiently**, so I recommend batches. 
+Currently, all the `rtika` functions take a tiny bit of time to spin up, and that will get annoying with hundreds of separate calls to `tika_text()` and the others. 
 ```{r}
 # Files or urls
-batch <- c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
+batch <- c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
+           ,'https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
 
 # A short data pipleine, shown with magrittr:
 text <- {
@@ -63,16 +70,20 @@ utils::str(text)
 
 ```
 
-The batch is two urls, and the output `text` is a character vector of two documents. See a snippet of the first document using `base::cat()`.
+The batch is two urls, and the output `text` is a character vector of two documents. 
+See a snippet of the first document using `base::cat()`.
 ```{r}
 # Look at a snippet from the long first document:
 base::cat(base::substr(text[1],45,160)) 
 ```
 
  
- Now we have some plain text. If there was a problem, the result would be `as.character(NA)`. Plain text can be easy to tokenize. 
+ Now we have some plain text. If there was a problem, the result would be `as.character(NA)`.
+ Plain text can be easy to tokenize. 
 ```{r}
-tokenize_words <- function(x){w=base::strsplit(base::tolower(x),split='[^a-zA-Z]+');base::lapply(w,function(x)x[x!=''])}
+tokenize_words <- function(x){
+  w=base::strsplit(base::tolower(x),split='[^a-zA-Z]+')
+  base::lapply(w,function(x)x[x!=''])}
 
 # Make a List of documents, each with a word vector
 words <- {
@@ -88,7 +99,8 @@ Access the first document in the `List` with the `[[` syntax. Each contains word
 words[[1]][1:7] 
 words[[2]][1:7] 
 ```
-While `rtika` is efficient for batches, to further reduce the time for very large jobs, increase the number of parallel system threads. For example: `tika_text(threads=2)`. This works on all `rtika` functions.
+While `rtika` is efficient for batches, to further reduce the time for very large jobs, increase the number of parallel system threads.
+For example: `tika_text(threads=2)`. This works on all `rtika` functions.
 ```{r}
 text <- {
   batch %>%
@@ -97,10 +109,15 @@ text <- {
 ```
 
 ## Get Metadata
-Metadata comes with the `jsonRecursive`,`xml` and `html` output options. In addition, text will be in `XHTML`, the stricter `HTML`. That retains more information than plain text, and is nice for extracting tables and table cells. The special `jsonRecursive` mode can also process compressed archives of documents. It is quickly accessed with `tika_json()`.
+Metadata comes with the `jsonRecursive`,`xml` and `html` output options. 
+In addition, text will be in `XHTML`, the stricter `HTML`.
+That retains more information than plain text, and is nice for extracting tables and table cells. 
+The special `jsonRecursive` mode can also process compressed archives of documents. 
+It is quickly accessed with `tika_json()`.
 ```{r}
 # Input vector of length two:
-batch <- c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf','https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
+batch <- c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
+           ,'https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
 
 # With tika_json(), text will be XHTML in the `X-TIKA:content` field.
 metadata <- {
@@ -121,10 +138,24 @@ utils::str(metadata[[1]])
 
 ## Similar Packages
 
-There is some overlap with many other text parsers, such as the R interface to antiword (See: <https://github.com/ropensci/antiword>). Listing all of them would take a huge amount of space, since Apache Tika processes over a thousand file types (See: <https://tika.apache.org/>). The main difference is that instead of specializing on a single format, Tika integrates dozens of specialist libraries from the Apache Foundation. Tika's unified approach offers a bit less control, and in return eases the parsing of digital archives filled with possibly unpredictable file types.
+There is some overlap with many other text parsers, such as the R interface to antiword (See: <https://github.com/ropensci/antiword>). 
+Listing all of them would take a huge amount of space, since Apache Tika processes over a thousand file types (See: <https://tika.apache.org/>). 
+The main difference is that instead of specializing on a single format, Tika integrates dozens of specialist libraries from the Apache Foundation. 
+Tika's unified approach offers a bit less control, and in return eases the parsing of digital archives filled with possibly unpredictable file types.
 
-In September 2017, github.com user *kyusque* released `tikaR`, which uses the `rJava` package to interact with Tika (See: <https://github.com/kyusque/tikaR>). As of writing, it provided similar text and metadata extraction, but only `xml` output. 
+In September 2017, github.com user *kyusque* released `tikaR`, which uses the `rJava` package to interact with Tika (See: <https://github.com/kyusque/tikaR>). 
+As of writing, it provided similar text and metadata extraction, but only `xml` output. 
 
-Back in March 2012, I started a similar project to interface with Apache Tika. My code also used low-level functions from the `rJava` package. I halted development after discovering that the Tika command line interface (CLI) was easier to use. My empty repository is at <https://r-forge.r-project.org/projects/r-tika/>.
+Back in March 2012, I started a similar project to interface with Apache Tika.
+My code also used low-level functions from the `rJava` package.
+I halted development after discovering that the Tika command line interface (CLI) was easier to use.
+My empty repository is at <https://r-forge.r-project.org/projects/r-tika/>.
 
- I chose to finally develop this package after getting excited by Tika's new 'batch processor' module, written in Java. I found the batch processor has very good efficiency when processing tens of thousands of documents. Further, it is not too slow for a single document either, and handles errors gracefully. Connecting `R` to the Tika batch processor turned out to be relatively simple, because the `R` code is simple. It uses the CLI to point Tika to the files. Simplicity, along with continuous testing, should ease integration. I anticipate that some researchers will need plain text output, while others will want `json` output. Some will want multiple processing threads to speed things up. These features are now implemented in `rtika`, although apparently not in `tikaR` yet. 
+ I chose to finally develop this package after getting excited by Tika's new 'batch processor' module, written in Java.
+The batch processor has very good efficiency when processing tens of thousands of documents. 
+Further, it is not too slow for a single document either, and handles errors gracefully. 
+Connecting `R` to the Tika batch processor turned out to be relatively simple, because the `R` code is simple.
+It uses the CLI to point Tika to the files. Simplicity, along with continuous testing, should ease integration.
+I anticipate that some researchers will need plain text output, while others will want `json` output.
+Some will want multiple processing threads to speed things up.
+These features are now implemented in `rtika`, although apparently not in `tikaR` yet. 

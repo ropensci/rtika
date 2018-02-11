@@ -9,6 +9,16 @@ for (i in seq_along(urls)) {
   download.file(urls[i], input[i])
 }
 
+# causes problem with travis, but not locally. May need to skip
+test_that("tika warns with url to nowhere without curl or sys package", {
+  nowhere <- 'http://www.predict-r.com/rtika_testing_coverage_file_not_here.txt'
+  expect_warning(tika(nowhere,lib.loc='') )
+})
+# causes problem with travis, but not locally. May need to skip
+test_that("tika stops when output_dir is root", {
+  expect_error( tika(input[1] , output_dir = file.path('/') ) )
+})
+
 test_that("tika parses a local pdf without curl or sys packages", {
   text <- tika(input[1], lib.loc = "")
   expect_equal(length(text), 1)
@@ -31,7 +41,11 @@ test_that("tika parses a single remote pdf without curl or sys package", {
 })
 
 
-
+# causes problem with travis, but not locally. Skipping on github for now.
+test_that("tika warns with url to nowhere with curl package", {
+  nowhere <- 'http://www.predict-r.com/rtika_testing_coverage_file_not_here.txt'
+  expect_warning(tika(nowhere) )
+})
 
 test_that("tika parses single local pdf", {
   text <- tika(input[1])
@@ -162,19 +176,9 @@ test_that("tika cleans up", {
   expect_equal(length(file.path(tempdir(), list.files(tempdir(), pattern = "^rtika_dir"))), 0)
 })
 
-# causes problem with travis, but not locally. Skipping on github for now.
-# test_that("tika warns with url to nowhere without curl or sys package", {
-#   nowhere <- 'http://www.predict-r.com/rtika_testing_coverage_file_not_here.txt'
-#   expect_warning(tika(nowhere,lib.loc='') )
-# })
 
 
-# causes problem with travis, but not locally. Skipping on github for now.
-# test_that("tika warns with url to nowhere", {
-#   nowhere <- 'http://www.predict-r.com/rtika_testing_coverage_file_not_here.txt'
-#   expect_warning(tika(nowhere) )
-# })
 
-# test_that("tika stops when output_dir is root", {
-#   expect_failure( tika(input[1] , output_dir = file.path('/') ) )
-# })
+
+
+
