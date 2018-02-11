@@ -136,7 +136,7 @@ tika <- function(input
     if (requireNamespace("curl", quietly = TRUE, lib.loc = lib.loc)) {
       .rtika_fetch <- function(url) {
         ret <- tempfile("rtika_file")
-        req <- curl::curl_fetch_disk(url, ret)
+        req <- tryCatch(curl::curl_fetch_disk(url, ret), error=function(e) return(list(status_code=1106)))
         if (req$status_code != 200) {
           warning("Could not download with curl::curl_fetch_disk: ", url)
           return(as.character(NA))
