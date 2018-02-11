@@ -8,7 +8,7 @@
 #' input= 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
 #' output = tika_text(input)
 #' cat(output)
-
+#' @export
 tika_text <- function(input, ...){
   tika(input=input, output="text", ...)
 }

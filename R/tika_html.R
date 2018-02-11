@@ -7,6 +7,7 @@
 #' input= 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
 #' output = tika_html(input)
 #' cat(output)
+#' @export
 
 tika_html <- function(input, ...){
   tika(input=input, output="html", ...)

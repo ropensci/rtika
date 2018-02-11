@@ -60,7 +60,7 @@
 #' Having the \code{data.table} package installed will slightly speed up the communication between R and Tika, but especially if there are hundreds of thousands of documents to process.
 #'
 #' The \code{curl} package downloads files quickly, if the user includes urls in the \code{input}. In testing, \code{curl} is required on Windows to avoid errors, and more work may still be needed to make Windows parse reliably.
-
+#' @export
 tika <- function(input
                  , output=c("text", "jsonRecursive", "xml", "html")[1]
                  , output_dir=""
@@ -73,8 +73,8 @@ tika <- function(input
                  , lib.loc=.libPaths()) {
 
   # Special thanks to Hadley for the nice git tutorial at: http://r-pkgs.had.co.nz/git.html
-  # devtools::build_vignettes() ; system('R CMD Rd2pdf ~/rtika')
-  # TODO:  memory setting with java -Xmx1024m -jar. Probably adjust child process -JXmx4g
+  # devtools::test(); devtools::document(); devtools::build_vignettes() ; system('R CMD Rd2pdf ~/rtika')
+  # TODO:  memory setting with java -Xmx1024m -jar. Probably also adjust child process -JXmx4g
 
 
   # Parameter sanity check --------------------------------------------------------
@@ -96,7 +96,8 @@ tika <- function(input
     , class(cleanup) == "logical"
     , class(lib.loc) == "character"
   )
-  # TODO: consider customizing config file for fine grained control over parsers?, see: https://tika.apache.org/1.17/configuring.html
+  # TODO: consider a config file for each request with fine grained control over parsers.
+  # see: https://tika.apache.org/1.17/configuring.html
 
   # Define return variable structure  --------------------------------------------------------
   # output will be character vector the same length as input, with initial NAs ...
@@ -115,7 +116,8 @@ tika <- function(input
   output_flag <- as.character(stats::na.omit(output_flag))
 
 
-  # output_dir parameter stores tika's processed files. If it doesn't exist, create one in the temp directory
+  # output_dir parameter stores tika's processed files. 
+  # If it doesn't exist, create one in the temp directory
   if (output_dir == "") {
     output_dir <- tempfile("rtika_dir")
     dir.create(output_dir)
@@ -139,27 +141,19 @@ tika <- function(input
           warning("Could not download with curl::curl_fetch_disk: ", url)
           return(as.character(NA))
         }
-        # TODO: consider adding file affix.
-        # OS X and ubuntu content-type is recorded in file extended attributes. Check with cmd: file --mime-type -b rtika_file*
-        # However, on windows, neither download.file and curl record content type as an extended attribute or file type affix
-        # typically, content0type is in header. It may or may not map to file type affix of file on internet.
+        # TODO: consider adding file affix recording document type (e.g. .docx) 
+        # With OS X and ubuntu, content-type is recorded nicely in extended attributes.
+        # Check with the cmd: file --mime-type -b rtika_file*
+        # However, on Windows, content type is not recorded apparently. 
+        # Neither download.file and curl help
+        # Curl *does* put content-type in the header provided by the download server
         # headers = parse_headers(req$headers)
         # ctype <- headers[grepl("^content-type", headers, ignore.case = TRUE)]
-        # https://github.com/jeroen/curl/blob/974495cd4880771a934b486530d11dd82aa743dd/examples/sitemap.R
-        # can map mime type to file extions:
+        # These can be mapped to a database of file affixes using these:
         # * https://raw.githubusercontent.com/apache/tika/master/tika-core/src/main/resources/org/apache/tika/mime/tika-mimetypes.xml
         # * ubuntu has a list in: /etc/mime.types
-        #  header content-type is more reliable that path affix in URL?
-        # this is often missing or wrong (e.g. .php, .cfm typically produce .html)
-        #       # path  = xml2::url_parse(url)$path
-        #       # regex pattern based on known extensions of Tika. Note that extension like .php, .cfm producing .html or other formats may or may not be an issue with tika. If it is, its worth using your own downloader. THis is just a convenience downloader.
-        #        # xml = xml2::read_xml('https://raw.githubusercontent.com/apache/tika/master/tika-core/src/main/resources/org/apache/tika/mime/tika-mimetypes.xml')
-        #       # ext = sort(xml2::xml_attr(xml_find_all(xml,'//glob'),'pattern'))
-        #       # max(nchar(ext[grepl('*.', ext,fixed=T)])-1) # 12
-        #       # sort(unique(unlist(strsplit(ext[grepl('*.', ext,fixed=T)],''))))
-        #       # paste( sort(unique(unlist(strsplit(ext[grepl('*.', ext,fixed=T)],'')))) , collapse = ' ')
-        #       # ext = tolower(regmatches(path, regexpr('\\.[A-Za-z0-9\\-_+]{1,12}$',path)))
-        # if path affix in URL does not match declared file type in headers, use headers?
+        # I assume content-type headers are much more reliable than the URL endpoint.
+        # This could be made into a 'robust_download' function, that also does retries
 
         return(ret)
       }
@@ -181,7 +175,7 @@ tika <- function(input
     }
     # input parameter adds downloaded file paths (if not downloaded, rtika_download produces NAs)
     urls <- input[toDownload]
-    tempfiles <- sapply(urls, .rtika_fetch)
+    tempfiles <- unlist(lapply(urls, .rtika_fetch))
     input[toDownload] <- tempfiles
   }
 
@@ -204,24 +198,53 @@ tika <- function(input
   # File paths containing both commas and quote characters appear to work with the settings below.
   fileList <- tempfile("rtika_file")
   if (requireNamespace("data.table", quietly = TRUE, lib.loc = lib.loc)) {
-    data.table::fwrite(data.table::data.table(inputFiles), fileList, row.names = FALSE, col.names = FALSE, sep = ",", quote = FALSE)
+    data.table::fwrite(data.table::data.table(inputFiles)
+                       , fileList, row.names = FALSE
+                       , col.names = FALSE
+                       , sep = ","
+                       , quote = FALSE)
   } else {
-    utils::write.table(inputFiles, fileList, row.names = FALSE, col.names = FALSE, sep = ",", quote = FALSE)
+    utils::write.table(inputFiles
+                       , fileList, row.names = FALSE
+                       , col.names = FALSE
+                       , sep = ","
+                       , quote = FALSE)
   }
-  # after the file is created, make sure it exists
+  # After the file is created, make sure it exists
   fileList <- normalizePath(fileList, mustWork = TRUE, winslash = "/")
 
   # java call  --------------------------------------------------------
 
   if (.Platform$OS.type == "windows") {
-    # windows requires quoting for paths, but others run into problems with default quoting on paths
-    java_args <- c("-jar", shQuote(jar), "-numConsumers", as.integer(threads), args, output_flag, "-i", shQuote(root), "-o", shQuote(output_dir), "-fileList", shQuote(fileList))
+    # Windows java requires quoting for paths, but OS X and Ubuntu java run into problems with shQuote. 
+    java_args <- c("-jar"
+                   , shQuote(jar)
+                   , "-numConsumers"
+                   , as.integer(threads)
+                   , args
+                   , output_flag
+                   , "-i"
+                   , shQuote(root)
+                   , "-o"
+                   , shQuote(output_dir)
+                   , "-fileList"
+                   , shQuote(fileList))
   } else {
-    java_args <- c("-jar", jar, "-numConsumers", as.integer(threads), args, output_flag, "-i", root, "-o", output_dir, "-fileList", fileList)
+    java_args <- c("-jar"
+                   , jar
+                   , "-numConsumers"
+                   , as.integer(threads)
+                   , args, output_flag
+                   , "-i"
+                   , root
+                   , "-o"
+                   , output_dir
+                   , "-fileList"
+                   , fileList)
   }
 
   # Compared to system2, sys is somehow much quicker when making the call to java.
-  # TODO: catch java errors if possible
+  # TODO: catch java errors better. 
   if (requireNamespace("sys", quietly = TRUE, lib.loc = lib.loc)) {
     sys::exec_wait(cmd = java[1], args = java_args, std_out = !quiet, std_err = !quiet)
   } else {
@@ -231,24 +254,39 @@ tika <- function(input
   # retrieve results  --------------------------------------------------------
 
   output_file_affix <- character()
-  output_file_affix <- ifelse(any(output %in% c("text", "t", "-t")), ".txt", output_file_affix)
-  output_file_affix <- ifelse(any(output %in% c("xml", "x", "-x")), ".xml", output_file_affix)
-  output_file_affix <- ifelse(any(output %in% c("html", "h", "-h")), ".html", output_file_affix)
-  output_file_affix <- ifelse(any(output %in% c("jsonRecursive", "J", "-J")), ".json", output_file_affix)
+  output_file_affix <- ifelse(any(output %in% c("text", "t", "-t"))
+                              , ".txt"
+                              , output_file_affix)
+  output_file_affix <- ifelse(any(output %in% c("xml", "x", "-x"))
+                              , ".xml"
+                              , output_file_affix)
+  output_file_affix <- ifelse(any(output %in% c("html", "h", "-h"))
+                              , ".html"
+                              , output_file_affix)
+  output_file_affix <- ifelse(any(output %in% c("jsonRecursive", "J", "-J"))
+                              , ".json"
+                              , output_file_affix)
 
-  # like a vectorized readChar
+  # Vectorized readChar
   .rtika_readFile <- function(path) {
     bytes <- file.size(path)
-    ifelse(!is.na(bytes), mapply(readChar, con = path, nchars = bytes, useBytes = TRUE), as.character(NA))
+    ifelse(!is.na(bytes), mapply(readChar
+                                 , con = path
+                                 , nchars = bytes
+                                 , useBytes = TRUE)
+           , as.character(NA))
   }
 
   # Clean & check with normalizePath, with warnings if not processed.
-  output_files <- normalizePath(file.path(output_dir, paste0(inputFiles, output_file_affix)), winslash = "/")
+  output_files <- normalizePath(file.path(output_dir
+                                          , paste0(inputFiles, output_file_affix))
+                                , winslash = "/")
 
   out[file_exists] <- .rtika_readFile(output_files)
 
   # UTF-8 is the preferred output format.
-  # While early Tika versions seemed to output UTF-16 from Java's SAX processor, it may be UTF-8 now. The XML output now declared UTF-8.
+  # While early Tika versions output UTF-16 from Java's SAX processor, it seems to be UTF-8 now.
+  # The XML output files declared UTF-8, for example.
   out <- enc2utf8(out)
 
   # cleanup temp files  --------------------------------------------------------
@@ -259,9 +297,11 @@ tika <- function(input
     }
 
     trash_dir <- file.path(tempdir(), list.files(tempdir(), pattern = "^rtika_dir"))
-    if (length(trash_dir) > 0) { # paranoid.
+    if (length(trash_dir) > 0) { 
       # if(.Platform$OS.type=='windows'){
-      #   tmp=  unlink( trash_dir, recursive =TRUE, force=TRUE) # does not seem to work unless force=TRUE on windows.
+      # On windows, deleting dir does not seem to work unless force=TRUE.
+      # but do not want to force this.
+      #   tmp=  unlink( trash_dir, recursive =TRUE, force=TRUE) 
       # } else {
       tmp <- unlink(trash_dir, recursive = TRUE)
       # }

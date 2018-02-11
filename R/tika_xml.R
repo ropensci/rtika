@@ -7,7 +7,7 @@
 #' input= 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
 #' output = tika_xml(input)
 #' cat(output)
-
+#' @export
 
 tika_xml <- function(input, ...){
   tika(input=input, output="xml", ...)
