@@ -72,12 +72,18 @@ tika <- function(input
                  , cleanup=FALSE
                  , lib.loc=.libPaths()) {
 
-  # Special thanks to Hadley for the nice git tutorial at: http://r-pkgs.had.co.nz/git.html
-  # devtools::test(); devtools::document(); devtools::build_vignettes() ; system('R CMD Rd2pdf ~/rtika')
-  # TODO:  memory setting with java -Xmx1024m -jar. Probably also adjust child process -JXmx4g
+  # Special thanks to Hadley the git tutorial at:
+  # http://r-pkgs.had.co.nz/git.html
+  # Useful functions: 
+  # devtools::test(); 
+  # devtools::build_vignettes() ; 
+  # system('R CMD Rd2pdf ~/rtika')
+  
+  # TODO:  memory setting with java -Xmx1024m -jar. 
+  # Probably also adjust child process -JXmx4g
 
 
-  # Parameter sanity check --------------------------------------------------------
+  # Parameter sanity check --------------------------------------------
   stopifnot(
     class(input) == "character"
     , length(input) > 0
@@ -99,7 +105,7 @@ tika <- function(input
   # TODO: consider a config file for each request with fine grained control over parsers.
   # see: https://tika.apache.org/1.17/configuring.html
 
-  # Define return variable structure  --------------------------------------------------------
+  # Define return variable structure  -----------------------------------------
   # output will be character vector the same length as input, with initial NAs ...
   out <- character(length(input))
   failure <- as.character(NA)
@@ -109,10 +115,18 @@ tika <- function(input
 
   # output_flag is output format for Tika command line
   output_flag <- character()
-  output_flag <- ifelse(any(output %in% c("jsonRecursive", "J", "-J")), "-J", output_flag) # goes first
-  output_flag <- c(output_flag, ifelse(any(output %in% c("text", "t", "-t")), "-t", NA))
-  output_flag <- c(output_flag, ifelse(any(output %in% c("xml", "x", "-x")), "-x", NA))
-  output_flag <- c(output_flag, ifelse(any(output %in% c("html", "h", "-h")), "-h", NA))
+  output_flag <- ifelse(any(output %in% c("jsonRecursive", "J", "-J"))
+                        , "-J"
+                        , output_flag) # goes first
+  output_flag <- c(output_flag, ifelse(any(output %in% c("text", "t", "-t"))
+                                       , "-t"
+                                       , NA))
+  output_flag <- c(output_flag, ifelse(any(output %in% c("xml", "x", "-x"))
+                                       , "-x"
+                                       , NA))
+  output_flag <- c(output_flag, ifelse(any(output %in% c("html", "h", "-h"))
+                                       , "-h"
+                                       , NA))
   output_flag <- as.character(stats::na.omit(output_flag))
 
 
@@ -124,9 +138,10 @@ tika <- function(input
   } else {
     # if an output directory is provided, check it exists.
     output_dir <- normalizePath(output_dir, mustWork = TRUE, winslash = "/")
-    # Must be very careful writing to any directory outside of temp directory. Idea here it to check its not the root directory
+    # Must be very careful writing to any directory outside of temp directory. 
+    # Idea here it to check its not the root directory
     if (output_dir == normalizePath("/", winslash = "/")) {
-      stop("Output directory cannot be the same as the root, because it is usually unsafe (e.g. Tika may overwrite files or create unwanted directories).")
+      stop("Output directory should not be the same as the system root.")
     }
   }
 
@@ -136,7 +151,7 @@ tika <- function(input
     if (requireNamespace("curl", quietly = TRUE, lib.loc = lib.loc)) {
       .rtika_fetch <- function(url) {
         ret <- tempfile("rtika_file")
-        req <- tryCatch(curl::curl_fetch_disk(url, ret), error=function(e) return(list(status_code=1106)))
+        req <- tryCatch(curl::curl_fetch_disk(url, ret), error=function(e) return(list(status_code=418)))
         if (req$status_code != 200) {
           warning("Could not download with curl::curl_fetch_disk: ", url)
           return(as.character(NA))
@@ -158,9 +173,7 @@ tika <- function(input
         return(ret)
       }
     } else {
-      if (.Platform$OS.type == "windows") {
-        warning("It's recommended to install the 'curl' package on Windows because the built in utils::download.file was not working.")
-      }
+      if (.Platform$OS.type == "windows") { warning("Please install the 'curl' package.") }
       .rtika_fetch <- function(url) {
         ret <- tempfile("rtika_file")
         req <- tryCatch(utils::download.file(url, ret, method = "libcurl"), error = function(e) {
@@ -179,14 +192,15 @@ tika <- function(input
     input[toDownload] <- tempfiles
   }
 
-  # input can have issues. Check if file exist, are not directories, are not NA, and were downloaded
+  # Input can have issues. 
+  # Check if file exist, are not directories, are not NA, and were downloaded
   file_exists <- !is.na(input) & file.exists(input) & !dir.exists(input)
   if (!any(file_exists)) {
     warning("No files could be found.")
     return(out)
   }
 
-  # inputFiles and fileList will contain files for Tika to process  --------------------------------------------------------
+  # inputFiles and fileList will contain files for Tika to process  --------------------------
 
   inputFiles <- normalizePath(input[file_exists], winslash = "/")
   # Tika expects files to be relative to root
@@ -217,30 +231,12 @@ tika <- function(input
 
   if (.Platform$OS.type == "windows") {
     # Windows java requires quoting for paths, but OS X and Ubuntu java run into problems with shQuote. 
-    java_args <- c("-jar"
-                   , shQuote(jar)
-                   , "-numConsumers"
-                   , as.integer(threads)
-                   , args
-                   , output_flag
-                   , "-i"
-                   , shQuote(root)
-                   , "-o"
-                   , shQuote(output_dir)
-                   , "-fileList"
+    java_args <- c("-jar" , shQuote(jar) , "-numConsumers" , as.integer(threads) , args
+                    , output_flag , "-i" , shQuote(root) , "-o" , shQuote(output_dir) , "-fileList"
                    , shQuote(fileList))
   } else {
-    java_args <- c("-jar"
-                   , jar
-                   , "-numConsumers"
-                   , as.integer(threads)
-                   , args, output_flag
-                   , "-i"
-                   , root
-                   , "-o"
-                   , output_dir
-                   , "-fileList"
-                   , fileList)
+    java_args <- c("-jar" , jar , "-numConsumers" , as.integer(threads), args, output_flag
+                   , "-i" , root , "-o" , output_dir , "-fileList" , fileList)
   }
 
   # Compared to system2, sys is somehow much quicker when making the call to java.

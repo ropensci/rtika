@@ -103,7 +103,9 @@ test_that("tika puts files into the specified output_dir", {
   dir.create(test_dir)
   test_dir <- normalizePath(test_dir, winslash = "/")
   text <- tika(input[1], output_dir = test_dir)
-  files <- list.files(test_dir, include.dirs = FALSE, recursive = TRUE)
+  files <- list.files(test_dir
+                      , include.dirs = FALSE
+                      , recursive = TRUE)
   expect_true(length(files) > 0)
   full_path <- file.path(test_dir, files)
   
@@ -172,8 +174,12 @@ test_that("tika_text works", {
 
 test_that("tika cleans up", {
   text <- tika(input[1], cleanup = TRUE)
-  expect_equal(length(file.path(tempdir(), list.files(tempdir(), pattern = "^rtika_file"))), 0)
-  expect_equal(length(file.path(tempdir(), list.files(tempdir(), pattern = "^rtika_dir"))), 0)
+  expect_equal(length(file.path(tempdir()
+                 , list.files(tempdir()
+                , pattern = "^rtika_file"))), 0)
+  expect_equal(length(file.path(tempdir()
+                , list.files(tempdir()
+                , pattern = "^rtika_dir"))), 0)
 })
 
 
