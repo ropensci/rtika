@@ -65,7 +65,7 @@ tika <- function(input
                  , output=c("text", "jsonRecursive", "xml", "html")[1]
                  , output_dir=""
                  , java = "java"
-                 , jar=system.file("java", "tika-app-1.17.jar", package = "rtika")
+                 , jar=tikajar::tikajar()
                  , threads=1
                  , args=character()
                  , quiet=TRUE

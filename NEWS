@@ -15,11 +15,18 @@
 =========================
 -added many tests to increase code coverage dramatically.
 -removed the n_chars parameter in favor of using  file.size() internally.
--integrated the covr package 
+-integrated the covr package.
 -for Windows users, the curl package is recommended to prevent base R download.file from corrupting files.
 -removed onLoad.R that checked java version in order to speed package loading and simplify code coverage testing.
 
-0.1.2 (2018-02-04)
+0.1.3 (2018-02-04)
 =========================
--added convenience functions that advertise output format: tika_xml(), tika_json(), tika_text(), tika_html()
--README examples use magrittr pipe
+-added convenience functions that advertise output format: tika_xml(), tika_json(), tika_text(), tika_html().
+-README examples use magrittr pipe.
+
+0.1.4 (2018-02-15)
+=========================
+-Because it is too big for CRAN, removed the Tika .jar file.
+-Added the Tika .jar to a new tikajar package on github.
+-Put the ropensci review badge on the tikajar package also, since its an essential component of this package.
+-Updated DESCRIPTION, documentation and .travis.yml to reflect the new installation routine.

@@ -5,9 +5,9 @@
 \title{R Interface to 'Apache Tika'}
 \usage{
 tika(input, output = c("text", "jsonRecursive", "xml", "html")[1],
-  output_dir = "", java = "java", jar = system.file("java",
-  "tika-app-1.17.jar", package = "rtika"), threads = 1, args = character(),
-  quiet = TRUE, cleanup = FALSE, lib.loc = .libPaths())
+  output_dir = "", java = "java", jar = tikajar::tikajar(), threads = 1,
+  args = character(), quiet = TRUE, cleanup = FALSE,
+  lib.loc = .libPaths())
 }
 \arguments{
 \item{input}{Character vector describing the paths to the input documents. Strings starting with 'http://','https://', or 'ftp://' are downloaded to a temporary directory first. Each file will be read, but not modified.}

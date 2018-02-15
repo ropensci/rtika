@@ -33,13 +33,13 @@ Next, install the `rtika` package from github.com.
 # Okay, we also need devtools to easily install from github, until this package is on CRAN 
 if(!requireNamespace('devtools')){
   install.packages('devtools',repos='https://cloud.r-project.org')};
-# Install and setup
+# Install the Tika java program using the 'tikajar' package, and setup
 if(!requireNamespace('rtika')){
-  devtools::install_github('predict-r/rtika')};
+  devtools::install_github(c('predict-r/tikajar','predict-r/rtika'))};
 library('rtika')  
 ```
 
-There are no dependencies other than `java`. It's nice that `rtika` is enhanced by other packages.
+There are no dependencies other than the `tikajar` package and `java`. 
 ```{r,results = "hide",message = FALSE }
 # The curl, sys, and data.table packages enhance rtika.
 # Here, magrittr helps document long pipelines.
