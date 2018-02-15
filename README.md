@@ -10,7 +10,7 @@ rtika
 
 > For most of the more common and popular formats, Tika then provides content extraction, metadata extraction and language identification capabilities. (From <https://en.wikipedia.org/wiki/Apache_Tika>, accessed Jan 18, 2018)
 
-This R interface includes the Tika software.
+This is an R interface to the Tika software.
 
 Installation
 ------------
@@ -25,17 +25,17 @@ Next, install the `rtika` package from github.com.
 # Okay, we also need devtools to easily install from github, until this package is on CRAN 
 if(!requireNamespace('devtools')){
   install.packages('devtools',repos='https://cloud.r-project.org')};
-# Install and setup
+# Install the Tika java program using the 'tikajar' package, and setup
 if(!requireNamespace('rtika')){
-  devtools::install_github('predict-r/rtika')};
+  devtools::install_github(c('predict-r/tikajar','predict-r/rtika'))};
 library('rtika')  
 ```
 
-There are no dependencies other than `java`. It's nice that `rtika` is enhanced by other packages.
+There are no dependencies other than the `tikajar` package and `java`.
 
 ``` r
 # The curl, sys, and data.table packages enhance rtika.
-# Magrittr helps document long pipelines.
+# Here, magrittr helps document long pipelines.
 library("magrittr")
 ```
 
@@ -154,7 +154,7 @@ utils::str(metadata[[1]])
 #>   ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
 #>  $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
 #>  $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-#>  $ X-TIKA:parse_time_millis                   : chr "1232"
+#>  $ X-TIKA:parse_time_millis                   : chr "1091"
 #>  $ access_permission:assemble_document        : chr "true"
 #>  $ access_permission:can_modify               : chr "true"
 #>  $ access_permission:can_print                : chr "true"
@@ -180,9 +180,9 @@ utils::str(metadata[[1]])
 #>  $ pdf:docinfo:trapped                        : chr "False"
 #>  $ pdf:encrypted                              : chr "false"
 #>  $ producer                                   : chr "pdfTeX-1.40.18"
-#>  $ resourceName                               : chr "rtika_file280332d11ecb"
+#>  $ resourceName                               : chr "rtika_file2d041544da51"
 #>  $ tika:file_ext                              : chr ""
-#>  $ tika_batch_fs:relative_path                : chr "tmp/Rtmpj19tio/rtika_file280332d11ecb"
+#>  $ tika_batch_fs:relative_path                : chr "tmp/RtmpwqNsI8/rtika_file2d041544da51"
 #>  $ trapped                                    : chr "False"
 #>  $ xmp:CreatorTool                            : chr "TeX"
 #>  $ xmpTPg:NPages                              : chr "37"
