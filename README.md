@@ -80,7 +80,9 @@ base::cat(base::substr(text[1],45,160))
 #> This manual is for R, version 3.4.3 (2017-11-30).
 ```
 
-Now we have some plain text. If there was a problem, the result would be `as.character(NA)`. Plain text can be easy to tokenize.
+Now we have some plain text. If there was a problem, the result would be `as.character(NA)`.
+
+Plain text can be easy to tokenize.
 
 ``` r
 tokenize_words <- function(x){
@@ -154,7 +156,7 @@ utils::str(metadata[[1]])
 #>   ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
 #>  $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
 #>  $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-#>  $ X-TIKA:parse_time_millis                   : chr "1167"
+#>  $ X-TIKA:parse_time_millis                   : chr "1237"
 #>  $ access_permission:assemble_document        : chr "true"
 #>  $ access_permission:can_modify               : chr "true"
 #>  $ access_permission:can_print                : chr "true"
@@ -180,9 +182,9 @@ utils::str(metadata[[1]])
 #>  $ pdf:docinfo:trapped                        : chr "False"
 #>  $ pdf:encrypted                              : chr "false"
 #>  $ producer                                   : chr "pdfTeX-1.40.18"
-#>  $ resourceName                               : chr "rtika_file2eff2702ea1d"
+#>  $ resourceName                               : chr "rtika_file32db361255b"
 #>  $ tika:file_ext                              : chr ""
-#>  $ tika_batch_fs:relative_path                : chr "tmp/Rtmpqb4lLg/rtika_file2eff2702ea1d"
+#>  $ tika_batch_fs:relative_path                : chr "tmp/RtmpMr7xHZ/rtika_file32db361255b"
 #>  $ trapped                                    : chr "False"
 #>  $ xmp:CreatorTool                            : chr "TeX"
 #>  $ xmpTPg:NPages                              : chr "37"

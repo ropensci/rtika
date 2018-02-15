@@ -57,12 +57,12 @@ Setting \code{output} to \code{"jsonRecursive"} or its shortcut \code{"J"} produ
 
 \section{Background}{
 
-Tika is a foundational library for several Apache projects such as the Apache Solr search engine. It has been in development since at least 2007. The most efficient way I've found to process many thousands of documents is Tika's 'batch' mode, which is the only mode used in `rtika`. There are potentially more things that can be done with this package, given enough time and attention, because Apache Tika includes many libraries and methods in its .jar file. The source is available at: \url{https://tika.apache.org/}.
+Tika is a foundational library for several Apache projects such as the Apache Solr search engine. It has been in development since at least 2007. The most efficient way I've found to process many thousands of documents is Tika's 'batch' mode, which is the only mode used in `rtika`. There are potentially more things that can be done, given enough time and attention, because Apache Tika includes many libraries and methods in its .jar file found in the 'tikajar' dependency. The source is available at: \url{https://tika.apache.org/}.
 }
 
 \section{Configuration}{
 
-This package includes the \code{tika-app-X.XX.jar}. This jar works with Java 7. Tika in mid-2018 needs Java 8, so it's best to install that version if possible.
+This package depends on the \code{tikajar} package, which contains the \code{tika-app-X.XX.jar}. This jar works with Java 7. Tika in mid-2018 needs Java 8, so it's best to install that version if possible.
 
 By default, this R package internally invokes Java by calling the \code{java} command from the command line. To specify the path to a particular Java version, set the path in the \code{java} attribute of the \code{tika} function.
 
