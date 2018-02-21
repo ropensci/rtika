@@ -5,7 +5,7 @@
 #' @param ... Other parameters to be sent to `tika`.
 #' @return A character vector in the same order and with the same length as \code{input}. Unprocessed files are \code{as.character(NA)}.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' input= 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
 #' output = tika_text(input)
 #' cat(output)

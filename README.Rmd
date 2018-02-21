@@ -101,12 +101,12 @@ Access the first document in the `List` with the `[[` syntax. Each contains word
 words[[1]][1:7] 
 words[[2]][1:7] 
 ```
-While `rtika` is efficient for batches, to further reduce the time for very large jobs, increase the number of parallel system threads.
-For example: `tika_text(threads=2)`. This works on all `rtika` functions.
+While `rtika` is efficient for batches, to further reduce the time for very large jobs, increase the number of parallel system threads. The usefulness of this depends on the file system speed or other factors. Eight threads is probably not much faster than three or four.
+For example: `tika_text(threads=3)`. This works on all `rtika` functions.
 ```{r}
 text <- {
   batch %>%
-  tika_text(threads=2) 
+  tika_text(threads=3) 
 }
 ```
 

@@ -19,7 +19,7 @@ To start, you need R and either `OpenJDK 1.7` or `Java 7`. Higher versions work.
 
 On Windows, the `curl` package is suggested if you feed `rtika` with urls instead of local documents.
 
-Next, install the `rtika` package and its dependencies `tikajar` and `sys`.
+Next, install the `rtika` package and its main dependencies `tikajar` and `sys`.
 
 ``` r
 # Okay, we also need devtools to easily install from github, until this is all on CRAN 
@@ -32,7 +32,7 @@ if(!requireNamespace('rtika')){
 library('rtika')  
 ```
 
-There are no other dependencies. The `rJava` package is not required.
+The `rJava` package is not required.
 
 ``` r
 # The curl and data.table packages enhance rtika.
@@ -113,12 +113,12 @@ words[[2]][1:7]
 #> [6] "definition" "table"
 ```
 
-While `rtika` is efficient for batches, to further reduce the time for very large jobs, increase the number of parallel system threads. For example: `tika_text(threads=2)`. This works on all `rtika` functions.
+While `rtika` is efficient for batches, to further reduce the time for very large jobs, increase the number of parallel system threads. The usefulness of this depends on the file system speed or other factors. Eight threads is probably not much faster than three or four. For example: `tika_text(threads=3)`. This works on all `rtika` functions.
 
 ``` r
 text <- {
   batch %>%
-  tika_text(threads=2) 
+  tika_text(threads=3) 
 }
 ```
 
@@ -157,7 +157,7 @@ utils::str(metadata[[1]])
 #>   ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
 #>  $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
 #>  $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-#>  $ X-TIKA:parse_time_millis                   : chr "982"
+#>  $ X-TIKA:parse_time_millis                   : chr "996"
 #>  $ access_permission:assemble_document        : chr "true"
 #>  $ access_permission:can_modify               : chr "true"
 #>  $ access_permission:can_print                : chr "true"
@@ -183,9 +183,9 @@ utils::str(metadata[[1]])
 #>  $ pdf:docinfo:trapped                        : chr "False"
 #>  $ pdf:encrypted                              : chr "false"
 #>  $ producer                                   : chr "pdfTeX-1.40.18"
-#>  $ resourceName                               : chr "rtika_file69b34963e4d3"
+#>  $ resourceName                               : chr "rtika_file7a6f1127d61b"
 #>  $ tika:file_ext                              : chr ""
-#>  $ tika_batch_fs:relative_path                : chr "tmp/RtmpnpqOpm/rtika_file69b34963e4d3"
+#>  $ tika_batch_fs:relative_path                : chr "tmp/RtmpsKnZtB/rtika_file7a6f1127d61b"
 #>  $ trapped                                    : chr "False"
 #>  $ xmp:CreatorTool                            : chr "TeX"
 #>  $ xmpTPg:NPages                              : chr "37"

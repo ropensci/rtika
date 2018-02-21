@@ -5,7 +5,7 @@
 \title{R Interface to 'Apache Tika'}
 \usage{
 tika(input, output = c("text", "jsonRecursive", "xml", "html")[1],
-  output_dir = "", java = "java", jar = tikajar::tikajar(), threads = 1,
+  output_dir = "", java = "java", jar = tikajar::tikajar(), threads = 2,
   args = character(), quiet = TRUE, cleanup = TRUE,
   lib.loc = .libPaths())
 }
@@ -20,7 +20,7 @@ tika(input, output = c("text", "jsonRecursive", "xml", "html")[1],
 
 \item{jar}{Optional alternative path to a \code{tika-app-X.XX.jar}. Useful if this package becomes out of date.}
 
-\item{threads}{Integer of the number of file consumer threads Tika uses. Defaults to 1.}
+\item{threads}{Integer of the number of file consumer threads Tika uses. Defaults to 2.}
 
 \item{args}{Optional character vector of additional arguments passed to Tika, that may not yet be implemented in this R interface, in the pattern of \code{c('-arg1','setting1','-arg2','setting2')}. Available arguments include \code{-timeoutThresholdMillis} (Number of milliseconds allowed to a parse before the process is killed and restarted), \code{-maxRestarts} (Maximum number of times the watchdog process will restart the child process), \code{-includeFilePat} (Regular expression to determine which files to process, e.g. \code{"(?i)\.pdf"}), \code{-excludeFilePat}, and \code{-maxFileSizeBytes}. These are documented in the .jar --help command.}
 
@@ -74,7 +74,7 @@ The \code{curl} package downloads files quickly, if the user includes urls in th
 }
 
 \examples{
-\dontrun{
+\donttest{
 #' #extract text
 input= 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
 text = tika(input)

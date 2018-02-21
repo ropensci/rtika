@@ -9,14 +9,14 @@
 #' @param output_dir Optional directory path to save the converted files in. Tika may overwrite files so an empty directory is best. See the 'Output Details' section before using.
 #' @param java Optional command to invoke Java. For example, it can be the full path to a particular Java version. See the Configuration section below.
 #' @param jar Optional alternative path to a \code{tika-app-X.XX.jar}. Useful if this package becomes out of date.
-#' @param threads Integer of the number of file consumer threads Tika uses. Defaults to 1.
+#' @param threads Integer of the number of file consumer threads Tika uses. Defaults to 2.
 #' @param args Optional character vector of additional arguments passed to Tika, that may not yet be implemented in this R interface, in the pattern of \code{c('-arg1','setting1','-arg2','setting2')}. Available arguments include \code{-timeoutThresholdMillis} (Number of milliseconds allowed to a parse before the process is killed and restarted), \code{-maxRestarts} (Maximum number of times the watchdog process will restart the child process), \code{-includeFilePat} (Regular expression to determine which files to process, e.g. \code{"(?i)\.pdf"}), \code{-excludeFilePat}, and \code{-maxFileSizeBytes}. These are documented in the .jar --help command.
 #' @param quiet Logical if Tika command line messages and errors are to be supressed. Defaults to TRUE.
 #' @param cleanup Logical to clean up temporary files after running the command, which can accumulate. Defaults to TRUE. They are in \code{tempdir()}. These files are automatically removed at the end of the R session even if set to FALSE.
 #' @param lib.loc Optional character vector describing the library paths containing \code{curl} and \code{data.table} packages. Normally, it's best to install these and leave this parameter alone. The parameter is included mainly for package testing.
 #' @return A character vector in the same order and with the same length as \code{input}. Unprocessed files are \code{as.character(NA)}. See the Output Details section below.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' #' #extract text
 #' input= 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
 #' text = tika(input)
@@ -66,7 +66,7 @@ tika <- function(input
                  , output_dir=""
                  , java = "java"
                  , jar=tikajar::tikajar()
-                 , threads=1
+                 , threads=2
                  , args=character()
                  , quiet=TRUE
                  , cleanup=TRUE
@@ -229,6 +229,7 @@ tika <- function(input
   fileList <- normalizePath(fileList, mustWork = TRUE, winslash = "/")
 
   # java call  --------------------------------------------------------
+
 
   if (.Platform$OS.type == "windows") {
     # Windows java requires quoting for paths, but OS X and Ubuntu java run into problems with shQuote. 
