@@ -27,7 +27,7 @@ Get Java installation tips at <http://openjdk.java.net/install/> or <https://www
 
 On Windows, the `curl` package is suggested if you feed `rtika` with urls instead of local documents. 
 
-Next, install the `rtika`  package and its dependencies `tikajar` and `sys`.
+Next, install the `rtika`  package and its main dependencies `tikajar` and `sys`.
 
 ```{r,results = "hide",message = FALSE }
 # Okay, we also need devtools to easily install from github, until this is all on CRAN 
@@ -40,7 +40,7 @@ if(!requireNamespace('rtika')){
 library('rtika')  
 ```
 
-There are no other dependencies. The `rJava` package is not required. 
+The `rJava` package is not required. 
 ```{r,results = "hide",message = FALSE }
 # The curl and data.table packages enhance rtika.
 # Here, magrittr helps document long pipelines.

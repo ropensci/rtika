@@ -7,7 +7,7 @@ Authors@R: c(
     person(given="The Apache Software Foundation", role=c("aut","cph") )
   )
 Maintainer: Sasha Goodman <goodmansasha@gmail.com>
-Imports: tikajar,sys
+Imports: tikajar,sys,stats,utils
 Suggests: 
     jsonlite,
     xml2,

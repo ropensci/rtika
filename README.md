@@ -27,7 +27,8 @@ if(!requireNamespace('devtools')){
   install.packages('devtools',repos='https://cloud.r-project.org')};
 # Install 'tikajar' and 'rtika'
 if(!requireNamespace('rtika')){
-  devtools::install_github(c('predict-r/tikajar','predict-r/rtika'),dependencies=TRUE)};
+  install.packages('sys',repos='https://cloud.r-project.org');
+  devtools::install_github(c('predict-r/tikajar','predict-r/rtika'))};
 library('rtika')  
 ```
 
@@ -156,7 +157,7 @@ utils::str(metadata[[1]])
 #>   ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
 #>  $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
 #>  $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-#>  $ X-TIKA:parse_time_millis                   : chr "968"
+#>  $ X-TIKA:parse_time_millis                   : chr "982"
 #>  $ access_permission:assemble_document        : chr "true"
 #>  $ access_permission:can_modify               : chr "true"
 #>  $ access_permission:can_print                : chr "true"
@@ -182,9 +183,9 @@ utils::str(metadata[[1]])
 #>  $ pdf:docinfo:trapped                        : chr "False"
 #>  $ pdf:encrypted                              : chr "false"
 #>  $ producer                                   : chr "pdfTeX-1.40.18"
-#>  $ resourceName                               : chr "rtika_file49a06ef276e3"
+#>  $ resourceName                               : chr "rtika_file69b34963e4d3"
 #>  $ tika:file_ext                              : chr ""
-#>  $ tika_batch_fs:relative_path                : chr "tmp/RtmpqbHkny/rtika_file49a06ef276e3"
+#>  $ tika_batch_fs:relative_path                : chr "tmp/RtmpnpqOpm/rtika_file69b34963e4d3"
 #>  $ trapped                                    : chr "False"
 #>  $ xmp:CreatorTool                            : chr "TeX"
 #>  $ xmpTPg:NPages                              : chr "37"
