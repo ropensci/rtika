@@ -30,3 +30,12 @@
 -Added the Tika .jar to a new tikajar package on github.
 -Put the ropensci review badge on the tikajar package also, since its an essential component of this package.
 -Updated DESCRIPTION, documentation and .travis.yml to reflect the new installation routine.
+
+0.1.5 (2018-02-15)
+=========================
+-Added dependency on 'sys' package because the 'system2' function was causing intermittent errors by ending tika in mid process.
+-Added startup check of the java version, using .onLoad() call to 'java -version'
+-Removed redundant conversion to UTF-8, because the Tika batch routine is already outputting UTF-8. 
+-Increased the speed of building packages (fewer downloads needed for testing, and the examples do not run).
+-Added Code of Conduct to CONDUCT.md file
+-Set default 'cleanup' attribute to TRUE.

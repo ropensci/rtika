@@ -1,12 +1,14 @@
 Package: rtika
 Type: Package
 Title: R Interface to 'Apache Tika' 
-Version: 0.1.4 
-Author: Sasha Goodman <goodmansasha@gmail.com>[aut], The Apache Software Foundation [aut,cph]
+Version: 0.1.5 
+Authors@R: c(
+    person(given="Sasha",family="Goodman", email="goodmansasha@gmail.com", role=c("aut","cre") ), 
+    person(given="The Apache Software Foundation", role=c("aut","cph") )
+  )
 Maintainer: Sasha Goodman <goodmansasha@gmail.com>
-Imports: tikajar
+Imports: tikajar,sys
 Suggests: 
-    sys,
     jsonlite,
     xml2,
     data.table,
@@ -18,8 +20,8 @@ Suggests:
     Matrix,
     magrittr
 License: Apache License 2.0 | file LICENSE
-SystemRequirements: Java (>=7) | openjdk-7-jre (via apt) | java-1.7.0-openjdk (via yum) | openjdk-8-jre (via apt) | java-1.8.0-openjdk (via yum) 
-Description: Extract text or metadata from over a thousand file types. Get either plain text or structured XHTML. This R interface includes the Tika software. Its source is available at https://github.com/apache/tika. 
+SystemRequirements: Java (>=7)
+Description: Extract text or metadata from over a thousand file types. Get either plain text or structured XHTML. 
 Depends: R (>= 3.1.0)
 Encoding: UTF-8
 LazyData: true

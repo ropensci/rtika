@@ -6,3 +6,4 @@
 ^tika-example$
 ^codecov\.yml$
 .Rhistory
+^CONDUCT\.md$

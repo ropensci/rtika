@@ -18,7 +18,9 @@ A character vector in the same order and with the same length as \code{input}. U
 Extract plain text rendition
 }
 \examples{
+\dontrun{
 input= 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
 output = tika_text(input)
 cat(output)
+}
 }

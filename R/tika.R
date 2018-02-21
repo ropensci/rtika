@@ -12,10 +12,11 @@
 #' @param threads Integer of the number of file consumer threads Tika uses. Defaults to 1.
 #' @param args Optional character vector of additional arguments passed to Tika, that may not yet be implemented in this R interface, in the pattern of \code{c('-arg1','setting1','-arg2','setting2')}. Available arguments include \code{-timeoutThresholdMillis} (Number of milliseconds allowed to a parse before the process is killed and restarted), \code{-maxRestarts} (Maximum number of times the watchdog process will restart the child process), \code{-includeFilePat} (Regular expression to determine which files to process, e.g. \code{"(?i)\.pdf"}), \code{-excludeFilePat}, and \code{-maxFileSizeBytes}. These are documented in the .jar --help command.
 #' @param quiet Logical if Tika command line messages and errors are to be supressed. Defaults to TRUE.
-#' @param cleanup Logical to clean up temporary files after running the command, which can accumulate. Defaults to FALSE. They are in \code{tempdir()}. These files are automatically removed at the end of the R session anyhow.
-#' @param lib.loc Optional character vector describing the library paths containing \code{curl}, \code{data.table} or \code{sys} packages. Normally, it's best to install the packages and leave this parameter alone. The parameter is included mainly for package testing.
+#' @param cleanup Logical to clean up temporary files after running the command, which can accumulate. Defaults to TRUE. They are in \code{tempdir()}. These files are automatically removed at the end of the R session even if set to FALSE.
+#' @param lib.loc Optional character vector describing the library paths containing \code{curl} and \code{data.table} packages. Normally, it's best to install these and leave this parameter alone. The parameter is included mainly for package testing.
 #' @return A character vector in the same order and with the same length as \code{input}. Unprocessed files are \code{as.character(NA)}. See the Output Details section below.
 #' @examples
+#' \dontrun{
 #' #' #extract text
 #' input= 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
 #' text = tika(input)
@@ -31,6 +32,7 @@
 #'   metadata$'Content-Type' # [1] "application/pdf"
 #'   metadata$producer # [1] "pdfTeX-1.40.18"
 #'   metadata$'Creation-Date' # [1] "2017-11-30T13:39:02Z"
+#' }
 #' }
 #' @section Output Details:
 #' If an input file did not exist, could not be downloaded, was a directory, or Tika could not process it, the result will be \code{as.character(NA)} for that file.
@@ -49,13 +51,11 @@
 #' @section Background:
 #' Tika is a foundational library for several Apache projects such as the Apache Solr search engine. It has been in development since at least 2007. The most efficient way I've found to process many thousands of documents is Tika's 'batch' mode, which is the only mode used in `rtika`. There are potentially more things that can be done, given enough time and attention, because Apache Tika includes many libraries and methods in its .jar file found in the 'tikajar' dependency. The source is available at: \url{https://tika.apache.org/}.
 #' @section Configuration:
-#' This package depends on the \code{tikajar} package, which contains the \code{tika-app-X.XX.jar}. This jar works with Java 7. Tika in mid-2018 needs Java 8, so it's best to install that version if possible.
+#' This package depends on the \code{sys} and \code{tikajar} packages. The later contains the \code{tika-app-X.XX.jar}. This jar works with Java 7. Tika in mid-2018 needs Java 8, so it's best to install Java 8.
 #'
 #' By default, this R package internally invokes Java by calling the \code{java} command from the command line. To specify the path to a particular Java version, set the path in the \code{java} attribute of the \code{tika} function.
 #'
 #' Other command line arguments can be set with \code{args}. See the options for version 1.17 here: \url{https://tika.apache.org/1.17/gettingstarted.html}
-#'
-#' Having the \code{sys} package is suggested but not required. The \code{sys} package can dramatically speed up the initial call to Java each time this function is run, which is useful if you are calling this function again and again. Installing  \code{sys} after  \code{rtika} will work as well as installing it before. If you find yourself calling \code{tika} repeatedly, consider supplying a long character vector of files to \code{input} instead of an individual file each time. It uses Tika's batch mode which is efficient.
 #'
 #' Having the \code{data.table} package installed will slightly speed up the communication between R and Tika, but especially if there are hundreds of thousands of documents to process.
 #'
@@ -69,7 +69,7 @@ tika <- function(input
                  , threads=1
                  , args=character()
                  , quiet=TRUE
-                 , cleanup=FALSE
+                 , cleanup=TRUE
                  , lib.loc=.libPaths()) {
 
   # Special thanks to Hadley the git tutorial at:
@@ -133,7 +133,8 @@ tika <- function(input
   # output_dir parameter stores tika's processed files. 
   # If it doesn't exist, create one in the temp directory
   if (output_dir == "") {
-    output_dir <- tempfile("rtika_dir")
+    # The filenames are guaranteed not to be currently in use.
+    output_dir <- tempfile("rtika_dir") 
     dir.create(output_dir)
   } else {
     # if an output directory is provided, check it exists.
@@ -231,21 +232,18 @@ tika <- function(input
 
   if (.Platform$OS.type == "windows") {
     # Windows java requires quoting for paths, but OS X and Ubuntu java run into problems with shQuote. 
-    java_args <- c("-jar" , shQuote(jar) , "-numConsumers" , as.integer(threads) , args
+    java_args <- c("-Djava.awt.headless=true","-jar" , shQuote(jar) , "-numConsumers" , as.integer(threads) , args
                     , output_flag , "-i" , shQuote(root) , "-o" , shQuote(output_dir) , "-fileList"
                    , shQuote(fileList))
   } else {
-    java_args <- c("-jar" , jar , "-numConsumers" , as.integer(threads), args, output_flag
+    java_args <- c("-Djava.awt.headless=true","-jar" , jar , "-numConsumers" , as.integer(threads), args, output_flag
                    , "-i" , root , "-o" , output_dir , "-fileList" , fileList)
   }
 
   # Compared to system2, sys is somehow much quicker when making the call to java.
   # TODO: catch java errors better. 
-  if (requireNamespace("sys", quietly = TRUE, lib.loc = lib.loc)) {
+ 
     sys::exec_wait(cmd = java[1], args = java_args, std_out = !quiet, std_err = !quiet)
-  } else {
-    system2(command = java[1], args = java_args, stdout = !quiet, stderr = !quiet)
-  }
 
   # retrieve results  --------------------------------------------------------
 
@@ -280,10 +278,9 @@ tika <- function(input
 
   out[file_exists] <- .rtika_readFile(output_files)
 
-  # UTF-8 is the preferred output format.
-  # While early Tika versions output UTF-16 from Java's SAX processor, it seems to be UTF-8 now.
-  # The XML output files declared UTF-8, for example.
-  out <- enc2utf8(out)
+
+  # From studying the source code, the Tika batch processor defaults to UTF-8
+  # every batch config xml file uses a FSOutputStreamFactory set to UTF-8
 
   # cleanup temp files  --------------------------------------------------------
   if (cleanup) {

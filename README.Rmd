@@ -27,7 +27,7 @@ Get Java installation tips at <http://openjdk.java.net/install/> or <https://www
 
 On Windows, the `curl` package is suggested if you feed `rtika` with urls instead of local documents. 
 
-Next, install the `tikajar` and `rtika`  packages from github.com.
+Next, install the `rtika`  package and its dependencies `tikajar` and `sys`.
 
 ```{r,results = "hide",message = FALSE }
 # Okay, we also need devtools to easily install from github, until this is all on CRAN 
@@ -35,13 +35,13 @@ if(!requireNamespace('devtools')){
   install.packages('devtools',repos='https://cloud.r-project.org')};
 # Install 'tikajar' and 'rtika'
 if(!requireNamespace('rtika')){
-  devtools::install_github(c('predict-r/tikajar','predict-r/rtika'))};
+  devtools::install_github(c('predict-r/tikajar','predict-r/rtika'),dependencies=TRUE)};
 library('rtika')  
 ```
 
-There are no dependencies other than the `tikajar` package and `java`. 
+There are no other dependencies. The `rJava` package is not required. 
 ```{r,results = "hide",message = FALSE }
-# The curl, sys, and data.table packages enhance rtika.
+# The curl and data.table packages enhance rtika.
 # Here, magrittr helps document long pipelines.
 library("magrittr")
 ```
@@ -160,3 +160,6 @@ It uses the CLI to point Tika to the files. Simplicity, along with continuous te
 I anticipate that some researchers will need plain text output, while others will want `json` output.
 Some will want multiple processing threads to speed things up.
 These features are now implemented in `rtika`, although apparently not in `tikaR` yet. 
+
+## Code of Conduct
+Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.

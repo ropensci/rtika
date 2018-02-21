@@ -6,7 +6,7 @@
 \usage{
 tika(input, output = c("text", "jsonRecursive", "xml", "html")[1],
   output_dir = "", java = "java", jar = tikajar::tikajar(), threads = 1,
-  args = character(), quiet = TRUE, cleanup = FALSE,
+  args = character(), quiet = TRUE, cleanup = TRUE,
   lib.loc = .libPaths())
 }
 \arguments{
@@ -26,9 +26,9 @@ tika(input, output = c("text", "jsonRecursive", "xml", "html")[1],
 
 \item{quiet}{Logical if Tika command line messages and errors are to be supressed. Defaults to TRUE.}
 
-\item{cleanup}{Logical to clean up temporary files after running the command, which can accumulate. Defaults to FALSE. They are in \code{tempdir()}. These files are automatically removed at the end of the R session anyhow.}
+\item{cleanup}{Logical to clean up temporary files after running the command, which can accumulate. Defaults to TRUE. They are in \code{tempdir()}. These files are automatically removed at the end of the R session even if set to FALSE.}
 
-\item{lib.loc}{Optional character vector describing the library paths containing \code{curl}, \code{data.table} or \code{sys} packages. Normally, it's best to install the packages and leave this parameter alone. The parameter is included mainly for package testing.}
+\item{lib.loc}{Optional character vector describing the library paths containing \code{curl} and \code{data.table} packages. Normally, it's best to install these and leave this parameter alone. The parameter is included mainly for package testing.}
 }
 \value{
 A character vector in the same order and with the same length as \code{input}. Unprocessed files are \code{as.character(NA)}. See the Output Details section below.
@@ -62,13 +62,11 @@ Tika is a foundational library for several Apache projects such as the Apache So
 
 \section{Configuration}{
 
-This package depends on the \code{tikajar} package, which contains the \code{tika-app-X.XX.jar}. This jar works with Java 7. Tika in mid-2018 needs Java 8, so it's best to install that version if possible.
+This package depends on the \code{sys} and \code{tikajar} packages. The later contains the \code{tika-app-X.XX.jar}. This jar works with Java 7. Tika in mid-2018 needs Java 8, so it's best to install Java 8.
 
 By default, this R package internally invokes Java by calling the \code{java} command from the command line. To specify the path to a particular Java version, set the path in the \code{java} attribute of the \code{tika} function.
 
 Other command line arguments can be set with \code{args}. See the options for version 1.17 here: \url{https://tika.apache.org/1.17/gettingstarted.html}
-
-Having the \code{sys} package is suggested but not required. The \code{sys} package can dramatically speed up the initial call to Java each time this function is run, which is useful if you are calling this function again and again. Installing  \code{sys} after  \code{rtika} will work as well as installing it before. If you find yourself calling \code{tika} repeatedly, consider supplying a long character vector of files to \code{input} instead of an individual file each time. It uses Tika's batch mode which is efficient.
 
 Having the \code{data.table} package installed will slightly speed up the communication between R and Tika, but especially if there are hundreds of thousands of documents to process.
 
@@ -76,6 +74,7 @@ The \code{curl} package downloads files quickly, if the user includes urls in th
 }
 
 \examples{
+\dontrun{
 #' #extract text
 input= 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
 text = tika(input)
@@ -91,5 +90,6 @@ if(requireNamespace('jsonlite')){
   metadata$'Content-Type' # [1] "application/pdf"
   metadata$producer # [1] "pdfTeX-1.40.18"
   metadata$'Creation-Date' # [1] "2017-11-30T13:39:02Z"
+}
 }
 }
