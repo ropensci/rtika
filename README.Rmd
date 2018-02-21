@@ -35,7 +35,8 @@ if(!requireNamespace('devtools')){
   install.packages('devtools',repos='https://cloud.r-project.org')};
 # Install 'tikajar' and 'rtika'
 if(!requireNamespace('rtika')){
-  devtools::install_github(c('predict-r/tikajar','predict-r/rtika'),dependencies=TRUE)};
+  install.packages('sys',repos='https://cloud.r-project.org');
+  devtools::install_github(c('predict-r/tikajar','predict-r/rtika'))};
 library('rtika')  
 ```
 
