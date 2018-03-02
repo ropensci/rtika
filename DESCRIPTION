@@ -20,7 +20,6 @@ Suggests:
     knitr,
     rmarkdown,
     covr,
-    Matrix,
     magrittr
 License: Apache License 2.0 | file LICENSE
 SystemRequirements: Java (>=7)

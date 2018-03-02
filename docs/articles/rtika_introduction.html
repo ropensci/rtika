@@ -87,43 +87,67 @@
 <div id="a-digital-babel-fish" class="section level1">
 <h1 class="hasAnchor">
 <a href="#a-digital-babel-fish" class="anchor"></a>A Digital Babel Fish</h1>
-<p>Apache Tika is similar to the Babel fish in Douglas Adam’s book, “The Hitchhikers’ Guide to the Galaxy” <span class="citation">(C. Mattmann and Zitting 2011, 3)</span>. The Babel fish translates any natural language to any other. While Apache Tika does not yet translate natural languages (that is in the works with Apache Joshua), it is a technology that aims to tame the tower of babel of digital document formats. As the Babel fish allowed a person to understand Vogon poetry, Tika allows a computer to extract text and objects from Microsoft Word.</p>
-<p>The world of digital documents and their file formats is like a place where every community has their own set of languages. Academic, business, government, and online communities use anywhere from a few file types to thousands. Unfortunately, attempts to unify groups around a single format are typically frustrated <span class="citation">(C. A. Mattmann 2013)</span>.</p>
-<p>This plethora of file formats has become a common concern. Tika is a common library to address the issue. Starting in Apache Nutch in 2005, Tika became its own project in 2007 and then a component of other Apache projects including Nutch, Lucene, Jackrabbit, Mahout, and Solr <span class="citation">(C. Mattmann and Zitting 2011, 17)</span>.</p>
-<p>With the increased volume of data to ingest found in digital archives, and terabyte sized data becoming common, Tika’s design goals include keeping the complexity at bay, memory consumption low, and processing speed fast <span class="citation">(C. Mattmann and Zitting 2011, 18)</span>.</p>
+<p>Apache Tika is similar to the Babel fish in Douglas Adam’s book, “The Hitchhikers’ Guide to the Galaxy” <span class="citation">(C. Mattmann and Zitting 2011, 3)</span>. The Babel fish translates any natural language to any other. While Apache Tika does not yet translate natural languages (that is in the works with Apache Joshua), it aims to tame the tower of babel of digital document formats. As the Babel fish allowed a person to understand Vogon poetry, Tika allows a computer to extract text and objects from Microsoft Word.</p>
+<p>The world of digital documents and their file formats is like a place where every community has their own language. Academic, business, government, and online communities use anywhere from a few file types to thousands. Unfortunately, attempts to unify groups around a single format are typically frustrated <span class="citation">(C. A. Mattmann 2013)</span>.</p>
+<p>This plethora of file formats has become a common concern. Tika is a common library to address the issue. Starting in Apache Nutch in 2005, Tika became its own project in 2007 and then a component of other Apache projects including Lucene, Jackrabbit, Mahout, and Solr <span class="citation">(C. Mattmann and Zitting 2011, 17)</span>.</p>
+<p>With the increased volume of data to ingest found in digital archives, and terabyte sized data becoming common, Tika’s design goals include keeping complexity at bay, low memory consumption, and fast processing <span class="citation">(C. Mattmann and Zitting 2011, 18)</span>.</p>
 <p>The <code>rtika</code> package is an interface to Apache Tika that leverages Tika’s efficient batch processor to parse lists of documents fairly quickly. Therefore, I recommend using batches whenever possible. Currently, all the <code><a href="../reference/tika.html">tika()</a></code> functions take some time to spin up, and that will get annoying with hundreds of separate calls the functions.</p>
 <p>The practice of piping batches of data into a function is not uncommon and is becoming a popular style with the <code>magrittr</code> R package. That style makes such pipelines easy to code, and they are almost self-documenting.</p>
 </div>
-<div id="use-tika_text-to-extract-plain-text" class="section level1">
+<div id="use-tika_fetch-to-preserve-content-type-when-downloading" class="section level1">
 <h1 class="hasAnchor">
-<a href="#use-tika_text-to-extract-plain-text" class="anchor"></a>Use tika_text() to Extract Plain Text</h1>
-<p>Video, sound and images are important file types, and yet much of the meaningful data in the world remains numeric or textual. Tika can parse many textual formats to extract alpha-numeric text, along with a few characters that control the arrangement of text like line breaks. For example:</p>
+<a href="#use-tika_fetch-to-preserve-content-type-when-downloading" class="anchor"></a>Use tika_fetch() to Preserve Content-Type when Downloading</h1>
+<p>A general suggestion is to use <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> when downloading files from the Internet, to preserve the Content-Type information in the file extension.</p>
+<p>Tika’s Content-Type detection is improved with file extensions (Tika also relies on other features such as Magic bytes, which are unique control bytes in the file header). The file extensions should be used whenever possible. The <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> function tries to preserves Content-Type information from the download server.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(<span class="st">'rtika'</span>)
 <span class="co">#&gt; Loading required package: rtika</span>
 <span class="kw">require</span>(<span class="st">'magrittr'</span>)
 <span class="co">#&gt; Loading required package: magrittr</span>
 
-<span class="co"># The manuals directory</span>
-<span class="co"># contains 37 PDF files manuals </span>
-<span class="co"># of popular R packages.</span>
-<span class="co"># It is about 7.7 MB in total.</span>
-my_path &lt;-<span class="st"> "~/manuals"</span>
+download_directory =<span class="st"> </span><span class="kw">tempfile</span>(<span class="st">'rtika_download_dir'</span>,
+                           <span class="dt">tmpdir=</span><span class="st">'~'</span>)
 
-<span class="co"># Get all the files in that directory</span>
-batch &lt;-<span class="st"> </span><span class="kw">file.path</span>(my_path,
-                <span class="kw">list.files</span>(<span class="dt">path =</span> my_path,
-                <span class="dt">recursive=</span><span class="ot">TRUE</span>))
+<span class="kw">dir.create</span>(download_directory)
+
+download_directory &lt;-<span class="st"> </span><span class="kw">normalizePath</span>(download_directory)
+
+urls &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'https://tika.apache.org/'</span>,
+           <span class="st">'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'</span>,
+           <span class="st">'https://cran.r-project.org/doc/manuals/r-release/R-lang.html'</span>)
+
+batch &lt;-<span class="st"> </span>
+<span class="st">    </span>urls <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw"><a href="../reference/tika_fetch.html">tika_fetch</a></span>(download_directory)
+
+<span class="co"># it will add the appropriate file extension to the downloads</span>
+batch
+<span class="co">#&gt; [1] "/home/project/rtika_download_dir62284b6ae951/rtika_file62285c92f0c6.html"</span>
+<span class="co">#&gt; [2] "/home/project/rtika_download_dir62284b6ae951/rtika_file622815e52df0.pdf" </span>
+<span class="co">#&gt; [3] "/home/project/rtika_download_dir62284b6ae951/rtika_file6228556e5774.html"</span></code></pre></div>
+<p>This <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> function is used internally by the other functions when processing URLs. However, then the downloaded files are left in a temporary directory and lost at the end of the R session. By using <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> with a directory of your choice, you can save the files and return to them later. <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> also has a <code>retries</code> parameter to help if an intermittent connection error stops a download.</p>
+</div>
+<div id="use-tika_text-to-extract-plain-text" class="section level1">
+<h1 class="hasAnchor">
+<a href="#use-tika_text-to-extract-plain-text" class="anchor"></a>Use tika_text() to Extract Plain Text</h1>
+<p>Video, sound and images are important file types, and yet much of the meaningful data in the world remains numeric or textual. Tika can parse many textual formats to extract alpha-numeric text, along with a few characters that control the arrangement of text like line breaks.</p>
+<p>Frequently, one start with a directory on the computer that contains many files, and get a list using <code><a href="http://www.rdocumentation.org/packages/base/topics/list.files">base::list.files()</a></code>. See the commented code below for a recipe. Because this article must run in the cloud, I use the downloaded files from above.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="co"># # Code to get ALL the files in my_path</span>
+<span class="co"># # using base::list.files</span>
+<span class="co"># my_path &lt;- "~"</span>
+<span class="co"># # get a batch</span>
+<span class="co"># batch &lt;- file.path(my_path,</span>
+<span class="co">#                 list.files(path = my_path,</span>
+<span class="co">#                 recursive=TRUE))</span>
+<span class="co"># # optionally sample </span>
 
 
 <span class="co"># pipe the batch into tika_text() </span>
 <span class="co"># get plain text</span>
-<span class="kw">system.time</span>(
+
 text &lt;-<span class="st">  </span>
 <span class="st">    </span>batch <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw"><a href="../reference/tika_text.html">tika_text</a></span>() 
-)
-<span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;  13.100   1.070   9.583</span></code></pre></div>
+<span class="st">    </span><span class="kw"><a href="../reference/tika_text.html">tika_text</a></span>() </code></pre></div>
 <p>The output is a R character vector of the same length and order as the input files.</p>
 <p>Occasionally, files are not parsable and the returned value for that file is <code>NA</code>. The reasons for unparsable files include corrupt files, disk input/output issues, empty files, password protection, a unhandled format, the document structure is broken, or the document has an unexpected variation.</p>
 <p>These issues should be rare. Tika works very well on most documents. If an archive is very large there may be a small percentage of unparsable files, and you might want to handle them.</p>
@@ -134,10 +158,10 @@ batch[<span class="kw">which</span>(<span class="kw">is.na</span>(text))]
 <p>Plain text is reasonably easy to search through using <code><a href="http://www.rdocumentation.org/packages/base/topics/grep">base::grep()</a></code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
 results &lt;-
-<span class="st">    </span>text[ base<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/base/topics/grep">grep</a></span>(<span class="dt">pattern=</span><span class="st">'the'</span>,<span class="dt">x=</span>text) ]
+<span class="st">    </span>text[ base<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/base/topics/grep">grep</a></span>(<span class="dt">pattern=</span><span class="st">'Tika'</span>,<span class="dt">x=</span>text) ]
 
 <span class="kw">length</span>(results)
-<span class="co">#&gt; [1] 37</span></code></pre></div>
+<span class="co">#&gt; [1] 1</span></code></pre></div>
 <p>With plain text, a variety of interesting analyses are possible ranging from word counting to making matrices for deep learning predictions. Many of these common cases are handled easily with the very well documented <code>tidytext</code> package <span class="citation">(Silge and Robinson 2017)</span>. Among other things, it handles tokenization and creating term-document matrices.</p>
 </div>
 <div id="parameters-for-very-big-datasets" class="section level1">
@@ -162,46 +186,16 @@ batch <span class="op">%&gt;%</span>
           <span class="dt">output_dir =</span> my_directory) 
 
 <span class="co"># list all the file locations </span>
-saved_files &lt;-<span class="st"> </span><span class="kw">file.path</span>(my_directory,
+processed_files &lt;-<span class="st"> </span><span class="kw">file.path</span>(my_directory,
                 <span class="kw">list.files</span>(<span class="dt">path =</span> my_directory,
                 <span class="dt">recursive=</span><span class="ot">TRUE</span>)
                 )</code></pre></div>
 <p>The location of each file in <code>output_dir</code> follows the convention from the Apache Tika batch processor: the full path to each file mirrors the original file’s path, only within the <code>output_dir</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">saved_files[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>]
-<span class="co">#&gt; [1] "/home/project/rtika_output_dir52fd11421584/home/project/manuals/assertthat.pdf.txt"</span>
-<span class="co">#&gt; [2] "/home/project/rtika_output_dir52fd11421584/home/project/manuals/BH.pdf.txt"        </span>
-<span class="co">#&gt; [3] "/home/project/rtika_output_dir52fd11421584/home/project/manuals/colorspace.pdf.txt"</span>
-<span class="co">#&gt; [4] "/home/project/rtika_output_dir52fd11421584/home/project/manuals/crayon.pdf.txt"    </span>
-<span class="co">#&gt; [5] "/home/project/rtika_output_dir52fd11421584/home/project/manuals/curl.pdf.txt"      </span>
-<span class="co">#&gt; [6] "/home/project/rtika_output_dir52fd11421584/home/project/manuals/dbplyr.pdf.txt"    </span>
-<span class="co">#&gt; [7] "/home/project/rtika_output_dir52fd11421584/home/project/manuals/devtools.pdf.txt"</span></code></pre></div>
-</div>
-<div id="use-tika_fetch-to-preserve-content-type-when-downloading" class="section level1">
-<h1 class="hasAnchor">
-<a href="#use-tika_fetch-to-preserve-content-type-when-downloading" class="anchor"></a>Use tika_fetch() to Preserve Content-Type when Downloading</h1>
-<p>A general suggestion is to use <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> to download files from the Internet, to preserve the Content-Type information in the file extension.</p>
-<p>Tika’s Content-Type detection is improved with file extensions (Tika also relies on other features such as Magic bytes, which are unique control bytes in the file header). The file extensions should be used whenever possible. The <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> function tries to preserves Content-Type information from the download server.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">download_directory =<span class="st"> </span><span class="kw">tempfile</span>(<span class="st">'rtika_download_dir'</span>,
-                           <span class="dt">tmpdir=</span><span class="st">'~'</span>)
-
-<span class="kw">dir.create</span>(download_directory)
-
-download_directory &lt;-<span class="st"> </span><span class="kw">normalizePath</span>(download_directory)
-
-batch &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'https://tika.apache.org/'</span>,
-           <span class="st">'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'</span>,
-           <span class="st">'https://cran.r-project.org/doc/manuals/r-release/R-lang.html'</span>)
-
-downloads &lt;-<span class="st"> </span>
-<span class="st">    </span>batch <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw"><a href="../reference/tika_fetch.html">tika_fetch</a></span>(download_directory)
-
-<span class="co"># it will add the appropriate file extension to the downloads</span>
-downloads
-<span class="co">#&gt; [1] "/home/project/rtika_download_dir52fd73885c66/rtika_file52fd21c265d.html" </span>
-<span class="co">#&gt; [2] "/home/project/rtika_download_dir52fd73885c66/rtika_file52fd51176881.pdf" </span>
-<span class="co">#&gt; [3] "/home/project/rtika_download_dir52fd73885c66/rtika_file52fd5c8c8690.html"</span></code></pre></div>
-<p>This <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> function is used internally by the other functions when processing URLs. However, then the downloaded files are left in a temporary directory and lost at the end of the R session. By using <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> with a directory of your choice, you can save the files and return to them later. <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> also has a <code>retries</code> parameter to help if an intermittent connection error stops a download.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">processed_files
+<span class="co">#&gt; [1] "/home/project/rtika_output_dir622846aade63/home/project/rtika_download_dir62284b6ae951/rtika_file622815e52df0.pdf.txt" </span>
+<span class="co">#&gt; [2] "/home/project/rtika_output_dir622846aade63/home/project/rtika_download_dir62284b6ae951/rtika_file6228556e5774.html.txt"</span>
+<span class="co">#&gt; [3] "/home/project/rtika_output_dir622846aade63/home/project/rtika_download_dir62284b6ae951/rtika_file62285c92f0c6.html.txt"</span></code></pre></div>
+<p>Note that <code><a href="../reference/tika_text.html">tika_text()</a></code> produces <code>.txt</code> files, <code><a href="../reference/tika_xml.html">tika_xml()</a></code> produces <code>.xml</code> files, <code><a href="../reference/tika_html.html">tika_html()</a></code> produces <code>.html</code> files, and <code><a href="../reference/tika_json.html">tika_json()</a></code> produces <code>.json</code> files.</p>
 </div>
 <div id="use-either-tika_html-or-tika_xml-to-get-structured-xhtml" class="section level1">
 <h1 class="hasAnchor">
@@ -212,7 +206,7 @@ downloads
 
 <span class="co"># get XHTML text</span>
 html &lt;-<span class="st"> </span>
-<span class="st">    </span>downloads <span class="op">%&gt;%</span>
+<span class="st">    </span>batch <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw"><a href="../reference/tika_html.html">tika_html</a></span>() <span class="op">%&gt;%</span>
 <span class="st">     </span><span class="kw">lapply</span>(xml2<span class="op">::</span>read_html)
 
@@ -222,23 +216,30 @@ links &lt;-
 <span class="st">    </span><span class="kw">lapply</span>(xml2<span class="op">::</span>xml_find_all, <span class="st">'//a'</span>) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">lapply</span>(xml2<span class="op">::</span>xml_attr, <span class="st">'href'</span>)
 
-links[[<span class="dv">2</span>]][<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]
-<span class="co">#&gt; [1] "https://CRAN.R-project.org/package=DBI"</span>
-<span class="co">#&gt; [2] "https://CRAN.R-project.org/package=DBI"</span>
-<span class="co">#&gt; [3] "https://CRAN.R-project.org/package=DBI"</span>
-<span class="co">#&gt; [4] "https://CRAN.R-project.org/package=DBI"</span>
-<span class="co">#&gt; [5] "https://CRAN.R-project.org/package=DBI"</span></code></pre></div>
+<span class="kw">sample</span>(links[[<span class="dv">2</span>]],<span class="dv">10</span>)
+<span class="co">#&gt;  [1] "https://www.openoffice.org"                    </span>
+<span class="co">#&gt;  [2] "https://CRAN.R-project.org/package=RODBC"      </span>
+<span class="co">#&gt;  [3] "https://CRAN.R-project.org/package=WriteXLS"   </span>
+<span class="co">#&gt;  [4] "https://CRAN.R-project.org/package=XLConnect"  </span>
+<span class="co">#&gt;  [5] "https://CRAN.R-project.org/package=RMongo"     </span>
+<span class="co">#&gt;  [6] "https://CRAN.R-project.org/package=RPostgreSQL"</span>
+<span class="co">#&gt;  [7] "http://www.unidata.ucar.edu/software/netcdf/"  </span>
+<span class="co">#&gt;  [8] "https://CRAN.R-project.org/package=XLConnect"  </span>
+<span class="co">#&gt;  [9] "https://CRAN.R-project.org/package=RODBC"      </span>
+<span class="co">#&gt; [10] "https://CRAN.R-project.org/package=rJava"</span></code></pre></div>
 <p>Each type of file has different information preserved by Tika’s internal parsers. The particular aspects vary. Some notes:</p>
-<pre><code>* PDF files retain pagination, with each page starting with the XHTML element `&lt;div class="page"&gt;`. 
-* PDFs retain hyperlinks in the anchor element `&lt;a&gt;` with the attribute `href`.
-* Word and Excel documents retain tabular data as a `&lt;table&gt;` element. The `rvest` package has a function to get tables of data  with `rvest::html_table()`.
-* Multiple Excel sheets are preserved as multiple XHTML tables. Ragged tables, where rows have differing numbers of cells, are not supported.</code></pre>
+<ul>
+<li>PDF files retain pagination, with each page starting with the XHTML element <code>&lt;div class="page"&gt;</code>.</li>
+<li>PDFs retain hyperlinks in the anchor element <code>&lt;a&gt;</code> with the attribute <code>href</code>.</li>
+<li>Word and Excel documents retain tabular data as a <code>&lt;table&gt;</code> element. The <code>rvest</code> package has a function to get tables of data with <code><a href="http://www.rdocumentation.org/packages/rvest/topics/html_table">rvest::html_table()</a></code>.</li>
+<li>Multiple Excel sheets are preserved as multiple XHTML tables. Ragged tables, where rows have differing numbers of cells, are not supported.</li>
+</ul>
 <p>Note that <code><a href="../reference/tika_html.html">tika_html()</a></code> and <code><a href="../reference/tika_xml.html">tika_xml()</a></code> both produce the same strict form of HTML called XHTML, and either works essentially the same for all the documents I’ve tried.</p>
 </div>
 <div id="a-bit-of-xhtml-metadata" class="section level1">
 <h1 class="hasAnchor">
 <a href="#a-bit-of-xhtml-metadata" class="anchor"></a>A Bit of XHTML Metadata</h1>
-<p>The <code><a href="../reference/tika_html.html">tika_html()</a></code> and <code><a href="../reference/tika_xml.html">tika_xml()</a></code> functions are focused on extracting strict, structured HTML as XHTML. In addition, basic metadata can be accessed in the <code>meta</code> tags of the XHTML. The MIME type is sometimes recorded in the Dublin Core metadata <code>dc:format</code> (<a href="http://dublincore.org/" class="uri">http://dublincore.org/</a>):</p>
+<p>The <code><a href="../reference/tika_html.html">tika_html()</a></code> and <code><a href="../reference/tika_xml.html">tika_xml()</a></code> functions are focused on extracting strict, structured HTML as XHTML. In addition, basic metadata can be accessed in the <code>meta</code> tags of the XHTML. The original file MIME type is sometimes recorded in the Dublin Core metadata <code>dc:format</code> (<a href="http://dublincore.org/" class="uri">http://dublincore.org/</a>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">html <span class="op">%&gt;%</span>
 <span class="kw">lapply</span>(xml2<span class="op">::</span>xml_find_first, <span class="st">'//meta[@name="dc:format"]'</span>) <span class="op">%&gt;%</span>
 <span class="kw">lapply</span>(xml2<span class="op">::</span>xml_attr,<span class="st">'content'</span>) <span class="op">%&gt;%</span>
@@ -258,7 +259,7 @@ html <span class="op">%&gt;%</span>
 <span class="co">#&gt;  [5] &lt;meta name="Content-Encoding" content="UTF-8"&gt;\n</span>
 <span class="co">#&gt;  [6] &lt;meta name="Content-Type-Hint" content="text/html; charset=UTF-8"&gt;\n</span>
 <span class="co">#&gt;  [7] &lt;meta name="tika_batch_fs:relative_path" content="home/project/rtik ...</span>
-<span class="co">#&gt;  [8] &lt;meta name="resourceName" content="rtika_file52fd21c265d.html"&gt;\n</span>
+<span class="co">#&gt;  [8] &lt;meta name="resourceName" content="rtika_file62285c92f0c6.html"&gt;\n</span>
 <span class="co">#&gt;  [9] &lt;meta name="Content-Length" content="34144"&gt;\n</span>
 <span class="co">#&gt; [10] &lt;meta name="X-TIKA:digest:MD5" content="6c45bb17c53941b781930f9683b ...</span>
 <span class="co">#&gt; [11] &lt;meta name="Content-Type" content="application/xhtml+xml; charset=U ...</span>
@@ -294,7 +295,7 @@ html <span class="op">%&gt;%</span>
 <span class="co">#&gt;  [3] &lt;meta name="keywords" content="R Language Definition"&gt;\n</span>
 <span class="co">#&gt;  [4] &lt;meta name="tika_batch_fs:relative_path" content="home/project/rtik ...</span>
 <span class="co">#&gt;  [5] &lt;meta name="description" content="R Language Definition"&gt;\n</span>
-<span class="co">#&gt;  [6] &lt;meta name="resourceName" content="rtika_file52fd5c8c8690.html"&gt;\n</span>
+<span class="co">#&gt;  [6] &lt;meta name="resourceName" content="rtika_file6228556e5774.html"&gt;\n</span>
 <span class="co">#&gt;  [7] &lt;meta name="distribution" content="global"&gt;\n</span>
 <span class="co">#&gt;  [8] &lt;meta name="dc:title" content="R Language Definition"&gt;\n</span>
 <span class="co">#&gt;  [9] &lt;meta name="tika:file_ext" content="html"&gt;\n</span>
@@ -404,7 +405,7 @@ metadata &lt;-
 <span class="co">#&gt;   ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.jpeg.JpegParser"</span>
 <span class="co">#&gt;  $ X-TIKA:content             : chr "&lt;html xmlns=\"http://www.w3.org/1999/xhtml\"&gt;\n&lt;head&gt;\n&lt;meta name=\"Exif Version\" content=\"2.21\" /&gt;\n&lt;meta n"| __truncated__</span>
 <span class="co">#&gt;  $ X-TIKA:digest:MD5          : chr "829904e2f23a2095b7c46d13e92cab12"</span>
-<span class="co">#&gt;  $ X-TIKA:parse_time_millis   : chr "184"</span>
+<span class="co">#&gt;  $ X-TIKA:parse_time_millis   : chr "246"</span>
 <span class="co">#&gt;  $ XMP Value Count            : chr "0"</span>
 <span class="co">#&gt;  $ Y Resolution               : chr "72 dots per inch"</span>
 <span class="co">#&gt;  $ YCbCr Positioning          : chr "Center of pixel array"</span>
@@ -538,9 +539,9 @@ content &lt;-<span class="st"> </span>
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#a-digital-babel-fish">A Digital Babel Fish</a></li>
+      <li><a href="#use-tika_fetch-to-preserve-content-type-when-downloading">Use tika_fetch() to Preserve Content-Type when Downloading</a></li>
       <li><a href="#use-tika_text-to-extract-plain-text">Use tika_text() to Extract Plain Text</a></li>
       <li><a href="#parameters-for-very-big-datasets">Parameters for Very Big Datasets</a></li>
-      <li><a href="#use-tika_fetch-to-preserve-content-type-when-downloading">Use tika_fetch() to Preserve Content-Type when Downloading</a></li>
       <li><a href="#use-either-tika_html-or-tika_xml-to-get-structured-xhtml">Use Either tika_html() or tika_xml() to Get Structured XHTML</a></li>
       <li><a href="#a-bit-of-xhtml-metadata">A Bit of XHTML Metadata</a></li>
       <li><a href="#use-tika_json-for-images">Use tika_json() for Images</a></li>

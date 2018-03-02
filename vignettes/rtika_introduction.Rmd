@@ -20,45 +20,74 @@ knitr::opts_chunk$set(
 # A Digital Babel Fish
 
 
-Apache Tika is similar to the Babel fish in Douglas Adam's book, "The Hitchhikers' Guide to the Galaxy" [@mattmann2011tika p. 3]. The Babel fish translates any natural language to any other. While Apache Tika does not yet translate natural languages (that is in the works with Apache Joshua), it is a technology that aims to tame the tower of babel of digital document formats. As the Babel fish allowed a person to understand Vogon poetry, Tika allows a computer to extract text and objects from Microsoft Word.  
+Apache Tika is similar to the Babel fish in Douglas Adam's book, "The Hitchhikers' Guide to the Galaxy" [@mattmann2011tika p. 3]. The Babel fish translates any natural language to any other. While Apache Tika does not yet translate natural languages (that is in the works with Apache Joshua), it aims to tame the tower of babel of digital document formats. As the Babel fish allowed a person to understand Vogon poetry, Tika allows a computer to extract text and objects from Microsoft Word.  
 
-The world of digital documents and their file formats is like a place where every community has their own set of languages. Academic, business, government, and online communities use anywhere from a few file types to thousands. Unfortunately, attempts to unify groups around a single format are typically frustrated [@mattmann2013computing]. 
+The world of digital documents and their file formats is like a place where every community has their own language. Academic, business, government, and online communities use anywhere from a few file types to thousands. Unfortunately, attempts to unify groups around a single format are typically frustrated [@mattmann2013computing]. 
 
-This plethora of file formats has become a common concern. Tika is a common library to address the issue. Starting in Apache Nutch in 2005, Tika became its own project in 2007 and then a component of other Apache projects including Nutch, Lucene, Jackrabbit, Mahout, and Solr [@mattmann2011tika p. 17]. 
+This plethora of file formats has become a common concern. Tika is a common library to address the issue. Starting in Apache Nutch in 2005, Tika became its own project in 2007 and then a component of other Apache projects including Lucene, Jackrabbit, Mahout, and Solr [@mattmann2011tika p. 17]. 
 
-With the increased volume of data to ingest found in digital archives, and terabyte sized data becoming common, Tika's design goals include keeping the complexity at bay, memory consumption low, and processing speed fast [@mattmann2011tika p. 18].  
+With the increased volume of data to ingest found in digital archives, and terabyte sized data becoming common, Tika's design goals include keeping complexity at bay, low memory consumption, and fast processing [@mattmann2011tika p. 18].  
 
 The `rtika` package is an interface to Apache Tika that leverages Tika's efficient batch processor to parse lists of documents fairly quickly. Therefore, I recommend using batches whenever possible. Currently, all the `tika()` functions take some time to spin up, and that will get annoying with hundreds of separate calls the functions. 
 
 The practice of piping batches of data into a function is not uncommon and is becoming a popular style with the `magrittr` R package. That style makes such pipelines easy to code, and they are almost self-documenting.
 
-# Use tika_text() to Extract Plain Text 
+# Use tika_fetch() to Preserve Content-Type when Downloading 
 
-Video, sound and images are important file types, and yet much of the meaningful data in the world remains numeric or textual. Tika can parse many textual formats to extract alpha-numeric text, along with a few characters that control the arrangement of text like line breaks. For example:
+A general suggestion is to use `tika_fetch()` when downloading files from the Internet, to preserve the Content-Type information in the file extension. 
+
+Tika's Content-Type detection is improved with file extensions (Tika also relies on other features such as Magic bytes, which are unique control bytes in the file header). The file extensions should be used whenever possible. The `tika_fetch()` function tries to preserves Content-Type information from the download server.
 
 ```{r}
 require('rtika')
 require('magrittr')
 
-# The manuals directory
-# contains 37 PDF files manuals 
-# of popular R packages.
-# It is about 7.7 MB in total.
-my_path <- "~/manuals"
+download_directory = tempfile('rtika_download_dir',
+                           tmpdir='~')
 
-# Get all the files in that directory
-batch <- file.path(my_path,
-                list.files(path = my_path,
-                recursive=TRUE))
+dir.create(download_directory)
+
+download_directory <- normalizePath(download_directory)
+
+urls <- c('https://tika.apache.org/',
+           'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf',
+           'https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
+
+batch <- 
+    urls %>% 
+    tika_fetch(download_directory)
+
+# it will add the appropriate file extension to the downloads
+batch
+
+```
+This `tika_fetch()` function is used internally by the other functions when processing URLs. However, then the downloaded files are left in a temporary directory and lost at the end of the R session. By using `tika_fetch()` with a directory of your choice, you can save the files and return to them later. `tika_fetch()` also has a `retries` parameter to help if an intermittent connection error stops a download.
+
+# Use tika_text() to Extract Plain Text 
+
+Video, sound and images are important file types, and yet much of the meaningful data in the world remains numeric or textual. Tika can parse many textual formats to extract alpha-numeric text, along with a few characters that control the arrangement of text like line breaks. 
+
+Frequently, one start with a directory on the computer that contains many files, and get a list using `base::list.files()`. See the commented code below for a recipe. Because this article must run in the cloud, I use the downloaded files from above.
+
+```{r}
+
+# # Code to get ALL the files in my_path
+# # using base::list.files
+# my_path <- "~"
+# # get a batch
+# batch <- file.path(my_path,
+#                 list.files(path = my_path,
+#                 recursive=TRUE))
+# # optionally sample 
 
 
 # pipe the batch into tika_text() 
 # get plain text
-system.time(
+
 text <-  
     batch %>%
     tika_text() 
-)
+
 
 ```
 
@@ -78,7 +107,7 @@ Plain text is reasonably easy to search through using `base::grep()`.
 ```{r}
 
 results <-
-    text[ base::grep(pattern='the',x=text) ]
+    text[ base::grep(pattern='Tika',x=text) ]
 
 length(results)
 ```
@@ -109,7 +138,7 @@ tika_text(threads=4,
           output_dir = my_directory) 
 
 # list all the file locations 
-saved_files <- file.path(my_directory,
+processed_files <- file.path(my_directory,
                 list.files(path = my_directory,
                 recursive=TRUE)
                 )
@@ -117,36 +146,11 @@ saved_files <- file.path(my_directory,
 ```
  The location of each file in `output_dir` follows the convention from the Apache Tika batch processor: the full path to each file mirrors the original file's path, only within the `output_dir`. 
 ```{r}
-saved_files[1:7]
+processed_files
 ```
+Note that `tika_text()` produces `.txt` files, `tika_xml()` produces `.xml` files, `tika_html()` produces `.html` files, and `tika_json()` produces `.json` files.
 
-# Use tika_fetch() to Preserve Content-Type when Downloading 
 
-A general suggestion is to use `tika_fetch()` to download files from the Internet, to preserve the Content-Type information in the file extension. 
-
-Tika's Content-Type detection is improved with file extensions (Tika also relies on other features such as Magic bytes, which are unique control bytes in the file header). The file extensions should be used whenever possible. The `tika_fetch()` function tries to preserves Content-Type information from the download server.
-
-```{r}
-download_directory = tempfile('rtika_download_dir',
-                           tmpdir='~')
-
-dir.create(download_directory)
-
-download_directory <- normalizePath(download_directory)
-
-batch <- c('https://tika.apache.org/',
-           'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf',
-           'https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
-
-downloads <- 
-    batch %>% 
-    tika_fetch(download_directory)
-
-# it will add the appropriate file extension to the downloads
-downloads
-
-```
-This `tika_fetch()` function is used internally by the other functions when processing URLs. However, then the downloaded files are left in a temporary directory and lost at the end of the R session. By using `tika_fetch()` with a directory of your choice, you can save the files and return to them later. `tika_fetch()` also has a `retries` parameter to help if an intermittent connection error stops a download.
 
 # Use Either tika_html() or tika_xml() to Get Structured XHTML 
  
@@ -158,7 +162,7 @@ library('xml2')
 
 # get XHTML text
 html <- 
-    downloads %>%
+    batch %>%
     tika_html() %>%
      lapply(xml2::read_html)
 
@@ -168,21 +172,21 @@ links <-
     lapply(xml2::xml_find_all, '//a') %>%
     lapply(xml2::xml_attr, 'href')
 
-links[[2]][1:5]
+sample(links[[2]],10)
 ```
 
 
 Each type of file has different information preserved by Tika's internal parsers. The particular aspects vary. Some notes:
 
-    * PDF files retain pagination, with each page starting with the XHTML element `<div class="page">`. 
-    * PDFs retain hyperlinks in the anchor element `<a>` with the attribute `href`.
-    * Word and Excel documents retain tabular data as a `<table>` element. The `rvest` package has a function to get tables of data  with `rvest::html_table()`.
-    * Multiple Excel sheets are preserved as multiple XHTML tables. Ragged tables, where rows have differing numbers of cells, are not supported.
+* PDF files retain pagination, with each page starting with the XHTML element `<div class="page">`. 
+* PDFs retain hyperlinks in the anchor element `<a>` with the attribute `href`.
+* Word and Excel documents retain tabular data as a `<table>` element. The `rvest` package has a function to get tables of data  with `rvest::html_table()`.
+* Multiple Excel sheets are preserved as multiple XHTML tables. Ragged tables, where rows have differing numbers of cells, are not supported.
 
 Note that `tika_html()` and `tika_xml()` both produce the same strict form of HTML called XHTML, and either works essentially the same for all the documents I've tried. 
 
 # A Bit of XHTML Metadata
-The `tika_html()` and `tika_xml()` functions are focused on extracting strict, structured HTML as XHTML. In addition, basic metadata can be accessed in the `meta` tags of the XHTML. The MIME type is sometimes recorded in the Dublin Core metadata `dc:format` (http://dublincore.org/):
+The `tika_html()` and `tika_xml()` functions are focused on extracting strict, structured HTML as XHTML. In addition, basic metadata can be accessed in the `meta` tags of the XHTML. The original file MIME type is sometimes recorded in the Dublin Core metadata `dc:format` (http://dublincore.org/):
 
 ```{r}
 html %>%
