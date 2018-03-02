@@ -10,6 +10,6 @@
 #' }
 #' @export
 
-tika_html <- function(input, ...){
-  tika(input=input, output="html", ...)
+tika_html <- function(input, ...) {
+  tika(input = input, output = "html", ...)
 }

@@ -12,8 +12,6 @@ rtika
 
 This is an R interface to the Tika software.
 
-See the complete usage instructions and introductory article at <http://predict-r.github.io/rtika>.
-
 Installation
 ------------
 
@@ -24,7 +22,7 @@ Next, install the `rtika` package.
 ``` r
 # We also need devtools to easily install from github, until this is all on CRAN 
 if(!requireNamespace('devtools')){
-  install.packages('devtools',
+  install.packages('devtools', 
     repos='https://cloud.r-project.org')
 }
 
@@ -37,7 +35,7 @@ library('rtika')
 
 The `rJava` package is **not** required.
 
-Again, see the complete usage instructions and introductory article at <http://predict-r.github.io/rtika>.
+Read an introductory article at <https://predict-r.github.io/rtika/articles/rtika_introduction.html>.
 
 Key Features
 ------------
@@ -89,8 +87,8 @@ Simple Example
 library('magrittr')
 
 # Local files or remote urls. Here, remote urls.
-batch <- c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
-           ,'https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
+batch <- c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf',
+           'https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
 
 # A short data pipleine, shown with magrittr.
 # Normal syntax also works, e.g. text <- tika_text(batch)
@@ -106,7 +104,7 @@ utils::str(text)
 #>  chr [1:2] "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nR Data Import/Export\"| __truncated__ ...
 
 # Look at a snippet:
-base::cat(base::substr(text[1],45,160)) 
+cat(substr(text[1], 45, 160)) 
 #> 
 #> R Data Import/Export
 #> Version 3.4.3 (2017-11-30)
@@ -118,7 +116,7 @@ base::cat(base::substr(text[1],45,160))
 #> This manual is for R, version 3.4.3 (2017-11-30).
 ```
 
-More examples can be found at <http://predict-r.github.io/rtika>.
+Read an introductory article at <https://predict-r.github.io/rtika/articles/rtika_introduction.html>.
 
 Similar Packages
 ----------------

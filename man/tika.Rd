@@ -10,146 +10,146 @@ tika(input, output = c("text", "jsonRecursive", "xml", "html")[1],
   lib.loc = .libPaths())
 }
 \arguments{
-\item{input}{Character vector describing the paths to the input documents. 
-Strings starting with 'http://','https://', or 'ftp://' are downloaded to a 
+\item{input}{Character vector describing the paths to the input documents.
+Strings starting with 'http://','https://', or 'ftp://' are downloaded to a
 temporary directory first. Each file will be read, but not modified.}
 
-\item{output}{Optional character vector of the output format. The default, 
-\code{"text"}, gets plain text without metadata. \code{"xml"} and 
-\code{"html"} get \code{XHTML} text with metadata. \code{"jsonRecursive"} 
-gets \code{XHTML} text and \code{json} metadata. 
-\code{c("jsonRecursive","text")} or \code{c("J","t")} get plain text and 
+\item{output}{Optional character vector of the output format. The default,
+\code{"text"}, gets plain text without metadata. \code{"xml"} and
+\code{"html"} get \code{XHTML} text with metadata. \code{"jsonRecursive"}
+gets \code{XHTML} text and \code{json} metadata.
+\code{c("jsonRecursive","text")} or \code{c("J","t")} get plain text and
 \code{json} metadata. See the 'Output Details' section.}
 
-\item{output_dir}{Optional directory path to save the converted files in. 
-Tika may overwrite files so an empty directory is best. See the 'Output 
+\item{output_dir}{Optional directory path to save the converted files in.
+Tika may overwrite files so an empty directory is best. See the 'Output
 Details' section before using.}
 
 \item{return}{Logical if an R object should be returned. Defaults to
 TRUE. If set to FALSE, and output_dir (above) must be specified.}
 
-\item{java}{Optional command to invoke Java. For example, it can be the full 
+\item{java}{Optional command to invoke Java. For example, it can be the full
 path to a particular Java version. See the Configuration section below.}
 
-\item{jar}{Optional alternative path to a \code{tika-app-X.XX.jar}. Useful 
+\item{jar}{Optional alternative path to a \code{tika-app-X.XX.jar}. Useful
 if this package becomes out of date.}
 
-\item{threads}{Integer of the number of file consumer threads Tika uses. 
+\item{threads}{Integer of the number of file consumer threads Tika uses.
 Defaults to 2.}
 
-\item{args}{Optional character vector of additional arguments passed to Tika, 
-that may not yet be implemented in this R interface, in the pattern of 
-\code{c('-arg1','setting1','-arg2','setting2')}. Available arguments include 
-\code{-timeoutThresholdMillis} (Number of milliseconds allowed to a parse 
-before the process is killed and restarted), \code{-maxRestarts} (Maximum 
-number of times the watchdog process will restart the child process), 
-\code{-includeFilePat} (Regular expression to determine which files to 
-process, e.g. \code{"(?i)\.pdf"}), \code{-excludeFilePat}, and 
+\item{args}{Optional character vector of additional arguments passed to Tika,
+that may not yet be implemented in this R interface, in the pattern of
+\code{c('-arg1','setting1','-arg2','setting2')}. Available arguments include
+\code{-timeoutThresholdMillis} (Number of milliseconds allowed to a parse
+before the process is killed and restarted), \code{-maxRestarts} (Maximum
+number of times the watchdog process will restart the child process),
+\code{-includeFilePat} (Regular expression to determine which files to
+process, e.g. \code{"(?i)\.pdf"}), \code{-excludeFilePat}, and
 \code{-maxFileSizeBytes}. These are documented in the .jar --help command.}
 
-\item{quiet}{Logical if Tika command line messages and errors are to be 
+\item{quiet}{Logical if Tika command line messages and errors are to be
 suppressed. Defaults to TRUE.}
 
-\item{cleanup}{Logical to clean up temporary files after running the command, 
-which can accumulate. Defaults to TRUE. They are in \code{tempdir()}. These 
-files are automatically removed at the end of the R session even if set to 
+\item{cleanup}{Logical to clean up temporary files after running the command,
+which can accumulate. Defaults to TRUE. They are in \code{tempdir()}. These
+files are automatically removed at the end of the R session even if set to
 FALSE.}
 
-\item{lib.loc}{Optional character vector describing the library paths 
-containing \code{curl} and \code{data.table} packages. Normally, it's best to 
-install these and leave this parameter alone. The parameter is included 
+\item{lib.loc}{Optional character vector describing the library paths
+containing \code{curl} and \code{data.table} packages. Normally, it's best to
+install these and leave this parameter alone. The parameter is included
 mainly for package testing.}
 }
 \value{
-A character vector in the same order and with the same length as 
-\code{input}. Unprocessed files are \code{as.character(NA)}. 
+A character vector in the same order and with the same length as
+\code{input}. Unprocessed files are \code{as.character(NA)}.
 If return=FALSE, then a NULL value is invisibly returned.
 See the Output Details section below.
 }
 \description{
 Extract text or metadata from over a thousand file types.
 Get either plain text or structured \code{XHTML}.
-Metadata includes \code{Content-Type}, character encoding, and Exif data from 
-jpeg or tiff images. See the long list of supported file types: 
+Metadata includes \code{Content-Type}, character encoding, and Exif data from
+jpeg or tiff images. See the long list of supported file types:
 \url{https://tika.apache.org/1.17/formats.html}.
 }
 \section{Output Details}{
 
-If an input file did not exist, could not be downloaded, was a directory, or 
-Tika could not process it, the result will be \code{as.character(NA)} for 
+If an input file did not exist, could not be downloaded, was a directory, or
+Tika could not process it, the result will be \code{as.character(NA)} for
 that file.
 
-By default, \code{output = "text"} and this produces plain text with no 
-metadata. Some formatting is preserved in this case using tabs, newlines and 
+By default, \code{output = "text"} and this produces plain text with no
+metadata. Some formatting is preserved in this case using tabs, newlines and
 spaces.
 
-Setting \code{output} to either \code{"xml"} or the shortcut \code{"x"} will 
-produce a strict form of \code{HTML} known as \code{XHTML}, with metadata in 
+Setting \code{output} to either \code{"xml"} or the shortcut \code{"x"} will
+produce a strict form of \code{HTML} known as \code{XHTML}, with metadata in
 the \code{head} node and formatted text in the \code{body}.
-Content retains more formatting with \code{"xml"}. For example, a Word or 
-Excel table will become a HTML \code{table}, with table data as text in 
-\code{td} elements. The \code{"html"} option and its shortcut \code{"h"} 
+Content retains more formatting with \code{"xml"}. For example, a Word or
+Excel table will become a HTML \code{table}, with table data as text in
+\code{td} elements. The \code{"html"} option and its shortcut \code{"h"}
 seem to produce the same result as \code{"xml"}.
 Parse XHTML output with \code{xml2::read_html}.
 
-Setting \code{output} to \code{"jsonRecursive"} or its shortcut \code{"J"} 
-produces a tree structure in `json`. Metadata fields are at the top level. 
-The \code{XHTML} or plain text will be found in the \code{X-TIKA:content} 
-field. By default the text is \code{XHTML}. This can be changed to plain 
-text like this: \code{output=c("jsonRecursive","text")} or 
-\code{output=c("J","t")}. This syntax is meant to mirror Tika's. Parse 
+Setting \code{output} to \code{"jsonRecursive"} or its shortcut \code{"J"}
+produces a tree structure in `json`. Metadata fields are at the top level.
+The \code{XHTML} or plain text will be found in the \code{X-TIKA:content}
+field. By default the text is \code{XHTML}. This can be changed to plain
+text like this: \code{output=c("jsonRecursive","text")} or
+\code{output=c("J","t")}. This syntax is meant to mirror Tika's. Parse
 \code{json} with \code{jsonlite::fromJSON}.
 
- If \code{output_dir} is specified, then the converted files will also be 
- saved to this directory. It's best to use an empty directory because Tika 
- may overwrite existing files. Tika seems to add an extra file extension to 
- each file to reduce the chance, but it's still best to use an empty 
- directory. The file locations within the \code{output_dir} maintain the same 
- general path structure as the input files. Downloaded files have a path 
- similar to the `tempdir()` that R uses. The original paths are now relative 
- to \code{output_dir}.  Files are appended with \code{.txt} for the default 
- plain text, but can be \code{.json}, \code{.xml}, or \code{.html} depending 
- on the \code{output} setting. One way to get a list of the processed files 
+ If \code{output_dir} is specified, then the converted files will also be
+ saved to this directory. It's best to use an empty directory because Tika
+ may overwrite existing files. Tika seems to add an extra file extension to
+ each file to reduce the chance, but it's still best to use an empty
+ directory. The file locations within the \code{output_dir} maintain the same
+ general path structure as the input files. Downloaded files have a path
+ similar to the `tempdir()` that R uses. The original paths are now relative
+ to \code{output_dir}.  Files are appended with \code{.txt} for the default
+ plain text, but can be \code{.json}, \code{.xml}, or \code{.html} depending
+ on the \code{output} setting. One way to get a list of the processed files
  is to use \code{list.files} with \code{recursive=TRUE}.
- If \code{output_dir} is not specified, files are saved to a volatile temp 
- directory named by \code{tmpdir()} and will be deleted when R shuts down. 
- If this function will be run on very large batches repeatedly, these 
+ If \code{output_dir} is not specified, files are saved to a volatile temp
+ directory named by \code{tmpdir()} and will be deleted when R shuts down.
+ If this function will be run on very large batches repeatedly, these
  temporary files can be cleaned up every time by adding
  \code{cleanup=TRUE}.
 }
 
 \section{Background}{
 
-Tika is a foundational library for several Apache projects such as the Apache 
-Solr search engine. It has been in development since at least 2007. The most 
-efficient way I've found to process many thousands of documents is Tika's 
+Tika is a foundational library for several Apache projects such as the Apache
+Solr search engine. It has been in development since at least 2007. The most
+efficient way I've found to process many thousands of documents is Tika's
 'batch' mode, which is the only mode used in `rtika`. There are potentially
-more things that can be done, given enough time and attention, because 
-Apache Tika includes many libraries and methods in its .jar file found in 
-the \strong{tikajar} dependency. The source is available at: 
+more things that can be done, given enough time and attention, because
+Apache Tika includes many libraries and methods in its .jar file found in
+the \strong{tikajar} dependency. The source is available at:
 \url{https://tika.apache.org/}.
 }
 
 \section{Configuration}{
 
-This package depends on the \code{sys} and \code{tikajar} packages. The later 
-contains the \code{tika-app-X.XX.jar}. This jar works with Java 7. Tika in 
+This package depends on the \code{sys} and \code{tikajar} packages. The later
+contains the \code{tika-app-X.XX.jar}. This jar works with Java 7. Tika in
 mid-2018 needs Java 8, so it's best to install Java 8.
 
-By default, this R package internally invokes Java by calling the \code{java} 
-command from the command line. To specify the path to a particular Java 
-version, set the path in the \code{java} attribute of the \code{tika} 
+By default, this R package internally invokes Java by calling the \code{java}
+command from the command line. To specify the path to a particular Java
+version, set the path in the \code{java} attribute of the \code{tika}
 function.
 
-Other command line arguments can be set with \code{args}. See the options 
+Other command line arguments can be set with \code{args}. See the options
 for version 1.17 here: \url{https://tika.apache.org/1.17/gettingstarted.html}
 
-Having the \code{data.table} package installed will slightly speed up the 
-communication between R and Tika, but especially if there are hundreds of 
+Having the \code{data.table} package installed will slightly speed up the
+communication between R and Tika, but especially if there are hundreds of
 thousands of documents to process.
 
-The \code{curl} package downloads files quickly, if the user includes urls 
-in the \code{input}. In testing, \code{curl} is required on Windows to avoid 
+The \code{curl} package downloads files quickly, if the user includes urls
+in the \code{input}. In testing, \code{curl} is required on Windows to avoid
 errors, and more work may still be needed to make Windows parse reliably.
 }
 

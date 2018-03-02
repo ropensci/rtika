@@ -9,9 +9,13 @@
 #' # detect language of web page
 #' sys::exec_wait('java',c('-jar',jar, '--language','https://tika.apache.org/'))
 #' @export
-tika_jar <- function(){
-    base::normalizePath(system.file("java"
-                                    , "tika-app-1.17.jar"
-                                    , package = "rtika")
-                        ,mustWork = TRUE)
+tika_jar <- function() {
+  base::normalizePath(
+    system.file(
+      "java"
+      , "tika-app-1.17.jar"
+      , package = "rtika"
+    )
+    , mustWork = TRUE
+  )
 }

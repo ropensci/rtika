@@ -10,6 +10,6 @@
 #' output = tika_text(input)
 #' }
 #' @export
-tika_text <- function(input, ...){
-  tika(input=input, output="text", ...)
+tika_text <- function(input, ...) {
+  tika(input = input, output = "text", ...)
 }

@@ -9,10 +9,11 @@
 #' @examples
 #' tika_check('e2720c2392c1bd6634cc4a8801f7363a') #checksum of tika-app-1.17.jar
 #' @export
-tika_check <- function(md5_sum){
-    
-    base::stopifnot(length(md5_sum)==1
-                    ,class(md5_sum)=='character')
-    
-    tools::md5sum(tika_jar())==md5_sum
+tika_check <- function(md5_sum) {
+  base::stopifnot(
+    length(md5_sum) == 1
+    , class(md5_sum) == "character"
+  )
+
+  tools::md5sum(tika_jar()) == md5_sum
 }

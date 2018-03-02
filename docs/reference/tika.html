@@ -11,8 +11,8 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -31,8 +31,8 @@
 
 <meta property="og:description" content="Extract text or metadata from over a thousand file types.
 Get either plain text or structured XHTML.
-Metadata includes Content-Type, character encoding, and Exif data from 
-jpeg or tiff images. See the long list of supported file types: 
+Metadata includes Content-Type, character encoding, and Exif data from
+jpeg or tiff images. See the long list of supported file types:
 https://tika.apache.org/1.17/formats.html." />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
@@ -111,8 +111,8 @@ https://tika.apache.org/1.17/formats.html." />
     
     <p>Extract text or metadata from over a thousand file types.
 Get either plain text or structured <code>XHTML</code>.
-Metadata includes <code>Content-Type</code>, character encoding, and Exif data from 
-jpeg or tiff images. See the long list of supported file types: 
+Metadata includes <code>Content-Type</code>, character encoding, and Exif data from
+jpeg or tiff images. See the long list of supported file types:
 <a href='https://tika.apache.org/1.17/formats.html'>https://tika.apache.org/1.17/formats.html</a>.</p>
     
 
@@ -126,23 +126,23 @@ jpeg or tiff images. See the long list of supported file types:
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>input</th>
-      <td><p>Character vector describing the paths to the input documents. 
-Strings starting with 'http://','https://', or 'ftp://' are downloaded to a 
+      <td><p>Character vector describing the paths to the input documents.
+Strings starting with 'http://','https://', or 'ftp://' are downloaded to a
 temporary directory first. Each file will be read, but not modified.</p></td>
     </tr>
     <tr>
       <th>output</th>
-      <td><p>Optional character vector of the output format. The default, 
-<code>"text"</code>, gets plain text without metadata. <code>"xml"</code> and 
-<code>"html"</code> get <code>XHTML</code> text with metadata. <code>"jsonRecursive"</code> 
-gets <code>XHTML</code> text and <code>json</code> metadata. 
-<code>c("jsonRecursive","text")</code> or <code>c("J","t")</code> get plain text and 
+      <td><p>Optional character vector of the output format. The default,
+<code>"text"</code>, gets plain text without metadata. <code>"xml"</code> and
+<code>"html"</code> get <code>XHTML</code> text with metadata. <code>"jsonRecursive"</code>
+gets <code>XHTML</code> text and <code>json</code> metadata.
+<code>c("jsonRecursive","text")</code> or <code>c("J","t")</code> get plain text and
 <code>json</code> metadata. See the 'Output Details' section.</p></td>
     </tr>
     <tr>
       <th>output_dir</th>
-      <td><p>Optional directory path to save the converted files in. 
-Tika may overwrite files so an empty directory is best. See the 'Output 
+      <td><p>Optional directory path to save the converted files in.
+Tika may overwrite files so an empty directory is best. See the 'Output
 Details' section before using.</p></td>
     </tr>
     <tr>
@@ -152,129 +152,129 @@ TRUE. If set to FALSE, and output_dir (above) must be specified.</p></td>
     </tr>
     <tr>
       <th>java</th>
-      <td><p>Optional command to invoke Java. For example, it can be the full 
+      <td><p>Optional command to invoke Java. For example, it can be the full
 path to a particular Java version. See the Configuration section below.</p></td>
     </tr>
     <tr>
       <th>jar</th>
-      <td><p>Optional alternative path to a <code>tika-app-X.XX.jar</code>. Useful 
+      <td><p>Optional alternative path to a <code>tika-app-X.XX.jar</code>. Useful
 if this package becomes out of date.</p></td>
     </tr>
     <tr>
       <th>threads</th>
-      <td><p>Integer of the number of file consumer threads Tika uses. 
+      <td><p>Integer of the number of file consumer threads Tika uses.
 Defaults to 2.</p></td>
     </tr>
     <tr>
       <th>args</th>
-      <td><p>Optional character vector of additional arguments passed to Tika, 
-that may not yet be implemented in this R interface, in the pattern of 
-<code>c('-arg1','setting1','-arg2','setting2')</code>. Available arguments include 
-<code>-timeoutThresholdMillis</code> (Number of milliseconds allowed to a parse 
-before the process is killed and restarted), <code>-maxRestarts</code> (Maximum 
-number of times the watchdog process will restart the child process), 
-<code>-includeFilePat</code> (Regular expression to determine which files to 
-process, e.g. <code>"(?i)\.pdf"</code>), <code>-excludeFilePat</code>, and 
+      <td><p>Optional character vector of additional arguments passed to Tika,
+that may not yet be implemented in this R interface, in the pattern of
+<code>c('-arg1','setting1','-arg2','setting2')</code>. Available arguments include
+<code>-timeoutThresholdMillis</code> (Number of milliseconds allowed to a parse
+before the process is killed and restarted), <code>-maxRestarts</code> (Maximum
+number of times the watchdog process will restart the child process),
+<code>-includeFilePat</code> (Regular expression to determine which files to
+process, e.g. <code>"(?i)\.pdf"</code>), <code>-excludeFilePat</code>, and
 <code>-maxFileSizeBytes</code>. These are documented in the .jar --help command.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
-      <td><p>Logical if Tika command line messages and errors are to be 
+      <td><p>Logical if Tika command line messages and errors are to be
 suppressed. Defaults to TRUE.</p></td>
     </tr>
     <tr>
       <th>cleanup</th>
-      <td><p>Logical to clean up temporary files after running the command, 
-which can accumulate. Defaults to TRUE. They are in <code>tempdir()</code>. These 
-files are automatically removed at the end of the R session even if set to 
+      <td><p>Logical to clean up temporary files after running the command,
+which can accumulate. Defaults to TRUE. They are in <code>tempdir()</code>. These
+files are automatically removed at the end of the R session even if set to
 FALSE.</p></td>
     </tr>
     <tr>
       <th>lib.loc</th>
-      <td><p>Optional character vector describing the library paths 
-containing <code>curl</code> and <code>data.table</code> packages. Normally, it's best to 
-install these and leave this parameter alone. The parameter is included 
+      <td><p>Optional character vector describing the library paths
+containing <code>curl</code> and <code>data.table</code> packages. Normally, it's best to
+install these and leave this parameter alone. The parameter is included
 mainly for package testing.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A character vector in the same order and with the same length as 
-<code>input</code>. Unprocessed files are <code>as.character(NA)</code>. 
+    <p>A character vector in the same order and with the same length as
+<code>input</code>. Unprocessed files are <code>as.character(NA)</code>.
 If return=FALSE, then a NULL value is invisibly returned.
 See the Output Details section below.</p>
     
     <h2 class="hasAnchor" id="output-details"><a class="anchor" href="#output-details"></a>Output Details</h2>
 
     
-    <p>If an input file did not exist, could not be downloaded, was a directory, or 
-Tika could not process it, the result will be <code>as.character(NA)</code> for 
+    <p>If an input file did not exist, could not be downloaded, was a directory, or
+Tika could not process it, the result will be <code>as.character(NA)</code> for
 that file.</p>
-<p>By default, <code>output = "text"</code> and this produces plain text with no 
-metadata. Some formatting is preserved in this case using tabs, newlines and 
+<p>By default, <code>output = "text"</code> and this produces plain text with no
+metadata. Some formatting is preserved in this case using tabs, newlines and
 spaces.</p>
-<p>Setting <code>output</code> to either <code>"xml"</code> or the shortcut <code>"x"</code> will 
-produce a strict form of <code>HTML</code> known as <code>XHTML</code>, with metadata in 
+<p>Setting <code>output</code> to either <code>"xml"</code> or the shortcut <code>"x"</code> will
+produce a strict form of <code>HTML</code> known as <code>XHTML</code>, with metadata in
 the <code>head</code> node and formatted text in the <code>body</code>.
-Content retains more formatting with <code>"xml"</code>. For example, a Word or 
-Excel table will become a HTML <code>table</code>, with table data as text in 
-<code>td</code> elements. The <code>"html"</code> option and its shortcut <code>"h"</code> 
+Content retains more formatting with <code>"xml"</code>. For example, a Word or
+Excel table will become a HTML <code>table</code>, with table data as text in
+<code>td</code> elements. The <code>"html"</code> option and its shortcut <code>"h"</code>
 seem to produce the same result as <code>"xml"</code>.
 Parse XHTML output with <code><a href='http://www.rdocumentation.org/packages/xml2/topics/read_xml'>xml2::read_html</a></code>.</p>
-<p>Setting <code>output</code> to <code>"jsonRecursive"</code> or its shortcut <code>"J"</code> 
-produces a tree structure in `json`. Metadata fields are at the top level. 
-The <code>XHTML</code> or plain text will be found in the <code>X-TIKA:content</code> 
-field. By default the text is <code>XHTML</code>. This can be changed to plain 
-text like this: <code>output=c("jsonRecursive","text")</code> or 
-<code>output=c("J","t")</code>. This syntax is meant to mirror Tika's. Parse 
+<p>Setting <code>output</code> to <code>"jsonRecursive"</code> or its shortcut <code>"J"</code>
+produces a tree structure in `json`. Metadata fields are at the top level.
+The <code>XHTML</code> or plain text will be found in the <code>X-TIKA:content</code>
+field. By default the text is <code>XHTML</code>. This can be changed to plain
+text like this: <code>output=c("jsonRecursive","text")</code> or
+<code>output=c("J","t")</code>. This syntax is meant to mirror Tika's. Parse
 <code>json</code> with <code><a href='http://www.rdocumentation.org/packages/jsonlite/topics/fromJSON'>jsonlite::fromJSON</a></code>.</p>
-<p>If <code>output_dir</code> is specified, then the converted files will also be 
- saved to this directory. It's best to use an empty directory because Tika 
- may overwrite existing files. Tika seems to add an extra file extension to 
- each file to reduce the chance, but it's still best to use an empty 
- directory. The file locations within the <code>output_dir</code> maintain the same 
- general path structure as the input files. Downloaded files have a path 
- similar to the `tempdir()` that R uses. The original paths are now relative 
- to <code>output_dir</code>.  Files are appended with <code>.txt</code> for the default 
- plain text, but can be <code>.json</code>, <code>.xml</code>, or <code>.html</code> depending 
- on the <code>output</code> setting. One way to get a list of the processed files 
+<p>If <code>output_dir</code> is specified, then the converted files will also be
+ saved to this directory. It's best to use an empty directory because Tika
+ may overwrite existing files. Tika seems to add an extra file extension to
+ each file to reduce the chance, but it's still best to use an empty
+ directory. The file locations within the <code>output_dir</code> maintain the same
+ general path structure as the input files. Downloaded files have a path
+ similar to the `tempdir()` that R uses. The original paths are now relative
+ to <code>output_dir</code>.  Files are appended with <code>.txt</code> for the default
+ plain text, but can be <code>.json</code>, <code>.xml</code>, or <code>.html</code> depending
+ on the <code>output</code> setting. One way to get a list of the processed files
  is to use <code>list.files</code> with <code>recursive=TRUE</code>.
- If <code>output_dir</code> is not specified, files are saved to a volatile temp 
- directory named by <code>tmpdir()</code> and will be deleted when R shuts down. 
- If this function will be run on very large batches repeatedly, these 
+ If <code>output_dir</code> is not specified, files are saved to a volatile temp
+ directory named by <code>tmpdir()</code> and will be deleted when R shuts down.
+ If this function will be run on very large batches repeatedly, these
  temporary files can be cleaned up every time by adding
  <code>cleanup=TRUE</code>.</p>
     
     <h2 class="hasAnchor" id="background"><a class="anchor" href="#background"></a>Background</h2>
 
     
-    <p>Tika is a foundational library for several Apache projects such as the Apache 
-Solr search engine. It has been in development since at least 2007. The most 
-efficient way I've found to process many thousands of documents is Tika's 
+    <p>Tika is a foundational library for several Apache projects such as the Apache
+Solr search engine. It has been in development since at least 2007. The most
+efficient way I've found to process many thousands of documents is Tika's
 'batch' mode, which is the only mode used in `rtika`. There are potentially
-more things that can be done, given enough time and attention, because 
-Apache Tika includes many libraries and methods in its .jar file found in 
-the <strong>tikajar</strong> dependency. The source is available at: 
+more things that can be done, given enough time and attention, because
+Apache Tika includes many libraries and methods in its .jar file found in
+the <strong>tikajar</strong> dependency. The source is available at:
 <a href='https://tika.apache.org/'>https://tika.apache.org/</a>.</p>
     
     <h2 class="hasAnchor" id="configuration"><a class="anchor" href="#configuration"></a>Configuration</h2>
 
     
-    <p>This package depends on the <code>sys</code> and <code>tikajar</code> packages. The later 
-contains the <code>tika-app-X.XX.jar</code>. This jar works with Java 7. Tika in 
+    <p>This package depends on the <code>sys</code> and <code>tikajar</code> packages. The later
+contains the <code>tika-app-X.XX.jar</code>. This jar works with Java 7. Tika in
 mid-2018 needs Java 8, so it's best to install Java 8.</p>
-<p>By default, this R package internally invokes Java by calling the <code>java</code> 
-command from the command line. To specify the path to a particular Java 
-version, set the path in the <code>java</code> attribute of the <code>tika</code> 
+<p>By default, this R package internally invokes Java by calling the <code>java</code>
+command from the command line. To specify the path to a particular Java
+version, set the path in the <code>java</code> attribute of the <code>tika</code>
 function.</p>
-<p>Other command line arguments can be set with <code>args</code>. See the options 
+<p>Other command line arguments can be set with <code>args</code>. See the options
 for version 1.17 here: <a href='https://tika.apache.org/1.17/gettingstarted.html'>https://tika.apache.org/1.17/gettingstarted.html</a></p>
-<p>Having the <code>data.table</code> package installed will slightly speed up the 
-communication between R and Tika, but especially if there are hundreds of 
+<p>Having the <code>data.table</code> package installed will slightly speed up the
+communication between R and Tika, but especially if there are hundreds of
 thousands of documents to process.</p>
-<p>The <code>curl</code> package downloads files quickly, if the user includes urls 
-in the <code>input</code>. In testing, <code>curl</code> is required on Windows to avoid 
+<p>The <code>curl</code> package downloads files quickly, if the user includes urls
+in the <code>input</code>. In testing, <code>curl</code> is required on Windows to avoid
 errors, and more work may still be needed to make Windows parse reliably.</p>
     
 
@@ -319,7 +319,7 @@ errors, and more work may still be needed to make Windows parse reliably.</p>
 #&gt;   ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
 #&gt;  $ X-TIKA:content                             : chr "&lt;html xmlns=\"http://www.w3.org/1999/xhtml\"&gt;\n&lt;head&gt;\n&lt;meta name=\"date\" content=\"2017-11-30T13:39:02Z\" /&gt;\"| __truncated__
 #&gt;  $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-#&gt;  $ X-TIKA:parse_time_millis                   : chr "856"
+#&gt;  $ X-TIKA:parse_time_millis                   : chr "830"
 #&gt;  $ access_permission:assemble_document        : chr "true"
 #&gt;  $ access_permission:can_modify               : chr "true"
 #&gt;  $ access_permission:can_print                : chr "true"
@@ -345,9 +345,9 @@ errors, and more work may still be needed to make Windows parse reliably.</p>
 #&gt;  $ pdf:docinfo:trapped                        : chr "False"
 #&gt;  $ pdf:encrypted                              : chr "false"
 #&gt;  $ producer                                   : chr "pdfTeX-1.40.18"
-#&gt;  $ resourceName                               : chr "rtika_file785b42e4f0cc.pdf"
+#&gt;  $ resourceName                               : chr "rtika_file785b4bcb2ed7.pdf"
 #&gt;  $ tika:file_ext                              : chr "pdf"
-#&gt;  $ tika_batch_fs:relative_path                : chr "tmp/RtmpCFb6kG/rtika_file785b42e4f0cc.pdf"
+#&gt;  $ tika_batch_fs:relative_path                : chr "tmp/RtmpCFb6kG/rtika_file785b4bcb2ed7.pdf"
 #&gt;  $ trapped                                    : chr "False"
 #&gt;  $ xmp:CreatorTool                            : chr "TeX"
 #&gt;  $ xmpTPg:NPages                              : chr "37"</div><div class='output co'>#&gt; [1] "2017-11-30T13:39:02Z"</div></pre>

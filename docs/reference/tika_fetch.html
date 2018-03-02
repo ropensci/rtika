@@ -11,8 +11,8 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -29,14 +29,14 @@
   
 <meta property="og:title" content="Fetch Files and Record Content-Type in the File Extension — tika_fetch" />
 
-<meta property="og:description" content="On the Internet, Content-Type information is mainly communicated via the server's headers. 
+<meta property="og:description" content="On the Internet, Content-Type information is mainly communicated via the server's headers.
 This is an issue if a file is saved to disk without examining the headers.
 The file can have a missing or incorrect file extension.
 For example, a URL ending in a slash (/) can produce file with the Content-Type of  text/html.
 The same URL might also produce a image/jpeg or application/pdf file.
 URLs ending in .php, .cfm can produce any Content-Type.
 The downloaded file will lose the server's declared Content-Type unless its appended as a file extension.
-tika_fetch gets a file from the URL, examines the server headers, 
+tika_fetch() gets a file from the URL, examines the server headers,
 and appends the matching file extension
 from Tika's database." />
 <meta name="twitter:card" content="summary" />
@@ -114,14 +114,14 @@ from Tika's database." />
     </div>
 
     
-    <p>On the Internet, Content-Type information is mainly communicated via the server's headers. 
+    <p>On the Internet, Content-Type information is mainly communicated via the server's headers.
 This is an issue if a file is saved to disk without examining the headers.
 The file can have a missing or incorrect file extension.
 For example, a URL ending in a slash (<code>/</code>) can produce file with the Content-Type of  <code>text/html</code>.
 The same URL might also produce a <code>image/jpeg</code> or <code>application/pdf</code> file.
 URLs ending in <code>.php</code>, <code>.cfm</code> can produce any Content-Type.
 The downloaded file will lose the server's declared Content-Type unless its appended as a file extension.
-tika_fetch gets a file from the URL, examines the server headers, 
+<code>tika_fetch()</code> gets a file from the URL, examines the server headers,
 and appends the matching file extension
 from Tika's database.</p>
     

@@ -22,14 +22,14 @@ tika_fetch(urls, download_dir = tempdir(), ssl_verifypeer = TRUE,
 Character vector of the same length and order as input with the paths describing the locations of the downloaded files. Errors are returned as NA.
 }
 \description{
-On the Internet, Content-Type information is mainly communicated via the server's headers. 
+On the Internet, Content-Type information is mainly communicated via the server's headers.
 This is an issue if a file is saved to disk without examining the headers.
 The file can have a missing or incorrect file extension.
 For example, a URL ending in a slash (\code{/}) can produce file with the Content-Type of  \code{text/html}.
 The same URL might also produce a \code{image/jpeg} or \code{application/pdf} file.
 URLs ending in \code{.php}, \code{.cfm} can produce any Content-Type.
 The downloaded file will lose the server's declared Content-Type unless its appended as a file extension.
-tika_fetch gets a file from the URL, examines the server headers, 
+\code{tika_fetch()} gets a file from the URL, examines the server headers,
 and appends the matching file extension
 from Tika's database.
 }

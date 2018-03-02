@@ -10,6 +10,6 @@
 #' }
 #' @export
 
-tika_xml <- function(input, ...){
-  tika(input=input, output="xml", ...)
+tika_xml <- function(input, ...) {
+  tika(input = input, output = "xml", ...)
 }

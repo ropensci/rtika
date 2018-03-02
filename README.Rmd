@@ -21,8 +21,6 @@ knitr::opts_chunk$set(
 
 This is an R interface to the Tika software. 
 
-See the complete usage instructions and introductory article at http://predict-r.github.io/rtika.
-
 ## Installation
 To start, you need R and either `OpenJDK 1.7` or `Java 7`. Higher versions work. To check your version, run the command `java -version` from a terminal. 
 Get Java installation tips at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>. 
@@ -32,7 +30,7 @@ Next, install the `rtika`  package.
 ```{r,results = "hide",message = FALSE }
 # We also need devtools to easily install from github, until this is all on CRAN 
 if(!requireNamespace('devtools')){
-  install.packages('devtools',
+  install.packages('devtools', 
     repos='https://cloud.r-project.org')
 }
 
@@ -45,7 +43,7 @@ library('rtika')
 
 The `rJava` package is **not** required.
 
-Again, see the complete usage instructions and introductory article at http://predict-r.github.io/rtika.
+Read an introductory article at https://predict-r.github.io/rtika/articles/rtika_introduction.html.
 
 ## Key Features
 
@@ -95,8 +93,8 @@ Currently, all the `tika()` functions take a tiny bit of time to spin up, and th
 library('magrittr')
 
 # Local files or remote urls. Here, remote urls.
-batch <- c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
-           ,'https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
+batch <- c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf',
+           'https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
 
 # A short data pipleine, shown with magrittr.
 # Normal syntax also works, e.g. text <- tika_text(batch)
@@ -111,11 +109,11 @@ text <-
 utils::str(text)
 
 # Look at a snippet:
-base::cat(base::substr(text[1],45,160)) 
+cat(substr(text[1], 45, 160)) 
 
 ```
 
-More examples can be found at http://predict-r.github.io/rtika.
+Read an introductory article at https://predict-r.github.io/rtika/articles/rtika_introduction.html.
 
 ## Similar Packages
 
