@@ -9,7 +9,7 @@ tika_xml(input, ...)
 \arguments{
 \item{input}{Character vector describing the paths and/or urls to the input documents.}
 
-\item{...}{Other parameters to be sent to `tika`.}
+\item{...}{Other parameters to be sent to \code{tika()}.}
 }
 \value{
 A character vector in the same order and with the same length as \code{input}. Unprocessed files are \code{as.character(NA)}.

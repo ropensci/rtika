@@ -23,7 +23,7 @@ Character vector of the same length and order as input with the paths describing
 }
 \description{
 On the Internet, Content-Type information is mainly communicated via the server's headers. 
-This is an issue if a file is saved to disk without examing the headers.
+This is an issue if a file is saved to disk without examining the headers.
 The file can have a missing or incorrect file extension.
 For example, a URL ending in a slash (\code{/}) can produce file with the Content-Type of  \code{text/html}.
 The same URL might also produce a \code{image/jpeg} or \code{application/pdf} file.

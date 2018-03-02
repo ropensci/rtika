@@ -7,7 +7,7 @@
 tika_jar()
 }
 \value{
-A character vector of length one describing the path to the particular tika-app-X.XX.jar.
+A character vector of length one describing the path to the particular  \code{tika-app-X.XX.jar}.
 }
 \description{
 A library for text and data extraction

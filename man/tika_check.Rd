@@ -13,7 +13,7 @@ tika_check(md5_sum)
 logical if the .jar matches the md5
 }
 \description{
-Checks the incuded Tika library, using the `tools::md5sum()` command.
+Checks the incuded Tika library, using the \code{tools::md5sum()} command.
 The latest checksums are at https://tika.apache.org/download.html.
 Note that these may ahead of the Tika version included in this package.
 }

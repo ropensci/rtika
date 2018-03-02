@@ -134,4 +134,4 @@ I chose to finally develop this package after getting excited by Tika's new 'bat
 Code of Conduct
 ---------------
 
-Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
+Please note that this project is released with a [Contributor Code of Conduct](https://github.com/predict-r/rtika/blob/master/CONDUCT.md). By participating in this project you agree to abide by its terms.
