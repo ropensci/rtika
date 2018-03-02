@@ -103,17 +103,18 @@
     </div>
 
     <div class="contents">
-    <div id="rtika-0-1-6-2018-02-27" class="section level1">
+    <div id="rtika-0-1-6-2018-03-01" class="section level1">
 <h1 class="hasAnchor">
-<a href="#rtika-0-1-6-2018-02-27" class="anchor"></a>rtika 0.1.6 (2018-02-27)</h1>
+<a href="#rtika-0-1-6-2018-03-01" class="anchor"></a>rtika 0.1.6 (2018-03-01)</h1>
 <div id="new-features" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>NEW FEATURES</h3>
 <ul>
-<li>tika(), tika_xml(), tika_json(), tika_text(), and tika_html() have a more robust downloader, which preserve the server’s content-type encoding. This should help Tika identify and parse files more reliably.</li>
-<li>Added tika_fetch(), which is a stand alone function to download files and append a file extension matching the content type declared by the server. Additional features for this function include specifying the number of download retries and ignoring ssl certificates verification if requested. The output of tika_fetch() can be piped directly into other tika functions.</li>
+<li>tika(), tika_xml(), tika_json(), tika_text(), and tika_html() have a new downloader, which preserve the server’s content-type encoding as a file extension when possible. This should help Tika identify and parse downloaded files more reliably. It depends on the ‘curl’ package.</li>
+<li>Added tika_fetch(), which is a stand alone function to download files and append a file extension matching the content type declared by the server. Additional features for this function include specifying the number of download retries. The output of tika_fetch() can be piped directly into other tika functions.</li>
 <li>New introductory vignette covers how to use the functions and surveys several applications.</li>
 <li>tika(), tika_xml(), tika_json(), tika_text(), and tika_html() can now be set to return=FALSE, which does not return any R character vector but invisibly returns NULL. This would be most useful in massive file conversion jobs with hundreds of thousands of files.</li>
+<li>Used pkgdown to create a website for github pages.</li>
 </ul>
 </div>
 <div id="deprecated-and-defunct" class="section level3">
@@ -241,7 +242,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#rtika-0-1-6-2018-02-27">0.1.6</a></li>
+        <li><a href="#rtika-0-1-6-2018-03-01">0.1.6</a></li>
         <li><a href="#rtika-0-1-5-2018-02-15">0.1.5</a></li>
         <li><a href="#rtika-0-1-4-2018-02-15">0.1.4</a></li>
         <li><a href="#rtika-0-1-3-2018-02-04">0.1.3</a></li>
