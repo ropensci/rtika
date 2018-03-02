@@ -18,6 +18,8 @@
 #' @param output_dir Optional directory path to save the converted files in. 
 #' Tika may overwrite files so an empty directory is best. See the 'Output 
 #' Details' section before using.
+#' @param return Logical if an R object should be returned. Defaults to
+#' TRUE. If set to FALSE, and output_dir (above) must be specified.
 #' @param java Optional command to invoke Java. For example, it can be the full 
 #' path to a particular Java version. See the Configuration section below.
 #' @param jar Optional alternative path to a \code{tika-app-X.XX.jar}. Useful 
@@ -44,8 +46,9 @@
 #' install these and leave this parameter alone. The parameter is included 
 #' mainly for package testing.
 #' @return A character vector in the same order and with the same length as 
-#' \code{input}. Unprocessed files are \code{as.character(NA)}. See the Output 
-#' Details section below.
+#' \code{input}. Unprocessed files are \code{as.character(NA)}. 
+#' If return=FALSE, then a NULL value is invisibly returned.
+#' See the Output Details section below.
 #' @examples
 #' \donttest{
 #' #' #extract text
@@ -140,8 +143,9 @@
 tika <- function(input,
                  output = c("text", "jsonRecursive", "xml", "html")[1],
                  output_dir = "",
+                 return = TRUE,
                  java = "java",
-                 jar = tikajar::tikajar(),
+                 jar = tika_jar(),
                  threads = 2,
                  args = character(),
                  quiet = TRUE,
@@ -153,13 +157,15 @@ tika <- function(input,
     # Useful functions: 
     # devtools::test(); 
     # devtools::build_vignettes() ; 
-    # system('R CMD Rd2pdf ~/rtika')
+    # pkgdown::clean_site() ; pkgdown::build_site()
+    # https://www.r-bloggers.com/building-a-website-with-pkgdown-a-short-guide/
     
     # TODO:  memory setting with java -Xmx1024m -jar. 
     # Probably also adjust child process -JXmx4g
     
     
     # Parameter sanity check --------------------------------------------
+  
     stopifnot(
         class(input) == "character",
         length(input) > 0,
@@ -168,6 +174,8 @@ tika <- function(input,
         length(output) <= 2,
         class(output_dir) == "character",
         length(output_dir) == 1,
+        class(return) == 'logical',
+        length(return) == 1,
         class(java) == "character",
         length(java) == 1,
         class(jar) == "character",
@@ -176,7 +184,8 @@ tika <- function(input,
         class(args) == "character",
         class(quiet) == "logical",
         class(cleanup) == "logical",
-        class(lib.loc) == "character"
+        class(lib.loc) == "character",
+        ifelse(nchar(output_dir)==0,return==TRUE,TRUE)
     )
     # TODO: consider a config file for each request with fine grained control over parsers.
     # see: https://tika.apache.org/1.17/configuring.html
@@ -225,50 +234,10 @@ tika <- function(input,
     # input parameter may contain URLs. Download if needed
     toDownload <- grep("^(http[s]?:/|ftp:/|file:/)", input, ignore.case = TRUE)
     if (length(toDownload) > 0) {
-        if (requireNamespace("curl", quietly = TRUE, lib.loc = lib.loc)) {
-            .rtika_fetch <- function(url) {
-                ret <- tempfile("rtika_file")
-                req <- tryCatch(curl::curl_fetch_disk(url, ret), 
-                                error = function(e) return(list(status_code = 418)))
-                if (req$status_code != 200) {
-                    warning("Could not download with curl::curl_fetch_disk: ", url)
-                    return(as.character(NA))
-                }
-                # TODO: consider adding file affix recording document type (e.g. .docx) 
-                # With OS X and ubuntu, content-type is recorded nicely in extended attributes.
-                # Check with the cmd: file --mime-type -b rtika_file*
-                # However, on Windows, content type is not recorded apparently. 
-                # Neither download.file and curl help
-                # Curl *does* put content-type in the header provided by the download server
-                # headers = parse_headers(req$headers)
-                # ctype <- headers[grepl("^content-type", headers, ignore.case = TRUE)]
-                # These can be mapped to a database of file affixes using these:
-                # * https://raw.githubusercontent.com/apache/tika/master/tika-core/src/main/resources/org/apache/tika/mime/tika-mimetypes.xml
-                # * ubuntu has a list in: /etc/mime.types
-                # I assume content-type headers are much more reliable than the URL endpoint.
-                # This could be made into a 'robust_download' function, that also does retries
-                
-                return(ret)
-            }
-        } else {
-            if (.Platform$OS.type == "windows") 
-            { warning("Please install the 'curl' package.") }
-            .rtika_fetch <- function(url) {
-                ret <- tempfile("rtika_file")
-                req <- tryCatch(utils::download.file(url, ret, method = "libcurl"), 
-                                error = function(e) {
-                                    return(1)
-                                })
-                if (req != 0) {
-                    warning("Could not download with utils::download.file: ", url)
-                    return(as.character(NA))
-                }
-                return(ret)
-            }
-        }
+       
         # input parameter adds downloaded file paths (if not downloaded, rtika_download produces NAs)
         urls <- input[toDownload]
-        tempfiles <- unlist(lapply(urls, .rtika_fetch))
+        tempfiles <- tika_fetch(urls)
         input[toDownload] <- tempfiles
     }
     
@@ -329,63 +298,69 @@ tika <- function(input,
                    std_err = !quiet)
     
     # retrieve results  --------------------------------------------------------
-    
-    output_file_affix <- character()
-    output_file_affix <- ifelse(any(output %in% c("text", "t", "-t")),
-                                ".txt",
-                                output_file_affix)
-    output_file_affix <- ifelse(any(output %in% c("xml", "x", "-x")),
-                                ".xml",
-                                output_file_affix)
-    output_file_affix <- ifelse(any(output %in% c("html", "h", "-h")),
-                                ".html",
-                                output_file_affix)
-    output_file_affix <- ifelse(any(output %in% c("jsonRecursive", "J", "-J")),
-                                ".json",
-                                output_file_affix)
-    
-    # Vectorized readChar
-    .rtika_readFile <- function(path) {
-        bytes <- file.size(path)
-        ifelse(!is.na(bytes), mapply(readChar,
-                                     con = path,
-                                     nchars = bytes,
-                                     useBytes = TRUE),
-               as.character(NA))
+    if(return){
+      
+      output_file_affix <- character()
+      output_file_affix <- ifelse(any(output %in% c("text", "t", "-t")),
+                                  ".txt",
+                                  output_file_affix)
+      output_file_affix <- ifelse(any(output %in% c("xml", "x", "-x")),
+                                  ".xml",
+                                  output_file_affix)
+      output_file_affix <- ifelse(any(output %in% c("html", "h", "-h")),
+                                  ".html",
+                                  output_file_affix)
+      output_file_affix <- ifelse(any(output %in% c("jsonRecursive", "J", "-J")),
+                                  ".json",
+                                  output_file_affix)
+      
+      # Vectorized readChar
+      .rtika_readFile <- function(path) {
+          bytes <- file.size(path)
+          ifelse(!is.na(bytes), mapply(readChar,
+                                       con = path,
+                                       nchars = bytes,
+                                       useBytes = TRUE),
+                 as.character(NA))
+      }
+      
+      # Clean & check with normalizePath, with warnings if not processed.
+      output_files <- normalizePath(file.path(output_dir,
+                                              paste0(inputFiles, 
+                                                     output_file_affix)),
+                                    winslash = "/")
+      
+      out[file_exists] <- .rtika_readFile(output_files)
+      
+      
+      # From studying the source code, the Tika batch processor defaults to UTF-8
+      # every batch config xml file uses a FSOutputStreamFactory set to UTF-8
+      
+      # cleanup temp files  -----------------------------------------------------
+      if (cleanup) {
+          trash_file <- file.path(tempdir(), list.files(tempdir(), 
+                                                        pattern = "^rtika_file"))
+          if (length(trash_file) > 0) {
+              tmp <- file.remove(trash_file)
+          }
+          
+          trash_dir <- file.path(tempdir(), list.files(tempdir(), 
+                                                       pattern = "^rtika_dir"))
+          if (length(trash_dir) > 0) { 
+              # if(.Platform$OS.type=='windows'){
+              # On windows, deleting dir does not seem to work unless force=TRUE.
+              # but do not want to force this.
+              #   tmp=  unlink( trash_dir, recursive =TRUE, force=TRUE) 
+              # } else {
+              tmp <- unlink(trash_dir, recursive = TRUE)
+              # }
+          }
+      }
+      return(out)
+    } else {
+      # if return==FALSE
+      invisible(NULL)
     }
     
-    # Clean & check with normalizePath, with warnings if not processed.
-    output_files <- normalizePath(file.path(output_dir,
-                                            paste0(inputFiles, 
-                                                   output_file_affix)),
-                                  winslash = "/")
     
-    out[file_exists] <- .rtika_readFile(output_files)
-    
-    
-    # From studying the source code, the Tika batch processor defaults to UTF-8
-    # every batch config xml file uses a FSOutputStreamFactory set to UTF-8
-    
-    # cleanup temp files  -----------------------------------------------------
-    if (cleanup) {
-        trash_file <- file.path(tempdir(), list.files(tempdir(), 
-                                                      pattern = "^rtika_file"))
-        if (length(trash_file) > 0) {
-            tmp <- file.remove(trash_file)
-        }
-        
-        trash_dir <- file.path(tempdir(), list.files(tempdir(), 
-                                                     pattern = "^rtika_dir"))
-        if (length(trash_dir) > 0) { 
-            # if(.Platform$OS.type=='windows'){
-            # On windows, deleting dir does not seem to work unless force=TRUE.
-            # but do not want to force this.
-            #   tmp=  unlink( trash_dir, recursive =TRUE, force=TRUE) 
-            # } else {
-            tmp <- unlink(trash_dir, recursive = TRUE)
-            # }
-        }
-    }
-    
-    return(out)
 }

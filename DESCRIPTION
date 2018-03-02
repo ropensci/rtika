@@ -1,13 +1,14 @@
 Package: rtika
 Type: Package
 Title: R Interface to 'Apache Tika' 
-Version: 0.1.5 
+Version: 0.1.6
 Authors@R: c(
     person(given="Sasha",family="Goodman", email="goodmansasha@gmail.com", role=c("aut","cre") ), 
     person(given="The Apache Software Foundation", role=c("aut","cph") )
   )
 Maintainer: Sasha Goodman <goodmansasha@gmail.com>
-Imports: tikajar,
+Imports: 
+    curl,
     sys,
     stats,
     utils
@@ -15,7 +16,6 @@ Suggests:
     jsonlite,
     xml2,
     data.table,
-    curl,
     testthat,
     knitr,
     rmarkdown,

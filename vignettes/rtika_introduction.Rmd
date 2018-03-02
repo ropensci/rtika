@@ -1,0 +1,311 @@
+---
+title: "Introduction to rtika"
+author: "Sasha Goodman"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: bibliography.bib
+
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+# A Digital Babel Fish
+
+
+Apache Tika is similar to the Babel fish in Douglas Adam's book, "The Hitchhikers' Guide to the Galaxy" [@mattmann2011tika p. 3]. The Babel fish translates any natural language to any other. While Apache Tika does not yet translate natural languages (that is in the works with Apache Joshua), it is a technology that aims to tame the tower of babel of digital document formats. As the Babel fish allowed a person to understand Vogon poetry, Tika allows a computer to extract text and objects from Microsoft Word.  
+
+The world of digital documents and their file formats is like a place where every community has their own set of languages. Academic, business, government, and online communities use anywhere from a few file types to thousands. Unfortunately, attempts to unify groups around a single format are typically frustrated [@mattmann2013computing]. 
+
+This plethora of file formats has become a common concern. Tika is a common library to address the issue. Starting in Apache Nutch in 2005, Tika became its own project in 2007 and then a component of other Apache projects including Nutch, Lucene, Jackrabbit, Mahout, and Solr [@mattmann2011tika p. 17]. 
+
+With the increased volume of data to ingest found in digital archives, and terabyte sized data becoming common, Tika's design goals include keeping the complexity at bay, memory consumption low, and processing speed fast [@mattmann2011tika p. 18].  
+
+The `rtika` package is an interface to Apache Tika that leverages Tika's efficient batch processor to parse lists of documents fairly quickly. Therefore, I recommend using batches whenever possible. Currently, all the `tika()` functions take some time to spin up, and that will get annoying with hundreds of separate calls the functions. 
+
+The practice of piping batches of data into a function is not uncommon and is becoming a popular style with the `magrittr` R package. That style makes such pipelines easy to code, and they are almost self-documenting.
+
+# Use tika_text() to Extract Plain Text 
+
+Video, sound and images are important file types, and yet much of the meaningful data in the world remains numeric or textual. Tika can parse many textual formats to extract alpha-numeric text, along with a few characters that control the arrangement of text like line breaks. For example:
+
+```{r}
+require('rtika')
+require('magrittr')
+
+# The manuals directory
+# contains 37 PDF files manuals 
+# of popular R packages.
+# It is about 7.7 MB in total.
+my_path <- "~/manuals"
+
+# Get all the files in that directory
+batch <- file.path(my_path,
+                list.files(path = my_path,
+                recursive=TRUE))
+
+
+# pipe the batch into tika_text() 
+# get plain text
+system.time(
+text <-  
+    batch %>%
+    tika_text() 
+)
+
+```
+
+The output is a R character vector of the same length and order as the input files.
+
+Occasionally, files are not parsable and the returned value for that file is `NA`. The reasons for unparsable files include corrupt files, disk input/output issues, empty files, password protection, a unhandled format, the document structure is broken, or the document has an unexpected variation. 
+
+These issues should be rare. Tika works very well on most documents. If an archive is very large there may be a small percentage of unparsable files, and you might want to handle them.
+```{r}
+# Find which files had an issue
+# Handle them if needed
+batch[which(is.na(text))]
+```
+
+Plain text is reasonably easy to search through using `base::grep()`.
+
+```{r}
+
+results <-
+    text[ base::grep(pattern='the',x=text) ]
+
+length(results)
+```
+
+With plain text, a variety of interesting analyses are possible ranging from word counting to making matrices for deep learning predictions. Many of these common cases are handled easily with the very well documented `tidytext` package [@silge2017text]. Among other things, it handles tokenization and creating term-document matrices.
+
+# Parameters for Very Big Datasets
+
+Very large processing jobs are possible with `rtika`, with a caveat. The R object returned by `tika` can become very large when there are hundreds of thousands of documents. In such a case, it's best to use the computer's disk to avoid running out of RAM. Most computers have much more disk space than RAM. 
+
+This can be done by setting two parameters in `tika_text()`, `tika_xml()`, `tika_html()` or `tika_json()`. First, set `return=FALSE` to avoid returning the big R character vector in RAM. Second, specify an existing directory on the file system using `output_dir` to save the processed files in. The files can be more easily dealt with in smaller batches later on. 
+
+```{r}
+# create a directory not already in use.
+my_directory <-
+   tempfile('rtika_output_dir',
+                           tmpdir='~')
+                  
+dir.create(my_directory)
+
+# normalizePath creates a canonical, user-understandable absolute path 
+my_directory <- normalizePath(my_directory)
+
+# pipe a batch tika_text()
+batch %>%
+tika_text(threads=4,
+          return=FALSE,
+          output_dir = my_directory) 
+
+# list all the file locations 
+saved_files <- file.path(my_directory,
+                list.files(path = my_directory,
+                recursive=TRUE)
+                )
+
+```
+ The location of each file in `output_dir` follows the convention from the Apache Tika batch processor: the full path to each file mirrors the original file's path, only within the `output_dir`. 
+```{r}
+saved_files[1:7]
+```
+
+# Use tika_fetch() to Preserve Content-Type when Downloading 
+
+A general suggestion is to use `tika_fetch()` to download files from the Internet, to preserve the Content-Type information in the file extension. 
+
+Tika's Content-Type detection is improved with file extensions (Tika also relies on other features such as Magic bytes, which are unique control bytes in the file header). The file extensions should be used whenever possible. The `tika_fetch()` function tries to preserves Content-Type information from the download server.
+
+```{r}
+download_directory = tempfile('rtika_download_dir',
+                           tmpdir='~')
+
+dir.create(download_directory)
+
+download_directory <- normalizePath(download_directory)
+
+batch <- c('https://tika.apache.org/',
+           'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf',
+           'https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
+
+downloads <- 
+    batch %>% 
+    tika_fetch(download_directory)
+
+# it will add the appropriate file extension to the downloads
+downloads
+
+```
+This `tika_fetch()` function is used internally by the other functions when processing URLs. However, then the downloaded files are left in a temporary directory and lost at the end of the R session. By using `tika_fetch()` with a directory of your choice, you can save the files and return to them later. `tika_fetch()` also has a `retries` parameter to help if an intermittent connection error stops a download.
+
+# Use Either tika_html() or tika_xml() to Get Structured XHTML 
+ 
+Plain text falls short sometimes. For example, pagination might be important for selecting page ranges.  The Tika authors chose HTML as a universal format because it offers semantic elements that are so common they are easy to learn or already feel familiar. For example, the hyperlink is represented in HTML as the anchor element `<a>` with the attribute `href`. The HTML in Tika preserves this metadata:
+
+```{r}
+library('xml2')
+
+
+# get XHTML text
+html <- 
+    downloads %>%
+    tika_html() %>%
+     lapply(xml2::read_html)
+
+# parse links from documents
+links <-
+    html %>%
+    lapply(xml2::xml_find_all, '//a') %>%
+    lapply(xml2::xml_attr, 'href')
+
+links[[2]][1:5]
+```
+
+
+Each type of file has different information preserved by Tika's internal parsers. The particular aspects vary. Some notes:
+
+    * PDF files retain pagination, with each page starting with the XHTML element `<div class="page">`. 
+    * PDFs retain hyperlinks in the anchor element `<a>` with the attribute `href`.
+    * Word and Excel documents retain tabular data as a `<table>` element. The `rvest` package has a function to get tables of data  with `rvest::html_table()`.
+    * Multiple Excel sheets are preserved as multiple XHTML tables. Ragged tables, where rows have differing numbers of cells, are not supported.
+
+Note that `tika_html()` and `tika_xml()` both produce the same strict form of HTML called XHTML, and either works essentially the same for all the documents I've tried. 
+
+# A Bit of XHTML Metadata
+The `tika_html()` and `tika_xml()` functions are focused on extracting strict, structured HTML as XHTML. In addition, basic metadata can be accessed in the `meta` tags of the XHTML. The MIME type is sometimes recorded in the Dublin Core metadata `dc:format` (http://dublincore.org/):
+
+```{r}
+html %>%
+lapply(xml2::xml_find_first, '//meta[@name="dc:format"]') %>%
+lapply(xml2::xml_attr,'content') %>%
+unlist()
+
+# show all available metadata
+html %>%
+lapply(xml2::xml_find_all,'//meta') 
+
+```
+
+More metadata can be accessed with the `tika_json()`
+
+# Use tika_json() for Images
+
+Consider all that can be found from a single image:
+
+```{r}
+library('jsonlite')
+batch = normalizePath('~/rtika/tests/testthat/calculator.jpg')
+
+# a list of data.frames
+metadata <-
+    batch %>% 
+    tika_json() %>%
+    lapply(jsonlite::fromJSON)
+
+# look at metadata structure
+str(metadata[[1]])
+
+
+# get content type from each data.frame
+    metadata %>%
+    lapply(function(x){ x$'Content-Type' }) %>%
+    unlist()
+
+
+```
+
+The most common metadata fields include `Content-Type`, `Content-Length`, `Creation-Date`, and `Content-Encoding`.
+
+In addition, each specific format can have its own specialized metadata fields. For example, photos sometimes store latitude and longitude:
+
+```{r}
+# get longitude and latitude 
+    metadata %>%
+    lapply(function(x){ as.numeric(x$'geo:lat') }) %>%
+    unlist()
+
+# get longitude and latitude
+    metadata %>%
+    lapply(function(x){ as.numeric(x$'geo:long') }) %>%
+    unlist()
+```
+
+
+# Use tika_json() for "Container" Documents 
+
+Some types of documents can have multiple objects within them. For example, a `.gzip` file can contain many other files. In the following example, I created a compressed archive of the Apache Tika homepage, using the command line program `wget` and `zip`. That downloaded the HTML, images, and other associated files into a compressed archive.
+
+```{r}
+# wget gets a webpage and other files. 
+# sys::exec_wait('wget', c('--page-requisites', 'https://tika.apache.org/'))
+# Put it all into a .zip file 
+# sys::exec_wait('zip', c('-r', 'tika.apache.org.zip' ,'tika.apache.org'))
+
+batch = normalizePath('~/rtika/tests/testthat/tika.apache.org.zip')
+
+# a list of data.frames
+metadata <-
+    batch %>% 
+    tika_json() %>%
+    lapply(jsonlite::fromJSON)
+
+# The structure is very long. See it with: str(metadata)
+
+```
+
+Here are some of the important metadata fields:
+
+```{r}
+
+embedded_resource_path <- 
+    metadata %>%
+    lapply(function(x){ x$'X-TIKA:embedded_resource_path' }) 
+
+embedded_resource_path
+```
+The `embedded_resource_path` tells you where in the document hierarchy an object resides. The first item in the character vector is the root, which is the actual container. As expected, it has a type of `application/zip`. The parser then recurses into the container and analyzes each object along the way, such as `application/xhtml+xml`, `image/png` and `text/css`.
+
+```{r}
+content_type <-
+    metadata %>%
+    lapply(function(x){ x$'Content-Type' }) 
+
+content_type
+
+content <- 
+     metadata %>%
+    lapply(function(x){ x$'X-TIKA:content' })
+
+str(content)
+
+```
+
+It may be surprising to learn that Word documents are containers (the modern `.docx `). By parsing them with `tika_json()`, the images, XHTML tables, and other embedded objects can be analyzed. 
+
+# Extending rtika
+
+Out of the box, `rtika` uses all the available Tika Detectors and Parsers and runs with sensible defaults. For most, this will work well.
+
+In future versions, Tika will use standardized configuration files to customize parsing. The config file option is on hold for now, because Tika's batch module is still new and the config file format will likely change and be backward incompatible with Tika 1.7. Please stay tuned.
+    
+Current Tika issues and progress can be seen here:    
+https://issues.apache.org/jira/projects/TIKA/issues/TIKA-2368?filter=allopenissues
+
+The Tika Wiki is here:
+https://wiki.apache.org/tika/FrontPage
+
+Tika sourcecode:
+https://github.com/apache/tika
+
+# References
+

@@ -21,6 +21,5 @@ Extract html rendition
 \donttest{
 input= 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
 output = tika_html(input)
-cat(output)
 }
 }

@@ -21,6 +21,5 @@ Extract xml rendition
 \donttest{
 input= 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
 output = tika_xml(input)
-cat(output)
 }
 }

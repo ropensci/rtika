@@ -4,7 +4,7 @@ rtika
 
 ***Extract text or metadata from over a thousand file types.***
 
-[![Travis-CI Build Status](https://travis-ci.org/predict-r/rtika.svg?branch=master)](https://travis-ci.org/predict-r/rtika) [![Coverage status](https://codecov.io/gh/predict-r/rtika/branch/master/graph/badge.svg)](https://codecov.io/github/predict-r/rtika?branch=master) [![](https://badges.ropensci.org/191_status.svg)](https://github.com/ropensci/onboarding/issues/191)
+[![Travis-CI Build Status](https://travis-ci.org/predict-r/rtika.svg?branch=master)](https://travis-ci.org/predict-r/rtika) [![Coverage status](https://codecov.io/gh/predict-r/rtika/branch/master/graph/badge.svg)](https://codecov.io/github/predict-r/rtika?branch=master)
 
 > Apache Tika is a content detection and analysis framework, written in Java, stewarded at the Apache Software Foundation. It detects and extracts metadata and text from over a thousand different file types, and as well as providing a Java library, has server and command-line editions suitable for use from other programming languages ...
 
@@ -12,63 +12,100 @@ rtika
 
 This is an R interface to the Tika software.
 
+See the complete usage instructions and introductory article at <http://predict-r.github.io/rtika>.
+
 Installation
 ------------
 
 To start, you need R and either `OpenJDK 1.7` or `Java 7`. Higher versions work. To check your version, run the command `java -version` from a terminal. Get Java installation tips at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>.
 
-On Windows, the `curl` package is suggested if you feed `rtika` with urls instead of local documents.
-
-Next, install the `rtika` package and its main dependencies `tikajar` and `sys`.
+Next, install the `rtika` package.
 
 ``` r
-# Okay, we also need devtools to easily install from github, until this is all on CRAN 
+# We also need devtools to easily install from github, until this is all on CRAN 
 if(!requireNamespace('devtools')){
-  install.packages('devtools',repos='https://cloud.r-project.org')};
-# Install 'tikajar' and 'rtika'
+  install.packages('devtools',
+    repos='https://cloud.r-project.org')
+}
+
 if(!requireNamespace('rtika')){
-  install.packages('sys',repos='https://cloud.r-project.org');
-  devtools::install_github(c('predict-r/tikajar','predict-r/rtika'))};
+  devtools::install_github('predict-r/rtika')
+}
+
 library('rtika')  
 ```
 
-The `rJava` package is not required.
+The `rJava` package is **not** required.
+
+Again, see the complete usage instructions and introductory article at <http://predict-r.github.io/rtika>.
+
+Key Features
+------------
+
+-   `tika_text()` to extract plain text.
+-   `tika_xml()` and `tika_html()` to extract an XHMTL rendition.
+-   `tika_json()` to get metadata and examine complex documents.
+-   `tika()` to extract plain text or the other types. This is the main function the others above inherit from.
+-   `tika_fetch()` to download files with a file extension matching the Content-Type.
+
+Supported File Types
+--------------------
+
+Tika parses and extracts text or metadata from over one thousand digital formats, including:
+
+-   Portable Document Format (`.pdf`)
+-   Microsoft Office document formats (Word, PowerPoint, Excel, etc.)
+-   Rich Text Format (`.rtf`)
+-   Electronic Publication Format (`.epub`)
+-   Image formats (`.jpeg`, `.png`, etc.)
+-   Mail formats (`.mbox`, Outlook)
+-   HyperText Markup Language (`.html`)
+-   XML and derived formats (`.xml`, etc.)
+-   Compression and packaging formats (`.gzip`, `.rar`, etc.)
+-   OpenDocument Format
+-   iWorks document formats
+-   WordPerfect document formats
+-   Text formats
+-   Feed and Syndication formats
+-   Help formats
+-   Audio formats
+-   Video formats
+-   Java class files and archives
+-   Source code
+-   CAD formats
+-   Font formats
+-   Scientific formats
+-   Executable programs and libraries
+-   Crypto formats
+
+For a list of MIME types, see: <https://tika.apache.org/1.17/formats.html>
+
+Simple Example
+--------------
+
+**The `rtika` package processes batches of documents efficiently**, so I recommend batches. Currently, all the `tika()` functions take a tiny bit of time to spin up, and that will get annoying with hundreds of separate calls the functions.
 
 ``` r
-# The curl and data.table packages enhance rtika.
-# Here, magrittr helps document long pipelines.
-library("magrittr")
-```
+library('magrittr')
 
-Extract Plain Text
-------------------
-
-Describe the paths to files that can contain text, such as `.pdf`, Microsoft Office (`.doc`, `docx`, `.ppt`, etc.), `.rtf`, or a mix. Tika reads each file, identifies the format, invokes a specialized parser, and then `tika_text()` returns a plain text rendition for you.
-
-**The `rtika` package processes batches of documents efficiently**, so I recommend batches. Currently, all the `rtika` functions take a tiny bit of time to spin up, and that will get annoying with hundreds of separate calls to `tika_text()` and the others.
-
-``` r
-# Files or urls
+# Local files or remote urls. Here, remote urls.
 batch <- c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
            ,'https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
 
-# A short data pipleine, shown with magrittr:
-text <- {
+# A short data pipleine, shown with magrittr.
+# Normal syntax also works, e.g. text <- tika_text(batch)
+text <-  
   batch %>%
   tika_text() 
-}
 
-# Normal syntax works, e.g. text = tika(input)
 
-# Look at the structure. It's a character vector:
+# Look at the structure returned. 
+# It's a character vector. 
+# There is one string for each document.
 utils::str(text)
 #>  chr [1:2] "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nR Data Import/Export\"| __truncated__ ...
-```
 
-The batch is two urls, and the output `text` is a character vector of two documents. See a snippet of the first document using `base::cat()`.
-
-``` r
-# Look at a snippet from the long first document:
+# Look at a snippet:
 base::cat(base::substr(text[1],45,160)) 
 #> 
 #> R Data Import/Export
@@ -81,115 +118,7 @@ base::cat(base::substr(text[1],45,160))
 #> This manual is for R, version 3.4.3 (2017-11-30).
 ```
 
-Now we have some plain text. If there was a problem, the result would be `as.character(NA)`.
-
-Plain text can be easy to tokenize.
-
-``` r
-tokenize_words <- function(x){
-  w=base::strsplit(base::tolower(x),split='[^a-zA-Z]+')
-  base::lapply(w,function(x)x[x!=''])}
-
-# Make a List of documents, each with a word vector
-words <- {
-  text %>% 
-  tokenize_words()
-}
-
-# Look at the structure
-str(words)
-#> List of 2
-#>  $ : chr [1:14267] "r" "data" "import" "export" ...
-#>  $ : chr [1:24949] "r" "language" "definition" "r" ...
-```
-
-Access the first document in the `List` with the `[[` syntax. Each contains words:
-
-``` r
-words[[1]][1:7] 
-#> [1] "r"       "data"    "import"  "export"  "version" "r"       "core"
-words[[2]][1:7] 
-#> [1] "r"          "language"   "definition" "r"          "language"  
-#> [6] "definition" "table"
-```
-
-While `rtika` is efficient for batches, to further reduce the time for very large jobs, increase the number of parallel system threads. The usefulness of this depends on the file system speed or other factors. Eight threads is probably not much faster than three or four. For example: `tika_text(threads=3)`. This works on all `rtika` functions.
-
-``` r
-text <- {
-  batch %>%
-  tika_text(threads=3) 
-}
-```
-
-Get Metadata
-------------
-
-Metadata comes with the `jsonRecursive`,`xml` and `html` output options. In addition, text will be in `XHTML`, the stricter `HTML`. That retains more information than plain text, and is nice for extracting tables and table cells. The special `jsonRecursive` mode can also process compressed archives of documents. It is quickly accessed with `tika_json()`.
-
-``` r
-# Input vector of length two:
-batch <- c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
-           ,'https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
-
-# With tika_json(), text will be XHTML in the `X-TIKA:content` field.
-metadata <- {
-  batch %>%
-  tika_json() %>% # output is a character with as.character(NA) failures
-  base::ifelse(is.na(.),'[{"X-TIKA:content":""}]',.)  %>% # typical failures handled
-  base::lapply(jsonlite::fromJSON) # list of data.frames
-}
-```
-
-See the structure of the metadata, or meta-metadata.
-
-``` r
-# The first document's metadata:
-utils::str(metadata[[1]])
-#> 'data.frame':    1 obs. of  41 variables:
-#>  $ Content-Length                             : chr "309939"
-#>  $ Content-Type                               : chr "application/pdf"
-#>  $ Creation-Date                              : chr "2017-11-30T13:39:02Z"
-#>  $ Last-Modified                              : chr "2017-11-30T13:39:02Z"
-#>  $ Last-Save-Date                             : chr "2017-11-30T13:39:02Z"
-#>  $ PTEX.Fullbanner                            : chr "This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) kpathsea version 6.2.3"
-#>  $ X-Parsed-By                                :List of 1
-#>   ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
-#>  $ X-TIKA:content                             : chr "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"date\" content=\"2017-11-30T13:39:02Z\" />\"| __truncated__
-#>  $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-#>  $ X-TIKA:parse_time_millis                   : chr "996"
-#>  $ access_permission:assemble_document        : chr "true"
-#>  $ access_permission:can_modify               : chr "true"
-#>  $ access_permission:can_print                : chr "true"
-#>  $ access_permission:can_print_degraded       : chr "true"
-#>  $ access_permission:extract_content          : chr "true"
-#>  $ access_permission:extract_for_accessibility: chr "true"
-#>  $ access_permission:fill_in_form             : chr "true"
-#>  $ access_permission:modify_annotations       : chr "true"
-#>  $ created                                    : chr "Thu Nov 30 05:39:02 PST 2017"
-#>  $ date                                       : chr "2017-11-30T13:39:02Z"
-#>  $ dc:format                                  : chr "application/pdf; version=1.5"
-#>  $ dcterms:created                            : chr "2017-11-30T13:39:02Z"
-#>  $ dcterms:modified                           : chr "2017-11-30T13:39:02Z"
-#>  $ meta:creation-date                         : chr "2017-11-30T13:39:02Z"
-#>  $ meta:save-date                             : chr "2017-11-30T13:39:02Z"
-#>  $ modified                                   : chr "2017-11-30T13:39:02Z"
-#>  $ pdf:PDFVersion                             : chr "1.5"
-#>  $ pdf:docinfo:created                        : chr "2017-11-30T13:39:02Z"
-#>  $ pdf:docinfo:creator_tool                   : chr "TeX"
-#>  $ pdf:docinfo:custom:PTEX.Fullbanner         : chr "This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) kpathsea version 6.2.3"
-#>  $ pdf:docinfo:modified                       : chr "2017-11-30T13:39:02Z"
-#>  $ pdf:docinfo:producer                       : chr "pdfTeX-1.40.18"
-#>  $ pdf:docinfo:trapped                        : chr "False"
-#>  $ pdf:encrypted                              : chr "false"
-#>  $ producer                                   : chr "pdfTeX-1.40.18"
-#>  $ resourceName                               : chr "rtika_file7a6f1127d61b"
-#>  $ tika:file_ext                              : chr ""
-#>  $ tika_batch_fs:relative_path                : chr "tmp/RtmpsKnZtB/rtika_file7a6f1127d61b"
-#>  $ trapped                                    : chr "False"
-#>  $ xmp:CreatorTool                            : chr "TeX"
-#>  $ xmpTPg:NPages                              : chr "37"
-```
+More examples can be found at <http://predict-r.github.io/rtika>.
 
 Similar Packages
 ----------------

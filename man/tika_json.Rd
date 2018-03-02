@@ -24,6 +24,5 @@ Tika can parse and extract text from almost anything, including zip, tar, tar.bz
 \donttest{
 input= 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
 output = tika_json(input)
-cat(output)
 }
 }

@@ -5,8 +5,8 @@
 \title{R Interface to 'Apache Tika'}
 \usage{
 tika(input, output = c("text", "jsonRecursive", "xml", "html")[1],
-  output_dir = "", java = "java", jar = tikajar::tikajar(), threads = 2,
-  args = character(), quiet = TRUE, cleanup = TRUE,
+  output_dir = "", return = TRUE, java = "java", jar = tika_jar(),
+  threads = 2, args = character(), quiet = TRUE, cleanup = TRUE,
   lib.loc = .libPaths())
 }
 \arguments{
@@ -24,6 +24,9 @@ gets \code{XHTML} text and \code{json} metadata.
 \item{output_dir}{Optional directory path to save the converted files in. 
 Tika may overwrite files so an empty directory is best. See the 'Output 
 Details' section before using.}
+
+\item{return}{Logical if an R object should be returned. Defaults to
+TRUE. If set to FALSE, and output_dir (above) must be specified.}
 
 \item{java}{Optional command to invoke Java. For example, it can be the full 
 path to a particular Java version. See the Configuration section below.}
@@ -59,8 +62,9 @@ mainly for package testing.}
 }
 \value{
 A character vector in the same order and with the same length as 
-\code{input}. Unprocessed files are \code{as.character(NA)}. See the Output 
-Details section below.
+\code{input}. Unprocessed files are \code{as.character(NA)}. 
+If return=FALSE, then a NULL value is invisibly returned.
+See the Output Details section below.
 }
 \description{
 Extract text or metadata from over a thousand file types.

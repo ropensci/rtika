@@ -2,7 +2,7 @@
 % Please edit documentation in R/tika_text.R
 \name{tika_text}
 \alias{tika_text}
-\title{Extract plain text rendition}
+\title{Get a Plain Text Rendition of File}
 \usage{
 tika_text(input, ...)
 }
@@ -15,12 +15,11 @@ tika_text(input, ...)
 A character vector in the same order and with the same length as \code{input}. Unprocessed files are \code{as.character(NA)}.
 }
 \description{
-Extract plain text rendition
+Get a Plain Text Rendition of File
 }
 \examples{
 \donttest{
 input= 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
 output = tika_text(input)
-cat(output)
 }
 }

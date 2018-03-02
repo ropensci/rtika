@@ -9,6 +9,27 @@ context("Connecting to Tika")
 #   download.file(urls[i], input[i])
 # }
 
+test_that("gets valid path", {
+    path <- tika_jar()
+    expect_true(length(path)==1)
+    expect_true(class(path)=='character')
+    expect_true(file.exists(path))
+})
+
+test_that("check_md5_sum only works with character strings ", {
+    expect_error(tika_check(777))
+})
+
+test_that("check_md5_sum fails with wrong checksum", {
+    expect_false(tika_check('not a checksum'))
+})
+
+
+test_that("md5_sum is correct for this version", {
+    expect_true(tika_check('e2720c2392c1bd6634cc4a8801f7363a'))
+})
+
+
 # causes problem with travis, but not locally. May need to skip
 test_that("tika warns with url to nowhere without curl package", {
   nowhere <- 'http://www.predict-r.com/rtika_testing_coverage_file_not_here.txt'
@@ -107,6 +128,7 @@ test_that("tika warns with NA input", {
   expect_equal(length(text), 1)
   expect_equal(text[1], as.character(NA))
 })
+
 
 
 
