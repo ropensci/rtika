@@ -209,7 +209,7 @@ Consider all that can be found from a single image:
 
 ```{r}
 library('jsonlite')
-batch = normalizePath('~/rtika/tests/testthat/calculator.jpg')
+batch = system.file("extdata", "calculator.jpg", package = "rtika")
 
 # a list of data.frames
 metadata <-
@@ -246,7 +246,7 @@ In addition, each specific format can have its own specialized metadata fields. 
 ```
 
 
-# Use tika_json() for "Container" Documents 
+# Use tika_json() for "Container" Documents and Metadata 
 
 Some types of documents can have multiple objects within them. For example, a `.gzip` file can contain many other files. In the following example, I created a compressed archive of the Apache Tika homepage, using the command line program `wget` and `zip`. That downloaded the HTML, images, and other associated files into a compressed archive.
 
@@ -255,8 +255,7 @@ Some types of documents can have multiple objects within them. For example, a `.
 # sys::exec_wait('wget', c('--page-requisites', 'https://tika.apache.org/'))
 # Put it all into a .zip file 
 # sys::exec_wait('zip', c('-r', 'tika.apache.org.zip' ,'tika.apache.org'))
-
-batch = normalizePath('~/rtika/tests/testthat/tika.apache.org.zip')
+batch = system.file("extdata", "tika.apache.org.zip", package = "rtika")
 
 # a list of data.frames
 metadata <-

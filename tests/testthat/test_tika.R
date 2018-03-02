@@ -9,6 +9,11 @@ context("Connecting to Tika")
 #   download.file(urls[i], input[i])
 # }
 
+input <- c(system.file("extdata", "R-data.pdf", package = "rtika"),
+system.file("extdata", "R-exts.epub", package = "rtika"),
+system.file("extdata", "R-FAQ.html", package = "rtika")
+)
+
 test_that("gets valid path", {
     path <- tika_jar()
     expect_true(length(path)==1)
@@ -37,12 +42,11 @@ test_that("tika warns with url to nowhere without curl package", {
 })
 # causes problem with travis, but not locally. May need to skip
 test_that("tika stops when output_dir is root", {
-  input <- c("R-data.pdf","R-exts.epub","R-FAQ.html")
   expect_error( tika(input[1] , output_dir = file.path('/') ) )
 })
 
 test_that("tika parses a local pdf without curl packages", {
-  input <- c("R-data.pdf","R-exts.epub","R-FAQ.html")
+  
   text <- tika(input[1], lib.loc = "")
   expect_equal(length(text), 1)
   expect_true(!is.na(text[1]))
@@ -74,7 +78,6 @@ test_that("tika warns with url to nowhere with curl package", {
 })
 
 test_that("tika parses single local pdf", {
-  input <- c("R-data.pdf","R-exts.epub","R-FAQ.html")
   text <- tika(input[1])
   expect_equal(length(text), 1)
   expect_true(!is.na(text[1]))
@@ -82,7 +85,6 @@ test_that("tika parses single local pdf", {
 })
 
 test_that("tika parses multiple local files", {
-  input <- c("R-data.pdf","R-exts.epub","R-FAQ.html")
   text <- tika(input)
   expect_equal(length(text), length(input))
   expect_true(!any(is.na(text)))
@@ -115,7 +117,6 @@ test_that("tika outputs NA with a path to nowhere", {
 
 test_that("tika outputs NA with a path to nowhere in right order", {
   nowhere <- file.path("/rtika_fake_file_not_here.txt")
-  input <- c("R-data.pdf","R-exts.epub","R-FAQ.html")
   text <- tika(c(input[1], nowhere, input[2]))
   expect_equal(text[2], as.character(NA))
   expect_equal(length(text), 3)
@@ -135,7 +136,6 @@ test_that("tika warns with NA input", {
 
 test_that("tika outputs parsable xml", {
  # library('xml2')
-  input <- c("R-data.pdf","R-exts.epub","R-FAQ.html")
   text <- tika_xml(input)
   processed_xml <- NA
   processed_xml <- xml2::read_xml(text[1])
@@ -152,7 +152,6 @@ test_that("tika outputs parsable xml", {
 
 test_that("tika outputs parsable html", {
  # library('xml2')
-  input <- c("R-data.pdf","R-exts.epub","R-FAQ.html")
   text <- tika_html(input)
   processed_html <- NA
   processed_html <- xml2::read_html(text[1])
@@ -170,7 +169,6 @@ test_that("tika outputs parsable html", {
 
 test_that("tika outputs parsable json", {
  # library('jsonlite')
-  input <- c("R-data.pdf","R-exts.epub","R-FAQ.html")
   text <- tika_json(input)
   processed_json <- data.frame()
   processed_json <- jsonlite::fromJSON(text[1])
@@ -187,7 +185,6 @@ test_that("tika outputs parsable json", {
 })
 
 test_that("tika_text works", {
-  input <- c("R-data.pdf","R-exts.epub","R-FAQ.html")
   text <- tika_text(input[1])
   expect_equal(length(text), 1)
   expect_true(!is.na(text[1]))
@@ -195,7 +192,7 @@ test_that("tika_text works", {
 })
 
 test_that("tika puts files into the specified output_dir", {
-  input <- c("R-data.pdf","R-exts.epub","R-FAQ.html")
+
   test_dir <- tempfile("testthat_rtika_test")
   dir.create(test_dir)
   test_dir <- normalizePath(test_dir, winslash = "/")
@@ -213,7 +210,7 @@ test_that("tika puts files into the specified output_dir", {
 
 
 test_that("tika cleans up", {
-  input <- c("R-data.pdf","R-exts.epub","R-FAQ.html")
+
   text <- tika(input[1], cleanup = TRUE)
   expect_equal(length(file.path(tempdir()
                  , list.files(tempdir()

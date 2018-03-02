@@ -121,9 +121,9 @@ batch &lt;-<span class="st"> </span>
 
 <span class="co"># it will add the appropriate file extension to the downloads</span>
 batch
-<span class="co">#&gt; [1] "/home/project/rtika_download_dir6c8a622e3aa5/rtika_file6c8a6bb1b50.html" </span>
-<span class="co">#&gt; [2] "/home/project/rtika_download_dir6c8a622e3aa5/rtika_file6c8a49033d95.pdf" </span>
-<span class="co">#&gt; [3] "/home/project/rtika_download_dir6c8a622e3aa5/rtika_file6c8a6dd01b7c.html"</span></code></pre></div>
+<span class="co">#&gt; [1] "/home/project/rtika_download_dir5f93a1766d8/rtika_file5f96e750e77.html"</span>
+<span class="co">#&gt; [2] "/home/project/rtika_download_dir5f93a1766d8/rtika_file5f91c714dfe.pdf" </span>
+<span class="co">#&gt; [3] "/home/project/rtika_download_dir5f93a1766d8/rtika_file5f95d260f47.html"</span></code></pre></div>
 <p>This <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> function is used internally by the <code><a href="../reference/tika.html">tika()</a></code> functions when processing URLs. However, then the downloaded files are left in a temporary directory and lost at the end of the R session. By using <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> with a directory of your choice, you can save the files and return to them later. <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> also has a <code>retries</code> parameter to help if an intermittent connection error stops a download.</p>
 </div>
 <div id="use-tika_text-to-extract-plain-text" class="section level1">
@@ -192,9 +192,9 @@ processed_files &lt;-<span class="st"> </span><span class="kw">file.path</span>(
                 )</code></pre></div>
 <p>The location of each file in <code>output_dir</code> follows the convention from the Apache Tika batch processor: the full path to each file mirrors the original file’s path, only within the <code>output_dir</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">processed_files
-<span class="co">#&gt; [1] "/home/project/rtika_output_dir6c8a7bdb0b43/home/project/rtika_download_dir6c8a622e3aa5/rtika_file6c8a49033d95.pdf.txt" </span>
-<span class="co">#&gt; [2] "/home/project/rtika_output_dir6c8a7bdb0b43/home/project/rtika_download_dir6c8a622e3aa5/rtika_file6c8a6bb1b50.html.txt" </span>
-<span class="co">#&gt; [3] "/home/project/rtika_output_dir6c8a7bdb0b43/home/project/rtika_download_dir6c8a622e3aa5/rtika_file6c8a6dd01b7c.html.txt"</span></code></pre></div>
+<span class="co">#&gt; [1] "/home/project/rtika_output_dir5f97584c019/home/project/rtika_download_dir5f93a1766d8/rtika_file5f91c714dfe.pdf.txt" </span>
+<span class="co">#&gt; [2] "/home/project/rtika_output_dir5f97584c019/home/project/rtika_download_dir5f93a1766d8/rtika_file5f95d260f47.html.txt"</span>
+<span class="co">#&gt; [3] "/home/project/rtika_output_dir5f97584c019/home/project/rtika_download_dir5f93a1766d8/rtika_file5f96e750e77.html.txt"</span></code></pre></div>
 <p>Note that <code><a href="../reference/tika_text.html">tika_text()</a></code> produces <code>.txt</code> files, <code><a href="../reference/tika_xml.html">tika_xml()</a></code> produces <code>.xml</code> files, <code><a href="../reference/tika_html.html">tika_html()</a></code> produces <code>.html</code> files, and <code><a href="../reference/tika_json.html">tika_json()</a></code> produces <code>.json</code> files.</p>
 </div>
 <div id="use-either-tika_html-or-tika_xml-to-get-structured-xhtml" class="section level1">
@@ -217,16 +217,16 @@ links &lt;-
 <span class="st">    </span><span class="kw">lapply</span>(xml2<span class="op">::</span>xml_attr, <span class="st">'href'</span>)
 
 <span class="kw">sample</span>(links[[<span class="dv">2</span>]],<span class="dv">10</span>)
-<span class="co">#&gt;  [1] "https://CRAN.R-project.org/package=reshape"          </span>
-<span class="co">#&gt;  [2] "https://mariadb.org/"                                </span>
-<span class="co">#&gt;  [3] "https://CRAN.R-project.org/package=XLConnect"        </span>
-<span class="co">#&gt;  [4] "https://CRAN.R-project.org/package=WriteXLS"         </span>
-<span class="co">#&gt;  [5] "https://CRAN.R-project.org/package=XLConnect"        </span>
-<span class="co">#&gt;  [6] "https://CRAN.R-project.org/package=RODBC"            </span>
-<span class="co">#&gt;  [7] "https://CRAN.R-project.org/package=DBI"              </span>
-<span class="co">#&gt;  [8] "https://CRAN.R-project.org/package=RODBC"            </span>
-<span class="co">#&gt;  [9] "http://www.ibm.com/db2"                              </span>
-<span class="co">#&gt; [10] "https://www.r-project.org/doc/Rnews/Rnews_2001-1.pdf"</span></code></pre></div>
+<span class="co">#&gt;  [1] "https://CRAN.R-project.org/package=WriteXLS"      </span>
+<span class="co">#&gt;  [2] "https://CRAN.R-project.org/package=ncdf4"         </span>
+<span class="co">#&gt;  [3] "https://CRAN.R-project.org/package=StatDataML"    </span>
+<span class="co">#&gt;  [4] "https://mariadb.org/"                             </span>
+<span class="co">#&gt;  [5] "https://CRAN.R-project.org/package=RMySQL"        </span>
+<span class="co">#&gt;  [6] "https://CRAN.R-project.org/package=MASS"          </span>
+<span class="co">#&gt;  [7] "https://CRAN.R-project.org/package=rgdal"         </span>
+<span class="co">#&gt;  [8] "https://en.wikipedia.org/wiki/Mondrian_(software)"</span>
+<span class="co">#&gt;  [9] "https://CRAN.R-project.org/package=ROracle"       </span>
+<span class="co">#&gt; [10] "https://CRAN.R-project.org/package=xml2"</span></code></pre></div>
 <p>Each type of file has different information preserved by Tika’s internal parsers. The particular aspects vary. Some notes:</p>
 <ul>
 <li>PDF files retain pagination, with each page starting with the XHTML element <code>&lt;div class="page"&gt;</code>.</li>
@@ -259,7 +259,7 @@ html <span class="op">%&gt;%</span>
 <span class="co">#&gt;  [5] &lt;meta name="Content-Encoding" content="UTF-8"&gt;\n</span>
 <span class="co">#&gt;  [6] &lt;meta name="Content-Type-Hint" content="text/html; charset=UTF-8"&gt;\n</span>
 <span class="co">#&gt;  [7] &lt;meta name="tika_batch_fs:relative_path" content="home/project/rtik ...</span>
-<span class="co">#&gt;  [8] &lt;meta name="resourceName" content="rtika_file6c8a6bb1b50.html"&gt;\n</span>
+<span class="co">#&gt;  [8] &lt;meta name="resourceName" content="rtika_file5f96e750e77.html"&gt;\n</span>
 <span class="co">#&gt;  [9] &lt;meta name="Content-Length" content="34144"&gt;\n</span>
 <span class="co">#&gt; [10] &lt;meta name="X-TIKA:digest:MD5" content="6c45bb17c53941b781930f9683b ...</span>
 <span class="co">#&gt; [11] &lt;meta name="Content-Type" content="application/xhtml+xml; charset=U ...</span>
@@ -295,7 +295,7 @@ html <span class="op">%&gt;%</span>
 <span class="co">#&gt;  [3] &lt;meta name="keywords" content="R Language Definition"&gt;\n</span>
 <span class="co">#&gt;  [4] &lt;meta name="tika_batch_fs:relative_path" content="home/project/rtik ...</span>
 <span class="co">#&gt;  [5] &lt;meta name="description" content="R Language Definition"&gt;\n</span>
-<span class="co">#&gt;  [6] &lt;meta name="resourceName" content="rtika_file6c8a6dd01b7c.html"&gt;\n</span>
+<span class="co">#&gt;  [6] &lt;meta name="resourceName" content="rtika_file5f95d260f47.html"&gt;\n</span>
 <span class="co">#&gt;  [7] &lt;meta name="distribution" content="global"&gt;\n</span>
 <span class="co">#&gt;  [8] &lt;meta name="dc:title" content="R Language Definition"&gt;\n</span>
 <span class="co">#&gt;  [9] &lt;meta name="tika:file_ext" content="html"&gt;\n</span>
@@ -313,7 +313,7 @@ html <span class="op">%&gt;%</span>
 <a href="#use-tika_json-for-images" class="anchor"></a>Use tika_json() for Images</h1>
 <p>Consider all that can be found from a single image:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">'jsonlite'</span>)
-batch =<span class="st"> </span><span class="kw">normalizePath</span>(<span class="st">'~/rtika/tests/testthat/calculator.jpg'</span>)
+batch =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"calculator.jpg"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>)
 
 <span class="co"># a list of data.frames</span>
 metadata &lt;-
@@ -347,7 +347,7 @@ metadata &lt;-
 <span class="co">#&gt;  $ Exposure Program           : chr "Program normal"</span>
 <span class="co">#&gt;  $ Exposure Time              : chr "1/30 sec"</span>
 <span class="co">#&gt;  $ F-Number                   : chr "f/2.2"</span>
-<span class="co">#&gt;  $ File Modified Date         : chr "Mon Feb 26 17:40:50 -08:00 2018"</span>
+<span class="co">#&gt;  $ File Modified Date         : chr "Thu Mar 01 22:18:47 -08:00 2018"</span>
 <span class="co">#&gt;  $ File Name                  : chr "calculator.jpg"</span>
 <span class="co">#&gt;  $ File Size                  : chr "712286 bytes"</span>
 <span class="co">#&gt;  $ Flash                      : chr "Flash did not fire"</span>
@@ -405,7 +405,7 @@ metadata &lt;-
 <span class="co">#&gt;   ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.jpeg.JpegParser"</span>
 <span class="co">#&gt;  $ X-TIKA:content             : chr "&lt;html xmlns=\"http://www.w3.org/1999/xhtml\"&gt;\n&lt;head&gt;\n&lt;meta name=\"Exif Version\" content=\"2.21\" /&gt;\n&lt;meta n"| __truncated__</span>
 <span class="co">#&gt;  $ X-TIKA:digest:MD5          : chr "829904e2f23a2095b7c46d13e92cab12"</span>
-<span class="co">#&gt;  $ X-TIKA:parse_time_millis   : chr "150"</span>
+<span class="co">#&gt;  $ X-TIKA:parse_time_millis   : chr "149"</span>
 <span class="co">#&gt;  $ XMP Value Count            : chr "0"</span>
 <span class="co">#&gt;  $ Y Resolution               : chr "72 dots per inch"</span>
 <span class="co">#&gt;  $ YCbCr Positioning          : chr "Center of pixel array"</span>
@@ -446,16 +446,15 @@ metadata &lt;-
 <span class="st">    </span><span class="kw">unlist</span>()
 <span class="co">#&gt; [1] -118.4496</span></code></pre></div>
 </div>
-<div id="use-tika_json-for-container-documents" class="section level1">
+<div id="use-tika_json-for-container-documents-and-metadata" class="section level1">
 <h1 class="hasAnchor">
-<a href="#use-tika_json-for-container-documents" class="anchor"></a>Use tika_json() for “Container” Documents</h1>
+<a href="#use-tika_json-for-container-documents-and-metadata" class="anchor"></a>Use tika_json() for “Container” Documents and Metadata</h1>
 <p>Some types of documents can have multiple objects within them. For example, a <code>.gzip</code> file can contain many other files. In the following example, I created a compressed archive of the Apache Tika homepage, using the command line program <code>wget</code> and <code>zip</code>. That downloaded the HTML, images, and other associated files into a compressed archive.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># wget gets a webpage and other files. </span>
 <span class="co"># sys::exec_wait('wget', c('--page-requisites', 'https://tika.apache.org/'))</span>
 <span class="co"># Put it all into a .zip file </span>
 <span class="co"># sys::exec_wait('zip', c('-r', 'tika.apache.org.zip' ,'tika.apache.org'))</span>
-
-batch =<span class="st"> </span><span class="kw">normalizePath</span>(<span class="st">'~/rtika/tests/testthat/tika.apache.org.zip'</span>)
+batch =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"tika.apache.org.zip"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>)
 
 <span class="co"># a list of data.frames</span>
 metadata &lt;-
@@ -545,7 +544,7 @@ content &lt;-<span class="st"> </span>
       <li><a href="#use-either-tika_html-or-tika_xml-to-get-structured-xhtml">Use Either tika_html() or tika_xml() to Get Structured XHTML</a></li>
       <li><a href="#a-bit-of-xhtml-metadata">A Bit of XHTML Metadata</a></li>
       <li><a href="#use-tika_json-for-images">Use tika_json() for Images</a></li>
-      <li><a href="#use-tika_json-for-container-documents">Use tika_json() for “Container” Documents</a></li>
+      <li><a href="#use-tika_json-for-container-documents-and-metadata">Use tika_json() for “Container” Documents and Metadata</a></li>
       <li><a href="#extending-rtika">Extending rtika</a></li>
       <li><a href="#references">References</a></li>
       </ul>
