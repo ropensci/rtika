@@ -313,7 +313,7 @@ In future versions, Tika uses a configuration file to customize parsing. This co
     
 You may  find these resources useful:
 
-* Current Tika issues and progress can be seen here: https://issues.apache.org/jira/projects/TIKA/issues/TIKA-2368?filter=allopenissues
+* Current Tika issues and progress can be seen here: https://issues.apache.org/jira/projects/TIKA
 * The Tika Wiki is here: https://wiki.apache.org/tika/FrontPage
 * Tika sourcecode: https://github.com/apache/tika
 
