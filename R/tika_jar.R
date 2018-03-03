@@ -3,7 +3,7 @@
 #' A library for text and data extraction
 #' @return A character vector of length one describing the path to the particular  \code{tika-app-X.XX.jar}.
 #' @examples
-#' jar = tika_jar()
+#' jar <- tika_jar()
 #' # see help
 #' sys::exec_wait('java',c('-jar',jar, '--help'))
 #' # detect language of web page

@@ -34,6 +34,6 @@ batch <- c(
  system.file("extdata", "calculator.jpg", package = "rtika"),
  system.file("extdata", "tika.apache.org.zip", package = "rtika")
 )
-json = tika_json(batch)
+json <- tika_json(batch)
 }
 }

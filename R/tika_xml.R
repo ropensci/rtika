@@ -16,7 +16,7 @@
 #'  system.file("extdata", "calculator.jpg", package = "rtika"),
 #'  system.file("extdata", "tika.apache.org.zip", package = "rtika")
 #' )
-#' xml = tika_xml(batch)
+#' xml <- tika_xml(batch)
 #' }
 #' @export
 

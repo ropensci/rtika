@@ -13,7 +13,7 @@ A character vector of length one describing the path to the particular  \code{ti
 A library for text and data extraction
 }
 \examples{
-jar = tika_jar()
+jar <- tika_jar()
 # see help
 sys::exec_wait('java',c('-jar',jar, '--help'))
 # detect language of web page

@@ -16,7 +16,7 @@
 #'  system.file("extdata", "calculator.jpg", package = "rtika"),
 #'  system.file("extdata", "tika.apache.org.zip", package = "rtika")
 #' )
-#' text = tika_text(batch)
+#' text <- tika_text(batch)
 #' }
 #' @export
 tika_text <- function(input, ...) {

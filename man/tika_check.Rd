@@ -2,7 +2,7 @@
 % Please edit documentation in R/tika_check.R
 \name{tika_check}
 \alias{tika_check}
-\title{Check tika_jar() against a md5 checksum}
+\title{Check Tika against a md5 checksum}
 \usage{
 tika_check(md5_sum)
 }

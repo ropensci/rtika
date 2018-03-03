@@ -1,4 +1,4 @@
-#' Check tika_jar() against a md5 checksum
+#' Check Tika against a md5 checksum
 #'
 #' Checks the incuded Tika library, using the \code{tools::md5sum()} command.
 #' The latest checksums are at https://tika.apache.org/download.html.
