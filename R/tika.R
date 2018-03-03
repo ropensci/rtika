@@ -128,13 +128,11 @@
 #' efficient way I've found to process many thousands of documents is Tika's
 #' 'batch' mode, which is the only mode used in `rtika`. There are potentially
 #' more things that can be done, given enough time and attention, because
-#' Apache Tika includes many libraries and methods in its .jar file found in
-#' the \strong{tikajar} dependency. The source is available at:
+#' Apache Tika includes many libraries and methods in its .jar file. The source is available at:
 #' \url{https://tika.apache.org/}.
 #' @section Configuration:
-#' This package depends on the \code{sys} and \code{tikajar} packages. The later
-#' contains the \code{tika-app-X.XX.jar}. This jar works with Java 7. Tika in
-#' mid-2018 needs Java 8, so it's best to install Java 8.
+#' While this jar works with Java 7, Tika in
+#' mid-2018 will need Java 8, so it's best to install Java 8.
 #'
 #' By default, this R package internally invokes Java by calling the \code{java}
 #' command from the command line. To specify the path to a particular Java
