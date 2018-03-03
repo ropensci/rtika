@@ -147,29 +147,37 @@ for version 1.17 here: \url{https://tika.apache.org/1.17/gettingstarted.html}
 Having the \code{data.table} package installed will slightly speed up the
 communication between R and Tika, but especially if there are hundreds of
 thousands of documents to process.
-
-The \code{curl} package downloads files quickly, if the user includes urls
-in the \code{input}. In testing, \code{curl} is required on Windows to avoid
-errors, and more work may still be needed to make Windows parse reliably.
 }
 
 \examples{
 \donttest{
 #' #extract text
-input= 'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'
-text = tika(input)
+batch <- c(
+  system.file("extdata", "jsonlite.pdf", package = "rtika"),
+  system.file("extdata", "curl.pdf", package = "rtika"),
+  system.file("extdata", "table.docx", package = "rtika"),
+  system.file("extdata", "xml2.pdf", package = "rtika"),
+  system.file("extdata", "R-FAQ.html", package = "rtika"),
+  system.file("extdata", "calculator.jpg", package = "rtika"),
+  system.file("extdata", "tika.apache.org.zip", package = "rtika")
+)
+text = tika(batch)
 cat(substr(text[1],45,450))
 
-#get metadata
+#more complex metadata
 if(requireNamespace('jsonlite')){
-  json = tika(input,'J') # capital J is shortcut for jsonRecursive
 
-  metadata = jsonlite::fromJSON(json[1])
-  str(metadata) #meta meta-data
+  json = tika(batch,c('J','t'))
+  # 'J' is shortcut for jsonRecursive
+  # 't' for text
+  metadata = lapply(json, jsonlite::fromJSON )
 
-  metadata$'Content-Type' # [1] "application/pdf"
-  metadata$producer # [1] "pdfTeX-1.40.18"
-  metadata$'Creation-Date' # [1] "2017-11-30T13:39:02Z"
+  #embedded resources
+  lapply(metadata, function(x){ as.character(x$'Content-Type') })
+
+  lapply(metadata, function(x){ as.character(x$'Creation-Date') })
+
+  lapply(metadata, function(x){  as.character(x$'X-TIKA:embedded_resource_path') })
 }
 }
 }

@@ -35,7 +35,7 @@ from Tika's database.
 }
 \examples{
 \donttest{
-paths = tika_fetch('https://tika.apache.org/')
+tika_fetch('https://tika.apache.org/')
 # a unique file name with .html appended to it
 }
 }

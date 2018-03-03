@@ -20,10 +20,10 @@ To start, you need R and either `OpenJDK 1.7` or `Java 7`. Higher versions work.
 Next, install the `rtika` package.
 
 ``` r
-# We also need devtools to easily install from github, until this is all on CRAN 
+# Get devtools to easily install from github, until this is all on CRAN 
 if(!requireNamespace('devtools')){
   install.packages('devtools', 
-    repos='https://cloud.r-project.org')
+    repos = 'https://cloud.r-project.org')
 }
 
 if(!requireNamespace('rtika')){
@@ -33,7 +33,7 @@ if(!requireNamespace('rtika')){
 library('rtika')  
 ```
 
-The `rJava` package is **not** required.
+The `rJava` package is ***not*** required.
 
 Read an introductory article at <https://predict-r.github.io/rtika/articles/rtika_introduction.html>.
 
@@ -41,9 +41,10 @@ Key Features
 ------------
 
 -   `tika_text()` to extract plain text.
--   `tika_xml()` and `tika_html()` to extract an XHMTL rendition.
--   `tika_json()` to get metadata and examine complex documents.
--   `tika()` to extract plain text or the other types. This is the main function the others above inherit from.
+-   `tika_xml()` and `tika_html()` to get a structured XHMTL rendition.
+-   `tika_json()` to get metadata as `.json`, with XHMTL content.
+-   `tika_json_text()` to get metadata as `.json`, with plain text content.
+-   `tika()` is the main function the others above inherit from.
 -   `tika_fetch()` to download files with a file extension matching the Content-Type.
 
 Supported File Types
@@ -78,45 +79,46 @@ Tika parses and extracts text or metadata from over one thousand digital formats
 
 For a list of MIME types, see: <https://tika.apache.org/1.17/formats.html>
 
-Simple Example
+Get Plain Text
 --------------
 
-**The `rtika` package processes batches of documents efficiently**, so I recommend batches. Currently, all the `tika()` functions take a tiny bit of time to spin up, and that will get annoying with hundreds of separate calls the functions.
+**The `rtika` package processes batches of documents efficiently**, so I recommend batches. Currently, the `tika()` parsers take a tiny bit of time to spin up, and that will get annoying with hundreds of separate calls to the functions.
 
 ``` r
 library('magrittr')
 
-# Local files or remote urls. Here, remote urls.
-batch <- c('https://cran.r-project.org/doc/manuals/r-release/R-data.pdf',
-           'https://cran.r-project.org/doc/manuals/r-release/R-lang.html')
+# Test files
+batch <- c(
+  system.file("extdata", "jsonlite.pdf", package = "rtika"),
+  system.file("extdata", "curl.pdf", package = "rtika"),
+  system.file("extdata", "table.docx", package = "rtika"),
+  system.file("extdata", "xml2.pdf", package = "rtika"),
+  system.file("extdata", "R-FAQ.html", package = "rtika"),
+  system.file("extdata", "calculator.jpg", package = "rtika"),
+  system.file("extdata", "tika.apache.org.zip", package = "rtika")
+)
 
-# A short data pipleine, shown with magrittr.
-# Normal syntax also works, e.g. text <- tika_text(batch)
-text <-  
-  batch %>%
-  tika_text() 
+ 
+ text <-  
+   batch %>%
+   tika_text() 
 
+# text has one string for each document:
+length(text)
+#> [1] 7
 
-# Look at the structure returned. 
-# It's a character vector. 
-# There is one string for each document.
-utils::str(text)
-#>  chr [1:2] "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nR Data Import/Export\"| __truncated__ ...
-
-# Look at a snippet:
-cat(substr(text[1], 45, 160)) 
+# A snippet:
+cat(substr(text[1], 54, 190)) 
 #> 
-#> R Data Import/Export
-#> Version 3.4.3 (2017-11-30)
+#> Package ‘jsonlite’
+#> June 1, 2017
 #> 
-#> R Core Team
-#> 
-#> 
-#> 
-#> This manual is for R, version 3.4.3 (2017-11-30).
+#> Version 1.5
+#> Title A Robust, High Performance JSON Parser and Generator for R
+#> License MIT + file LICENSE
 ```
 
-Read an introductory article at <https://predict-r.github.io/rtika/articles/rtika_introduction.html>.
+To learn more and find out how to extract structured text and metadata, read the vignette: <https://predict-r.github.io/rtika/articles/rtika_introduction.html>.
 
 Similar Packages
 ----------------

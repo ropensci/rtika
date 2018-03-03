@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract json of file and all embedded documents — tika_json • rtika</title>
+<title>Extract json of file and all embedded documents — tika_json_text • rtika</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -27,13 +27,14 @@
 <script src="../pkgdown.js"></script>
   
   
-<meta property="og:title" content="Extract json of file and all embedded documents — tika_json" />
+<meta property="og:title" content="Extract json of file and all embedded documents — tika_json_text" />
 
 <meta property="og:description" content="Tika can parse and extract text from almost anything, including zip, tar, tar.bz2, and other archives that contain documents.
  If you have a zip file with 100 text files in it, you can get the text and metadata for each file nested inside of the zip file.
  This recursive output is currently used for the jsonified mode. See:  https://wiki.apache.org/tika/RecursiveMetadata 
-The document content is XHTML in the "X-TIKA:content" field.  
-If output_dir is specified, files will have the .json file extension." />
+The document contents are plain text in the "X-TIKA:content" field." />
+
+<meta property="og:description" content="If output_dir is specified, files will have the .json file extension." />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -112,11 +113,12 @@ If output_dir is specified, files will have the .json file extension." />
     <p>Tika can parse and extract text from almost anything, including zip, tar, tar.bz2, and other archives that contain documents.
  If you have a zip file with 100 text files in it, you can get the text and metadata for each file nested inside of the zip file.
  This recursive output is currently used for the jsonified mode. See:  https://wiki.apache.org/tika/RecursiveMetadata</p> 
-<p>The document content is XHTML in the "X-TIKA:content" field.</p>  
-<p>If <code>output_dir</code> is specified, files will have the <code>.json</code> file extension.</p>
+<p>The document contents are plain text in the "X-TIKA:content" field.</p>
+
+    <p>If <code>output_dir</code> is specified, files will have the <code>.json</code> file extension.</p>
     
 
-    <pre class="usage"><span class='fu'>tika_json</span>(<span class='no'>input</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>tika_json_text</span>(<span class='no'>input</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -146,7 +148,7 @@ If output_dir is specified, files will have the .json file extension." />
  <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"calculator.jpg"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
  <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"tika.apache.org.zip"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>)
 )
-<span class='no'>json</span> <span class='kw'>=</span> <span class='fu'>tika_json</span>(<span class='no'>batch</span>)</div></pre>
+<span class='no'>json</span> <span class='kw'>=</span> <span class='fu'>tika_json_text</span>(<span class='no'>batch</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -10,9 +10,13 @@ context("Connecting to Tika")
 # }
 
 input <- c(
-  system.file("extdata", "R-data.pdf", package = "rtika"),
-  system.file("extdata", "R-exts.epub", package = "rtika"),
-  system.file("extdata", "R-FAQ.html", package = "rtika")
+  system.file("extdata", "jsonlite.pdf", package = "rtika"),
+  system.file("extdata", "curl.pdf", package = "rtika"),
+  system.file("extdata", "table.docx", package = "rtika"),
+  system.file("extdata", "xml2.pdf", package = "rtika"),
+  system.file("extdata", "R-FAQ.html", package = "rtika"),
+  system.file("extdata", "calculator.jpg", package = "rtika"),
+  system.file("extdata", "tika.apache.org.zip", package = "rtika")
 )
 
 test_that("gets valid path", {
@@ -174,17 +178,11 @@ test_that("tika outputs parsable html", {
 test_that("tika outputs parsable json", {
   # library('jsonlite')
   text <- tika_json(input)
-  processed_json <- data.frame()
-  processed_json <- jsonlite::fromJSON(text[1])
-  expect_true(nrow(processed_json) == 1)
-
-  processed_json <- data.frame()
-  processed_json <- jsonlite::fromJSON(text[2])
-  expect_true(nrow(processed_json) == 1)
-
-  processed_json <- data.frame()
-  processed_json <- jsonlite::fromJSON(text[3])
-  expect_true(nrow(processed_json) == 1)
+  for (i in seq_along(text)) {
+    processed_json <- data.frame()
+    processed_json <- jsonlite::fromJSON(text[i])
+    expect_true(nrow(processed_json) >= 1)
+  }
 })
 
 test_that("tika_text works", {

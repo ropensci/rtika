@@ -20,7 +20,7 @@
 #' @return Character vector of the same length and order as input with the paths describing the locations of the downloaded files. Errors are returned as NA.
 #' @examples
 #' \donttest{
-#' paths = tika_fetch('https://tika.apache.org/')
+#' tika_fetch('https://tika.apache.org/')
 #' # a unique file name with .html appended to it
 #' }
 #' @export

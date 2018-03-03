@@ -96,10 +96,10 @@
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>To start, you need R and either <code>OpenJDK 1.7</code> or <code>Java 7</code>. Higher versions work. To check your version, run the command <code>java -version</code> from a terminal. Get Java installation tips at <a href="http://openjdk.java.net/install/" class="uri">http://openjdk.java.net/install/</a> or <a href="https://www.java.com/en/download/help/download_options.xml" class="uri">https://www.java.com/en/download/help/download_options.xml</a>.</p>
 <p>Next, install the <code>rtika</code> package.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># We also need devtools to easily install from github, until this is all on CRAN </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get devtools to easily install from github, until this is all on CRAN </span>
 <span class="cf">if</span>(<span class="op">!</span><span class="kw">requireNamespace</span>(<span class="st">'devtools'</span>)){
   <span class="kw">install.packages</span>(<span class="st">'devtools'</span>, 
-    <span class="dt">repos=</span><span class="st">'https://cloud.r-project.org'</span>)
+    <span class="dt">repos =</span> <span class="st">'https://cloud.r-project.org'</span>)
 }
 
 <span class="cf">if</span>(<span class="op">!</span><span class="kw">requireNamespace</span>(<span class="st">'rtika'</span>)){
@@ -107,7 +107,7 @@
 }
 
 <span class="kw">library</span>(<span class="st">'rtika'</span>)  </code></pre></div>
-<p>The <code>rJava</code> package is <strong>not</strong> required.</p>
+<p>The <code>rJava</code> package is <strong><em>not</em></strong> required.</p>
 <p>Read an introductory article at <a href="https://predict-r.github.io/rtika/articles/rtika_introduction.html" class="uri">https://predict-r.github.io/rtika/articles/rtika_introduction.html</a>.</p>
 </div>
 <div id="key-features" class="section level2">
@@ -117,11 +117,13 @@
 <li>
 <code><a href="reference/tika_text.html">tika_text()</a></code> to extract plain text.</li>
 <li>
-<code><a href="reference/tika_xml.html">tika_xml()</a></code> and <code><a href="reference/tika_html.html">tika_html()</a></code> to extract an XHMTL rendition.</li>
+<code><a href="reference/tika_xml.html">tika_xml()</a></code> and <code><a href="reference/tika_html.html">tika_html()</a></code> to get a structured XHMTL rendition.</li>
 <li>
-<code><a href="reference/tika_json.html">tika_json()</a></code> to get metadata and examine complex documents.</li>
+<code><a href="reference/tika_json.html">tika_json()</a></code> to get metadata as <code>.json</code>, with XHMTL content.</li>
 <li>
-<code><a href="reference/tika.html">tika()</a></code> to extract plain text or the other types. This is the main function the others above inherit from.</li>
+<code><a href="reference/tika_json_text.html">tika_json_text()</a></code> to get metadata as <code>.json</code>, with plain text content.</li>
+<li>
+<code><a href="reference/tika.html">tika()</a></code> is the main function the others above inherit from.</li>
 <li>
 <code><a href="reference/tika_fetch.html">tika_fetch()</a></code> to download files with a file extension matching the Content-Type.</li>
 </ul>
@@ -158,41 +160,42 @@
 </ul>
 <p>For a list of MIME types, see: <a href="https://tika.apache.org/1.17/formats.html" class="uri">https://tika.apache.org/1.17/formats.html</a></p>
 </div>
-<div id="simple-example" class="section level2">
+<div id="get-plain-text" class="section level2">
 <h2 class="hasAnchor">
-<a href="#simple-example" class="anchor"></a>Simple Example</h2>
-<p><strong>The <code>rtika</code> package processes batches of documents efficiently</strong>, so I recommend batches. Currently, all the <code><a href="reference/tika.html">tika()</a></code> functions take a tiny bit of time to spin up, and that will get annoying with hundreds of separate calls the functions.</p>
+<a href="#get-plain-text" class="anchor"></a>Get Plain Text</h2>
+<p><strong>The <code>rtika</code> package processes batches of documents efficiently</strong>, so I recommend batches. Currently, the <code><a href="reference/tika.html">tika()</a></code> parsers take a tiny bit of time to spin up, and that will get annoying with hundreds of separate calls to the functions.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">'magrittr'</span>)
 
-<span class="co"># Local files or remote urls. Here, remote urls.</span>
-batch &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'</span>,
-           <span class="st">'https://cran.r-project.org/doc/manuals/r-release/R-lang.html'</span>)
+<span class="co"># Test files</span>
+batch &lt;-<span class="st"> </span><span class="kw">c</span>(
+  <span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"jsonlite.pdf"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>),
+  <span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"curl.pdf"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>),
+  <span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"table.docx"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>),
+  <span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"xml2.pdf"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>),
+  <span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"R-FAQ.html"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>),
+  <span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"calculator.jpg"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>),
+  <span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"tika.apache.org.zip"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>)
+)
 
-<span class="co"># A short data pipleine, shown with magrittr.</span>
-<span class="co"># Normal syntax also works, e.g. text &lt;- tika_text(batch)</span>
-text &lt;-<span class="st">  </span>
-<span class="st">  </span>batch <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="reference/tika_text.html">tika_text</a></span>() 
+ 
+ text &lt;-<span class="st">  </span>
+<span class="st">   </span>batch <span class="op">%&gt;%</span>
+<span class="st">   </span><span class="kw"><a href="reference/tika_text.html">tika_text</a></span>() 
 
+<span class="co"># text has one string for each document:</span>
+<span class="kw">length</span>(text)
+<span class="co">#&gt; [1] 7</span>
 
-<span class="co"># Look at the structure returned. </span>
-<span class="co"># It's a character vector. </span>
-<span class="co"># There is one string for each document.</span>
-utils<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(text)
-<span class="co">#&gt;  chr [1:2] "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nR Data Import/Export\"| __truncated__ ...</span>
-
-<span class="co"># Look at a snippet:</span>
-<span class="kw">cat</span>(<span class="kw">substr</span>(text[<span class="dv">1</span>], <span class="dv">45</span>, <span class="dv">160</span>)) 
+<span class="co"># A snippet:</span>
+<span class="kw">cat</span>(<span class="kw">substr</span>(text[<span class="dv">1</span>], <span class="dv">54</span>, <span class="dv">190</span>)) 
 <span class="co">#&gt; </span>
-<span class="co">#&gt; R Data Import/Export</span>
-<span class="co">#&gt; Version 3.4.3 (2017-11-30)</span>
+<span class="co">#&gt; Package ‘jsonlite’</span>
+<span class="co">#&gt; June 1, 2017</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; R Core Team</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; This manual is for R, version 3.4.3 (2017-11-30).</span></code></pre></div>
-<p>Read an introductory article at <a href="https://predict-r.github.io/rtika/articles/rtika_introduction.html" class="uri">https://predict-r.github.io/rtika/articles/rtika_introduction.html</a>.</p>
+<span class="co">#&gt; Version 1.5</span>
+<span class="co">#&gt; Title A Robust, High Performance JSON Parser and Generator for R</span>
+<span class="co">#&gt; License MIT + file LICENSE</span></code></pre></div>
+<p>To learn more and find out how to extract structured text and metadata, read the vignette: <a href="https://predict-r.github.io/rtika/articles/rtika_introduction.html" class="uri">https://predict-r.github.io/rtika/articles/rtika_introduction.html</a>.</p>
 </div>
 <div id="similar-packages" class="section level2">
 <h2 class="hasAnchor">

@@ -4,9 +4,10 @@
 #'  If you have a zip file with 100 text files in it, you can get the text and metadata for each file nested inside of the zip file.
 #'  This recursive output is currently used for the jsonified mode. See:  https://wiki.apache.org/tika/RecursiveMetadata
 #'  
-#'  The document content is XHTML in the "X-TIKA:content" field.
+#'  The document contents are plain text in the "X-TIKA:content" field.
 #'   
-#'  If \code{output_dir} is specified, files will have the \code{.json} file extension.
+#'   
+#'   If \code{output_dir} is specified, files will have the \code{.json} file extension.
 #'
 #' @param input Character vector describing the paths and/or urls to the input documents.
 #' @param ... Other parameters to be sent to \code{tika()}.
@@ -22,9 +23,9 @@
 #'  system.file("extdata", "calculator.jpg", package = "rtika"),
 #'  system.file("extdata", "tika.apache.org.zip", package = "rtika")
 #' )
-#' json = tika_json(batch)
+#' json = tika_json_text(batch)
 #' }
 #' @export
-tika_json <- function(input, ...) {
-  tika(input = input, output = "jsonRecursive", ...)
+tika_json_text <- function(input, ...) {
+  tika(input = input, output = c("jsonRecursive", "text"), ...)
 }

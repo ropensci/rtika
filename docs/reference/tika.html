@@ -273,84 +273,83 @@ for version 1.17 here: <a href='https://tika.apache.org/1.17/gettingstarted.html
 <p>Having the <code>data.table</code> package installed will slightly speed up the
 communication between R and Tika, but especially if there are hundreds of
 thousands of documents to process.</p>
-<p>The <code>curl</code> package downloads files quickly, if the user includes urls
-in the <code>input</code>. In testing, <code>curl</code> is required on Windows to avoid
-errors, and more work may still be needed to make Windows parse reliably.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>#' #extract text</span>
-<span class='no'>input</span><span class='kw'>=</span> <span class='st'>'https://cran.r-project.org/doc/manuals/r-release/R-data.pdf'</span>
-<span class='no'>text</span> <span class='kw'>=</span> <span class='fu'>tika</span>(<span class='no'>input</span>)
+<span class='no'>batch</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(
+  <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"jsonlite.pdf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
+  <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"curl.pdf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
+  <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"table.docx"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
+  <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"xml2.pdf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
+  <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"R-FAQ.html"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
+  <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"calculator.jpg"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
+  <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"tika.apache.org.zip"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>)
+)
+<span class='no'>text</span> <span class='kw'>=</span> <span class='fu'>tika</span>(<span class='no'>batch</span>)
 <span class='fu'>cat</span>(<span class='fu'>substr</span>(<span class='no'>text</span>[<span class='fl'>1</span>],<span class='fl'>45</span>,<span class='fl'>450</span>))</div><div class='output co'>#&gt; 
-#&gt; R Data Import/Export
-#&gt; Version 3.4.3 (2017-11-30)
-#&gt; 
-#&gt; R Core Team
 #&gt; 
 #&gt; 
 #&gt; 
-#&gt; This manual is for R, version 3.4.3 (2017-11-30).
 #&gt; 
-#&gt; Copyright c© 2000–2016 R Core Team
-#&gt; Permission is granted to make and distribute verbatim copies of this manual provided
-#&gt; the copyright notice and this permission notice are preserved on all copies.
 #&gt; 
-#&gt; Permission is granted to copy and distribute modified versions of this manual under
-#&gt; the cond</div><div class='input'>
-<span class='co'>#get metadata</span>
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; Package ‘jsonlite’
+#&gt; June 1, 2017
+#&gt; 
+#&gt; Version 1.5
+#&gt; Title A Robust, High Performance JSON Parser and Generator for R
+#&gt; License MIT + file LICENSE
+#&gt; NeedsCompilation yes
+#&gt; Depends methods
+#&gt; Author Jeroen Ooms, Duncan Temple Lang, Lloyd Hilaiel
+#&gt; 
+#&gt; URL https://arxiv.org/abs/1403.2805,
+#&gt; https://www.opencpu.org/posts/jsonlite-a-smarter-json-encoder
+#&gt; 
+#&gt; BugReports http://github.com/jeroen/jsonlite/issues
+#&gt; Maintainer Jero</div><div class='input'>
+<span class='co'>#more complex metadata</span>
 <span class='kw'>if</span>(<span class='fu'>requireNamespace</span>(<span class='st'>'jsonlite'</span>)){
-  <span class='no'>json</span> <span class='kw'>=</span> <span class='fu'>tika</span>(<span class='no'>input</span>,<span class='st'>'J'</span>) <span class='co'># capital J is shortcut for jsonRecursive</span>
 
-  <span class='no'>metadata</span> <span class='kw'>=</span> <span class='kw pkg'>jsonlite</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/jsonlite/topics/fromJSON'>fromJSON</a></span>(<span class='no'>json</span>[<span class='fl'>1</span>])
-  <span class='fu'>str</span>(<span class='no'>metadata</span>) <span class='co'>#meta meta-data</span>
+  <span class='no'>json</span> <span class='kw'>=</span> <span class='fu'>tika</span>(<span class='no'>batch</span>,<span class='fu'>c</span>(<span class='st'>'J'</span>,<span class='st'>'t'</span>))
+  <span class='co'># 'J' is shortcut for jsonRecursive</span>
+  <span class='co'># 't' for text</span>
+  <span class='no'>metadata</span> <span class='kw'>=</span> <span class='fu'>lapply</span>(<span class='no'>json</span>, <span class='kw pkg'>jsonlite</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/jsonlite/topics/fromJSON'>fromJSON</a></span> )
 
-  <span class='no'>metadata</span>$<span class='st'>'Content-Type'</span> <span class='co'># [1] "application/pdf"</span>
-  <span class='no'>metadata</span>$<span class='no'>producer</span> <span class='co'># [1] "pdfTeX-1.40.18"</span>
-  <span class='no'>metadata</span>$<span class='st'>'Creation-Date'</span> <span class='co'># [1] "2017-11-30T13:39:02Z"</span>
-}</div><div class='output co'>#&gt; 'data.frame':	1 obs. of  41 variables:
-#&gt;  $ Content-Length                             : chr "309939"
-#&gt;  $ Content-Type                               : chr "application/pdf"
-#&gt;  $ Creation-Date                              : chr "2017-11-30T13:39:02Z"
-#&gt;  $ Last-Modified                              : chr "2017-11-30T13:39:02Z"
-#&gt;  $ Last-Save-Date                             : chr "2017-11-30T13:39:02Z"
-#&gt;  $ PTEX.Fullbanner                            : chr "This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) kpathsea version 6.2.3"
-#&gt;  $ X-Parsed-By                                :List of 1
-#&gt;   ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.pdf.PDFParser"
-#&gt;  $ X-TIKA:content                             : chr "&lt;html xmlns=\"http://www.w3.org/1999/xhtml\"&gt;\n&lt;head&gt;\n&lt;meta name=\"date\" content=\"2017-11-30T13:39:02Z\" /&gt;\"| __truncated__
-#&gt;  $ X-TIKA:digest:MD5                          : chr "3f1b649a4ec70aaa4c2dad4eade8b430"
-#&gt;  $ X-TIKA:parse_time_millis                   : chr "830"
-#&gt;  $ access_permission:assemble_document        : chr "true"
-#&gt;  $ access_permission:can_modify               : chr "true"
-#&gt;  $ access_permission:can_print                : chr "true"
-#&gt;  $ access_permission:can_print_degraded       : chr "true"
-#&gt;  $ access_permission:extract_content          : chr "true"
-#&gt;  $ access_permission:extract_for_accessibility: chr "true"
-#&gt;  $ access_permission:fill_in_form             : chr "true"
-#&gt;  $ access_permission:modify_annotations       : chr "true"
-#&gt;  $ created                                    : chr "Thu Nov 30 05:39:02 PST 2017"
-#&gt;  $ date                                       : chr "2017-11-30T13:39:02Z"
-#&gt;  $ dc:format                                  : chr "application/pdf; version=1.5"
-#&gt;  $ dcterms:created                            : chr "2017-11-30T13:39:02Z"
-#&gt;  $ dcterms:modified                           : chr "2017-11-30T13:39:02Z"
-#&gt;  $ meta:creation-date                         : chr "2017-11-30T13:39:02Z"
-#&gt;  $ meta:save-date                             : chr "2017-11-30T13:39:02Z"
-#&gt;  $ modified                                   : chr "2017-11-30T13:39:02Z"
-#&gt;  $ pdf:PDFVersion                             : chr "1.5"
-#&gt;  $ pdf:docinfo:created                        : chr "2017-11-30T13:39:02Z"
-#&gt;  $ pdf:docinfo:creator_tool                   : chr "TeX"
-#&gt;  $ pdf:docinfo:custom:PTEX.Fullbanner         : chr "This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) kpathsea version 6.2.3"
-#&gt;  $ pdf:docinfo:modified                       : chr "2017-11-30T13:39:02Z"
-#&gt;  $ pdf:docinfo:producer                       : chr "pdfTeX-1.40.18"
-#&gt;  $ pdf:docinfo:trapped                        : chr "False"
-#&gt;  $ pdf:encrypted                              : chr "false"
-#&gt;  $ producer                                   : chr "pdfTeX-1.40.18"
-#&gt;  $ resourceName                               : chr "rtika_file785b4bcb2ed7.pdf"
-#&gt;  $ tika:file_ext                              : chr "pdf"
-#&gt;  $ tika_batch_fs:relative_path                : chr "tmp/RtmpCFb6kG/rtika_file785b4bcb2ed7.pdf"
-#&gt;  $ trapped                                    : chr "False"
-#&gt;  $ xmp:CreatorTool                            : chr "TeX"
-#&gt;  $ xmpTPg:NPages                              : chr "37"</div><div class='output co'>#&gt; [1] "2017-11-30T13:39:02Z"</div></pre>
+  <span class='co'>#embedded resources</span>
+  <span class='fu'>lapply</span>(<span class='no'>metadata</span>, <span class='kw'>function</span>(<span class='no'>x</span>){ <span class='fu'>as.character</span>(<span class='no'>x</span>$<span class='st'>'Content-Type'</span>) })
+
+  <span class='fu'>lapply</span>(<span class='no'>metadata</span>, <span class='kw'>function</span>(<span class='no'>x</span>){ <span class='fu'>as.character</span>(<span class='no'>x</span>$<span class='st'>'Creation-Date'</span>) })
+
+  <span class='fu'>lapply</span>(<span class='no'>metadata</span>, <span class='kw'>function</span>(<span class='no'>x</span>){  <span class='fu'>as.character</span>(<span class='no'>x</span>$<span class='st'>'X-TIKA:embedded_resource_path'</span>) })
+}</div><div class='output co'>#&gt; [[1]]
+#&gt; character(0)
+#&gt; 
+#&gt; [[2]]
+#&gt; character(0)
+#&gt; 
+#&gt; [[3]]
+#&gt; [1] NA            "/image1.jpg"
+#&gt; 
+#&gt; [[4]]
+#&gt; character(0)
+#&gt; 
+#&gt; [[5]]
+#&gt; character(0)
+#&gt; 
+#&gt; [[6]]
+#&gt; character(0)
+#&gt; 
+#&gt; [[7]]
+#&gt;  [1] NA                       "/index.html"            "/site.css"             
+#&gt;  [4] "/external.png"          "/icon_info_sml.gif"     "/icon_warning_sml.gif" 
+#&gt;  [7] "/icon_error_sml.gif"    "/icon_success_sml.gif"  "/tika.png"             
+#&gt; [10] "/mattmann_cover150.jpg" "/asf-logo.gif"         
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

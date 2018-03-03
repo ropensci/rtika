@@ -8,6 +8,7 @@
   * New introductory vignette covers how to use the functions and surveys several applications.
   * tika(), tika_xml(), tika_json(), tika_text(), and tika_html() can now be set to return=FALSE, which does not return any R character vector but invisibly returns NULL. This would be most useful in massive file conversion jobs with hundreds of thousands of files.
   * Used pkgdown to create a website for github pages.
+  * New tika_json_text() function gets metadata in .json with plain text content.
 
 ### DEPRECATED AND DEFUNCT
 
