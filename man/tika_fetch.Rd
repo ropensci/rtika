@@ -2,7 +2,7 @@
 % Please edit documentation in R/tika_fetch.R
 \name{tika_fetch}
 \alias{tika_fetch}
-\title{Fetch Files and Record Content-Type in the File Extension}
+\title{Fetch Files with the Content-Type Preserved in the File Extension}
 \usage{
 tika_fetch(urls, download_dir = tempdir(), ssl_verifypeer = TRUE,
   retries = 1, quiet = TRUE)

@@ -1,4 +1,4 @@
-#' Extract html rendition
+#' Get Structured XHTML
 #' 
 #' If \code{output_dir} is specified, files will have the \code{.html} file extension.
 #'

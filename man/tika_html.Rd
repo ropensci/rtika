@@ -2,7 +2,7 @@
 % Please edit documentation in R/tika_html.R
 \name{tika_html}
 \alias{tika_html}
-\title{Extract html rendition}
+\title{Get Structured XHTML}
 \usage{
 tika_html(input, ...)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/tika_text.R
 \name{tika_text}
 \alias{tika_text}
-\title{Get a Plain Text Rendition of File}
+\title{Get Plain Text}
 \usage{
 tika_text(input, ...)
 }

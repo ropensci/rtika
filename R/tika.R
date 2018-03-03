@@ -1,4 +1,4 @@
-#' R Interface to 'Apache Tika'
+#' Main R Interface to 'Apache Tika'
 #'
 #' Extract text or metadata from over a thousand file types.
 #' Get either plain text or structured \code{XHTML}.

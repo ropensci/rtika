@@ -1,10 +1,10 @@
-#' Extract xml rendition
+#' Get a Structured XHTML Rendition
 #' 
 #' If \code{output_dir} is specified, files will have the \code{.xml} file extension.
 #'
 #' @param input Character vector describing the paths and/or urls to the input documents.
 #' @param ... Other parameters to be sent to \code{tika()}.
-#' @return A character vector in the same order and with the same length as \code{input}, of unparsed \code{XML}. Unprocessed files are \code{as.character(NA)}.
+#' @return A character vector in the same order and with the same length as \code{input}, of unparsed \code{XHTML}. Unprocessed files are \code{as.character(NA)}.
 #' @examples
 #' \donttest{
 #' batch <- c(

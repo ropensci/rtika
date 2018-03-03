@@ -1,5 +1,5 @@
 
-#' Fetch Files and Record Content-Type in the File Extension
+#' Fetch Files with the Content-Type Preserved in the File Extension
 #'
 #' On the Internet, Content-Type information is mainly communicated via the server's headers.
 #' This is an issue if a file is saved to disk without examining the headers.

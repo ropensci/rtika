@@ -1,4 +1,4 @@
-#' Get a Plain Text Rendition of File
+#' Get Plain Text
 #' 
 #' If \code{output_dir} is specified, files will have the \code{.txt} file extension.
 #'

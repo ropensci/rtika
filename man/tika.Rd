@@ -2,7 +2,7 @@
 % Please edit documentation in R/tika.R
 \name{tika}
 \alias{tika}
-\title{R Interface to 'Apache Tika'}
+\title{Main R Interface to 'Apache Tika'}
 \usage{
 tika(input, output = c("text", "jsonRecursive", "xml", "html")[1],
   output_dir = "", return = TRUE, java = "java", jar = tika_jar(),

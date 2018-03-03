@@ -2,7 +2,7 @@
 % Please edit documentation in R/tika_json.R
 \name{tika_json}
 \alias{tika_json}
-\title{Extract json of file and all embedded documents}
+\title{Get json Metadata and XHTML Content}
 \usage{
 tika_json(input, ...)
 }

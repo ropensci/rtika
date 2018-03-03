@@ -135,7 +135,7 @@ text &lt;-<span class="st">  </span>
 <span class="st">    </span><span class="kw"><a href="../reference/tika_text.html">tika_text</a></span>() 
 )
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;    3.97    0.46    4.33</span>
+<span class="co">#&gt;   3.590   0.590   4.342</span>
 <span class="co"># normal syntax also works:</span>
 <span class="co"># text &lt;- tika_text(batch)</span></code></pre></div>
 <p>The output is a R character vector of the same length and order as the input files.</p>
@@ -176,8 +176,8 @@ downloaded &lt;-<span class="st"> </span>
 
 <span class="co"># it will add the appropriate file extension to the downloads</span>
 downloaded
-<span class="co">#&gt; [1] "/home/project/rtika_30ee5bec3dd2/rtika_file30ee2b7a646.html"</span>
-<span class="co">#&gt; [2] "/home/project/rtika_30ee5bec3dd2/rtika_file30ee5a79fc29.pdf"</span></code></pre></div>
+<span class="co">#&gt; [1] "/home/project/rtika_3c0a2df738f4/rtika_file3c0a361d3b39.html"</span>
+<span class="co">#&gt; [2] "/home/project/rtika_3c0a2df738f4/rtika_file3c0a28a425b0.pdf"</span></code></pre></div>
 <p>This <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> function is used internally by the <code><a href="../reference/tika.html">tika()</a></code> functions when processing URLs. By using <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> explicitly with a specified directory, you can also save the files and return to them later.</p>
 </div>
 <div id="settings-for-big-datasets" class="section level1">
@@ -206,13 +206,13 @@ processed_files &lt;-<span class="st"> </span><span class="kw">file.path</span>(
                 )</code></pre></div>
 <p>The location of each file in <code>output_dir</code> follows a convention from the Apache Tika batch processor: the full path to each file mirrors the original file’s path, only within the <code>output_dir</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">processed_files
-<span class="co">#&gt; [1] "/home/project/rtika_30ee58661a18/home/project/R/library/rtika/extdata/calculator.jpg.txt"     </span>
-<span class="co">#&gt; [2] "/home/project/rtika_30ee58661a18/home/project/R/library/rtika/extdata/curl.pdf.txt"           </span>
-<span class="co">#&gt; [3] "/home/project/rtika_30ee58661a18/home/project/R/library/rtika/extdata/jsonlite.pdf.txt"       </span>
-<span class="co">#&gt; [4] "/home/project/rtika_30ee58661a18/home/project/R/library/rtika/extdata/R-FAQ.html.txt"         </span>
-<span class="co">#&gt; [5] "/home/project/rtika_30ee58661a18/home/project/R/library/rtika/extdata/table.docx.txt"         </span>
-<span class="co">#&gt; [6] "/home/project/rtika_30ee58661a18/home/project/R/library/rtika/extdata/tika.apache.org.zip.txt"</span>
-<span class="co">#&gt; [7] "/home/project/rtika_30ee58661a18/home/project/R/library/rtika/extdata/xml2.pdf.txt"</span></code></pre></div>
+<span class="co">#&gt; [1] "/home/project/rtika_3c0a4f965cc6/home/project/R/library/rtika/extdata/calculator.jpg.txt"     </span>
+<span class="co">#&gt; [2] "/home/project/rtika_3c0a4f965cc6/home/project/R/library/rtika/extdata/curl.pdf.txt"           </span>
+<span class="co">#&gt; [3] "/home/project/rtika_3c0a4f965cc6/home/project/R/library/rtika/extdata/jsonlite.pdf.txt"       </span>
+<span class="co">#&gt; [4] "/home/project/rtika_3c0a4f965cc6/home/project/R/library/rtika/extdata/R-FAQ.html.txt"         </span>
+<span class="co">#&gt; [5] "/home/project/rtika_3c0a4f965cc6/home/project/R/library/rtika/extdata/table.docx.txt"         </span>
+<span class="co">#&gt; [6] "/home/project/rtika_3c0a4f965cc6/home/project/R/library/rtika/extdata/tika.apache.org.zip.txt"</span>
+<span class="co">#&gt; [7] "/home/project/rtika_3c0a4f965cc6/home/project/R/library/rtika/extdata/xml2.pdf.txt"</span></code></pre></div>
 <p>Note that <code><a href="../reference/tika_text.html">tika_text()</a></code> produces <code>.txt</code> files, <code><a href="../reference/tika_xml.html">tika_xml()</a></code> produces <code>.xml</code> files, <code><a href="../reference/tika_html.html">tika_html()</a></code> produces <code>.html</code> files, and both <code><a href="../reference/tika_json.html">tika_json()</a></code> and <code><a href="../reference/tika_json_text.html">tika_json_text()</a></code> produce <code>.json</code> files.</p>
 </div>
 <div id="get-a-structured-xhtml-rendition" class="section level1">
@@ -234,16 +234,16 @@ links &lt;-
 <span class="st">    </span><span class="kw">lapply</span>(xml2<span class="op">::</span>xml_attr, <span class="st">'href'</span>)
 
 <span class="kw">sample</span>(links[[<span class="dv">1</span>]],<span class="dv">10</span>)
-<span class="co">#&gt;  [1] "https://www.opencpu.org/posts/jsonlite-a-smarter-json-encoder"                 </span>
-<span class="co">#&gt;  [2] "https://arxiv.org/abs/1403.2805"                                               </span>
+<span class="co">#&gt;  [1] "http://ndjson.org"                                                             </span>
+<span class="co">#&gt;  [2] "http://docs.mongodb.org/manual/reference/program/mongoexport/#cmdoption--query"</span>
 <span class="co">#&gt;  [3] "https://arxiv.org/abs/1403.2805"                                               </span>
-<span class="co">#&gt;  [4] "https://arxiv.org/abs/1403.2805"                                               </span>
-<span class="co">#&gt;  [5] "http://ndjson.org"                                                             </span>
-<span class="co">#&gt;  [6] "http://github.com/jeroen/jsonlite/issues"                                      </span>
-<span class="co">#&gt;  [7] "https://github.com/maxogden/dat"                                               </span>
-<span class="co">#&gt;  [8] "http://ndjson.org"                                                             </span>
-<span class="co">#&gt;  [9] "http://docs.mongodb.org/manual/reference/program/mongoexport/#cmdoption--query"</span>
-<span class="co">#&gt; [10] "http://en.wikipedia.org/wiki/Singleton_(mathematics)"</span></code></pre></div>
+<span class="co">#&gt;  [4] "http://github.com/jeroen/jsonlite/issues"                                      </span>
+<span class="co">#&gt;  [5] "https://www.opencpu.org/posts/jsonlite-a-smarter-json-encoder"                 </span>
+<span class="co">#&gt;  [6] "https://arxiv.org/abs/1403.2805"                                               </span>
+<span class="co">#&gt;  [7] "http://en.wikipedia.org/wiki/Singleton_(mathematics)"                          </span>
+<span class="co">#&gt;  [8] "http://en.wikipedia.org/wiki/Singleton_(mathematics)"                          </span>
+<span class="co">#&gt;  [9] "http://ndjson.org"                                                             </span>
+<span class="co">#&gt; [10] "https://github.com/maxogden/dat"</span></code></pre></div>
 <p>Each type of file has different information preserved by Tika’s internal parsers. The particular aspects vary. Some notes:</p>
 <ul>
 <li>PDF files retain pagination, with each page starting with the XHTML element <code>&lt;div class="page"&gt;</code>.</li>
@@ -381,7 +381,7 @@ metadata &lt;-
 <span class="co">#&gt;   ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.jpeg.JpegParser"</span>
 <span class="co">#&gt;  $ X-TIKA:content             : chr "&lt;html xmlns=\"http://www.w3.org/1999/xhtml\"&gt;\n&lt;head&gt;\n&lt;meta name=\"Exif Version\" content=\"2.21\" /&gt;\n&lt;meta n"| __truncated__</span>
 <span class="co">#&gt;  $ X-TIKA:digest:MD5          : chr "1d6e398a96f058db680b7249beb8eeda"</span>
-<span class="co">#&gt;  $ X-TIKA:parse_time_millis   : chr "22"</span>
+<span class="co">#&gt;  $ X-TIKA:parse_time_millis   : chr "100"</span>
 <span class="co">#&gt;  $ XMP Value Count            : chr "4"</span>
 <span class="co">#&gt;  $ Y Resolution               : chr "72 dots per inch"</span>
 <span class="co">#&gt;  $ date                       : chr "2014-07-01T02:49:22"</span>
@@ -489,7 +489,7 @@ content_type
 <p>Mattmann, Chris, and Jukka Zitting. 2011. <em>Tika in Action</em>. Manning Publications Co. <a href="https://www.manning.com/books/tika-in-action" class="uri">https://www.manning.com/books/tika-in-action</a>.</p>
 </div>
 <div id="ref-silge2017text">
-<p>Silge, Julia, and David Robinson. 2017. <em>Text Mining with R: A Tidy Approach</em>. “ O’Reilly Media, Inc.”</p>
+<p>Silge, Julia, and David Robinson. 2017. <em>Text Mining with R: A Tidy Approach</em>. “ O’Reilly Media, Inc.” <a href="https://www.tidytextmining.com/" class="uri">https://www.tidytextmining.com/</a>.</p>
 </div>
 </div>
 </div>

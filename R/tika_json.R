@@ -1,4 +1,4 @@
-#' Extract json of file and all embedded documents
+#' Get json Metadata and XHTML Content 
 #'
 #'  Tika can parse and extract text from almost anything, including zip, tar, tar.bz2, and other archives that contain documents.
 #'  If you have a zip file with 100 text files in it, you can get the text and metadata for each file nested inside of the zip file.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/tika_xml.R
 \name{tika_xml}
 \alias{tika_xml}
-\title{Extract xml rendition}
+\title{Get a Structured XHTML Rendition}
 \usage{
 tika_xml(input, ...)
 }
@@ -12,7 +12,7 @@ tika_xml(input, ...)
 \item{...}{Other parameters to be sent to \code{tika()}.}
 }
 \value{
-A character vector in the same order and with the same length as \code{input}, of unparsed \code{XML}. Unprocessed files are \code{as.character(NA)}.
+A character vector in the same order and with the same length as \code{input}, of unparsed \code{XHTML}. Unprocessed files are \code{as.character(NA)}.
 }
 \description{
 If \code{output_dir} is specified, files will have the \code{.xml} file extension.
