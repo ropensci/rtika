@@ -19,14 +19,14 @@ knitr::opts_chunk$set(
 # A Digital Babel Fish
 
 ```
-                            .----.      
-                   ____    __\\\\\\__                 
-                   \___'--"          .-.          
-                   /___>------rtika  '0'          
-                  /____,--.        \----B      
-                          "".____  ___-"    
-                          //    / /                   
-                                ]/               
+                    .----.      
+           ____    __\\\\\\__                 
+           \___'--"          .-.          
+           /___>------rtika  '0'          
+          /____,--.        \----B      
+                  "".____  ___-"    
+                  //    / /                   
+                        ]/               
 ```
 Apache Tika is similar to the Babel fish in Douglas Adam's book, "The Hitchhikers' Guide to the Galaxy" [@mattmann2011tika p. 3]. The Babel fish translates any natural language to any other. While Apache Tika does not yet translate natural languages, it starts to tame the tower of babel of digital document formats. As the Babel fish allowed a person to understand Vogon poetry, Tika allows a computer to extract text and objects from Microsoft Word.  
 
@@ -79,7 +79,7 @@ text <-
 
 The output is a R character vector of the same length and order as the input files.
 
-Most of the time is spent starting up the Tika batch processor. The most costly file is the first one. The rest are parsed quickly.
+In the example above, most of the time is spent starting up the Tika batch processor. The most costly file was the first one. The rest were parsed more quickly.
 
 Occasionally, files are not parsable and the returned value for the file will be `NA`. The reasons include corrupt files, disk input/output issues, empty files, password protection, a unhandled format, the document structure is broken, or the document has an unexpected variation. 
 
@@ -249,7 +249,7 @@ metadata[[6]]$'geo:long'
 
 # Get Metadata from "Container" Documents
 
-Some types of documents can have multiple objects within them. For example, a `.gzip` file may contain many other files. The `tika_json()` and `tika_json_text()` functions have a special ability that others do not. They will recurse into a container and examine each file within.
+Some types of documents can have multiple objects within them. For example, a `.gzip` file may contain many other files. The `tika_json()` and `tika_json_text()` functions have a special ability that others do not. They will recurse into a container and examine each file within. The Tika authors call the format `jsonRecursive` for this reason.
 
 In the following example, I created a compressed archive of the Apache Tika homepage, using the command line programs `wget` and `zip`. The small archive includes the HTML page, its images, and required files. 
 
@@ -280,7 +280,7 @@ embedded_resource_path <-
 
 embedded_resource_path
 ```
-The `'X-TIKA:embedded_resource_path` field tells you where in the document hierarchy each object resides. The first item in the character vector is the root, which is the container itself. 
+The `X-TIKA:embedded_resource_path` field tells you where in the document hierarchy each object resides. The first item in the character vector is the root, which is the container itself. The other items are embedded one layer down, as indicated by the forward slash `/`. In the context of the `X-TIKA:embedded_resource_path` field,  paths are not literally directory paths like in a file system. In reality, the image `icon_info_sml.gif` is within a folder called `images`. Rather, the number of forward slashes  indicates the level of recursion within the document. One slash `/` reveals a first set of embedded documents. Additional slashes `/` indicate that the parser has recursed into an embedded document within an embedded document. 
 
 ```{r}
 content_type <-
@@ -309,8 +309,10 @@ It may be surprising to learn that Word documents are containers (at least the m
 
 Out of the box, `rtika` uses all the available Tika Detectors and Parsers and runs with sensible defaults. For most, this will work well.
 
-In future versions, Tika uses a configuration file to customize parsing. This config file option is on hold in `rtika`, because Tika's batch module is still new and the config file format will likely change and be backward incompatible with Tika 1.7. Please stay tuned.
-    
+In future versions, Tika uses a configuration file to customize parsing. This config file option is on hold in `rtika`, because Tika's batch module is still new and the config file format will likely change in Tika 1.18 and be backward incompatible with Tika 1.17. Please stay tuned.
+
+There is also some room for improvement in the Tika software. The R community uses Latex and Markdown, but Tika currently has limited support for parsing those formats.  Tika reads the files just fine, and outputs text that is essentially similar to the input file. However, Tika does not yet have Java parsers to fully understand the Latex or Markdown document structure, render it to XHTML, or extract just the plain text and ignore the markup.  For these cases, a tool such as Pandoc may help more. 
+
 You may  find these resources useful:
 
 * Current Tika issues and progress can be seen here: https://issues.apache.org/jira/projects/TIKA
