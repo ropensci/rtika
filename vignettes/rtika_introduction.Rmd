@@ -311,7 +311,7 @@ Out of the box, `rtika` uses all the available Tika Detectors and Parsers and ru
 
 In future versions, Tika uses a configuration file to customize parsing. This config file option is on hold in `rtika`, because Tika's batch module is still new and the config file format will likely change in Tika 1.18 and be backward incompatible with Tika 1.17. Please stay tuned.
 
-There is also some room for improvement in the Tika software. The R community uses Latex and Markdown, but Tika currently has limited support for parsing those formats.  Tika reads the files just fine, and outputs text that is essentially similar to the input file. However, Tika does not yet have Java parsers to fully understand the Latex or Markdown document structure, render it to XHTML, or extract just the plain text and ignore the markup.  For these cases, a tool such as Pandoc may help more. 
+There is also some room for improvement in the Tika software. The R community uses Latex and Markdown, but Tika currently has limited support for parsing those formats. Tika reads the actual files just fine, and outputs text that is essentially the same as the input file. It also captures metadata and recognizes the MIME type when downloading with `tika_fetch()`. However, Tika does not have Java parsers to fully understand the Latex or Markdown document structure, render it to XHTML, or extract just the plain text and ignore the markup. For these cases, Pandoc will be more useful (See: https://pandoc.org/demos.html ). 
 
 You may  find these resources useful:
 
