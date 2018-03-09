@@ -26,14 +26,13 @@
 #' if this package becomes out of date.
 #' @param threads Integer of the number of file consumer threads Tika uses.
 #' Defaults to 2.
+#' @param max_restarts Integer of the maximum number of times the watchdog 
+#' process will restart the child process
 #' @param args Optional character vector of additional arguments passed to Tika,
 #' that may not yet be implemented in this R interface, in the pattern of
 #' \code{c('-arg1','setting1','-arg2','setting2')}. Available arguments include
 #' \code{-timeoutThresholdMillis} (Number of milliseconds allowed to a parse
-#' before the process is killed and restarted), \code{-maxRestarts} (Maximum
-#' number of times the watchdog process will restart the child process),
-#' \code{-includeFilePat} (Regular expression to determine which files to
-#' process, e.g. \code{"(?i)\.pdf"}), \code{-excludeFilePat}, and
+#' before the process is killed and restarted), and
 #' \code{-maxFileSizeBytes}. These are documented in the .jar --help command.
 #' @param quiet Logical if Tika command line messages and errors are to be
 #' suppressed. Defaults to TRUE.
@@ -157,6 +156,7 @@ tika <- function(input,
                  java = "java",
                  jar = tika_jar(),
                  threads = 2,
+                 max_restarts = 10,
                  args = character(),
                  quiet = TRUE,
                  cleanup = TRUE,
@@ -196,6 +196,7 @@ tika <- function(input,
     length(jar) == 1,
     nchar(jar) > 0,
     class(threads) %in% c("integer", "numeric"),
+    class(max_restarts) %in% c("integer", "numeric"),
     class(args) == "character",
     class(quiet) == "logical",
     class(cleanup) == "logical",
@@ -243,6 +244,7 @@ tika <- function(input,
     # The filenames are guaranteed not to be currently in use.
     output_dir <- tempfile("rtika_dir")
     dir.create(output_dir)
+    output_dir <- normalizePath(output_dir, mustWork = TRUE, winslash = "/")
   } else {
     # if an output directory is provided, check it exists.
     output_dir <- normalizePath(output_dir, mustWork = TRUE, winslash = "/")
@@ -285,7 +287,7 @@ tika <- function(input,
 
   # fileList is a delimited versiob if inputFiles that will be passed to Tika.
   # File paths containing both commas and quote characters appear to work.
-  fileList <- tempfile("rtika_file")
+  fileList <- normalizePath(tempfile("rtika_file"), mustWork = FALSE, winslash = "/")
   if (requireNamespace("data.table", quietly = TRUE, lib.loc = lib.loc)) {
     data.table::fwrite(
       data.table::data.table(inputFiles),
@@ -314,14 +316,19 @@ tika <- function(input,
     # but OS X and Ubuntu java run into problems with shQuote.
     java_args <- c(
       "-Djava.awt.headless=true", "-jar", shQuote(jar),
-      "-numConsumers", as.integer(threads), args, output_flag,
+      "-numConsumers", as.integer(threads), 
+      "-maxRestarts", as.integer(max_restarts),
+      args, 
+      output_flag,
       "-i", shQuote(root), "-o", shQuote(output_dir),
       "-fileList", shQuote(fileList)
     )
   } else {
     java_args <- c(
-      "-Djava.awt.headless=true", "-jar", jar, "-numConsumers",
-      as.integer(threads), args, output_flag, "-i", root, "-o",
+      "-Djava.awt.headless=true", "-jar", jar,
+      "-numConsumers", as.integer(threads), 
+      "-maxRestarts", as.integer(max_restarts),
+      args, output_flag, "-i", root, "-o",
       output_dir, "-fileList", fileList
     )
   }
@@ -387,7 +394,7 @@ tika <- function(input,
 
     # cleanup temp files  -----------------------------------------------------
     if (cleanup) {
-      trash_file <- file.path(tempdir(), list.files(
+      trash_file <- file.path(normalizePath(tempdir()), list.files(
         tempdir(),
         pattern = "^rtika_file"
       ))
@@ -395,7 +402,7 @@ tika <- function(input,
         tmp <- file.remove(trash_file)
       }
 
-      trash_dir <- file.path(tempdir(), list.files(
+      trash_dir <- file.path(normalizePath(tempdir()), list.files(
         tempdir(),
         pattern = "^rtika_dir"
       ))

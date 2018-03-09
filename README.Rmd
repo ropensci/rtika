@@ -28,6 +28,8 @@ Get Java installation tips at <http://openjdk.java.net/install/> or <https://www
 
 Next, install the `rtika`  package. 
 
+Note that there are currently some problems with OS X.
+
 ```{r,results = "hide", message = FALSE }
 # Get devtools to easily install from github, until this is all on CRAN 
 if(!requireNamespace('devtools')){

@@ -118,8 +118,8 @@ jpeg or tiff images. See the long list of supported file types:
 
     <pre class="usage"><span class='fu'>tika</span>(<span class='no'>input</span>, <span class='kw'>output</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"text"</span>, <span class='st'>"jsonRecursive"</span>, <span class='st'>"xml"</span>, <span class='st'>"html"</span>)[<span class='fl'>1</span>],
   <span class='kw'>output_dir</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>java</span> <span class='kw'>=</span> <span class='st'>"java"</span>, <span class='kw'>jar</span> <span class='kw'>=</span> <span class='fu'><a href='tika_jar.html'>tika_jar</a></span>(),
-  <span class='kw'>threads</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'>character</span>(), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>cleanup</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>lib.loc</span> <span class='kw'>=</span> <span class='fu'>.libPaths</span>())</pre>
+  <span class='kw'>threads</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>max_restarts</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'>character</span>(), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>cleanup</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>lib.loc</span> <span class='kw'>=</span> <span class='fu'>.libPaths</span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -166,15 +166,17 @@ if this package becomes out of date.</p></td>
 Defaults to 2.</p></td>
     </tr>
     <tr>
+      <th>max_restarts</th>
+      <td><p>Integer of the maximum number of times the watchdog 
+process will restart the child process</p></td>
+    </tr>
+    <tr>
       <th>args</th>
       <td><p>Optional character vector of additional arguments passed to Tika,
 that may not yet be implemented in this R interface, in the pattern of
 <code>c('-arg1','setting1','-arg2','setting2')</code>. Available arguments include
 <code>-timeoutThresholdMillis</code> (Number of milliseconds allowed to a parse
-before the process is killed and restarted), <code>-maxRestarts</code> (Maximum
-number of times the watchdog process will restart the child process),
-<code>-includeFilePat</code> (Regular expression to determine which files to
-process, e.g. <code>"(?i)\.pdf"</code>), <code>-excludeFilePat</code>, and
+before the process is killed and restarted), and
 <code>-maxFileSizeBytes</code>. These are documented in the .jar --help command.</p></td>
     </tr>
     <tr>

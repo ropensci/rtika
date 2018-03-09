@@ -6,8 +6,8 @@
 \usage{
 tika(input, output = c("text", "jsonRecursive", "xml", "html")[1],
   output_dir = "", return = TRUE, java = "java", jar = tika_jar(),
-  threads = 2, args = character(), quiet = TRUE, cleanup = TRUE,
-  lib.loc = .libPaths())
+  threads = 2, max_restarts = 10, args = character(), quiet = TRUE,
+  cleanup = TRUE, lib.loc = .libPaths())
 }
 \arguments{
 \item{input}{Character vector describing the paths to the input documents.
@@ -37,14 +37,14 @@ if this package becomes out of date.}
 \item{threads}{Integer of the number of file consumer threads Tika uses.
 Defaults to 2.}
 
+\item{max_restarts}{Integer of the maximum number of times the watchdog 
+process will restart the child process}
+
 \item{args}{Optional character vector of additional arguments passed to Tika,
 that may not yet be implemented in this R interface, in the pattern of
 \code{c('-arg1','setting1','-arg2','setting2')}. Available arguments include
 \code{-timeoutThresholdMillis} (Number of milliseconds allowed to a parse
-before the process is killed and restarted), \code{-maxRestarts} (Maximum
-number of times the watchdog process will restart the child process),
-\code{-includeFilePat} (Regular expression to determine which files to
-process, e.g. \code{"(?i)\.pdf"}), \code{-excludeFilePat}, and
+before the process is killed and restarted), and
 \code{-maxFileSizeBytes}. These are documented in the .jar --help command.}
 
 \item{quiet}{Logical if Tika command line messages and errors are to be

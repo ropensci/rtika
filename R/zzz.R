@@ -38,7 +38,7 @@ Type ?tika for Java installation tips.")
   if (is.na(tika_installed)) {
     warning("To finish installing 'rtika', type:
 
-install_tika()
+rtika::install_tika()
 ")
   } else {
     tika_version <- tryCatch(
@@ -57,7 +57,7 @@ install_tika()
       warning("Could not determine the Apache Tika version installed.
 Try reinstalling with:
 
-install_tika()
+rtika::install_tika()
 ")
     } else {
       if (tika_version > tika_jar_version) {
@@ -67,7 +67,7 @@ install_tika()
       if (tika_version < tika_jar_version) {
         warning("The installed Apache Tika .jar is outdated. To update, type:
 
-install_tika()
+rtika::install_tika()
 ")
       }
     }

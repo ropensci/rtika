@@ -19,6 +19,8 @@ To start, you need R and either `OpenJDK 1.7` or `Java 7`. Higher versions work.
 
 Next, install the `rtika` package.
 
+Note that there are currently some problems with OS X.
+
 ``` r
 # Get devtools to easily install from github, until this is all on CRAN 
 if(!requireNamespace('devtools')){
