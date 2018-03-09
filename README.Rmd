@@ -37,9 +37,11 @@ if(!requireNamespace('devtools')){
 
 if(!requireNamespace('rtika')){
   devtools::install_github('predict-r/rtika')
+    # You must install the Apache Tika .jar once:
+   rtika::install_tika()
 }
 
-library('rtika')  
+library('rtika')
 ```
 
 The `rJava` package is ***not*** required.

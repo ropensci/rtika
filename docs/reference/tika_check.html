@@ -29,9 +29,9 @@
   
 <meta property="og:title" content="Check Tika against a md5 checksum — tika_check" />
 
-<meta property="og:description" content="Checks the incuded Tika library, using the tools::md5sum() command.
-The latest checksums are at https://tika.apache.org/download.html.
-Note that these may ahead of the Tika version included in this package." />
+<meta property="og:description" content="This is used by install_tika() internally, 
+or can be called directly on a jar file.
+The latest jar files and checksums are at https://tika.apache.org/download.html." />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -107,12 +107,12 @@ Note that these may ahead of the Tika version included in this package." />
     </div>
 
     
-    <p>Checks the incuded Tika library, using the <code><a href='http://www.rdocumentation.org/packages/tools/topics/md5sum'>tools::md5sum()</a></code> command.
-The latest checksums are at https://tika.apache.org/download.html.
-Note that these may ahead of the Tika version included in this package.</p>
+    <p>This is used by <code><a href='install_tika.html'>install_tika()</a></code> internally, 
+or can be called directly on a <code>jar</code> file.
+The latest <code>jar</code> files and checksums are at https://tika.apache.org/download.html.</p>
     
 
-    <pre class="usage"><span class='fu'>tika_check</span>(<span class='no'>md5_sum</span>)</pre>
+    <pre class="usage"><span class='fu'>tika_check</span>(<span class='no'>md5_sum</span>, <span class='kw'>jar</span> <span class='kw'>=</span> <span class='fu'><a href='tika_jar.html'>tika_jar</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -121,16 +121,17 @@ Note that these may ahead of the Tika version included in this package.</p>
       <th>md5_sum</th>
       <td><p>Character vector of length one with the target md5 checksum.</p></td>
     </tr>
+    <tr>
+      <th>jar</th>
+      <td><p>Optional alternative path to a Tika <code>jar</code> file.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>logical if the .jar matches the md5</p>
+    <p>logical if the <code>jar</code> checksum matches <code>md5_sum</code>.</p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>tika_check</span>(<span class='st'>'e2720c2392c1bd6634cc4a8801f7363a'</span>) <span class='co'>#checksum of tika-app-1.17.jar</span></div><div class='output co'>#&gt; /home/project/rtika/inst/java/tika-app-1.17.jar 
-#&gt;                                            TRUE </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -138,9 +139,7 @@ Note that these may ahead of the Tika version included in this package.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>

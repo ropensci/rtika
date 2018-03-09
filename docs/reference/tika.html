@@ -241,7 +241,7 @@ text like this: <code>output=c("jsonRecursive","text")</code> or
  on the <code>output</code> setting. One way to get a list of the processed files
  is to use <code>list.files</code> with <code>recursive=TRUE</code>.
  If <code>output_dir</code> is not specified, files are saved to a volatile temp
- directory named by <code>tmpdir()</code> and will be deleted when R shuts down.
+ directory named by <code>tempdir()</code> and will be deleted when R shuts down.
  If this function will be run on very large batches repeatedly, these
  temporary files can be cleaned up every time by adding
  <code>cleanup=TRUE</code>.</p>
@@ -257,11 +257,13 @@ more things that can be done, given enough time and attention, because
 Apache Tika includes many libraries and methods in its .jar file. The source is available at:
 <a href='https://tika.apache.org/'>https://tika.apache.org/</a>.</p>
     
-    <h2 class="hasAnchor" id="configuration"><a class="anchor" href="#configuration"></a>Configuration</h2>
+    <h2 class="hasAnchor" id="installation"><a class="anchor" href="#installation"></a>Installation</h2>
 
     
     <p>While this jar works with Java 7, Tika in
 mid-2018 will need Java 8, so it's best to install Java 8.</p>
+<p>Java installation instructions are at &lt;http://openjdk.java.net/install/&gt; 
+or &lt;https://www.java.com/en/download/help/download_options.xml&gt;.</p>
 <p>By default, this R package internally invokes Java by calling the <code>java</code>
 command from the command line. To specify the path to a particular Java
 version, set the path in the <code>java</code> attribute of the <code>tika</code>
@@ -274,7 +276,8 @@ thousands of documents to process.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>#' #extract text</span>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'>#extract text</span>
 <span class='no'>batch</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(
   <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"jsonlite.pdf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
   <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"curl.pdf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
@@ -285,31 +288,8 @@ thousands of documents to process.</p>
   <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"tika.apache.org.zip"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>)
 )
 <span class='no'>text</span> <span class='kw'>=</span> <span class='fu'>tika</span>(<span class='no'>batch</span>)
-<span class='fu'>cat</span>(<span class='fu'>substr</span>(<span class='no'>text</span>[<span class='fl'>1</span>],<span class='fl'>45</span>,<span class='fl'>450</span>))</div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; 
-#&gt; 
-#&gt; 
-#&gt; 
-#&gt; 
-#&gt; 
-#&gt; 
-#&gt; 
-#&gt; Package ‘jsonlite’
-#&gt; June 1, 2017
-#&gt; 
-#&gt; Version 1.5
-#&gt; Title A Robust, High Performance JSON Parser and Generator for R
-#&gt; License MIT + file LICENSE
-#&gt; NeedsCompilation yes
-#&gt; Depends methods
-#&gt; Author Jeroen Ooms, Duncan Temple Lang, Lloyd Hilaiel
-#&gt; 
-#&gt; URL https://arxiv.org/abs/1403.2805,
-#&gt; https://www.opencpu.org/posts/jsonlite-a-smarter-json-encoder
-#&gt; 
-#&gt; BugReports http://github.com/jeroen/jsonlite/issues
-#&gt; Maintainer Jero</div><div class='input'>
+<span class='fu'>cat</span>(<span class='fu'>substr</span>(<span class='no'>text</span>[<span class='fl'>1</span>],<span class='fl'>45</span>,<span class='fl'>450</span>))
+
 <span class='co'>#more complex metadata</span>
 <span class='kw'>if</span>(<span class='fu'>requireNamespace</span>(<span class='st'>'jsonlite'</span>)){
 
@@ -324,30 +304,8 @@ thousands of documents to process.</p>
   <span class='fu'>lapply</span>(<span class='no'>metadata</span>, <span class='kw'>function</span>(<span class='no'>x</span>){ <span class='fu'>as.character</span>(<span class='no'>x</span>$<span class='st'>'Creation-Date'</span>) })
 
   <span class='fu'>lapply</span>(<span class='no'>metadata</span>, <span class='kw'>function</span>(<span class='no'>x</span>){  <span class='fu'>as.character</span>(<span class='no'>x</span>$<span class='st'>'X-TIKA:embedded_resource_path'</span>) })
-}</div><div class='output co'>#&gt; [[1]]
-#&gt; character(0)
-#&gt; 
-#&gt; [[2]]
-#&gt; character(0)
-#&gt; 
-#&gt; [[3]]
-#&gt; [1] NA            "/image1.jpg"
-#&gt; 
-#&gt; [[4]]
-#&gt; character(0)
-#&gt; 
-#&gt; [[5]]
-#&gt; character(0)
-#&gt; 
-#&gt; [[6]]
-#&gt; character(0)
-#&gt; 
-#&gt; [[7]]
-#&gt;  [1] NA                       "/index.html"            "/site.css"             
-#&gt;  [4] "/external.png"          "/icon_info_sml.gif"     "/icon_warning_sml.gif" 
-#&gt;  [7] "/icon_error_sml.gif"    "/icon_success_sml.gif"  "/tika.png"             
-#&gt; [10] "/mattmann_cover150.jpg" "/asf-logo.gif"         
-#&gt; </div></pre>
+}
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -360,7 +318,7 @@ thousands of documents to process.</p>
 
       <li><a href="#background">Background</a></li>
 
-      <li><a href="#configuration">Configuration</a></li>
+      <li><a href="#installation">Installation</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

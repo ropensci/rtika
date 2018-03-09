@@ -78,7 +78,7 @@
       <h1>Introduction to rtika</h1>
                         <h4 class="author">Sasha Goodman</h4>
             
-            <h4 class="date">2018-03-04</h4>
+            <h4 class="date">2018-03-08</h4>
           </div>
 
     
@@ -135,7 +135,7 @@ text &lt;-<span class="st">  </span>
 <span class="st">    </span><span class="kw"><a href="../reference/tika_text.html">tika_text</a></span>() 
 )
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   3.960   0.510   4.369</span>
+<span class="co">#&gt;   4.110   1.420   5.489</span>
 <span class="co"># normal syntax also works:</span>
 <span class="co"># text &lt;- tika_text(batch)</span></code></pre></div>
 <p>The output is a R character vector of the same length and order as the input files.</p>
@@ -176,8 +176,8 @@ downloaded &lt;-<span class="st"> </span>
 
 <span class="co"># it will add the appropriate file extension to the downloads</span>
 downloaded
-<span class="co">#&gt; [1] "/home/project/rtika_636e7467ab20/rtika_file636e7babeae3.html"</span>
-<span class="co">#&gt; [2] "/home/project/rtika_636e7467ab20/rtika_file636e7fea3dc6.pdf"</span></code></pre></div>
+<span class="co">#&gt; [1] "/home/project/rtika_36f9be24829/rtika_file36f970d5185a.html"</span>
+<span class="co">#&gt; [2] "/home/project/rtika_36f9be24829/rtika_file36f9293a745a.pdf"</span></code></pre></div>
 <p>This <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> function is used internally by the <code><a href="../reference/tika.html">tika()</a></code> functions when processing URLs. By using <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> explicitly with a specified directory, you can also save the files and return to them later.</p>
 </div>
 <div id="settings-for-big-datasets" class="section level1">
@@ -206,13 +206,13 @@ processed_files &lt;-<span class="st"> </span><span class="kw">file.path</span>(
                 )</code></pre></div>
 <p>The location of each file in <code>output_dir</code> follows a convention from the Apache Tika batch processor: the full path to each file mirrors the original file’s path, only within the <code>output_dir</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">processed_files
-<span class="co">#&gt; [1] "/home/project/rtika_636ef9315c5/home/project/R/library/rtika/extdata/calculator.jpg.txt"     </span>
-<span class="co">#&gt; [2] "/home/project/rtika_636ef9315c5/home/project/R/library/rtika/extdata/curl.pdf.txt"           </span>
-<span class="co">#&gt; [3] "/home/project/rtika_636ef9315c5/home/project/R/library/rtika/extdata/jsonlite.pdf.txt"       </span>
-<span class="co">#&gt; [4] "/home/project/rtika_636ef9315c5/home/project/R/library/rtika/extdata/R-FAQ.html.txt"         </span>
-<span class="co">#&gt; [5] "/home/project/rtika_636ef9315c5/home/project/R/library/rtika/extdata/table.docx.txt"         </span>
-<span class="co">#&gt; [6] "/home/project/rtika_636ef9315c5/home/project/R/library/rtika/extdata/tika.apache.org.zip.txt"</span>
-<span class="co">#&gt; [7] "/home/project/rtika_636ef9315c5/home/project/R/library/rtika/extdata/xml2.pdf.txt"</span></code></pre></div>
+<span class="co">#&gt; [1] "/home/project/rtika_36f95cdcff6f/home/project/R/library/rtika/extdata/calculator.jpg.txt"     </span>
+<span class="co">#&gt; [2] "/home/project/rtika_36f95cdcff6f/home/project/R/library/rtika/extdata/curl.pdf.txt"           </span>
+<span class="co">#&gt; [3] "/home/project/rtika_36f95cdcff6f/home/project/R/library/rtika/extdata/jsonlite.pdf.txt"       </span>
+<span class="co">#&gt; [4] "/home/project/rtika_36f95cdcff6f/home/project/R/library/rtika/extdata/R-FAQ.html.txt"         </span>
+<span class="co">#&gt; [5] "/home/project/rtika_36f95cdcff6f/home/project/R/library/rtika/extdata/table.docx.txt"         </span>
+<span class="co">#&gt; [6] "/home/project/rtika_36f95cdcff6f/home/project/R/library/rtika/extdata/tika.apache.org.zip.txt"</span>
+<span class="co">#&gt; [7] "/home/project/rtika_36f95cdcff6f/home/project/R/library/rtika/extdata/xml2.pdf.txt"</span></code></pre></div>
 <p>Note that <code><a href="../reference/tika_text.html">tika_text()</a></code> produces <code>.txt</code> files, <code><a href="../reference/tika_xml.html">tika_xml()</a></code> produces <code>.xml</code> files, <code><a href="../reference/tika_html.html">tika_html()</a></code> produces <code>.html</code> files, and both <code><a href="../reference/tika_json.html">tika_json()</a></code> and <code><a href="../reference/tika_json_text.html">tika_json_text()</a></code> produce <code>.json</code> files.</p>
 </div>
 <div id="get-a-structured-xhtml-rendition" class="section level1">
@@ -234,16 +234,16 @@ links &lt;-
 <span class="st">    </span><span class="kw">lapply</span>(xml2<span class="op">::</span>xml_attr, <span class="st">'href'</span>)
 
 <span class="kw">sample</span>(links[[<span class="dv">1</span>]],<span class="dv">10</span>)
-<span class="co">#&gt;  [1] "https://arxiv.org/abs/1403.2805"                                               </span>
+<span class="co">#&gt;  [1] "http://github.com/jeroen/jsonlite/issues"                                      </span>
 <span class="co">#&gt;  [2] "https://arxiv.org/abs/1403.2805"                                               </span>
-<span class="co">#&gt;  [3] "https://arxiv.org/abs/1403.2805"                                               </span>
-<span class="co">#&gt;  [4] "https://www.opencpu.org/posts/jsonlite-a-smarter-json-encoder"                 </span>
-<span class="co">#&gt;  [5] "http://github.com/jeroen/jsonlite/issues"                                      </span>
-<span class="co">#&gt;  [6] "http://ndjson.org"                                                             </span>
-<span class="co">#&gt;  [7] "http://docs.mongodb.org/manual/reference/program/mongoexport/#cmdoption--query"</span>
-<span class="co">#&gt;  [8] "http://en.wikipedia.org/wiki/Singleton_(mathematics)"                          </span>
-<span class="co">#&gt;  [9] "http://en.wikipedia.org/wiki/Singleton_(mathematics)"                          </span>
-<span class="co">#&gt; [10] "http://docs.mongodb.org/manual/reference/program/mongoexport/#cmdoption--query"</span></code></pre></div>
+<span class="co">#&gt;  [3] "http://en.wikipedia.org/wiki/Singleton_(mathematics)"                          </span>
+<span class="co">#&gt;  [4] "http://ndjson.org"                                                             </span>
+<span class="co">#&gt;  [5] "https://www.opencpu.org/posts/jsonlite-a-smarter-json-encoder"                 </span>
+<span class="co">#&gt;  [6] "http://en.wikipedia.org/wiki/Singleton_(mathematics)"                          </span>
+<span class="co">#&gt;  [7] "https://github.com/maxogden/dat"                                               </span>
+<span class="co">#&gt;  [8] "http://docs.mongodb.org/manual/reference/program/mongoexport/#cmdoption--query"</span>
+<span class="co">#&gt;  [9] "http://ndjson.org"                                                             </span>
+<span class="co">#&gt; [10] "http://jsonlines.org/"</span></code></pre></div>
 <p>Each type of file has different information preserved by Tika’s internal parsers. The particular aspects vary. Some notes:</p>
 <ul>
 <li>PDF files retain pagination, with each page starting with the XHTML element <code>&lt;div class="page"&gt;</code>.</li>
@@ -323,7 +323,7 @@ metadata &lt;-
 <span class="co">#&gt;  $ Exposure Program           : chr "Program normal"</span>
 <span class="co">#&gt;  $ Exposure Time              : chr "1/30 sec"</span>
 <span class="co">#&gt;  $ F-Number                   : chr "f/2.2"</span>
-<span class="co">#&gt;  $ File Modified Date         : chr "Fri Mar 02 15:40:48 -08:00 2018"</span>
+<span class="co">#&gt;  $ File Modified Date         : chr "Thu Mar 08 16:06:17 -08:00 2018"</span>
 <span class="co">#&gt;  $ File Name                  : chr "calculator.jpg"</span>
 <span class="co">#&gt;  $ File Size                  : chr "83654 bytes"</span>
 <span class="co">#&gt;  $ Flash                      : chr "Flash did not fire"</span>
@@ -381,7 +381,7 @@ metadata &lt;-
 <span class="co">#&gt;   ..$ : chr  "org.apache.tika.parser.DefaultParser" "org.apache.tika.parser.jpeg.JpegParser"</span>
 <span class="co">#&gt;  $ X-TIKA:content             : chr "&lt;html xmlns=\"http://www.w3.org/1999/xhtml\"&gt;\n&lt;head&gt;\n&lt;meta name=\"Exif Version\" content=\"2.21\" /&gt;\n&lt;meta n"| __truncated__</span>
 <span class="co">#&gt;  $ X-TIKA:digest:MD5          : chr "1d6e398a96f058db680b7249beb8eeda"</span>
-<span class="co">#&gt;  $ X-TIKA:parse_time_millis   : chr "261"</span>
+<span class="co">#&gt;  $ X-TIKA:parse_time_millis   : chr "389"</span>
 <span class="co">#&gt;  $ XMP Value Count            : chr "4"</span>
 <span class="co">#&gt;  $ Y Resolution               : chr "72 dots per inch"</span>
 <span class="co">#&gt;  $ date                       : chr "2014-07-01T02:49:22"</span>
@@ -461,14 +461,14 @@ content_type
 <span class="co">#&gt; List of 1</span>
 <span class="co">#&gt;  $ : chr [1:11] "&lt;html xmlns=\"http://www.w3.org/1999/xhtml\"&gt;\n&lt;head&gt;\n&lt;meta name=\"X-Parsed-By\" content=\"org.apache.tika.par"| __truncated__ "&lt;html xmlns=\"http://www.w3.org/1999/xhtml\"&gt;\n&lt;head&gt;\n&lt;link rel=\"icon\" type=\"image/png\" href=\"./tikaNoTex"| __truncated__ "&lt;html xmlns=\"http://www.w3.org/1999/xhtml\"&gt;\n&lt;head&gt;\n&lt;meta name=\"date\" content=\"2014-12-20T07:36:10Z\" /&gt;\"| __truncated__ "&lt;html xmlns=\"http://www.w3.org/1999/xhtml\"&gt;\n&lt;head&gt;\n&lt;meta name=\"date\" content=\"2010-08-05T13:48:24Z\" /&gt;\"| __truncated__ ...</span></code></pre></div>
 <p>The <code>X-TIKA:content</code> field includes the XHTML rendition of an object. It is possible to extract plain text in the <code>X-TIKA:content</code> field by calling <code><a href="../reference/tika_json_text.html">tika_json_text()</a></code> instead. That is the only difference between <code><a href="../reference/tika_json.html">tika_json()</a></code> and <code><a href="../reference/tika_json_text.html">tika_json_text()</a></code>.</p>
-<p>It may be surprising to learn that Word documents are containers (at least the modern <code>.docx</code> variety are). By parsing them with <code><a href="../reference/tika_json.html">tika_json()</a></code> or <code><a href="../reference/tika_json_text.html">tika_json_text()</a></code>, the various images and embedded objects can be analyzed. However, there is an added complexity, because each document may produce a long vector of <code>Content-Types</code> for each embedded file, instead of a single <code>Content-Types</code> for the container like <code><a href="../reference/tika_xml.html">tika_xml()</a></code> and <code><a href="../reference/tika_html.html">tika_html()</a></code>.</p>
+<p>It may be surprising to learn that Word documents are containers (at least the modern <code>.docx</code> variety are). By parsing them with <code><a href="../reference/tika_json.html">tika_json()</a></code> or <code><a href="../reference/tika_json_text.html">tika_json_text()</a></code>, the various images and embedded objects can be analyzed. However, there is an added complexity, because each document may produce a long vector of <code>Content-Types</code> for each embedded file, instead of a single <code>Content-Type</code> for the container like <code><a href="../reference/tika_xml.html">tika_xml()</a></code> and <code><a href="../reference/tika_html.html">tika_html()</a></code>.</p>
 </div>
 <div id="extending-rtika" class="section level1">
 <h1 class="hasAnchor">
 <a href="#extending-rtika" class="anchor"></a>Extending rtika</h1>
 <p>Out of the box, <code>rtika</code> uses all the available Tika Detectors and Parsers and runs with sensible defaults. For most, this will work well.</p>
 <p>In future versions, Tika uses a configuration file to customize parsing. This config file option is on hold in <code>rtika</code>, because Tika’s batch module is still new and the config file format will likely change in Tika 1.18 and be backward incompatible with Tika 1.17. Please stay tuned.</p>
-<p>There is also some room for improvement in the Tika software. The R community uses Latex and Markdown, but Tika currently has limited support for parsing those formats. Tika reads the actual files just fine, and outputs text that is essentially the same as the input file. It also captures metadata and recognizes the MIME type when downloading with <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code>. However, Tika does not have Java parsers to fully understand the Latex or Markdown document structure, render it to XHTML, or extract just the plain text and ignore the markup. For these cases, Pandoc will be more useful (See: <a href="https://pandoc.org/demos.html" class="uri">https://pandoc.org/demos.html</a> ).</p>
+<p>There is also room for improvement when it comes to working with document formats common in the R community, especially Latex and Markdown. Tika currently reads and writes these formats just fine, captures metadata and recognizes the MIME type when downloading with <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code>. However, Tika does not have any parsers to fully understand the Latex or Markdown document structure, render it to XHTML, and extract the plain text while ignoring markup. For these cases, Pandoc will be more useful (See: <a href="https://pandoc.org/demos.html" class="uri">https://pandoc.org/demos.html</a> ).</p>
 <p>You may find these resources useful:</p>
 <ul>
 <li>Current Tika issues and progress can be seen here: <a href="https://issues.apache.org/jira/projects/TIKA" class="uri">https://issues.apache.org/jira/projects/TIKA</a>

@@ -6,7 +6,7 @@
 #' @param ... Other parameters to be sent to \code{tika()}.
 #' @return A character vector in the same order and with the same length as \code{input}, of unparsed \code{XHTML}. Unprocessed files are \code{as.character(NA)}.
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' batch <- c(
 #'  system.file("extdata", "jsonlite.pdf", package = "rtika"),
 #'  system.file("extdata", "curl.pdf", package = "rtika"),

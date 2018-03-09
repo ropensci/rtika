@@ -15,6 +15,13 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
+tika_installed <- rtika::tika_jar()
+  
+if(is.na(tika_installed)){
+    rtika::install_tika()
+ }
+
 ```
 # A Digital Babel Fish
 
@@ -302,7 +309,7 @@ str(content)
 
 The `X-TIKA:content` field includes the XHTML rendition of an object. It is possible to extract plain text in the `X-TIKA:content` field by calling `tika_json_text()` instead. That is the only difference between `tika_json()` and `tika_json_text()`.
 
-It may be surprising to learn that Word documents are containers (at least the modern `.docx` variety are). By parsing them with `tika_json()` or `tika_json_text()`, the various images and embedded objects can be analyzed. However, there is an added complexity, because each document may  produce a long vector of `Content-Types` for each embedded file, instead of a single `Content-Types` for the container like `tika_xml()` and `tika_html()`.
+It may be surprising to learn that Word documents are containers (at least the modern `.docx` variety are). By parsing them with `tika_json()` or `tika_json_text()`, the various images and embedded objects can be analyzed. However, there is an added complexity, because each document may  produce a long vector of `Content-Types` for each embedded file, instead of a single `Content-Type` for the container like `tika_xml()` and `tika_html()`.
 
 
 # Extending rtika
@@ -311,7 +318,7 @@ Out of the box, `rtika` uses all the available Tika Detectors and Parsers and ru
 
 In future versions, Tika uses a configuration file to customize parsing. This config file option is on hold in `rtika`, because Tika's batch module is still new and the config file format will likely change in Tika 1.18 and be backward incompatible with Tika 1.17. Please stay tuned.
 
-There is also some room for improvement in the Tika software. The R community uses Latex and Markdown, but Tika currently has limited support for parsing those formats. Tika reads the actual files just fine, and outputs text that is essentially the same as the input file. It also captures metadata and recognizes the MIME type when downloading with `tika_fetch()`. However, Tika does not have Java parsers to fully understand the Latex or Markdown document structure, render it to XHTML, or extract just the plain text and ignore the markup. For these cases, Pandoc will be more useful (See: https://pandoc.org/demos.html ). 
+There is also room for improvement when it comes to working with document formats common in the R community, especially Latex and Markdown. Tika currently reads and writes these formats just fine, captures metadata and recognizes the MIME type when downloading with `tika_fetch()`. However, Tika does not have any parsers to fully understand the Latex or Markdown document structure, render it to XHTML, and extract the plain text while ignoring markup. For these cases, Pandoc will be more useful (See: https://pandoc.org/demos.html ). 
 
 You may  find these resources useful:
 

@@ -1,7 +1,7 @@
 Package: rtika
 Type: Package
 Title: R Interface to 'Apache Tika' 
-Version: 0.1.6
+Version: 0.1.7
 Authors@R: c(
     person(given="Sasha",family="Goodman", email="goodmansasha@gmail.com", role=c("aut","cre") ), 
     person(given="The Apache Software Foundation", role=c("aut","cph") )
@@ -11,7 +11,8 @@ Imports:
     curl,
     sys,
     stats,
-    utils
+    utils, 
+    rappdirs
 Suggests: 
     jsonlite,
     xml2,
@@ -23,7 +24,7 @@ Suggests:
     magrittr
 License: Apache License 2.0 | file LICENSE
 SystemRequirements: Java (>=7)
-Description: Extract text or metadata from over a thousand file types. Get either plain text or structured XHTML. 
+Description: Extract text or metadata from over a thousand file types. Get either plain text or structured XHTML content. 
 Depends: R (>= 3.1.0)
 Encoding: UTF-8
 LazyData: true

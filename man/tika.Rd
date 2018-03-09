@@ -112,7 +112,7 @@ text like this: \code{output=c("jsonRecursive","text")} or
  on the \code{output} setting. One way to get a list of the processed files
  is to use \code{list.files} with \code{recursive=TRUE}.
  If \code{output_dir} is not specified, files are saved to a volatile temp
- directory named by \code{tmpdir()} and will be deleted when R shuts down.
+ directory named by \code{tempdir()} and will be deleted when R shuts down.
  If this function will be run on very large batches repeatedly, these
  temporary files can be cleaned up every time by adding
  \code{cleanup=TRUE}.
@@ -129,10 +129,13 @@ Apache Tika includes many libraries and methods in its .jar file. The source is 
 \url{https://tika.apache.org/}.
 }
 
-\section{Configuration}{
+\section{Installation}{
 
 While this jar works with Java 7, Tika in
 mid-2018 will need Java 8, so it's best to install Java 8.
+
+ Java installation instructions are at <http://openjdk.java.net/install/> 
+or <https://www.java.com/en/download/help/download_options.xml>.
 
 By default, this R package internally invokes Java by calling the \code{java}
 command from the command line. To specify the path to a particular Java
@@ -148,8 +151,8 @@ thousands of documents to process.
 }
 
 \examples{
-\donttest{
-#' #extract text
+\dontrun{
+#extract text
 batch <- c(
   system.file("extdata", "jsonlite.pdf", package = "rtika"),
   system.file("extdata", "curl.pdf", package = "rtika"),

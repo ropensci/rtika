@@ -50,8 +50,8 @@
 #' If return=FALSE, then a NULL value is invisibly returned.
 #' See the Output Details section below.
 #' @examples
-#' \donttest{
-#' #' #extract text
+#' \dontrun{
+#' #extract text
 #' batch <- c(
 #'   system.file("extdata", "jsonlite.pdf", package = "rtika"),
 #'   system.file("extdata", "curl.pdf", package = "rtika"),
@@ -118,7 +118,7 @@
 #'  on the \code{output} setting. One way to get a list of the processed files
 #'  is to use \code{list.files} with \code{recursive=TRUE}.
 #'  If \code{output_dir} is not specified, files are saved to a volatile temp
-#'  directory named by \code{tmpdir()} and will be deleted when R shuts down.
+#'  directory named by \code{tempdir()} and will be deleted when R shuts down.
 #'  If this function will be run on very large batches repeatedly, these
 #'  temporary files can be cleaned up every time by adding
 #'  \code{cleanup=TRUE}.
@@ -130,9 +130,12 @@
 #' more things that can be done, given enough time and attention, because
 #' Apache Tika includes many libraries and methods in its .jar file. The source is available at:
 #' \url{https://tika.apache.org/}.
-#' @section Configuration:
+#' @section Installation:
 #' While this jar works with Java 7, Tika in
 #' mid-2018 will need Java 8, so it's best to install Java 8.
+#' 
+#'  Java installation instructions are at <http://openjdk.java.net/install/> 
+#' or <https://www.java.com/en/download/help/download_options.xml>.
 #'
 #' By default, this R package internally invokes Java by calling the \code{java}
 #' command from the command line. To specify the path to a particular Java
@@ -188,8 +191,10 @@ tika <- function(input,
     length(return) == 1,
     class(java) == "character",
     length(java) == 1,
+    !any(is.na(jar)),
     class(jar) == "character",
     length(jar) == 1,
+    nchar(jar) > 0,
     class(threads) %in% c("integer", "numeric"),
     class(args) == "character",
     class(quiet) == "logical",

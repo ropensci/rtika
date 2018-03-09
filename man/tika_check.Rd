@@ -4,19 +4,18 @@
 \alias{tika_check}
 \title{Check Tika against a md5 checksum}
 \usage{
-tika_check(md5_sum)
+tika_check(md5_sum, jar = tika_jar())
 }
 \arguments{
 \item{md5_sum}{Character vector of length one with the target md5 checksum.}
+
+\item{jar}{Optional alternative path to a Tika \code{jar} file.}
 }
 \value{
-logical if the .jar matches the md5
+logical if the \code{jar} checksum matches \code{md5_sum}.
 }
 \description{
-Checks the incuded Tika library, using the \code{tools::md5sum()} command.
-The latest checksums are at https://tika.apache.org/download.html.
-Note that these may ahead of the Tika version included in this package.
-}
-\examples{
-tika_check('e2720c2392c1bd6634cc4a8801f7363a') #checksum of tika-app-1.17.jar
+This is used by \code{install_tika()} internally, 
+or can be called directly on a \code{jar} file.
+The latest \code{jar} files and checksums are at https://tika.apache.org/download.html.
 }

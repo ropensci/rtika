@@ -103,6 +103,25 @@
     </div>
 
     <div class="contents">
+    <div id="rtika-0-1-7-2018-03-08" class="section level1">
+<h1 class="hasAnchor">
+<a href="#rtika-0-1-7-2018-03-08" class="anchor"></a>rtika 0.1.7 (2018-03-08)</h1>
+<div id="minor-improvements" class="section level3">
+<h3 class="hasAnchor">
+<a href="#minor-improvements" class="anchor"></a>MINOR IMPROVEMENTS</h3>
+<ul>
+<li>The new install_tika() function allows this package to be distributed on CRAN. The Tika App jar was too large to go on CRAN directly. The .jar is installed in the directory determined by the rappdirs::user_data_dir() function.</li>
+<li>The .onLoad() function now gives various installation advice when starting up.</li>
+</ul>
+</div>
+<div id="deprecated-and-defunct" class="section level3">
+<h3 class="hasAnchor">
+<a href="#deprecated-and-defunct" class="anchor"></a>DEPRECATED AND DEFUNCT</h3>
+<ul>
+<li>Removed the .jar in favor of the install_tika() function.</li>
+</ul>
+</div>
+</div>
     <div id="rtika-0-1-6-2018-03-01" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rtika-0-1-6-2018-03-01" class="anchor"></a>rtika 0.1.6 (2018-03-01)</h1>
@@ -118,9 +137,9 @@
 <li>New tika_json_text() function gets metadata in .json with plain text content.</li>
 </ul>
 </div>
-<div id="deprecated-and-defunct" class="section level3">
+<div id="deprecated-and-defunct-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#deprecated-and-defunct" class="anchor"></a>DEPRECATED AND DEFUNCT</h3>
+<a href="#deprecated-and-defunct-1" class="anchor"></a>DEPRECATED AND DEFUNCT</h3>
 <ul>
 <li>Previous vignette has been removed in favor of new one.</li>
 <li>The tikajar package is not required in this version. Moved the .jar file back into this package to ease installation until I hear from CRAN.</li>
@@ -130,9 +149,9 @@
     <div id="rtika-0-1-5-2018-02-15" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rtika-0-1-5-2018-02-15" class="anchor"></a>rtika 0.1.5 (2018-02-15)</h1>
-<div id="minor-improvements" class="section level3">
+<div id="minor-improvements-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-improvements" class="anchor"></a>MINOR IMPROVEMENTS</h3>
+<a href="#minor-improvements-1" class="anchor"></a>MINOR IMPROVEMENTS</h3>
 <ul>
 <li>Added dependency on ‘sys’ package because the ‘system2’ function was causing intermittent errors by ending tika in mid process.</li>
 <li>Added startup check of the java version, using .onLoad() call to ‘java -version’</li>
@@ -146,9 +165,9 @@
     <div id="rtika-0-1-4-2018-02-15" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rtika-0-1-4-2018-02-15" class="anchor"></a>rtika 0.1.4 (2018-02-15)</h1>
-<div id="minor-improvements-1" class="section level3">
+<div id="minor-improvements-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-improvements-1" class="anchor"></a>MINOR IMPROVEMENTS</h3>
+<a href="#minor-improvements-2" class="anchor"></a>MINOR IMPROVEMENTS</h3>
 <ul>
 <li>Because it is too big for CRAN, removed the Tika .jar file.</li>
 <li>Added the Tika .jar to a new tikajar package on github.</li>
@@ -167,9 +186,9 @@
 <li>added convenience functions that advertise output format: tika_xml(), tika_json(), tika_text(), tika_html().</li>
 </ul>
 </div>
-<div id="minor-improvements-2" class="section level3">
+<div id="minor-improvements-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-improvements-2" class="anchor"></a>MINOR IMPROVEMENTS</h3>
+<a href="#minor-improvements-3" class="anchor"></a>MINOR IMPROVEMENTS</h3>
 <ul>
 <li>README examples use magrittr pipe.</li>
 </ul>
@@ -186,16 +205,16 @@
 <li>integrated the covr package.</li>
 </ul>
 </div>
-<div id="minor-improvements-3" class="section level3">
+<div id="minor-improvements-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-improvements-3" class="anchor"></a>MINOR IMPROVEMENTS</h3>
+<a href="#minor-improvements-4" class="anchor"></a>MINOR IMPROVEMENTS</h3>
 <ul>
 <li>for Windows users, the curl package is recommended to prevent base R download.file from corrupting files.</li>
 </ul>
 </div>
-<div id="deprecated-and-defunct-1" class="section level3">
+<div id="deprecated-and-defunct-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#deprecated-and-defunct-1" class="anchor"></a>DEPRECATED AND DEFUNCT</h3>
+<a href="#deprecated-and-defunct-2" class="anchor"></a>DEPRECATED AND DEFUNCT</h3>
 <ul>
 <li>removed the n_chars parameter in favor of using file.size() internally.</li>
 <li>removed onLoad.R that checked java version in order to speed package loading and simplify code coverage testing.</li>
@@ -212,9 +231,9 @@
 <li>allows the user to input the URLs and file paths of documents. URLs will be downloaded first to a temporary directory. The previous interface has been changed.</li>
 </ul>
 </div>
-<div id="minor-improvements-4" class="section level3">
+<div id="minor-improvements-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-improvements-4" class="anchor"></a>MINOR IMPROVEMENTS</h3>
+<a href="#minor-improvements-5" class="anchor"></a>MINOR IMPROVEMENTS</h3>
 <ul>
 <li>the Tika License file is included in the source.</li>
 <li>added a vignette on basic text processing using the library.</li>
@@ -243,6 +262,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#rtika-0-1-7-2018-03-08">0.1.7</a></li>
         <li><a href="#rtika-0-1-6-2018-03-01">0.1.6</a></li>
         <li><a href="#rtika-0-1-5-2018-02-15">0.1.5</a></li>
         <li><a href="#rtika-0-1-4-2018-02-15">0.1.4</a></li>

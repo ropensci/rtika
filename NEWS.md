@@ -1,3 +1,15 @@
+ rtika 0.1.7 (2018-03-08)
+========================= 
+
+### MINOR IMPROVEMENTS
+
+  * The new install_tika() function allows this package to be distributed on CRAN. The Tika App jar was too large to go on CRAN directly. The .jar is installed in the directory determined by the rappdirs::user_data_dir() function. 
+  * The .onLoad() function now gives various installation advice when starting up. 
+  
+
+### DEPRECATED AND DEFUNCT
+  * Removed the .jar in favor of the install_tika() function.
+
  rtika 0.1.6 (2018-03-01)
 ========================= 
 

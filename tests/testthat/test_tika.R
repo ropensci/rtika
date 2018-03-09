@@ -1,13 +1,20 @@
 context("Connecting to Tika")
 
-# urls <- c("https://cran.r-project.org/doc/manuals/r-release/R-data.pdf"
-#          , "https://cran.r-project.org/doc/manuals/r-release/R-exts.epub"
-#          , "https://cran.r-project.org/doc/manuals/r-release/R-FAQ.html")
-# input <- replicate(length(urls), tempfile('rtika_tests'))
-# input <- c("R-data.pdf","R-exts.epub","R-FAQ.html")
-# for (i in seq_along(urls)) {
-#   download.file(urls[i], input[i])
-# }
+# we are not allowed to install the Tika jar automatically on CRAN
+
+# the plan is to use skip_on_cran()
+
+# so tests work on travis but are otherwise skipped.
+
+# install the jar after the skip_on_cran() 
+install_if_needed <- function(){
+  tika_installed <- tika_jar()
+  
+  if(is.na(tika_installed)){
+    install_tika()
+  }
+}
+
 
 input <- c(
   system.file("extdata", "jsonlite.pdf", package = "rtika"),
@@ -20,6 +27,9 @@ input <- c(
 )
 
 test_that("gets valid path", {
+  skip_on_cran()
+  install_if_needed()
+  
   path <- tika_jar()
   expect_true(length(path) == 1)
   expect_true(class(path) == "character")
@@ -27,30 +37,49 @@ test_that("gets valid path", {
 })
 
 test_that("check_md5_sum only works with character strings ", {
+  skip_on_cran()
+  install_if_needed()
+  
   expect_error(tika_check(777))
 })
 
 test_that("check_md5_sum fails with wrong checksum", {
+  skip_on_cran()
+  install_if_needed()
+  
+  install_if_needed()
   expect_false(tika_check("not a checksum"))
 })
 
 
 test_that("md5_sum is correct for this version", {
+  skip_on_cran()
+  install_if_needed()
+  
   expect_true(tika_check("e2720c2392c1bd6634cc4a8801f7363a"))
 })
 
 
 # causes problem with travis, but not locally. May need to skip
 test_that("tika warns with url to nowhere without curl package", {
+  skip_on_cran()
+  install_if_needed()
+  
   nowhere <- "http://www.predict-r.com/rtika_testing_coverage_file_not_here.txt"
   expect_warning(tika(nowhere, lib.loc = ""))
 })
 # causes problem with travis, but not locally. May need to skip
 test_that("tika stops when output_dir is root", {
+  skip_on_cran()
+  install_if_needed()
+  
   expect_error(tika(input[1], output_dir = file.path("/")))
 })
 
 test_that("tika parses a local pdf without curl packages", {
+  skip_on_cran()
+  install_if_needed()
+  
   text <- tika(input[1], lib.loc = "")
   expect_equal(length(text), 1)
   expect_true(!is.na(text[1]))
@@ -58,6 +87,9 @@ test_that("tika parses a local pdf without curl packages", {
 })
 
 test_that("tika handles fake file without curl packages", {
+  skip_on_cran()
+  install_if_needed()
+  
   nowhere <- file.path("/rtika_fake_file_not_here.txt")
   expect_warning(text <- tika(nowhere, lib.loc = ""))
   expect_equal(length(text), 1)
@@ -65,6 +97,9 @@ test_that("tika handles fake file without curl packages", {
 })
 
 test_that("tika parses a single remote pdf without curl package", {
+  skip_on_cran()
+  install_if_needed()
+  
   urls <- c(
     "https://cran.r-project.org/doc/manuals/r-release/R-data.pdf"
     , "https://cran.r-project.org/doc/manuals/r-release/R-exts.epub"
@@ -79,11 +114,17 @@ test_that("tika parses a single remote pdf without curl package", {
 
 # causes problem with travis, but not locally. Skipping on github for now.
 test_that("tika warns with url to nowhere with curl package", {
+  skip_on_cran()
+  install_if_needed()
+  
   nowhere <- "http://www.predict-r.com/rtika_testing_coverage_file_not_here.txt"
   expect_warning(tika(nowhere))
 })
 
 test_that("tika parses single local pdf", {
+  skip_on_cran()
+  install_if_needed()
+  
   text <- tika(input[1])
   expect_equal(length(text), 1)
   expect_true(!is.na(text[1]))
@@ -91,6 +132,9 @@ test_that("tika parses single local pdf", {
 })
 
 test_that("tika parses multiple local files", {
+  skip_on_cran()
+  install_if_needed()
+  
   text <- tika(input)
   expect_equal(length(text), length(input))
   expect_true(!any(is.na(text)))
@@ -99,6 +143,9 @@ test_that("tika parses multiple local files", {
 
 
 test_that("tika parses a single remote pdf", {
+  skip_on_cran()
+  install_if_needed()
+  
   urls <- c(
     "https://cran.r-project.org/doc/manuals/r-release/R-data.pdf"
     , "https://cran.r-project.org/doc/manuals/r-release/R-exts.epub"
@@ -112,10 +159,16 @@ test_that("tika parses a single remote pdf", {
 
 
 test_that("tika warns with path to nowhere", {
+  skip_on_cran()
+  install_if_needed()
+  
   expect_warning(tika(file.path("/rtika_fake_file_not_here.txt")))
 })
 
 test_that("tika outputs NA with a path to nowhere", {
+  skip_on_cran()
+  install_if_needed()
+  
   nowhere <- file.path("/rtika_fake_file_not_here.txt")
   text <- ""
   text <- expect_warning(tika(nowhere))
@@ -124,6 +177,9 @@ test_that("tika outputs NA with a path to nowhere", {
 })
 
 test_that("tika outputs NA with a path to nowhere in right order", {
+  skip_on_cran()
+  install_if_needed()
+  
   nowhere <- file.path("/rtika_fake_file_not_here.txt")
   text <- tika(c(input[1], nowhere, input[2]))
   expect_equal(text[2], as.character(NA))
@@ -132,6 +188,9 @@ test_that("tika outputs NA with a path to nowhere in right order", {
 })
 
 test_that("tika warns with NA input", {
+  skip_on_cran()
+  install_if_needed()
+  
   nowhere <- as.character(NA)
   expect_warning(text <- tika(nowhere))
   expect_equal(length(text), 1)
@@ -143,6 +202,9 @@ test_that("tika warns with NA input", {
 
 
 test_that("tika outputs parsable xml", {
+  skip_on_cran()
+  install_if_needed()
+  
   # library('xml2')
   text <- tika_xml(input)
   processed_xml <- NA
@@ -159,6 +221,9 @@ test_that("tika outputs parsable xml", {
 })
 
 test_that("tika outputs parsable html", {
+  skip_on_cran()
+  install_if_needed()
+  
   # library('xml2')
   text <- tika_html(input)
   processed_html <- NA
@@ -176,6 +241,9 @@ test_that("tika outputs parsable html", {
 
 
 test_that("tika outputs parsable json", {
+  skip_on_cran()
+  install_if_needed()
+  
   # library('jsonlite')
   text <- tika_json(input)
   for (i in seq_along(text)) {
@@ -186,6 +254,9 @@ test_that("tika outputs parsable json", {
 })
 
 test_that("tika_text works", {
+  skip_on_cran()
+  install_if_needed()
+  
   text <- tika_text(input[1])
   expect_equal(length(text), 1)
   expect_true(!is.na(text[1]))
@@ -193,6 +264,9 @@ test_that("tika_text works", {
 })
 
 test_that("tika puts files into the specified output_dir", {
+  skip_on_cran()
+  install_if_needed()
+  
   test_dir <- tempfile("testthat_rtika_test")
   dir.create(test_dir)
   test_dir <- normalizePath(test_dir, winslash = "/")
@@ -212,6 +286,9 @@ test_that("tika puts files into the specified output_dir", {
 
 
 test_that("tika cleans up", {
+  skip_on_cran()
+  install_if_needed()
+
   text <- tika(input[1], cleanup = TRUE)
   expect_equal(length(file.path(
     tempdir()
