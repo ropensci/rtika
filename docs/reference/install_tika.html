@@ -112,21 +112,22 @@ and verifies the integrity of the file using a md5 checksum.
 The default settings should work fine.</p>
     
 
-    <pre class="usage"><span class='fu'>install_tika</span>(<span class='kw'>version</span> <span class='kw'>=</span> <span class='st'>"1.17"</span>, <span class='kw'>md5_sum</span> <span class='kw'>=</span> <span class='st'>"e2720c2392c1bd6634cc4a8801f7363a"</span>,
+    <pre class="usage"><span class='fu'>install_tika</span>(<span class='kw'>version</span> <span class='kw'>=</span> <span class='fl'>1.18</span>, <span class='kw'>md5_sum</span> <span class='kw'>=</span> <span class='st'>""</span>,
   <span class='kw'>mirrors</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"http://mirrors.ocf.berkeley.edu/apache/tika/"</span>,
   <span class='st'>"http://apache.cs.utah.edu/tika/"</span>,
-  <span class='st'>"http://mirror.cc.columbia.edu/pub/software/apache/tika/"</span>), <span class='kw'>retries</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
+  <span class='st'>"http://mirror.cc.columbia.edu/pub/software/apache/tika/"</span>), <span class='kw'>retries</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>url</span> <span class='kw'>=</span> <span class='st'>"https://builds.apache.org/job/tika-branch-1x/10/org.apache.tika$tika-app/artifact/org.apache.tika/tika-app/1.18-20180309.175001-20/tika-app-1.18-20180309.175001-20.jar"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>version</th>
-      <td><p>The version to download.</p></td>
+      <td><p>The declared Tika version</p></td>
     </tr>
     <tr>
       <th>md5_sum</th>
-      <td><p>The md5 checksum.</p></td>
+      <td><p>The md5 checksum. Set to an empty string <code>""</code> to skip the check.</p></td>
     </tr>
     <tr>
       <th>mirrors</th>
@@ -135,6 +136,10 @@ The default settings should work fine.</p>
     <tr>
       <th>retries</th>
       <td><p>The number of times to try the download.</p></td>
+    </tr>
+    <tr>
+      <th>url</th>
+      <td><p>Optional url of a particular file to download. Will override downloading from random mirrors.</p></td>
     </tr>
     </table>
     
@@ -147,10 +152,11 @@ The default settings should work fine.</p>
     
     <p>The default settings of <code>install_tika()</code> should typically be left as they are.</p>
 <p>This function will download the version of the Tika <code>jar</code> tested to work
-with this package, and verify file integrity using a checksum.</p>
-<p>It will download from a random Apache mirror.
+with this package, and can verify file integrity using a checksum.</p>
+<p>It will normally download from a random Apache mirror.
 If the mirror fails,
-it tries the archive at <code>http://archive.apache.org/dist/tika/</code>.</p>
+it tries the archive at <code>http://archive.apache.org/dist/tika/</code>.
+You can also enter a value for <code>url</code> directly to override this.</p>
 <p>It will download into a directory determined
 by the <code><a href='http://www.rdocumentation.org/packages/rappdirs/topics/user_data_dir'>rappdirs::user_data_dir()</a></code> function,
 specific to the operating system.</p>
@@ -163,7 +169,7 @@ try running <code>install_tika()</code> again.</p>
     <p>If you are uninstalling the entire <code>rtika</code> package
 and want to remove the Tika App <code>jar</code> also,
 before uninstalling run:</p>
-<p><code>file.remove(tika_jar())</code></p>  
+<p><code>file.remove(tika_jar())</code></p>
 <p>Alternately, navigate to the install folder and delete it manually.
 It is the file path returned by <code><a href='http://www.rdocumentation.org/packages/rappdirs/topics/user_data_dir'>rappdirs::user_data_dir('rtika')</a></code>.
 The path is OS specific, and explained here:

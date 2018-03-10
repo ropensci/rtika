@@ -6,7 +6,8 @@
 \usage{
 tika(input, output = c("text", "jsonRecursive", "xml", "html")[1],
   output_dir = "", return = TRUE, java = "java", jar = tika_jar(),
-  threads = 2, max_restarts = 10, args = character(), quiet = TRUE,
+  threads = 2, max_restarts = integer(), timeout = 3e+05,
+  max_file_size = integer(), args = character(), quiet = TRUE,
   cleanup = TRUE, lib.loc = .libPaths())
 }
 \arguments{
@@ -37,15 +38,18 @@ if this package becomes out of date.}
 \item{threads}{Integer of the number of file consumer threads Tika uses.
 Defaults to 2.}
 
-\item{max_restarts}{Integer of the maximum number of times the watchdog 
-process will restart the child process}
+\item{max_restarts}{Integer of the maximum number of times the watchdog
+process will restart the child process. The default is no limit.}
+
+\item{timeout}{Integer of the number of milliseconds allowed to a parse
+before the process is killed and restarted. Defaults to 300000.}
+
+\item{max_file_size}{Integer of the maximum bytes allowed.
+Do not process files larger than this. The default is unlimited.}
 
 \item{args}{Optional character vector of additional arguments passed to Tika,
 that may not yet be implemented in this R interface, in the pattern of
-\code{c('-arg1','setting1','-arg2','setting2')}. Available arguments include
-\code{-timeoutThresholdMillis} (Number of milliseconds allowed to a parse
-before the process is killed and restarted), and
-\code{-maxFileSizeBytes}. These are documented in the .jar --help command.}
+\code{c('-arg1','setting1','-arg2','setting2')}.}
 
 \item{quiet}{Logical if Tika command line messages and errors are to be
 suppressed. Defaults to TRUE.}
@@ -131,19 +135,15 @@ Apache Tika includes many libraries and methods in its .jar file. The source is 
 
 \section{Installation}{
 
-While this jar works with Java 7, Tika in
-mid-2018 will need Java 8, so it's best to install Java 8.
+ Tika requires Java 8.
 
- Java installation instructions are at <http://openjdk.java.net/install/> 
+ Java installation instructions are at <http://openjdk.java.net/install/>
 or <https://www.java.com/en/download/help/download_options.xml>.
 
 By default, this R package internally invokes Java by calling the \code{java}
 command from the command line. To specify the path to a particular Java
 version, set the path in the \code{java} attribute of the \code{tika}
 function.
-
-Other command line arguments can be set with \code{args}. See the options
-for version 1.17 here: \url{https://tika.apache.org/1.17/gettingstarted.html}
 
 Having the \code{data.table} package installed will slightly speed up the
 communication between R and Tika, but especially if there are hundreds of

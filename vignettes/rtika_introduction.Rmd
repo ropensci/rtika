@@ -15,13 +15,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-
-tika_installed <- rtika::tika_jar()
-  
-if(is.na(tika_installed)){
-    rtika::install_tika()
- }
-
+if(is.na(rtika::tika_jar())){ rtika::install_tika() }
 ```
 # A Digital Babel Fish
 
@@ -50,9 +44,9 @@ Video, sound and images are important, and yet much meaningful data remains nume
 I recommend an analyst start with a directory on the computer and get a vector of paths to each file using `base::list.files()`. The commented code below has a recipe. Here, I use test files that are included with the package.
 
 ```{r}
+
 library('rtika')
 library('magrittr')
-
 # Code to get ALL the files in my_path:
 
 # my_path <- "~"
@@ -81,7 +75,6 @@ text <-
 )
 # normal syntax also works:
 # text <- tika_text(batch)
-
 ```
 
 The output is a R character vector of the same length and order as the input files.
@@ -117,8 +110,7 @@ A general suggestion is to use `tika_fetch()` when downloading files from the In
 Tika's Content-Type detection is improved with file extensions (Tika also relies on other features such as Magic bytes, which are unique control bytes in the file header). The `tika_fetch()` function tries to preserves Content-Type information from the download server by finding the matching extension in Tika's database.
 
 ```{r}
-download_directory <- tempfile('rtika_',
-                           tmpdir = '~')
+download_directory <- tempfile('rtika_')
 
 dir.create(download_directory)
 
@@ -146,7 +138,7 @@ Another option is to increase the number of threads, setting `threads` to someth
 ```{r}
 # create a directory not already in use.
 my_directory <-
-   tempfile('rtika_', tmpdir = '~')
+   tempfile('rtika_')
                   
 dir.create(my_directory)
 
@@ -318,7 +310,7 @@ Out of the box, `rtika` uses all the available Tika Detectors and Parsers and ru
 
 In future versions, Tika uses a configuration file to customize parsing. This config file option is on hold in `rtika`, because Tika's batch module is still new and the config file format will likely change in Tika 1.18 and be backward incompatible with Tika 1.17. Please stay tuned.
 
-There is also room for improvement when it comes to working with document formats common in the R community, especially Latex and Markdown. Tika currently reads and writes these formats just fine, captures metadata and recognizes the MIME type when downloading with `tika_fetch()`. However, Tika does not have any parsers to fully understand the Latex or Markdown document structure, render it to XHTML, and extract the plain text while ignoring markup. For these cases, Pandoc will be more useful (See: https://pandoc.org/demos.html ). 
+There is also room for improvement with the document formats common in the R community, especially Latex and Markdown. Tika currently reads and writes these formats just fine, captures metadata and recognizes the MIME type when downloading with `tika_fetch()`. However, Tika does not have parsers to fully understand the Latex or Markdown document structure, render it to XHTML, and extract the plain text while ignoring markup. For these cases, Pandoc will be more useful (See: https://pandoc.org/demos.html ). 
 
 You may  find these resources useful:
 

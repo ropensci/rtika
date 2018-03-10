@@ -4,19 +4,22 @@
 \alias{install_tika}
 \title{Install or Update the Apache Tika \code{jar}}
 \usage{
-install_tika(version = "1.17", md5_sum = "e2720c2392c1bd6634cc4a8801f7363a",
+install_tika(version = 1.18, md5_sum = "",
   mirrors = c("http://mirrors.ocf.berkeley.edu/apache/tika/",
   "http://apache.cs.utah.edu/tika/",
-  "http://mirror.cc.columbia.edu/pub/software/apache/tika/"), retries = 2)
+  "http://mirror.cc.columbia.edu/pub/software/apache/tika/"), retries = 2,
+  url = "https://builds.apache.org/job/tika-branch-1x/10/org.apache.tika$tika-app/artifact/org.apache.tika/tika-app/1.18-20180309.175001-20/tika-app-1.18-20180309.175001-20.jar")
 }
 \arguments{
-\item{version}{The version to download.}
+\item{version}{The declared Tika version}
 
-\item{md5_sum}{The md5 checksum.}
+\item{md5_sum}{The md5 checksum. Set to an empty string \code{""} to skip the check.}
 
 \item{mirrors}{A vector Apache mirror sites. One is picked randomly.}
 
 \item{retries}{The number of times to try the download.}
+
+\item{url}{Optional url of a particular file to download. Will override downloading from random mirrors.}
 }
 \value{
 Logical if the installation was successful.
@@ -31,11 +34,12 @@ The default settings should work fine.
 The default settings of \code{install_tika()} should typically be left as they are.
 
 This function will download the version of the Tika \code{jar} tested to work
-with this package, and verify file integrity using a checksum.
+with this package, and can verify file integrity using a checksum.
 
-It will download from a random Apache mirror.
+It will normally download from a random Apache mirror.
 If the mirror fails,
 it tries the archive at \code{http://archive.apache.org/dist/tika/}.
+You can also enter a value for \code{url} directly to override this.
 
 It will download into a directory determined
 by the \code{rappdirs::user_data_dir()} function,
@@ -51,8 +55,8 @@ If you are uninstalling the entire \code{rtika} package
 and want to remove the Tika App \code{jar} also,
 before uninstalling run:
 
- \code{file.remove(tika_jar())} 
-  
+ \code{file.remove(tika_jar())}
+
 Alternately, navigate to the install folder and delete it manually.
 It is the file path returned by \code{rappdirs::user_data_dir('rtika')}.
 The path is OS specific, and explained here:

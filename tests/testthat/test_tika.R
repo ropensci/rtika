@@ -4,14 +4,12 @@ context("Connecting to Tika")
 
 # the plan is to use skip_on_cran()
 
-# so tests work on travis but are otherwise skipped.
+# so tests run on travis but are skipped on CRAN.
 
-# install the jar after the skip_on_cran() 
+# install the jar after the skip_on_cran(), so 
 install_if_needed <- function(){
-  tika_installed <- tika_jar()
-  
-  if(is.na(tika_installed)){
-    install_tika()
+  if(is.na(rtika::tika_jar())){
+      rtika::install_tika()
   }
 }
 
@@ -52,12 +50,12 @@ test_that("check_md5_sum fails with wrong checksum", {
 })
 
 
-test_that("md5_sum is correct for this version", {
-  skip_on_cran()
-  install_if_needed()
-  
-  expect_true(tika_check("e2720c2392c1bd6634cc4a8801f7363a"))
-})
+# test_that("md5_sum is correct for this version", {
+#   skip_on_cran()
+#   install_if_needed()
+#   
+#   expect_true(tika_check("e2720c2392c1bd6634cc4a8801f7363a"))
+# })
 
 
 # causes problem with travis, but not locally. May need to skip

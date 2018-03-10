@@ -26,14 +26,15 @@
 #' if this package becomes out of date.
 #' @param threads Integer of the number of file consumer threads Tika uses.
 #' Defaults to 2.
-#' @param max_restarts Integer of the maximum number of times the watchdog 
-#' process will restart the child process
+#' @param max_restarts Integer of the maximum number of times the watchdog
+#' process will restart the child process. The default is no limit.
+#' @param timeout Integer of the number of milliseconds allowed to a parse
+#' before the process is killed and restarted. Defaults to 300000. 
+#' @param max_file_size Integer of the maximum bytes allowed.
+#' Do not process files larger than this. The default is unlimited.
 #' @param args Optional character vector of additional arguments passed to Tika,
 #' that may not yet be implemented in this R interface, in the pattern of
-#' \code{c('-arg1','setting1','-arg2','setting2')}. Available arguments include
-#' \code{-timeoutThresholdMillis} (Number of milliseconds allowed to a parse
-#' before the process is killed and restarted), and
-#' \code{-maxFileSizeBytes}. These are documented in the .jar --help command.
+#' \code{c('-arg1','setting1','-arg2','setting2')}. 
 #' @param quiet Logical if Tika command line messages and errors are to be
 #' suppressed. Defaults to TRUE.
 #' @param cleanup Logical to clean up temporary files after running the command,
@@ -130,19 +131,15 @@
 #' Apache Tika includes many libraries and methods in its .jar file. The source is available at:
 #' \url{https://tika.apache.org/}.
 #' @section Installation:
-#' While this jar works with Java 7, Tika in
-#' mid-2018 will need Java 8, so it's best to install Java 8.
-#' 
-#'  Java installation instructions are at <http://openjdk.java.net/install/> 
+#'  Tika requires Java 8.
+#'
+#'  Java installation instructions are at <http://openjdk.java.net/install/>
 #' or <https://www.java.com/en/download/help/download_options.xml>.
 #'
 #' By default, this R package internally invokes Java by calling the \code{java}
 #' command from the command line. To specify the path to a particular Java
 #' version, set the path in the \code{java} attribute of the \code{tika}
 #' function.
-#'
-#' Other command line arguments can be set with \code{args}. See the options
-#' for version 1.17 here: \url{https://tika.apache.org/1.17/gettingstarted.html}
 #'
 #' Having the \code{data.table} package installed will slightly speed up the
 #' communication between R and Tika, but especially if there are hundreds of
@@ -156,7 +153,9 @@ tika <- function(input,
                  java = "java",
                  jar = tika_jar(),
                  threads = 2,
-                 max_restarts = 10,
+                 max_restarts = integer(),
+                 timeout = 300000,
+                 max_file_size = integer(),
                  args = character(),
                  quiet = TRUE,
                  cleanup = TRUE,
@@ -196,7 +195,13 @@ tika <- function(input,
     length(jar) == 1,
     nchar(jar) > 0,
     class(threads) %in% c("integer", "numeric"),
+    length(threads) <= 1,
     class(max_restarts) %in% c("integer", "numeric"),
+    length(max_restarts) <= 1,
+    class(timeout) %in% c("integer", "numeric"),
+    length(timeout) <= 1,
+    class(max_file_size) %in% c("integer", "numeric"),
+    length(max_file_size) <= 1,
     class(args) == "character",
     class(quiet) == "logical",
     class(cleanup) == "logical",
@@ -288,6 +293,7 @@ tika <- function(input,
   # fileList is a delimited versiob if inputFiles that will be passed to Tika.
   # File paths containing both commas and quote characters appear to work.
   fileList <- normalizePath(tempfile("rtika_file"), mustWork = FALSE, winslash = "/")
+
   if (requireNamespace("data.table", quietly = TRUE, lib.loc = lib.loc)) {
     data.table::fwrite(
       data.table::data.table(inputFiles),
@@ -306,30 +312,59 @@ tika <- function(input,
     )
   }
   # After the file is created, make sure it exists
-  fileList <- normalizePath(fileList, mustWork = TRUE, winslash = "/")
+  if (!file.exists(fileList)) {
+    stop('Could not write to the tempfile for "fileList": ', fileList)
+  }
 
   # java call  -----------------------------------------------------
+  numConsumers <- character()
+  maxRestarts <- character()
+  timeoutThresholdMillis <- character()
+  maxFileSizeBytes <- character()
 
+  if (length(threads) > 0) {
+    numConsumers <- c("-numConsumers", as.character(as.integer(threads)))
+  }
+
+  if (length(max_restarts) > 0) {
+    maxRestarts <- c("-maxRestarts", as.character(as.integer(max_restarts)))
+  }
+
+  if (length(timeout) > 0) {
+    timeoutThresholdMillis <- c("-timeoutThresholdMillis", as.character(as.integer(timeout)))
+  }
+
+  if (length(maxFileSizeBytes) > 0) {
+    maxFileSizeBytes <- c("-maxFileSizeBytes", as.character(as.integer(max_file_size)))
+  }
 
   if (.Platform$OS.type == "windows") {
     # Windows java requires quoting for paths
     # but OS X and Ubuntu java run into problems with shQuote.
     java_args <- c(
-      "-Djava.awt.headless=true", "-jar", shQuote(jar),
-      "-numConsumers", as.integer(threads), 
-      "-maxRestarts", as.integer(max_restarts),
-      args, 
+      "-Djava.awt.headless=true",
+      "-jar", shQuote(jar),
+      numConsumers,
+      maxRestarts,
+      timeoutThresholdMillis,
+      maxFileSizeBytes,
+      args,
       output_flag,
-      "-i", shQuote(root), "-o", shQuote(output_dir),
+      "-i", shQuote(root),
+      "-o", shQuote(output_dir),
       "-fileList", shQuote(fileList)
     )
   } else {
     java_args <- c(
-      "-Djava.awt.headless=true", "-jar", jar,
-      "-numConsumers", as.integer(threads), 
-      "-maxRestarts", as.integer(max_restarts),
-      args, output_flag, "-i", root, "-o",
-      output_dir, "-fileList", fileList
+      "-Djava.awt.headless=true",
+      "-jar", jar,
+      numConsumers,
+      maxRestarts,
+      timeoutThresholdMillis,
+      maxFileSizeBytes,
+      args, output_flag, "-i", root,
+      "-o", output_dir,
+      "-fileList", fileList
     )
   }
 

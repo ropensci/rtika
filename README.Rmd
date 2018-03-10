@@ -23,12 +23,10 @@ knitr::opts_chunk$set(
 This is an R interface to the Tika software. 
 
 ## Installation
-To start, you need R and either `OpenJDK 1.7` or `Java 7`. Higher versions work. To check your version, run the command `java -version` from a terminal. 
+To start, you need R and `Java 8` or `OpenJDK 1.8`. Higher versions work. To check your version, run the command `java -version` from a terminal. 
 Get Java installation tips at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>. 
 
-Next, install the `rtika`  package. 
 
-Note that there are currently some problems with OS X.
 
 ```{r,results = "hide", message = FALSE }
 # Get devtools to easily install from github, until this is all on CRAN 
@@ -38,9 +36,14 @@ if(!requireNamespace('devtools')){
 }
 
 if(!requireNamespace('rtika')){
-  devtools::install_github('predict-r/rtika')
-    # You must install the Apache Tika .jar once:
-   rtika::install_tika()
+ 
+ devtools::install_github('predict-r/rtika')
+
+ # You must install the Apache Tika .jar:
+ # Here, we get the development version with an important bug fix. 
+ # This is currently required to run on OS X, and some other systems.
+ rtika::install_tika()
+
 }
 
 library('rtika')

@@ -94,9 +94,7 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>To start, you need R and either <code>OpenJDK 1.7</code> or <code>Java 7</code>. Higher versions work. To check your version, run the command <code>java -version</code> from a terminal. Get Java installation tips at <a href="http://openjdk.java.net/install/" class="uri">http://openjdk.java.net/install/</a> or <a href="https://www.java.com/en/download/help/download_options.xml" class="uri">https://www.java.com/en/download/help/download_options.xml</a>.</p>
-<p>Next, install the <code>rtika</code> package.</p>
-<p>Note that there are currently some problems with OS X.</p>
+<p>To start, you need R and <code>Java 8</code> or <code>OpenJDK 1.8</code>. Higher versions work. To check your version, run the command <code>java -version</code> from a terminal. Get Java installation tips at <a href="http://openjdk.java.net/install/" class="uri">http://openjdk.java.net/install/</a> or <a href="https://www.java.com/en/download/help/download_options.xml" class="uri">https://www.java.com/en/download/help/download_options.xml</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get devtools to easily install from github, until this is all on CRAN </span>
 <span class="cf">if</span>(<span class="op">!</span><span class="kw">requireNamespace</span>(<span class="st">'devtools'</span>)){
   <span class="kw">install.packages</span>(<span class="st">'devtools'</span>, 
@@ -104,9 +102,14 @@
 }
 
 <span class="cf">if</span>(<span class="op">!</span><span class="kw">requireNamespace</span>(<span class="st">'rtika'</span>)){
-  devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">'predict-r/rtika'</span>)
-    <span class="co"># You must install the Apache Tika .jar once:</span>
-   rtika<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rtika/topics/install_tika">install_tika</a></span>()
+ 
+ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">'predict-r/rtika'</span>)
+
+ <span class="co"># You must install the Apache Tika .jar:</span>
+ <span class="co"># Here, we get the development version with an important bug fix. </span>
+ <span class="co"># This is currently required to run on OS X, and some other systems.</span>
+ rtika<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rtika/topics/install_tika">install_tika</a></span>()
+
 }
 
 <span class="kw">library</span>(<span class="st">'rtika'</span>)</code></pre></div>

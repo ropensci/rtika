@@ -23,7 +23,7 @@ Suggests:
     covr,
     magrittr
 License: Apache License 2.0 | file LICENSE
-SystemRequirements: Java (>=7)
+SystemRequirements: Java (>=8)
 Description: Extract text or metadata from over a thousand file types. Get either plain text or structured XHTML content. 
 Depends: R (>= 3.1.0)
 Encoding: UTF-8

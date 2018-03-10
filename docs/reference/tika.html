@@ -118,7 +118,8 @@ jpeg or tiff images. See the long list of supported file types:
 
     <pre class="usage"><span class='fu'>tika</span>(<span class='no'>input</span>, <span class='kw'>output</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"text"</span>, <span class='st'>"jsonRecursive"</span>, <span class='st'>"xml"</span>, <span class='st'>"html"</span>)[<span class='fl'>1</span>],
   <span class='kw'>output_dir</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>java</span> <span class='kw'>=</span> <span class='st'>"java"</span>, <span class='kw'>jar</span> <span class='kw'>=</span> <span class='fu'><a href='tika_jar.html'>tika_jar</a></span>(),
-  <span class='kw'>threads</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>max_restarts</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'>character</span>(), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>threads</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>max_restarts</span> <span class='kw'>=</span> <span class='fu'>integer</span>(), <span class='kw'>timeout</span> <span class='kw'>=</span> <span class='fl'>3e+05</span>,
+  <span class='kw'>max_file_size</span> <span class='kw'>=</span> <span class='fu'>integer</span>(), <span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'>character</span>(), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>cleanup</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>lib.loc</span> <span class='kw'>=</span> <span class='fu'>.libPaths</span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -167,17 +168,24 @@ Defaults to 2.</p></td>
     </tr>
     <tr>
       <th>max_restarts</th>
-      <td><p>Integer of the maximum number of times the watchdog 
-process will restart the child process</p></td>
+      <td><p>Integer of the maximum number of times the watchdog
+process will restart the child process. The default is no limit.</p></td>
+    </tr>
+    <tr>
+      <th>timeout</th>
+      <td><p>Integer of the number of milliseconds allowed to a parse
+before the process is killed and restarted. Defaults to 300000.</p></td>
+    </tr>
+    <tr>
+      <th>max_file_size</th>
+      <td><p>Integer of the maximum bytes allowed.
+Do not process files larger than this. The default is unlimited.</p></td>
     </tr>
     <tr>
       <th>args</th>
       <td><p>Optional character vector of additional arguments passed to Tika,
 that may not yet be implemented in this R interface, in the pattern of
-<code>c('-arg1','setting1','-arg2','setting2')</code>. Available arguments include
-<code>-timeoutThresholdMillis</code> (Number of milliseconds allowed to a parse
-before the process is killed and restarted), and
-<code>-maxFileSizeBytes</code>. These are documented in the .jar --help command.</p></td>
+<code>c('-arg1','setting1','-arg2','setting2')</code>.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
@@ -262,16 +270,13 @@ Apache Tika includes many libraries and methods in its .jar file. The source is 
     <h2 class="hasAnchor" id="installation"><a class="anchor" href="#installation"></a>Installation</h2>
 
     
-    <p>While this jar works with Java 7, Tika in
-mid-2018 will need Java 8, so it's best to install Java 8.</p>
-<p>Java installation instructions are at &lt;http://openjdk.java.net/install/&gt; 
+    <p>Tika requires Java 8.</p>
+<p>Java installation instructions are at &lt;http://openjdk.java.net/install/&gt;
 or &lt;https://www.java.com/en/download/help/download_options.xml&gt;.</p>
 <p>By default, this R package internally invokes Java by calling the <code>java</code>
 command from the command line. To specify the path to a particular Java
 version, set the path in the <code>java</code> attribute of the <code>tika</code>
 function.</p>
-<p>Other command line arguments can be set with <code>args</code>. See the options
-for version 1.17 here: <a href='https://tika.apache.org/1.17/gettingstarted.html'>https://tika.apache.org/1.17/gettingstarted.html</a></p>
 <p>Having the <code>data.table</code> package installed will slightly speed up the
 communication between R and Tika, but especially if there are hundreds of
 thousands of documents to process.</p>
