@@ -102,17 +102,16 @@
 }
 
 <span class="cf">if</span>(<span class="op">!</span><span class="kw">requireNamespace</span>(<span class="st">'rtika'</span>)){
- 
  devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">'predict-r/rtika'</span>)
-
- <span class="co"># You must install the Apache Tika .jar:</span>
- <span class="co"># Here, we get the development version with an important bug fix. </span>
- <span class="co"># This is currently required to run on OS X, and some other systems.</span>
- rtika<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rtika/topics/install_tika">install_tika</a></span>()
-
 }
 
-<span class="kw">library</span>(<span class="st">'rtika'</span>)</code></pre></div>
+<span class="kw">library</span>(<span class="st">'rtika'</span>)
+
+ <span class="co"># You need to install the Apache Tika .jar once.</span>
+ <span class="co"># This gets the development version with an important bug fix: </span>
+<span class="cf">if</span>(<span class="kw">is.na</span>(<span class="kw"><a href="reference/tika_jar.html">tika_jar</a></span>())){
+ <span class="kw"><a href="reference/install_tika.html">install_tika</a></span>()
+}</code></pre></div>
 <p>The <code>rJava</code> package is <strong><em>not</em></strong> required.</p>
 <p>Read an introductory article at <a href="https://predict-r.github.io/rtika/articles/rtika_introduction.html" class="uri">https://predict-r.github.io/rtika/articles/rtika_introduction.html</a>.</p>
 </div>
@@ -170,9 +169,7 @@
 <h2 class="hasAnchor">
 <a href="#get-plain-text" class="anchor"></a>Get Plain Text</h2>
 <p><strong>The <code>rtika</code> package processes batches of documents efficiently</strong>, so I recommend batches. Currently, the <code><a href="reference/tika.html">tika()</a></code> parsers take a tiny bit of time to spin up, and that will get annoying with hundreds of separate calls to the functions.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">'magrittr'</span>)
-
-<span class="co"># Test files</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Test files</span>
 batch &lt;-<span class="st"> </span><span class="kw">c</span>(
   <span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"jsonlite.pdf"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>),
   <span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"curl.pdf"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>),
@@ -183,10 +180,8 @@ batch &lt;-<span class="st"> </span><span class="kw">c</span>(
   <span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"tika.apache.org.zip"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>)
 )
 
- 
- text &lt;-<span class="st">  </span>
-<span class="st">   </span>batch <span class="op">%&gt;%</span>
-<span class="st">   </span><span class="kw"><a href="reference/tika_text.html">tika_text</a></span>() 
+<span class="co"># batches are best, and can also be piped with magrittr.</span>
+text &lt;-<span class="st"> </span><span class="kw"><a href="reference/tika_text.html">tika_text</a></span>(batch)
 
 <span class="co"># text has one string for each document:</span>
 <span class="kw">length</span>(text)

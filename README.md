@@ -25,17 +25,16 @@ if(!requireNamespace('devtools')){
 }
 
 if(!requireNamespace('rtika')){
- 
  devtools::install_github('predict-r/rtika')
-
- # You must install the Apache Tika .jar:
- # Here, we get the development version with an important bug fix. 
- # This is currently required to run on OS X, and some other systems.
- rtika::install_tika()
-
 }
 
 library('rtika')
+
+ # You need to install the Apache Tika .jar once.
+ # This gets the development version with an important bug fix: 
+if(is.na(tika_jar())){
+ install_tika()
+}
 ```
 
 The `rJava` package is ***not*** required.
@@ -90,8 +89,6 @@ Get Plain Text
 **The `rtika` package processes batches of documents efficiently**, so I recommend batches. Currently, the `tika()` parsers take a tiny bit of time to spin up, and that will get annoying with hundreds of separate calls to the functions.
 
 ``` r
-library('magrittr')
-
 # Test files
 batch <- c(
   system.file("extdata", "jsonlite.pdf", package = "rtika"),
@@ -103,10 +100,8 @@ batch <- c(
   system.file("extdata", "tika.apache.org.zip", package = "rtika")
 )
 
- 
- text <-  
-   batch %>%
-   tika_text() 
+# batches are best, and can also be piped with magrittr.
+text <- tika_text(batch)
 
 # text has one string for each document:
 length(text)

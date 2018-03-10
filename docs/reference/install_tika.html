@@ -168,8 +168,8 @@ try running <code>install_tika()</code> again.</p>
     
     <p>If you are uninstalling the entire <code>rtika</code> package
 and want to remove the Tika App <code>jar</code> also,
-before uninstalling run:</p>
-<p><code>file.remove(tika_jar())</code></p>
+run:</p>
+<p><code>unlink(rappdirs::user_data_dir('rtika'), recursive = TRUE)</code></p>
 <p>Alternately, navigate to the install folder and delete it manually.
 It is the file path returned by <code><a href='http://www.rdocumentation.org/packages/rappdirs/topics/user_data_dir'>rappdirs::user_data_dir('rtika')</a></code>.
 The path is OS specific, and explained here:

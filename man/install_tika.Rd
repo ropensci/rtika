@@ -53,9 +53,9 @@ try running \code{install_tika()} again.
 
 If you are uninstalling the entire \code{rtika} package
 and want to remove the Tika App \code{jar} also,
-before uninstalling run:
+run:
 
- \code{file.remove(tika_jar())}
+ \code{unlink(rappdirs::user_data_dir('rtika'), recursive = TRUE)}
 
 Alternately, navigate to the install folder and delete it manually.
 It is the file path returned by \code{rappdirs::user_data_dir('rtika')}.
