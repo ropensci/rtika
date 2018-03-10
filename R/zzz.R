@@ -25,8 +25,8 @@ Type ?tika for Java installation tips.")
     # See http://openjdk.java.net/jeps/223
 
     java_version_check <- (
-      grepl('version "1\\.(7|8)', response)
-      | grepl('version "(7|8|9|1[0-9])', response)
+      grepl('version "1\\.8', response)
+      | grepl('version "(8|9|1[0-9])', response)
     )
 
     if (!java_version_check) {

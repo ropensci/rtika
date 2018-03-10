@@ -6,7 +6,7 @@ context("Connecting to Tika")
 
 # so tests run on travis but are skipped on CRAN.
 
-# install the jar after the skip_on_cran(), so 
+# install the jar after the skip_on_cran(), s
 install_if_needed <- function(){
   if(is.na(rtika::tika_jar())){
       rtika::install_tika()
