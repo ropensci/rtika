@@ -25,7 +25,7 @@ install_tika(version = 1.18, md5_sum = "",
 Logical if the installation was successful.
 }
 \description{
-This downloads and installs the Tika App \code{jar} into a user directory,
+This downloads and installs the Tika App \code{jar} (~60 MB) into a user directory,
 and verifies the integrity of the file using a md5 checksum.
 The default settings should work fine.
 }
