@@ -131,7 +131,7 @@ This `tika_fetch()` function is used internally by the `tika()` functions when p
 
 Large jobs are possible with `rtika`. However, with hundreds of thousands of documents, the R object returned by the `tika()` functions can be too big for RAM. In such cases, it is good to use the computer's disk more, since running out of RAM slows the computer.
 
-I suggest changing two parameters in any of the `tika()` parsers. First, set `return=FALSE` to prevent returning a big R character vector of text. Second, specify an existing directory on the file system using `output_dir`, pointing to where the processed files will be saved. The files can be dealt with in smaller batches later on. 
+I suggest changing two parameters in any of the `tika()` parsers. First, set `return = FALSE` to prevent returning a big R character vector of text. Second, specify an existing directory on the file system using `output_dir`, pointing to where the processed files will be saved. The files can be dealt with in smaller batches later on. 
 
 Another option is to increase the number of threads, setting `threads` to something like the number of processors minus one. 
 

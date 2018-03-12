@@ -89,7 +89,7 @@ https://tika.apache.org/1.17/formats.html." />
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="http://github.com/predict-r/rtika">
+  <a href="http://github.com/ropensci/rtika">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -190,19 +190,19 @@ that may not yet be implemented in this R interface, in the pattern of
     <tr>
       <th>quiet</th>
       <td><p>Logical if Tika command line messages and errors are to be
-suppressed. Defaults to TRUE.</p></td>
+suppressed. Defaults to <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>cleanup</th>
       <td><p>Logical to clean up temporary files after running the command,
-which can accumulate. Defaults to TRUE. They are in <code>tempdir()</code>. These
+which can accumulate. Defaults to <code>TRUE</code>. They are in <code>tempdir()</code>. These
 files are automatically removed at the end of the R session even if set to
 FALSE.</p></td>
     </tr>
     <tr>
       <th>lib.loc</th>
       <td><p>Optional character vector describing the library paths
-containing <code>curl</code> and <code>data.table</code> packages. Normally, it's best to
+containing the <code>data.table</code> package. Normally, it's best to
 install these and leave this parameter alone. The parameter is included
 mainly for package testing.</p></td>
     </tr>
@@ -212,7 +212,7 @@ mainly for package testing.</p></td>
 
     <p>A character vector in the same order and with the same length as
 <code>input</code>. Unprocessed files are <code>as.character(NA)</code>.
-If return=FALSE, then a NULL value is invisibly returned.
+If <code>return = FALSE</code>, then a <code>NULL</code> value is invisibly returned.
 See the Output Details section below.</p>
     
     <h2 class="hasAnchor" id="output-details"><a class="anchor" href="#output-details"></a>Output Details</h2>

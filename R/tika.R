@@ -36,18 +36,18 @@
 #' that may not yet be implemented in this R interface, in the pattern of
 #' \code{c('-arg1','setting1','-arg2','setting2')}. 
 #' @param quiet Logical if Tika command line messages and errors are to be
-#' suppressed. Defaults to TRUE.
+#' suppressed. Defaults to \code{TRUE}.
 #' @param cleanup Logical to clean up temporary files after running the command,
-#' which can accumulate. Defaults to TRUE. They are in \code{tempdir()}. These
+#' which can accumulate. Defaults to \code{TRUE}. They are in \code{tempdir()}. These
 #' files are automatically removed at the end of the R session even if set to
 #' FALSE.
 #' @param lib.loc Optional character vector describing the library paths
-#' containing \code{curl} and \code{data.table} packages. Normally, it's best to
+#' containing the \code{data.table} package. Normally, it's best to
 #' install these and leave this parameter alone. The parameter is included
 #' mainly for package testing.
 #' @return A character vector in the same order and with the same length as
 #' \code{input}. Unprocessed files are \code{as.character(NA)}.
-#' If return=FALSE, then a NULL value is invisibly returned.
+#' If \code{return = FALSE}, then a \code{NULL} value is invisibly returned.
 #' See the Output Details section below.
 #' @examples
 #' \dontrun{
