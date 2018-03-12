@@ -4,7 +4,7 @@ rtika
 
 ***Extract text or metadata from over a thousand file types.***
 
-[![Travis-CI Build Status](https://travis-ci.org/predict-r/rtika.svg?branch=master)](https://travis-ci.org/predict-r/rtika) [![Coverage status](https://codecov.io/gh/predict-r/rtika/branch/master/graph/badge.svg)](https://codecov.io/github/predict-r/rtika?branch=master) [![](https://badges.ropensci.org/191_status.svg)](https://github.com/ropensci/onboarding/issues/191)
+[![Travis-CI Build Status](https://travis-ci.org/ropensci/rtika.svg?branch=master)](https://travis-ci.org/ropensci/rtika) [![Coverage status](https://codecov.io/gh/ropensci/rtika/branch/master/graph/badge.svg)](https://codecov.io/github/ropensci/rtika?branch=master) [![](https://badges.ropensci.org/191_status.svg)](https://github.com/ropensci/onboarding/issues/191)
 
 > Apache Tika is a content detection and analysis framework, written in Java, stewarded at the Apache Software Foundation. It detects and extracts metadata and text from over a thousand different file types, and as well as providing a Java library, has server and command-line editions suitable for use from other programming languages ...
 
@@ -25,7 +25,7 @@ if(!requireNamespace('devtools')){
 }
 
 if(!requireNamespace('rtika')){
- devtools::install_github('predict-r/rtika')
+ devtools::install_github('ropensci/rtika')
 }
 
 library('rtika')
@@ -39,7 +39,7 @@ if(is.na(tika_jar())){
 
 The `rJava` package is ***not*** required.
 
-Read an introductory article at <https://predict-r.github.io/rtika/articles/rtika_introduction.html>.
+Read an introductory article at <https://ropensci.github.io/rtika/articles/rtika_introduction.html>.
 
 Key Features
 ------------
@@ -118,7 +118,7 @@ cat(substr(text[1], 54, 190))
 #> License MIT + file LICENSE
 ```
 
-To learn more and find out how to extract structured text and metadata, read the vignette: <https://predict-r.github.io/rtika/articles/rtika_introduction.html>.
+To learn more and find out how to extract structured text and metadata, read the vignette: <https://ropensci.github.io/rtika/articles/rtika_introduction.html>.
 
 Similar Packages
 ----------------
@@ -134,4 +134,4 @@ I chose to finally develop this package after getting excited by Tika's new 'bat
 Code of Conduct
 ---------------
 
-Please note that this project is released with a [Contributor Code of Conduct](https://github.com/predict-r/rtika/blob/master/CONDUCT.md). By participating in this project you agree to abide by its terms.
+Please note that this project is released with a [Contributor Code of Conduct](https://github.com/ropensci/rtika/blob/master/CONDUCT.md). By participating in this project you agree to abide by its terms.

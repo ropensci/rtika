@@ -11,8 +11,8 @@ knitr::opts_chunk$set(
 # rtika
 ***Extract text or metadata from over a thousand file types.***
 
-[![Travis-CI Build Status](https://travis-ci.org/predict-r/rtika.svg?branch=master)](https://travis-ci.org/predict-r/rtika)
-[![Coverage status](https://codecov.io/gh/predict-r/rtika/branch/master/graph/badge.svg)](https://codecov.io/github/predict-r/rtika?branch=master)
+[![Travis-CI Build Status](https://travis-ci.org/ropensci/rtika.svg?branch=master)](https://travis-ci.org/ropensci/rtika)
+[![Coverage status](https://codecov.io/gh/ropensci/rtika/branch/master/graph/badge.svg)](https://codecov.io/github/ropensci/rtika?branch=master)
 [![](https://badges.ropensci.org/191_status.svg)](https://github.com/ropensci/onboarding/issues/191)
 
 
@@ -36,7 +36,7 @@ if(!requireNamespace('devtools')){
 }
 
 if(!requireNamespace('rtika')){
- devtools::install_github('predict-r/rtika')
+ devtools::install_github('ropensci/rtika')
 }
 
 library('rtika')
@@ -50,7 +50,7 @@ if(is.na(tika_jar())){
 
 The `rJava` package is ***not*** required.
 
-Read an introductory article at https://predict-r.github.io/rtika/articles/rtika_introduction.html.
+Read an introductory article at https://ropensci.github.io/rtika/articles/rtika_introduction.html.
 
 ## Key Features
 
@@ -120,7 +120,7 @@ cat(substr(text[1], 54, 190))
 
 ```
 
-To learn more and find out how to extract structured text and metadata, read the vignette: https://predict-r.github.io/rtika/articles/rtika_introduction.html.
+To learn more and find out how to extract structured text and metadata, read the vignette: https://ropensci.github.io/rtika/articles/rtika_introduction.html.
 
 ## Similar Packages
 
@@ -147,4 +147,4 @@ Some will want multiple processing threads to speed things up.
 These features are now implemented in `rtika`, although apparently not in `tikaR` yet. 
 
 ## Code of Conduct
-Please note that this project is released with a [Contributor Code of Conduct](https://github.com/predict-r/rtika/blob/master/CONDUCT.md). By participating in this project you agree to abide by its terms.
+Please note that this project is released with a [Contributor Code of Conduct](https://github.com/ropensci/rtika/blob/master/CONDUCT.md). By participating in this project you agree to abide by its terms.
