@@ -133,8 +133,8 @@
 #' @section Installation:
 #'  Tika requires Java 8.
 #'
-#'  Java installation instructions are at <http://openjdk.java.net/install/>
-#' or <https://www.java.com/en/download/help/download_options.xml>.
+#'  Java installation instructions are at http://openjdk.java.net/install/
+#' or https://www.java.com/en/download/help/download_options.xml.
 #'
 #' By default, this R package internally invokes Java by calling the \code{java}
 #' command from the command line. To specify the path to a particular Java

@@ -1,6 +1,6 @@
 .onLoad <- function(libname, pkgname) {
   # IMPORTANT: this is the version check, the version tested to currently work.
-  tika_jar_version <- 1.18
+  tika_jar_tested_version <- 1.18
 
   # Check if Java is there -------------------
   response <- tryCatch(
@@ -30,7 +30,7 @@ Type ?tika for Java installation tips.")
     )
 
     if (!java_version_check) {
-      warning("Found Java, but not version 7 or above.
+      warning("Found Java, but not the correct version.
 Type ?tika for Java installation tips.")
     }
   }
@@ -64,11 +64,11 @@ Try reinstalling with:
 rtika::install_tika()
 ")
     } else {
-      if (tika_version > tika_jar_version) {
+      if (tika_version > tika_jar_tested_version) {
         warning("The installed Apache Tika version is higher than the version tested with 'rtika'.")
       }
 
-      if (tika_version < tika_jar_version) {
+      if (tika_version < tika_jar_tested_version) {
         warning("The installed Apache Tika .jar is outdated. To update, type:
 
 rtika::install_tika()

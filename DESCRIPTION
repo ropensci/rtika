@@ -4,7 +4,10 @@ Title: R Interface to 'Apache Tika'
 Version: 0.1.7
 Authors@R: c(
     person(given="Sasha",family="Goodman", email="goodmansasha@gmail.com", role=c("aut","cre") ), 
-    person(given="The Apache Software Foundation", role=c("aut","cph") )
+    person(given="The Apache Software Foundation", role=c("aut","cph") ),
+    person("Noam", "Ross", role = c("rev"), comment = "Reviewed the package for rOpenSci, see https://github.com/ropensci/onboarding/issues/191"),
+    person("Julia", "Silge", role = c("rev"), comment = "Reviewed the package for rOpenSci, see https://github.com/ropensci/onboarding/issues/191"),
+    person("David", "Gohel", role = c("rev"), comment = "Reviewed the package for rOpenSci, see https://github.com/ropensci/onboarding/issues/191")
   )
 Maintainer: Sasha Goodman <goodmansasha@gmail.com>
 Imports: 
