@@ -1,6 +1,6 @@
 #' Install or Update the Apache Tika \code{jar}
 #'
-#' This downloads and installs the Tika App \code{jar} into a user directory,
+#' This downloads and installs the Tika App \code{jar} (~60 MB) into a user directory,
 #' and verifies the integrity of the file using a md5 checksum.
 #' The default settings should work fine.
 #'
@@ -88,7 +88,7 @@ install_tika <- function(version = 1.18,
   message(
     "Downloading the Tika App .jar version ", version, ' into "',
     user_data_dir,
-    '". This will take a while.'
+    '". The file is approximately 60 MB - this may take a while.'
   )
 
   download <- tika_fetch(
