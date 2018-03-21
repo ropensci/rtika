@@ -68,18 +68,17 @@ batch <- c(
   system.file("extdata", "tika.apache.org.zip", package = "rtika")
 )
 
-system.time(
 text <-  
     batch %>%
     tika_text() 
-)
+
 # normal syntax also works:
 # text <- tika_text(batch)
 ```
 
 The output is a R character vector of the same length and order as the input files.
 
-In the example above, most of the time is spent starting up the Tika batch processor. The most costly file was the first one. The rest were parsed more quickly.
+In the example above, there are several seconds of overhead to start up the Tika batch processor and then process the output. The most costly file was the first one. Large batches are parsed more quickly. For example, when parsing thousands of 1-5 page Word documents, I've measured 1/100th of a second per document on average.
 
 Occasionally, files are not parsable and the returned value for the file will be `NA`. The reasons include corrupt files, disk input/output issues, empty files, password protection, a unhandled format, the document structure is broken, or the document has an unexpected variation. 
 
