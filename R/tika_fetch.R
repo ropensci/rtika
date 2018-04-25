@@ -83,7 +83,7 @@ tika_fetch <- function(urls,
       if (!req$status_code %in% c(200, 203, 206, 207, 226)) {
         if (!quiet) {
           if (this_try <= retries) {
-            warning("Retrying::curl_fetch_disk: ", urls[i])
+            message("Retrying::curl_fetch_disk: ", urls[i])
           } else {
             warning("Could not download with curl::curl_fetch_disk: ", urls[i])
           }

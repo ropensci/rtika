@@ -63,6 +63,14 @@ The path is OS specific, and explained here:
 https://github.com/r-lib/rappdirs .
 }
 
+\section{Distribution}{
+
+Tika is distributed under the Apache License Version 2.0,
+which generally permits distribution of the code "Object" without the "Source".
+The master copy of the Apache Tika source code is held in GIT. 
+You can fetch (clone) the large source from GitHub ( https://github.com/apache/tika ).
+}
+
 \examples{
 \dontrun{
 install_tika()

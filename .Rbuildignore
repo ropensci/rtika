@@ -2,9 +2,13 @@
 ^\.Rproj\.user$
 ^java
 ^\.travis\.yml$
-^README.Rmd$
+^README\.Rmd$
 ^tika-example$
 ^codecov\.yml$
 .Rhistory
 ^CONDUCT\.md$
 ^data-raw$
+^_pkgdown\.yaml
+^docs
+.RData
+.DS_Store

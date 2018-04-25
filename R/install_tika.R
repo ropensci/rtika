@@ -44,6 +44,12 @@
 #' It is the file path returned by \code{rappdirs::user_data_dir('rtika')}.
 #' The path is OS specific, and explained here:
 #' https://github.com/r-lib/rappdirs .
+#' 
+#' @section Distribution:
+#' Tika is distributed under the Apache License Version 2.0,
+#' which generally permits distribution of the code "Object" without the "Source".
+#' The master copy of the Apache Tika source code is held in GIT. 
+#' You can fetch (clone) the large source from GitHub ( https://github.com/apache/tika ).
 #'
 #' @export
 
@@ -98,7 +104,7 @@ install_tika <- function(version = 1.18,
   )
 
   if (is.na(download)) {
-    warning('Could not download the Tika App .jar from mirror "', url, '".
+     message('Could not download the Tika App .jar from mirror "', url, '".
 Trying the Apache archive.')
 
     url <- paste0(
