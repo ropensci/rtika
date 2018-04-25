@@ -31,7 +31,11 @@
 
 <meta property="og:description" content="This is used by install_tika() internally, 
 or can be called directly on a jar file.
-The latest jar files and checksums are at https://tika.apache.org/download.html." />
+The latest jar files and checksums are at https://tika.apache.org/download.html.
+The tools::md5sum() function is used here. 
+Optionally, a user may install and use the digest::digest() function
+to double check the SHA-512 checksum
+for the tika_jar() file." />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -109,7 +113,11 @@ The latest jar files and checksums are at https://tika.apache.org/download.html.
     
     <p>This is used by <code><a href='install_tika.html'>install_tika()</a></code> internally, 
 or can be called directly on a <code>jar</code> file.
-The latest <code>jar</code> files and checksums are at https://tika.apache.org/download.html.</p>
+The latest <code>jar</code> files and checksums are at https://tika.apache.org/download.html.
+The <code><a href='http://www.rdocumentation.org/packages/tools/topics/md5sum'>tools::md5sum()</a></code> function is used here. 
+Optionally, a user may install and use the <code><a href='http://www.rdocumentation.org/packages/digest/topics/digest'>digest::digest()</a></code> function
+to double check the <code>SHA-512</code> checksum
+for the <code><a href='tika_jar.html'>tika_jar()</a></code> file.</p>
     
 
     <pre class="usage"><span class='fu'>tika_check</span>(<span class='no'>md5_sum</span>, <span class='kw'>jar</span> <span class='kw'>=</span> <span class='fu'><a href='tika_jar.html'>tika_jar</a></span>())</pre>

@@ -42,7 +42,6 @@ if(!requireNamespace('rtika')){
 library('rtika')
 
  # You need to install the Apache Tika .jar once.
- # This gets the development version with an important bug fix: 
 if(is.na(tika_jar())){
  install_tika()
 }

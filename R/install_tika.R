@@ -48,14 +48,14 @@
 #' @export
 
 install_tika <- function(version = 1.18,
-                         md5_sum = "",
+                         md5_sum = "7458883287f99020211e447350eaeeee",
                          mirrors = c(
                            "http://mirrors.ocf.berkeley.edu/apache/tika/",
                            "http://apache.cs.utah.edu/tika/",
                            "http://mirror.cc.columbia.edu/pub/software/apache/tika/"
                          ),
                          retries = 2,
-                         url = "https://builds.apache.org/job/tika-branch-1x/10/org.apache.tika$tika-app/artifact/org.apache.tika/tika-app/1.18-20180309.175001-20/tika-app-1.18-20180309.175001-20.jar") {
+                         url = character()) {
    
      # Get user directory  -------------------
      user_data_dir <-
@@ -76,7 +76,7 @@ install_tika <- function(version = 1.18,
     }
   }
 
-  if (nchar(url) == 0) {
+  if (length(url) == 0 || nchar(url) == 0) {
     random_mirror <- sample(mirrors, 1)
 
     url <- paste0(
