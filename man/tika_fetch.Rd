@@ -34,7 +34,7 @@ and appends the matching file extension
 from Tika's database.
 }
 \examples{
-\dontrun{
+\donttest{
 tika_fetch('https://tika.apache.org/')
 # a unique file name with .html appended to it
 }

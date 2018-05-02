@@ -4,7 +4,7 @@
 #' Get either plain text or structured \code{XHTML}.
 #' Metadata includes \code{Content-Type}, character encoding, and Exif data from
 #' jpeg or tiff images. See the long list of supported file types:
-#' \url{https://tika.apache.org/1.17/formats.html}.
+#' \url{https://tika.apache.org/1.18/formats.html}.
 #'
 #' @param input Character vector describing the paths to the input documents.
 #' Strings starting with 'http://','https://', or 'ftp://' are downloaded to a
@@ -50,7 +50,7 @@
 #' If \code{return = FALSE}, then a \code{NULL} value is invisibly returned.
 #' See the Output Details section below.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' #extract text
 #' batch <- c(
 #'   system.file("extdata", "jsonlite.pdf", package = "rtika"),
@@ -163,6 +163,7 @@ tika <- function(input,
 
   # Special thanks to Hadley the git tutorial at:
   # http://r-pkgs.had.co.nz/git.html
+    # Sys.setenv(NOT_CRAN = TRUE)
   # Useful functions:
   # devtools::test();
   # devtools::document()
@@ -210,7 +211,7 @@ tika <- function(input,
   )
   # TODO: consider a config file
   # for fine grained control over parsers.
-  # see: https://tika.apache.org/1.17/configuring.html
+  # see: https://tika.apache.org/1.18/configuring.html
   # but waiting for batch format to stabilize.
 
   # Define return variable structure  -----------------------------------

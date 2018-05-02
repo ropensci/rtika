@@ -3,7 +3,7 @@
 #' Gets the path to the Tika App \code{.jar} installed by \code{tika_install()}.
 #' @return A string describing the file path to the Tika App \code{.jar} file. If not found, \code{NA}.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' jar <- tika_jar()
 #' # see help
 #' sys::exec_wait('java',c('-jar',jar, '--help'))

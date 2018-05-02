@@ -151,7 +151,7 @@ thousands of documents to process.
 }
 
 \examples{
-\dontrun{
+\donttest{
 #extract text
 batch <- c(
   system.file("extdata", "jsonlite.pdf", package = "rtika"),

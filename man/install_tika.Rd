@@ -72,7 +72,7 @@ You can fetch (clone) the large source from GitHub ( https://github.com/apache/t
 }
 
 \examples{
-\dontrun{
+\donttest{
 install_tika()
 }
 }

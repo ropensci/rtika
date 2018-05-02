@@ -12,7 +12,7 @@
 #'
 #' @return Logical if the installation was successful.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' install_tika()
 #' }
 #' @section Details:

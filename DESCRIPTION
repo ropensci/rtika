@@ -26,7 +26,7 @@ Suggests:
     magrittr
 License: Apache License 2.0 | file LICENSE
 SystemRequirements: Java (>=8)
-Description: Extract text or metadata from over a thousand file types. Get either plain text or structured XHTML content. 
+Description: Extract text or metadata from over a thousand file types, using Apache Tika <https://tika.apache.org/>. Get either plain text or structured XHTML content. 
 Depends: R (>= 3.1.0)
 Encoding: UTF-8
 LazyData: true

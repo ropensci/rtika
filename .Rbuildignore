@@ -10,5 +10,5 @@
 ^data-raw$
 ^_pkgdown\.yaml
 ^docs
-.RData
-.DS_Store
+\.RData
+\.DS_Store

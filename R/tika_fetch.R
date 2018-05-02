@@ -19,7 +19,7 @@
 #' @param quiet Logical if download warnings should be printed. Defaults to FALSE.
 #' @return Character vector of the same length and order as input with the paths describing the locations of the downloaded files. Errors are returned as NA.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' tika_fetch('https://tika.apache.org/')
 #' # a unique file name with .html appended to it
 #' }

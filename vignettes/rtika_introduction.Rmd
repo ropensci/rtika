@@ -11,11 +11,16 @@ bibliography: bibliography.bib
 ---
 
 ```{r setup, include = FALSE}
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-if(is.na(rtika::tika_jar())){ rtika::install_tika() }
+if(NOT_CRAN){
+  if(is.na(rtika::tika_jar())){ rtika::install_tika() }  
+}
+
 ```
 # A Digital Babel Fish
 
@@ -43,8 +48,9 @@ Video, sound and images are important, and yet much meaningful data remains nume
 
 I recommend an analyst start with a directory on the computer and get a vector of paths to each file using `base::list.files()`. The commented code below has a recipe. Here, I use test files that are included with the package.
 
-```{r}
+```{r, eval=NOT_CRAN}
 
+    
 library('rtika')
 library('magrittr')
 # Code to get ALL the files in my_path:
@@ -74,6 +80,7 @@ text <-
 
 # normal syntax also works:
 # text <- tika_text(batch)
+
 ```
 
 The output is a R character vector of the same length and order as the input files.
@@ -83,7 +90,7 @@ In the example above, there are several seconds of overhead to start up the Tika
 Occasionally, files are not parsable and the returned value for the file will be `NA`. The reasons include corrupt files, disk input/output issues, empty files, password protection, a unhandled format, the document structure is broken, or the document has an unexpected variation. 
 
 These issues should be rare. Tika works well on most documents, but if an archive is very large there may be a small percentage of unparsable files, and you might want to handle those.
-```{r}
+```{r, eval=NOT_CRAN}
 # Find which files had an issue
 # Handle them if needed
 batch[which(is.na(text))]
@@ -91,7 +98,7 @@ batch[which(is.na(text))]
 
 Plain text is easy to search using `base::grep()`.
 
-```{r}
+```{r, eval=NOT_CRAN}
 length(text)
 
 search <-
@@ -108,7 +115,7 @@ A general suggestion is to use `tika_fetch()` when downloading files from the In
 
 Tika's Content-Type detection is improved with file extensions (Tika also relies on other features such as Magic bytes, which are unique control bytes in the file header). The `tika_fetch()` function tries to preserves Content-Type information from the download server by finding the matching extension in Tika's database.
 
-```{r}
+```{r, eval=NOT_CRAN}
 download_directory <- tempfile('rtika_')
 
 dir.create(download_directory)
@@ -134,7 +141,7 @@ I suggest changing two parameters in any of the `tika()` parsers. First, set `re
 
 Another option is to increase the number of threads, setting `threads` to something like the number of processors minus one. 
 
-```{r}
+```{r, eval=NOT_CRAN}
 # create a directory not already in use.
 my_directory <-
    tempfile('rtika_')
@@ -156,7 +163,7 @@ processed_files <- file.path(
 
 ```
  The location of each file in `output_dir` follows a convention from the Apache Tika batch processor: the full path to each file mirrors the original file's path, only within the `output_dir`. 
-```{r}
+```{r, eval=NOT_CRAN}
 processed_files
 ```
 Note that `tika_text()` produces `.txt` files, `tika_xml()` produces `.xml` files, `tika_html()` produces `.html` files, and both `tika_json()` and `tika_json_text()` produce `.json` files.
@@ -166,7 +173,7 @@ Note that `tika_text()` produces `.txt` files, `tika_xml()` produces `.xml` file
  
 Plain text falls short for some purposes. For example, pagination might be important for selecting a particular page in a PDF.  The Tika authors chose HTML as a universal format because it offers semantic elements that are common or familiar. For example, the hyperlink is represented in HTML as the anchor element `<a>` with the attribute `href`. The HTML in Tika preserves this metadata:
 
-```{r}
+```{r , eval=NOT_CRAN}
 library('xml2')
 
 # get XHTML text
@@ -199,7 +206,7 @@ Note that `tika_html()` and `tika_xml()` both produce the same strict form of HT
 # Access Metadata in the XHTML
 The `tika_html()` and `tika_xml()` functions are focused on extracting strict, structured HTML as XHTML. In addition, metadata can be accessed in the `meta` tags of the XHTML. Common metadata fields include `Content-Type`, `Content-Length`, `Creation-Date`, and `Content-Encoding`.
 
-```{r}
+```{r , eval=NOT_CRAN}
 # Content-Type
 html %>%
 lapply(xml2::xml_find_first, '//meta[@name="Content-Type"]') %>%
@@ -221,7 +228,7 @@ unlist()
 Metadata can also accessed with `tika_json()` and `tika_json_text()`. Consider all that can be found from a single image:
 
 
-```{r}
+```{r, eval=NOT_CRAN}
 library('jsonlite')
 #batch <- system.file("extdata", "calculator.jpg", package = "rtika")
 
@@ -239,7 +246,7 @@ str(metadata[[6]])
 
 In addition, each specific format can have its own specialized metadata fields. For example, photos sometimes store latitude and longitude:
 
-```{r}
+```{r, eval=NOT_CRAN}
 metadata[[6]]$'geo:lat'
 metadata[[6]]$'geo:long'
 ```
@@ -251,7 +258,7 @@ Some types of documents can have multiple objects within them. For example, a `.
 
 In the following example, I created a compressed archive of the Apache Tika homepage, using the command line programs `wget` and `zip`. The small archive includes the HTML page, its images, and required files. 
 
-```{r}
+```{r, eval=NOT_CRAN}
 # wget gets a webpage and other files. 
 # sys::exec_wait('wget', c('--page-requisites', 'https://tika.apache.org/'))
 # Put it all into a .zip file 
@@ -270,7 +277,7 @@ metadata <-
 
 Here are some of the main metadata fields of the recursive `json` output:
 
-```{r}
+```{r, eval=NOT_CRAN}
 # the 'X-TIKA:embedded_resource_path' field
 embedded_resource_path <- 
     metadata %>%
@@ -280,7 +287,7 @@ embedded_resource_path
 ```
 The `X-TIKA:embedded_resource_path` field tells you where in the document hierarchy each object resides. The first item in the character vector is the root, which is the container itself. The other items are embedded one layer down, as indicated by the forward slash `/`. In the context of the `X-TIKA:embedded_resource_path` field,  paths are not literally directory paths like in a file system. In reality, the image `icon_info_sml.gif` is within a folder called `images`. Rather, the number of forward slashes  indicates the level of recursion within the document. One slash `/` reveals a first set of embedded documents. Additional slashes `/` indicate that the parser has recursed into an embedded document within an embedded document. 
 
-```{r}
+```{r, eval=NOT_CRAN}
 content_type <-
     metadata %>%
     lapply(function(x){ x$'Content-Type' }) 
@@ -289,7 +296,7 @@ content_type
 ```
 The `Content-Type` metadata reveals the first item is the container and has the type `application/zip`. The items after that are deeper and include web formats such as `application/xhtml+xml`, `image/png`, and `text/css`.
 
-```{r}
+```{r, eval=NOT_CRAN}
 content <- 
      metadata %>%
     lapply(function(x){ x$'X-TIKA:content' })

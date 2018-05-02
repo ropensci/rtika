@@ -25,7 +25,7 @@ Tika can parse and extract text from almost anything, including zip, tar, tar.bz
   If \code{output_dir} is specified, files will have the \code{.json} file extension.
 }
 \examples{
-\dontrun{
+\donttest{
 batch <- c(
  system.file("extdata", "jsonlite.pdf", package = "rtika"),
  system.file("extdata", "curl.pdf", package = "rtika"),

@@ -18,7 +18,7 @@ A character vector in the same order and with the same length as \code{input}, o
 If \code{output_dir} is specified, files will have the \code{.txt} file extension.
 }
 \examples{
-\dontrun{
+\donttest{
 batch <- c(
  system.file("extdata", "jsonlite.pdf", package = "rtika"),
  system.file("extdata", "curl.pdf", package = "rtika"),

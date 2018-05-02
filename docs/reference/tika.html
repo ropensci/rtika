@@ -283,8 +283,7 @@ thousands of documents to process.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'>#extract text</span>
+    <pre class="examples"><div class='input'><span class='co'>#extract text</span>
 <span class='no'>batch</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(
   <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"jsonlite.pdf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
   <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"curl.pdf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
@@ -295,8 +294,31 @@ thousands of documents to process.</p>
   <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"tika.apache.org.zip"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>)
 )
 <span class='no'>text</span> <span class='kw'>=</span> <span class='fu'>tika</span>(<span class='no'>batch</span>)
-<span class='fu'>cat</span>(<span class='fu'>substr</span>(<span class='no'>text</span>[<span class='fl'>1</span>],<span class='fl'>45</span>,<span class='fl'>450</span>))
-
+<span class='fu'>cat</span>(<span class='fu'>substr</span>(<span class='no'>text</span>[<span class='fl'>1</span>],<span class='fl'>45</span>,<span class='fl'>450</span>))</div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; Package ‘jsonlite’
+#&gt; June 1, 2017
+#&gt; 
+#&gt; Version 1.5
+#&gt; Title A Robust, High Performance JSON Parser and Generator for R
+#&gt; License MIT + file LICENSE
+#&gt; NeedsCompilation yes
+#&gt; Depends methods
+#&gt; Author Jeroen Ooms, Duncan Temple Lang, Lloyd Hilaiel
+#&gt; 
+#&gt; URL https://arxiv.org/abs/1403.2805,
+#&gt; https://www.opencpu.org/posts/jsonlite-a-smarter-json-encoder
+#&gt; 
+#&gt; BugReports http://github.com/jeroen/jsonlite/issues
+#&gt; Maintainer Jero</div><div class='input'>
 <span class='co'>#more complex metadata</span>
 <span class='kw'>if</span>(<span class='fu'>requireNamespace</span>(<span class='st'>'jsonlite'</span>)){
 
@@ -311,8 +333,30 @@ thousands of documents to process.</p>
   <span class='fu'>lapply</span>(<span class='no'>metadata</span>, <span class='kw'>function</span>(<span class='no'>x</span>){ <span class='fu'>as.character</span>(<span class='no'>x</span>$<span class='st'>'Creation-Date'</span>) })
 
   <span class='fu'>lapply</span>(<span class='no'>metadata</span>, <span class='kw'>function</span>(<span class='no'>x</span>){  <span class='fu'>as.character</span>(<span class='no'>x</span>$<span class='st'>'X-TIKA:embedded_resource_path'</span>) })
-}
-<span class='co'># }</span></pre>
+}</div><div class='output co'>#&gt; [[1]]
+#&gt; character(0)
+#&gt; 
+#&gt; [[2]]
+#&gt; character(0)
+#&gt; 
+#&gt; [[3]]
+#&gt; [1] NA            "/image1.jpg"
+#&gt; 
+#&gt; [[4]]
+#&gt; character(0)
+#&gt; 
+#&gt; [[5]]
+#&gt; character(0)
+#&gt; 
+#&gt; [[6]]
+#&gt; character(0)
+#&gt; 
+#&gt; [[7]]
+#&gt;  [1] NA                       "/index.html"            "/site.css"             
+#&gt;  [4] "/external.png"          "/icon_info_sml.gif"     "/icon_warning_sml.gif" 
+#&gt;  [7] "/icon_error_sml.gif"    "/icon_success_sml.gif"  "/tika.png"             
+#&gt; [10] "/mattmann_cover150.jpg" "/asf-logo.gif"         
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -29,7 +29,7 @@ which has caused erratic, intermittent errors with Tika.
 }
 
 \examples{
-\dontrun{
+\donttest{
 jar <- tika_jar()
 # see help
 sys::exec_wait('java',c('-jar',jar, '--help'))
