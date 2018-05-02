@@ -15,17 +15,13 @@ This is an R interface to the Tika software.
 Installation
 ------------
 
-To start, you need R and `Java 8` or `OpenJDK 1.8`. Higher versions work. To check your version, run the command `java -version` from a terminal. Get Java installation tips at <http://openjdk.java.net/install/> or <https://www.java.com/en/download/help/download_options.xml>.
+To start, you need R and `Java 8` or `OpenJDK 1.8`. Higher versions work. To check your version, run the command `java -version` from a terminal. Get Java installation tips at <https://www.java.com/en/download/> or <http://openjdk.java.net/install/>. Because the `rJava` package is ***not*** required, installation is simple. You can cut and paste the following:
 
 ``` r
-# Get devtools to easily install from github, until this is all on CRAN 
-if(!requireNamespace('devtools')){
-  install.packages('devtools', 
-    repos = 'https://cloud.r-project.org')
-}
 
 if(!requireNamespace('rtika')){
- devtools::install_github('ropensci/rtika')
+    install.packages('rtika', 
+        repos = 'https://cran.r-project.org')
 }
 
 library('rtika')
@@ -35,8 +31,6 @@ if(is.na(tika_jar())){
  install_tika()
 }
 ```
-
-The `rJava` package is ***not*** required.
 
 Read an introductory article at <https://ropensci.github.io/rtika/articles/rtika_introduction.html>.
 

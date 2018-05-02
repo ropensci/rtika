@@ -75,7 +75,7 @@ Extract text or metadata from over a thousand file types.
 Get either plain text or structured \code{XHTML}.
 Metadata includes \code{Content-Type}, character encoding, and Exif data from
 jpeg or tiff images. See the long list of supported file types:
-\url{https://tika.apache.org/1.17/formats.html}.
+\url{https://tika.apache.org/1.18/formats.html}.
 }
 \section{Output Details}{
 
