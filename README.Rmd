@@ -31,7 +31,7 @@ Because the `rJava` package is ***not*** required, installation is simple. You c
 
 if(!requireNamespace('rtika')){
     install.packages('rtika', 
-        repos = 'https://cran.r-project.org')
+        repos = 'https://cloud.r-project.org')
 }
 
 library('rtika')

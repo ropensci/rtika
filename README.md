@@ -21,7 +21,7 @@ To start, you need R and `Java 8` or `OpenJDK 1.8`. Higher versions work. To che
 
 if(!requireNamespace('rtika')){
     install.packages('rtika', 
-        repos = 'https://cran.r-project.org')
+        repos = 'https://cloud.r-project.org')
 }
 
 library('rtika')
