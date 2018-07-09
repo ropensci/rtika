@@ -21,21 +21,27 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Get json Metadata and Plain Text Content — tika_json_text" />
 
 <meta property="og:description" content="Tika can parse and extract text from almost anything, including zip, tar, tar.bz2, and other archives that contain documents.
  If you have a zip file with 100 text files in it, you can get the text and metadata for each file nested inside of the zip file.
  This recursive output is currently used for the jsonified mode. See:  https://wiki.apache.org/tika/RecursiveMetadata 
-The document contents are plain text in the "X-TIKA:content" field." />
+The document contents are plain text in the &quot;X-TIKA:content&quot; field." />
 
 <meta property="og:description" content="If output_dir is specified, files will have the .json file extension." />
 <meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -58,8 +64,12 @@ The document contents are plain text in the "X-TIKA:content" field." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">rtika</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">rtika</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.9</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -84,7 +94,7 @@ The document contents are plain text in the "X-TIKA:content" field." />
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -96,6 +106,7 @@ The document contents are plain text in the "X-TIKA:content" field." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -103,12 +114,15 @@ The document contents are plain text in the "X-TIKA:content" field." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Get json Metadata and Plain Text Content</h1>
+    <small class="dont-index">Source: <a href='http://github.com/ropensci/rtika/blob/master/R/tika_json_text.R'><code>R/tika_json_text.R</code></a></small>
+    <div class="hidden name"><code>tika_json_text.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Tika can parse and extract text from almost anything, including zip, tar, tar.bz2, and other archives that contain documents.
  If you have a zip file with 100 text files in it, you can get the text and metadata for each file nested inside of the zip file.
@@ -117,10 +131,11 @@ The document contents are plain text in the "X-TIKA:content" field." />
 
     <p>If <code>output_dir</code> is specified, files will have the <code>.json</code> file extension.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>tika_json_text</span>(<span class='no'>input</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -175,5 +190,8 @@ The document contents are plain text in the "X-TIKA:content" field." />
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

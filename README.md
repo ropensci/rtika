@@ -74,7 +74,7 @@ Tika parses and extracts text or metadata from over one thousand digital formats
 -   Executable programs and libraries
 -   Crypto formats
 
-For a list of MIME types, see: <https://tika.apache.org/1.17/formats.html>
+For a list of MIME types, see: <https://tika.apache.org/1.18/formats.html>
 
 Get Plain Text
 --------------

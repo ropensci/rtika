@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>All news • rtika</title>
+<title>Changelog • rtika</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -21,13 +21,19 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
-<meta property="og:title" content="All news" />
+
+
+
+<meta property="og:title" content="Changelog" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -50,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">rtika</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">rtika</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.9</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -76,7 +86,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -88,6 +98,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -95,31 +106,49 @@
       
       </header>
 
-      <div class="row">
-
-  <div class="col-md-9">
+<div class="row">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Change log <small>All releases</small></h1>
+      <h1>Changelog <small></small></h1>
+      <small>Source: <a href='http://github.com/ropensci/rtika/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="contents">
-    <div id="rtika-0-1-8-2018-04-25" class="section level1">
-<h1 class="hasAnchor">
-<a href="#rtika-0-1-8-2018-04-25" class="anchor"></a>rtika 0.1.8 (2018-04-25)</h1>
+    <div id="rtika-0-1-9-2018-07-08" class="section level1">
+<h1 class="page-header">
+<a href="#rtika-0-1-9-2018-07-08" class="anchor"></a>rtika 0.1.9 (2018-07-08)<small> Unreleased </small>
+</h1>
+<div id="new-features" class="section level3">
+<h3 class="hasAnchor">
+<a href="#new-features" class="anchor"></a>NEW FEATURES</h3>
+<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">*</span><span class="st"> </span>The new <span class="kw"><a href="../reference/java.html">java</a></span>() <span class="cf">function</span> is used internally to get the command to invoke Java, and allows the option of changing its value across sessions. If you want to use a particular installation of Java, set the JAVA_HOME variable using the <span class="kw">Sys.setenv</span>(<span class="dt">JAVA_HOME =</span> <span class="st">'my path'</span>). The <span class="kw"><a href="../reference/java.html">java</a></span>() <span class="cf">function</span> will check <span class="cf">for</span> this variable, and return it instead of the default <span class="st">'java'</span> invocation <span class="cf">if</span> found. </code></pre></div>
+</div>
 <div id="minor-improvements" class="section level3">
 <h3 class="hasAnchor">
 <a href="#minor-improvements" class="anchor"></a>MINOR IMPROVEMENTS</h3>
+<ul>
+<li>The tika_check function now uses the more advance SHA512 checksum instead of the MD5. To implement this, the ‘digest’ pacakge is now a dependency.</li>
+</ul>
+</div>
+</div>
+    <div id="rtika-0-1-8-2018-04-25" class="section level1">
+<h1 class="page-header">
+<a href="#rtika-0-1-8-2018-04-25" class="anchor"></a>rtika 0.1.8 (2018-04-25)<small> 2018-05-02 </small>
+</h1>
+<div id="minor-improvements-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#minor-improvements-1" class="anchor"></a>MINOR IMPROVEMENTS</h3>
 <ul>
 <li>The install_tika() function now gets the Tika 1.18 release that came out 2018-04-24, instead of the 1.18 development version.</li>
 </ul>
 </div>
 </div>
     <div id="rtika-0-1-7-2018-03-08" class="section level1">
-<h1 class="hasAnchor">
-<a href="#rtika-0-1-7-2018-03-08" class="anchor"></a>rtika 0.1.7 (2018-03-08)</h1>
-<div id="minor-improvements-1" class="section level3">
+<h1 class="page-header">
+<a href="#rtika-0-1-7-2018-03-08" class="anchor"></a>rtika 0.1.7 (2018-03-08)<small> Unreleased </small>
+</h1>
+<div id="minor-improvements-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-improvements-1" class="anchor"></a>MINOR IMPROVEMENTS</h3>
+<a href="#minor-improvements-2" class="anchor"></a>MINOR IMPROVEMENTS</h3>
 <ul>
 <li>The new install_tika() function allows this package to be distributed on CRAN. The Tika App jar was too large to go on CRAN directly. The .jar is installed in the directory determined by the rappdirs::user_data_dir() function.</li>
 <li>The .onLoad() function now gives various installation advice when starting up.</li>
@@ -134,11 +163,12 @@
 </div>
 </div>
     <div id="rtika-0-1-6-2018-03-01" class="section level1">
-<h1 class="hasAnchor">
-<a href="#rtika-0-1-6-2018-03-01" class="anchor"></a>rtika 0.1.6 (2018-03-01)</h1>
-<div id="new-features" class="section level3">
+<h1 class="page-header">
+<a href="#rtika-0-1-6-2018-03-01" class="anchor"></a>rtika 0.1.6 (2018-03-01)<small> Unreleased </small>
+</h1>
+<div id="new-features-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#new-features" class="anchor"></a>NEW FEATURES</h3>
+<a href="#new-features-1" class="anchor"></a>NEW FEATURES</h3>
 <ul>
 <li>tika(), tika_xml(), tika_json(), tika_text(), and tika_html() have a new downloader, which preserve the server’s content-type encoding as a file extension when possible. This should help Tika identify and parse downloaded files more reliably. It depends on the ‘curl’ package.</li>
 <li>Added tika_fetch(), which is a stand alone function to download files and append a file extension matching the content type declared by the server. Additional features for this function include specifying the number of download retries. The output of tika_fetch() can be piped directly into other tika functions.</li>
@@ -158,11 +188,12 @@
 </div>
 </div>
     <div id="rtika-0-1-5-2018-02-15" class="section level1">
-<h1 class="hasAnchor">
-<a href="#rtika-0-1-5-2018-02-15" class="anchor"></a>rtika 0.1.5 (2018-02-15)</h1>
-<div id="minor-improvements-2" class="section level3">
+<h1 class="page-header">
+<a href="#rtika-0-1-5-2018-02-15" class="anchor"></a>rtika 0.1.5 (2018-02-15)<small> Unreleased </small>
+</h1>
+<div id="minor-improvements-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-improvements-2" class="anchor"></a>MINOR IMPROVEMENTS</h3>
+<a href="#minor-improvements-3" class="anchor"></a>MINOR IMPROVEMENTS</h3>
 <ul>
 <li>Added dependency on ‘sys’ package because the ‘system2’ function was causing intermittent errors by ending tika in mid process.</li>
 <li>Added startup check of the java version, using .onLoad() call to ‘java -version’</li>
@@ -174,11 +205,12 @@
 </div>
 </div>
     <div id="rtika-0-1-4-2018-02-15" class="section level1">
-<h1 class="hasAnchor">
-<a href="#rtika-0-1-4-2018-02-15" class="anchor"></a>rtika 0.1.4 (2018-02-15)</h1>
-<div id="minor-improvements-3" class="section level3">
+<h1 class="page-header">
+<a href="#rtika-0-1-4-2018-02-15" class="anchor"></a>rtika 0.1.4 (2018-02-15)<small> Unreleased </small>
+</h1>
+<div id="minor-improvements-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-improvements-3" class="anchor"></a>MINOR IMPROVEMENTS</h3>
+<a href="#minor-improvements-4" class="anchor"></a>MINOR IMPROVEMENTS</h3>
 <ul>
 <li>Because it is too big for CRAN, removed the Tika .jar file.</li>
 <li>Added the Tika .jar to a new tikajar package on github.</li>
@@ -188,37 +220,39 @@
 </div>
 </div>
     <div id="rtika-0-1-3-2018-02-04" class="section level1">
-<h1 class="hasAnchor">
-<a href="#rtika-0-1-3-2018-02-04" class="anchor"></a>rtika 0.1.3 (2018-02-04)</h1>
-<div id="new-features-1" class="section level3">
+<h1 class="page-header">
+<a href="#rtika-0-1-3-2018-02-04" class="anchor"></a>rtika 0.1.3 (2018-02-04)<small> Unreleased </small>
+</h1>
+<div id="new-features-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#new-features-1" class="anchor"></a>NEW FEATURES</h3>
+<a href="#new-features-2" class="anchor"></a>NEW FEATURES</h3>
 <ul>
 <li>added convenience functions that advertise output format: tika_xml(), tika_json(), tika_text(), tika_html().</li>
 </ul>
 </div>
-<div id="minor-improvements-4" class="section level3">
+<div id="minor-improvements-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-improvements-4" class="anchor"></a>MINOR IMPROVEMENTS</h3>
+<a href="#minor-improvements-5" class="anchor"></a>MINOR IMPROVEMENTS</h3>
 <ul>
 <li>README examples use magrittr pipe.</li>
 </ul>
 </div>
 </div>
     <div id="rtika-0-1-2-2018-01-30" class="section level1">
-<h1 class="hasAnchor">
-<a href="#rtika-0-1-2-2018-01-30" class="anchor"></a>rtika 0.1.2 (2018-01-30)</h1>
-<div id="new-features-2" class="section level3">
+<h1 class="page-header">
+<a href="#rtika-0-1-2-2018-01-30" class="anchor"></a>rtika 0.1.2 (2018-01-30)<small> Unreleased </small>
+</h1>
+<div id="new-features-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#new-features-2" class="anchor"></a>NEW FEATURES</h3>
+<a href="#new-features-3" class="anchor"></a>NEW FEATURES</h3>
 <ul>
 <li>added many tests to increase code coverage dramatically.</li>
 <li>integrated the covr package.</li>
 </ul>
 </div>
-<div id="minor-improvements-5" class="section level3">
+<div id="minor-improvements-6" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-improvements-5" class="anchor"></a>MINOR IMPROVEMENTS</h3>
+<a href="#minor-improvements-6" class="anchor"></a>MINOR IMPROVEMENTS</h3>
 <ul>
 <li>for Windows users, the curl package is recommended to prevent base R download.file from corrupting files.</li>
 </ul>
@@ -233,18 +267,19 @@
 </div>
 </div>
     <div id="rtika-0-1-1-2018-01-23" class="section level1">
-<h1 class="hasAnchor">
-<a href="#rtika-0-1-1-2018-01-23" class="anchor"></a>rtika 0.1.1 (2018-01-23)</h1>
-<div id="new-features-3" class="section level3">
+<h1 class="page-header">
+<a href="#rtika-0-1-1-2018-01-23" class="anchor"></a>rtika 0.1.1 (2018-01-23)<small> Unreleased </small>
+</h1>
+<div id="new-features-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#new-features-3" class="anchor"></a>NEW FEATURES</h3>
+<a href="#new-features-4" class="anchor"></a>NEW FEATURES</h3>
 <ul>
 <li>allows the user to input the URLs and file paths of documents. URLs will be downloaded first to a temporary directory. The previous interface has been changed.</li>
 </ul>
 </div>
-<div id="minor-improvements-6" class="section level3">
+<div id="minor-improvements-7" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-improvements-6" class="anchor"></a>MINOR IMPROVEMENTS</h3>
+<a href="#minor-improvements-7" class="anchor"></a>MINOR IMPROVEMENTS</h3>
 <ul>
 <li>the Tika License file is included in the source.</li>
 <li>added a vignette on basic text processing using the library.</li>
@@ -252,11 +287,12 @@
 </div>
 </div>
     <div id="rtika-0-1-0-2018-01-19" class="section level1">
-<h1 class="hasAnchor">
-<a href="#rtika-0-1-0-2018-01-19" class="anchor"></a>rtika 0.1.0 (2018-01-19)</h1>
-<div id="new-features-4" class="section level3">
+<h1 class="page-header">
+<a href="#rtika-0-1-0-2018-01-19" class="anchor"></a>rtika 0.1.0 (2018-01-19)<small> Unreleased </small>
+</h1>
+<div id="new-features-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#new-features-4" class="anchor"></a>NEW FEATURES</h3>
+<a href="#new-features-5" class="anchor"></a>NEW FEATURES</h3>
 <ul>
 <li>Initial release.</li>
 <li>R interface to Apache Tika batch processing CLI, found to be the most efficient CLI option.</li>
@@ -266,13 +302,13 @@
 </ul>
 </div>
 </div>
-    </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#rtika-0-1-9-2018-07-08">0.1.9</a></li>
         <li><a href="#rtika-0-1-8-2018-04-25">0.1.8</a></li>
         <li><a href="#rtika-0-1-7-2018-03-08">0.1.7</a></li>
         <li><a href="#rtika-0-1-6-2018-03-01">0.1.6</a></li>
@@ -300,5 +336,8 @@
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

@@ -3,27 +3,43 @@
   tika_jar_tested_version <- 1.18
 
   # Check if Java is there -------------------
-  response <- tryCatch(
-    rawToChar(
-      sys::exec_internal(
-        "java",
-        "-version"
-      )$stderr
-    ),
-    error = function(e) {
-      return(as.character(NA))
-    }
-  )[1]
-
-  if (is.na(response)) {
+  
+  if (.Platform$OS.type == "windows") {
+      response <- tryCatch(
+          rawToChar(
+              sys::exec_internal(
+                  shQuote(rtika::java()),
+                  "-version"
+              )$stderr
+          ),
+          error = function(e) {
+              return(as.character(NA))
+          }
+      )[1]
+  } else {
+      response <- tryCatch(
+          rawToChar(
+              sys::exec_internal(
+                  rtika::java(),
+                  "-version"
+              )$stderr
+          ),
+          error = function(e) {
+              return(as.character(NA))
+          }
+      )[1]
+  }
+ 
+  if(is.na(response)) {
       packageStartupMessage("Could not find Java.
 Type ?tika for Java installation tips.")
   } else {
-    # Check the Java version   -------------------
+    # Check the Java version  -------------------
     # Open-JDK dropped the initial 1 since version 9
     # See http://openjdk.java.net/projects/jdk9/
     # See http://openjdk.java.net/jeps/223
-
+   
+      
     java_version_check <- (
       grepl('version "1\\.8', response)
       | grepl('version "(8|9|1[0-9])', response)

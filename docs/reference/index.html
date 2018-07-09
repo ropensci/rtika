@@ -21,13 +21,19 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Function reference" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -50,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">rtika</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">rtika</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.9</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -76,7 +86,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -88,6 +98,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -95,100 +106,102 @@
       
       </header>
 
-      <div class="row">
-  <div class="col-md-9">
+<div class="row">
+  <div class="contents col-md-9">
     <div class="page-header">
-      <h1>
-        Reference
-        <small>version&nbsp;0.1.8</small>
-      </h1>
+      <h1>Reference</h1>
     </div>
 
-    <div class="contents">
-      <table class="ref-index">
+    <table class="ref-index">
 
-      <colgroup>
-        <col class="alias" />
-        <col class="title" />
-      </colgroup>
+    <colgroup>
+      
+      <col class="alias" />
+      <col class="title" />
+    </colgroup>
 
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="install_tika.html">install_tika</a></code> </p>
-          </td>
-          <td><p>Install or Update the Apache Tika <code>jar</code></p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="rtika.html">rtika</a></code> </p>
-          </td>
-          <td><p>rtika: R Interface to 'Apache Tika'</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="tika_check.html">tika_check</a></code> </p>
-          </td>
-          <td><p>Check Tika against a md5 checksum</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="tika_fetch.html">tika_fetch</a></code> </p>
-          </td>
-          <td><p>Fetch Files with the Content-Type Preserved in the File Extension</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="tika_html.html">tika_html</a></code> </p>
-          </td>
-          <td><p>Get Structured XHTML</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="tika_jar.html">tika_jar</a></code> </p>
-          </td>
-          <td><p>Path to Apache Tika</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="tika_json_text.html">tika_json_text</a></code> </p>
-          </td>
-          <td><p>Get json Metadata and Plain Text Content</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="tika_json.html">tika_json</a></code> </p>
-          </td>
-          <td><p>Get json Metadata and XHTML Content</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="tika_text.html">tika_text</a></code> </p>
-          </td>
-          <td><p>Get Plain Text</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="tika_xml.html">tika_xml</a></code> </p>
-          </td>
-          <td><p>Get a Structured XHTML Rendition</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="tika.html">tika</a></code> </p>
-          </td>
-          <td><p>Main R Interface to 'Apache Tika'</p></td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
+    <tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="install_tika.html">install_tika()</a></code> </p>
+        </td>
+        <td><p>Install or Update the Apache Tika <code>jar</code></p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="java.html">java()</a></code> </p>
+        </td>
+        <td><p>System Command to Run Java</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="rtika.html">rtika</a></code> </p>
+        </td>
+        <td><p>rtika: R Interface to 'Apache Tika'</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tika.html">tika()</a></code> </p>
+        </td>
+        <td><p>Main R Interface to 'Apache Tika'</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tika_check.html">tika_check()</a></code> </p>
+        </td>
+        <td><p>Check Tika against a checksum</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tika_fetch.html">tika_fetch()</a></code> </p>
+        </td>
+        <td><p>Fetch Files with the Content-Type Preserved in the File Extension</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tika_html.html">tika_html()</a></code> </p>
+        </td>
+        <td><p>Get Structured XHTML</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tika_jar.html">tika_jar()</a></code> </p>
+        </td>
+        <td><p>Path to Apache Tika</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tika_json.html">tika_json()</a></code> </p>
+        </td>
+        <td><p>Get json Metadata and XHTML Content</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tika_json_text.html">tika_json_text()</a></code> </p>
+        </td>
+        <td><p>Get json Metadata and Plain Text Content</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tika_text.html">tika_text()</a></code> </p>
+        </td>
+        <td><p>Get Plain Text</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tika_xml.html">tika_xml()</a></code> </p>
+        </td>
+        <td><p>Get a Structured XHTML Rendition</p></td>
+      </tr>
+    </tbody>
+    </table>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -211,5 +224,8 @@
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

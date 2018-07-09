@@ -150,8 +150,8 @@ tika <- function(input,
                  output = c("text", "jsonRecursive", "xml", "html")[1],
                  output_dir = "",
                  return = TRUE,
-                 java = "java",
-                 jar = tika_jar(),
+                 java = rtika::java(),
+                 jar = rtika::tika_jar(),
                  threads = 2,
                  max_restarts = integer(),
                  timeout = 300000,
@@ -163,15 +163,17 @@ tika <- function(input,
 
   # Special thanks to Hadley the git tutorial at:
   # http://r-pkgs.had.co.nz/git.html
-    # Sys.setenv(NOT_CRAN = TRUE)
-  # Useful functions:
-  # devtools::test();
-  # devtools::document()
+
+  # When updating the package, run these functions in order:
+  # devtools::document() # sets up NAMESPACE and .Rd documentation files to match function
+  # devtools::test(); 
+  # Sys.setenv(NOT_CRAN = TRUE)
   # devtools::build_vignettes() ;
+  # pkgdown::clean_site() ; pkgdown::build_site() # https://www.r-bloggers.com/building-a-website-with-pkgdown-a-short-guide/
+  
+  # Suggested functions to run occasionally:
   # goodpractice::gp()
-  # styler::style_dir()
-  # pkgdown::clean_site() ; pkgdown::build_site()
-  # https://www.r-bloggers.com/building-a-website-with-pkgdown-a-short-guide/
+  # styler::style_dir() # note this has made some files break in the past, 
 
   # TODO:  memory setting with java -Xmx1024m -jar.
   # Probably also adjust child process -JXmx4g

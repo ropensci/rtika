@@ -5,10 +5,10 @@
 \title{Main R Interface to 'Apache Tika'}
 \usage{
 tika(input, output = c("text", "jsonRecursive", "xml", "html")[1],
-  output_dir = "", return = TRUE, java = "java", jar = tika_jar(),
-  threads = 2, max_restarts = integer(), timeout = 3e+05,
-  max_file_size = integer(), args = character(), quiet = TRUE,
-  cleanup = TRUE, lib.loc = .libPaths())
+  output_dir = "", return = TRUE, java = rtika::java(),
+  jar = rtika::tika_jar(), threads = 2, max_restarts = integer(),
+  timeout = 3e+05, max_file_size = integer(), args = character(),
+  quiet = TRUE, cleanup = TRUE, lib.loc = .libPaths())
 }
 \arguments{
 \item{input}{Character vector describing the paths to the input documents.

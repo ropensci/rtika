@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check Tika against a md5 checksum — tika_check • rtika</title>
+<title>Check Tika against a checksum — tika_check • rtika</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -21,22 +21,24 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
-<meta property="og:title" content="Check Tika against a md5 checksum — tika_check" />
+
+
+
+<meta property="og:title" content="Check Tika against a checksum — tika_check" />
 
 <meta property="og:description" content="This is used by install_tika() internally, 
 or can be called directly on a jar file.
-The latest jar files and checksums are at https://tika.apache.org/download.html.
-The tools::md5sum() function is used here. 
-Optionally, a user may install and use the digest::digest() function
-to double check the SHA-512 checksum
-for the tika_jar() file." />
+The latest jar files and checksums are at https://tika.apache.org/download.html." />
 <meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -59,8 +61,12 @@ for the tika_jar() file." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">rtika</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">rtika</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.9</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -85,7 +91,7 @@ for the tika_jar() file." />
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -97,6 +103,7 @@ for the tika_jar() file." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -104,40 +111,44 @@ for the tika_jar() file." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Check Tika against a md5 checksum</h1>
+    <h1>Check Tika against a checksum</h1>
+    <small class="dont-index">Source: <a href='http://github.com/ropensci/rtika/blob/master/R/tika_check.R'><code>R/tika_check.R</code></a></small>
+    <div class="hidden name"><code>tika_check.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This is used by <code><a href='install_tika.html'>install_tika()</a></code> internally, 
 or can be called directly on a <code>jar</code> file.
-The latest <code>jar</code> files and checksums are at https://tika.apache.org/download.html.
-The <code><a href='http://www.rdocumentation.org/packages/tools/topics/md5sum'>tools::md5sum()</a></code> function is used here. 
-Optionally, a user may install and use the <code><a href='http://www.rdocumentation.org/packages/digest/topics/digest'>digest::digest()</a></code> function
-to double check the <code>SHA-512</code> checksum
-for the <code><a href='tika_jar.html'>tika_jar()</a></code> file.</p>
+The latest <code>jar</code> files and checksums are at https://tika.apache.org/download.html.</p>
     
+    </div>
 
-    <pre class="usage"><span class='fu'>tika_check</span>(<span class='no'>md5_sum</span>, <span class='kw'>jar</span> <span class='kw'>=</span> <span class='fu'><a href='tika_jar.html'>tika_jar</a></span>())</pre>
+    <pre class="usage"><span class='fu'>tika_check</span>(<span class='no'>digest</span>, <span class='kw'>jar</span> <span class='kw'>=</span> <span class='fu'><a href='tika_jar.html'>tika_jar</a></span>(), <span class='kw'>algo</span> <span class='kw'>=</span> <span class='st'>"sha512"</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>md5_sum</th>
-      <td><p>Character vector of length one with the target md5 checksum.</p></td>
+      <th>digest</th>
+      <td><p>Character vector of length one with the target checksum.</p></td>
     </tr>
     <tr>
       <th>jar</th>
       <td><p>Optional alternative path to a Tika <code>jar</code> file.</p></td>
     </tr>
+    <tr>
+      <th>algo</th>
+      <td><p>Optional algorithm used to create checksum. Defaults to SHA512.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>logical if the <code>jar</code> checksum matches <code>md5_sum</code>.</p>
+    <p>logical if the <code>jar</code> checksum matches <code>digest</code>.</p>
     
 
   </div>
@@ -164,5 +175,8 @@ for the <code><a href='tika_jar.html'>tika_jar()</a></code> file.</p>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

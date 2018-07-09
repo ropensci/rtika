@@ -21,18 +21,24 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Install or Update the Apache Tika <code>jar</code> — install_tika" />
 
 <meta property="og:description" content="This downloads and installs the Tika App jar (~60 MB) into a user directory,
-and verifies the integrity of the file using a md5 checksum.
+and verifies the integrity of the file using a checksum.
 The default settings should work fine." />
 <meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -55,8 +61,12 @@ The default settings should work fine." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">rtika</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">rtika</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.9</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -81,7 +91,7 @@ The default settings should work fine." />
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -93,6 +103,7 @@ The default settings should work fine." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -100,25 +111,32 @@ The default settings should work fine." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Install or Update the Apache Tika <code>jar</code></h1>
+    <small class="dont-index">Source: <a href='http://github.com/ropensci/rtika/blob/master/R/install_tika.R'><code>R/install_tika.R</code></a></small>
+    <div class="hidden name"><code>install_tika.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This downloads and installs the Tika App <code>jar</code> (~60 MB) into a user directory,
-and verifies the integrity of the file using a md5 checksum.
+and verifies the integrity of the file using a checksum.
 The default settings should work fine.</p>
     
+    </div>
 
-    <pre class="usage"><span class='fu'>install_tika</span>(<span class='kw'>version</span> <span class='kw'>=</span> <span class='fl'>1.18</span>, <span class='kw'>md5_sum</span> <span class='kw'>=</span> <span class='st'>"7458883287f99020211e447350eaeeee"</span>,
+    <pre class="usage"><span class='fu'>install_tika</span>(<span class='kw'>version</span> <span class='kw'>=</span> <span class='fl'>1.18</span>,
+  <span class='kw'>digest</span> <span class='kw'>=</span> <span class='fu'>paste0</span>(<span class='st'>"b767577886d6a6110388584b416d17db"</span>,
+  <span class='st'>"4455b94d5c7dfec750fe849e245f468f"</span>, <span class='st'>"c7ce4559f8be02365af739a342317347"</span>,
+  <span class='st'>"beaa5fd996833b1bad7ece72a20d3b0f"</span>),
   <span class='kw'>mirrors</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"http://mirrors.ocf.berkeley.edu/apache/tika/"</span>,
   <span class='st'>"http://apache.cs.utah.edu/tika/"</span>,
   <span class='st'>"http://mirror.cc.columbia.edu/pub/software/apache/tika/"</span>), <span class='kw'>retries</span> <span class='kw'>=</span> <span class='fl'>2</span>,
   <span class='kw'>url</span> <span class='kw'>=</span> <span class='fu'>character</span>())</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -126,8 +144,8 @@ The default settings should work fine.</p>
       <td><p>The declared Tika version</p></td>
     </tr>
     <tr>
-      <th>md5_sum</th>
-      <td><p>The md5 checksum. Set to an empty string <code>""</code> to skip the check.</p></td>
+      <th>digest</th>
+      <td><p>The sha15 checksum. Set to an empty string <code>""</code> to skip the check.</p></td>
     </tr>
     <tr>
       <th>mirrors</th>
@@ -218,5 +236,8 @@ You can fetch (clone) the large source from GitHub ( https://github.com/apache/t
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

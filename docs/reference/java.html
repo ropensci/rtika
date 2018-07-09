@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get a Structured XHTML Rendition — tika_xml • rtika</title>
+<title>System Command to Run Java — java • rtika</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,12 @@
 
 
 
-<meta property="og:title" content="Get a Structured XHTML Rendition — tika_xml" />
+<meta property="og:title" content="System Command to Run Java — java" />
 
-<meta property="og:description" content="If output_dir is specified, files will have the .xml file extension." />
+<meta property="og:description" content="Gets the system command needed to run Java from the command line, as a string.
+Typically, this is the string: 'java'. 
+However, if the R session has the JAVA_HOME environmental variable set, it will use that to locate java instead. 
+This can be persisted over sessions (see the Details below)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -112,55 +115,51 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get a Structured XHTML Rendition</h1>
-    <small class="dont-index">Source: <a href='http://github.com/ropensci/rtika/blob/master/R/tika_xml.R'><code>R/tika_xml.R</code></a></small>
-    <div class="hidden name"><code>tika_xml.Rd</code></div>
+    <h1>System Command to Run Java</h1>
+    <small class="dont-index">Source: <a href='http://github.com/ropensci/rtika/blob/master/R/java.R'><code>R/java.R</code></a></small>
+    <div class="hidden name"><code>java.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>If <code>output_dir</code> is specified, files will have the <code>.xml</code> file extension.</p>
+    <p>Gets the system command needed to run Java from the command line, as a string.
+Typically, this is the string: 'java'. 
+However, if the R session has the <code>JAVA_HOME</code> environmental variable set, it will use that to locate java instead. 
+This can be persisted over sessions (see the Details below).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>tika_xml</span>(<span class='no'>input</span>, <span class='no'>...</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>input</th>
-      <td><p>Character vector describing the paths and/or urls to the input documents.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Other parameters to be sent to <code><a href='tika.html'>tika()</a></code>.</p></td>
-    </tr>
-    </table>
-    
+    <pre class="usage"><span class='fu'>java</span>()</pre>
+        
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A character vector in the same order and with the same length as <code>input</code>, of unparsed <code>XHTML</code>. Unprocessed files are <code>as.character(NA)</code>.</p>
+    <p>The system command needed to invoke Java, as a string.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    
+    <p>This function is used by all of the <code><a href='tika.html'>tika()</a></code> functions internally as the default value to its <code>java</code> parameter.</p>
+<p>This function tries to find an environmental variable using <code>Sys.getenv("JAVA_HOME")</code>.
+It looks for the <code>java</code> executable inside the <code>bin</code> directory in the <code>JAVA_HOME</code> directory.</p>
+<p>If you want to use a specific version of Java, set the <code>JAVA_HOME</code> variable using <code>Sys.setenv(JAVA_HOME = 'my path')</code>,
+where 'my path' is the path to a folder that has a <code>bin</code> directory with a <code>java</code> executable.</p>
+<p>For example, on Windows 10 <code>JAVA_HOME</code> might be <code>C:/Program Files (x86)/Java/jre1.8.0_171</code>. 
+On Ubuntu and OS X, it might be the <code>/usr</code> directory.</p>
+<p>The <code>JAVA_HOME</code> variable can also be set to persist over sessions.
+Add the path to the <code>.Rprofile</code> by adding <code>Sys.setenv(JAVA_HOME = 'my path')</code>, and it will use that every time R is started.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>batch</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(
- <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"jsonlite.pdf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
- <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"curl.pdf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
- <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"table.docx"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
- <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"xml2.pdf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
- <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"R-FAQ.html"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
- <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"calculator.jpg"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
- <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"tika.apache.org.zip"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>)
-)
-<span class='no'>xml</span> <span class='kw'>&lt;-</span> <span class='fu'>tika_xml</span>(<span class='no'>batch</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># Typically, this function returns the string 'java'.</span>
+<span class='fu'>java</span>()</div><div class='output co'>#&gt; [1] "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
