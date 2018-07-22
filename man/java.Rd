@@ -35,6 +35,7 @@ Add the path to the \code{.Rprofile} by adding \code{Sys.setenv(JAVA_HOME = 'my 
 \examples{
 \donttest{
 # Typically, this function returns the string 'java'.
+# If JAVA_HOME is set, it's a path to java in a 'bin' folder.
 java()
 }
 }

@@ -110,7 +110,7 @@
 <span class="cf">if</span>(<span class="kw">is.na</span>(<span class="kw"><a href="reference/tika_jar.html">tika_jar</a></span>())){
  <span class="kw"><a href="reference/install_tika.html">install_tika</a></span>()
 }</code></pre></div>
-<p>Read an introductory article at <a href="https://ropensci.github.io/rtika/articles/rtika_introduction.html" class="uri">https://ropensci.github.io/rtika/articles/rtika_introduction.html</a>.</p>
+<p>Read an <a href="https://ropensci.github.io/rtika/articles/rtika_introduction.html">introductory article</a> at <a href="https://ropensci.github.io/rtika/articles/rtika_introduction.html" class="uri">https://ropensci.github.io/rtika/articles/rtika_introduction.html</a>.</p>
 </div>
 <div id="key-features" class="section level2">
 <h2 class="hasAnchor">
@@ -195,10 +195,23 @@ text &lt;-<span class="st"> </span><span class="kw"><a href="reference/tika_text
 <span class="co">#&gt; License MIT + file LICENSE</span></code></pre></div>
 <p>To learn more and find out how to extract structured text and metadata, read the vignette: <a href="https://ropensci.github.io/rtika/articles/rtika_introduction.html" class="uri">https://ropensci.github.io/rtika/articles/rtika_introduction.html</a>.</p>
 </div>
-<div id="similar-packages" class="section level2">
+<div id="enhancements" class="section level2">
 <h2 class="hasAnchor">
-<a href="#similar-packages" class="anchor"></a>Similar Packages</h2>
-<p>There is some overlap with many other text parsers, such as the R interface to antiword (See: <a href="https://github.com/ropensci/antiword" class="uri">https://github.com/ropensci/antiword</a>). Listing all of them would take a huge amount of space, since Apache Tika processes over a thousand file types (See: <a href="https://tika.apache.org/" class="uri">https://tika.apache.org/</a>). The main difference is that instead of specializing on a single format, Tika integrates dozens of specialist libraries from the Apache Foundation. Tika’s unified approach offers a bit less control, and in return eases the parsing of digital archives filled with possibly unpredictable file types.</p>
+<a href="#enhancements" class="anchor"></a>Enhancements</h2>
+<p>Tika also integrates with the Tesseract OCR program, which extracts plain text from images of text. If Tesseract is installed, Tika will automatically use it for images and PDFs that contain images of text. To get that installed, follow the Tesseract installation found in the <a href="https://github.com/ropensci/tesseract"><code>tesseract</code></a> package by <span class="citation">@jeroen</span>, which is an interface to the required program.</p>
+<p>The Apache Tika community welcomes your feedback. Issues regarding the R interface should be raised at the <code>rTika</code> <a href="https://github.com/ropensci/tesseract">Github Issue Tracker</a>. If you are confident the issue concerns Tika or one of its underlying parsers, use the Tika <a href="https://issues.apache.org/jira/projects/TIKA/issues">Bugtracking System</a>.</p>
+</div>
+<div id="similar-r-packages" class="section level2">
+<h2 class="hasAnchor">
+<a href="#similar-r-packages" class="anchor"></a>Similar R Packages</h2>
+<p>The <a href="https://github.com/ropensci/pdftools"><code>pdftools</code></a> package extracts metadata and text from PDF files, the <a href="%3Chttps://github.com/ropensci/antiword"><code>antiword</code></a> package extracts text from recent versions of Word, and the <code>epubr</code> package by <span class="citation">@leonawicz</span> processes <code>epub</code> files. These do not depend on Java. Listing all of the similar packages would be an undertaking, since Apache Tika processes over a thousand file types.</p>
+<p>The big difference between Tika and a specialized parser is that Tika integrates dozens of specialist libraries maintained by the Apache Foundation. While Tika’s unified approach offers a bit less control, it eases the processing of digital archives that contain unpredictable files.</p>
+<p>For example, researchers use Tika to process archives from court cases, governments, or the Internet Archive that span multiple years. These archives frequently contain diverse formats and multiple versions of each format. Because Tika finds the matching parser for each file, is well suited. In general, the parsing quality is very good.</p>
+<p>On the other hand, a specialized library may offer more options. For example, the <a href="https://github.com/ropensci/tabulizer"><code>tabulizer</code></a> package by <span class="citation">@leeper</span> and <span class="citation">@tpaskhalis</span> includes bindings to the ‘Tabula PDF Table Extractor Library’. Because PDF files store tables as a series of positions with no clear boundaries, extracting a <code>data.frame</code> or <code>matrix</code> requires heuristics and customization. On the other hand, Tika extracts PDF tables as plain text. For those formats that store tables semantically, like Word, Tika extracts them as XHTML that can be turned into a <code>data.frame</code> using <code><a href="http://www.rdocumentation.org/packages/rvest/topics/html_table">rvest::html_table()</a></code>.</p>
+</div>
+<div id="history" class="section level2">
+<h2 class="hasAnchor">
+<a href="#history" class="anchor"></a>History</h2>
 <p>In September 2017, github.com user <em>kyusque</em> released <code>tikaR</code>, which uses the <code>rJava</code> package to interact with Tika (See: <a href="https://github.com/kyusque/tikaR" class="uri">https://github.com/kyusque/tikaR</a>). As of writing, it provided similar text and metadata extraction, but only <code>xml</code> output.</p>
 <p>Back in March 2012, I started a similar project to interface with Apache Tika. My code also used low-level functions from the <code>rJava</code> package. I halted development after discovering that the Tika command line interface (CLI) was easier to use. My empty repository is at <a href="https://r-forge.r-project.org/projects/r-tika/" class="uri">https://r-forge.r-project.org/projects/r-tika/</a>.</p>
 <p>I chose to finally develop this package after getting excited by Tika’s new ‘batch processor’ module, written in Java. The batch processor has very good efficiency when processing tens of thousands of documents. Further, it is not too slow for a single document either, and handles errors gracefully. Connecting <code>R</code> to the Tika batch processor turned out to be relatively simple, because the <code>R</code> code is simple. It uses the CLI to point Tika to the files. Simplicity, along with continuous testing, should ease integration. I anticipate that some researchers will need plain text output, while others will want <code>json</code> output. Some will want multiple processing threads to speed things up. These features are now implemented in <code>rtika</code>, although apparently not in <code>tikaR</code> yet.</p>

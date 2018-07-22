@@ -3,11 +3,11 @@
 
 ### NEW FEATURES
 
-    * The new java() function is used internally to get the command to invoke Java, and allows the option of changing its value across sessions. If you want to use a particular installation of Java, set the JAVA_HOME variable using the Sys.setenv(JAVA_HOME = 'my path'). The java() function will check for this variable, and return it instead of the default 'java' invocation if found. 
+  * The new java() function is used get the command to invoke Java for all tika() functions, and allows the option of changing its value across sessions. If you want to use a particular installation of Java, set the JAVA_HOME variable using the Sys.setenv(JAVA_HOME = 'my path'). The java() function will check for this variable, and if found return it instead of the default 'java' invocation. 
 
 ### MINOR IMPROVEMENTS
 
-  * The tika_check function now uses the more advance SHA512 checksum instead of the MD5. To implement this, the 'digest' pacakge is now a dependency.
+  * The tika_check function now uses the more advance SHA512 checksum instead of the MD5. To implement this, the 'digest' package is now a dependency.
 
  rtika 0.1.8 (2018-04-25)
 ========================= 
