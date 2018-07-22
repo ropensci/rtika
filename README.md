@@ -32,7 +32,7 @@ if(is.na(tika_jar())){
 }
 ```
 
-Read an introductory article at <https://ropensci.github.io/rtika/articles/rtika_introduction.html>.
+Read an [introductory article](https://ropensci.github.io/rtika/articles/rtika_introduction.html) at <https://ropensci.github.io/rtika/articles/rtika_introduction.html>.
 
 Key Features
 ------------
@@ -113,10 +113,26 @@ cat(substr(text[1], 54, 190))
 
 To learn more and find out how to extract structured text and metadata, read the vignette: <https://ropensci.github.io/rtika/articles/rtika_introduction.html>.
 
-Similar Packages
-----------------
+Enhancements
+------------
 
-There is some overlap with many other text parsers, such as the R interface to antiword (See: <https://github.com/ropensci/antiword>). Listing all of them would take a huge amount of space, since Apache Tika processes over a thousand file types (See: <https://tika.apache.org/>). The main difference is that instead of specializing on a single format, Tika integrates dozens of specialist libraries from the Apache Foundation. Tika's unified approach offers a bit less control, and in return eases the parsing of digital archives filled with possibly unpredictable file types.
+Tika also integrates with the Tesseract OCR program, which extracts plain text from images of text. If Tesseract is installed, Tika will automatically use it for images and PDFs that contain images of text. To get that installed, follow the Tesseract installation found in the [`tesseract`](https://github.com/ropensci/tesseract) package by @jeroen, which is an interface to the required program.
+
+The Apache Tika community welcomes your feedback. Issues regarding the R interface should be raised at the `rTika` [Github Issue Tracker](https://github.com/ropensci/tesseract). If you are confident the issue concerns Tika or one of its underlying parsers, use the Tika [Bugtracking System](https://issues.apache.org/jira/projects/TIKA/issues).
+
+Similar R Packages
+------------------
+
+The [`pdftools`](https://github.com/ropensci/pdftools) package extracts metadata and text from PDF files, the [`antiword`](%3Chttps://github.com/ropensci/antiword) package extracts text from recent versions of Word, and the `epubr` package by @leonawicz processes `epub` files. These do not depend on Java. Listing all of the similar packages would be an undertaking, since Apache Tika processes over a thousand file types.
+
+The big difference between Tika and a specialized parser is that Tika integrates dozens of specialist libraries maintained by the Apache Foundation. While Tika's unified approach offers a bit less control, it eases the processing of digital archives that contain unpredictable files.
+
+For example, researchers use Tika to process archives from court cases, governments, or the Internet Archive that span multiple years. These archives frequently contain diverse formats and multiple versions of each format. Because Tika finds the matching parser for each file, is well suited. In general, the parsing quality is very good.
+
+On the other hand, a specialized library may offer more options. For example, the [`tabulizer`](https://github.com/ropensci/tabulizer) package by @leeper and @tpaskhalis includes bindings to the 'Tabula PDF Table Extractor Library'. Because PDF files store tables as a series of positions with no clear boundaries, extracting a `data.frame` or `matrix` requires heuristics and customization. On the other hand, Tika extracts PDF tables as plain text. For those formats that store tables semantically, like Word, Tika extracts them as XHTML that can be turned into a `data.frame` using `rvest::html_table()`.
+
+History
+-------
 
 In September 2017, github.com user *kyusque* released `tikaR`, which uses the `rJava` package to interact with Tika (See: <https://github.com/kyusque/tikaR>). As of writing, it provided similar text and metadata extraction, but only `xml` output.
 
