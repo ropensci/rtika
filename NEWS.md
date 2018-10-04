@@ -1,9 +1,10 @@
- rtika 0.1.9 (2018-07-08)
+ rtika 1.0.0 (2018-07-08)
 ========================= 
 
 ### NEW FEATURES
 
   * The new java() function is used get the command to invoke Java for all tika() functions, and allows the option of changing its value across sessions. If you want to use a particular installation of Java, set the JAVA_HOME variable using the Sys.setenv(JAVA_HOME = 'my path'). The java() function will check for this variable, and if found return it instead of the default 'java' invocation. 
+  * Updated to Tika version 1.19. 
 
 ### MINOR IMPROVEMENTS
 

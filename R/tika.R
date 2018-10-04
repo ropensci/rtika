@@ -4,7 +4,7 @@
 #' Get either plain text or structured \code{XHTML}.
 #' Metadata includes \code{Content-Type}, character encoding, and Exif data from
 #' jpeg or tiff images. See the long list of supported file types:
-#' \url{https://tika.apache.org/1.18/formats.html}.
+#' \url{https://tika.apache.org/1.19/formats.html}.
 #'
 #' @param input Character vector describing the paths to the input documents.
 #' Strings starting with 'http://','https://', or 'ftp://' are downloaded to a
@@ -213,7 +213,7 @@ tika <- function(input,
   )
   # TODO: consider a config file
   # for fine grained control over parsers.
-  # see: https://tika.apache.org/1.18/configuring.html
+  # see: https://tika.apache.org/1.19/configuring.html
   # but waiting for batch format to stabilize.
 
   # Define return variable structure  -----------------------------------

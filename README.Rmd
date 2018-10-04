@@ -6,6 +6,16 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+if(!requireNamespace('rtika')){
+    install.packages('rtika', 
+        repos = 'https://cloud.r-project.org')
+}
+
+library('rtika')
+
+if(is.na(tika_jar())){
+ install_tika()
+}
 ```
 
 # rtika
@@ -25,21 +35,15 @@ This is an R interface to the Tika software.
 ## Installation
 To start, you need R and `Java 8` or `OpenJDK 1.8`. Higher versions work. To check your version, run the command `java -version` from a terminal. 
 Get Java installation tips at <https://www.java.com/en/download/> or <http://openjdk.java.net/install/>. 
-Because the `rJava` package is ***not*** required, installation is simple. You can cut and paste the following:
+Because the `rJava` package is ***not*** required, installation is simple. You can cut and paste the following snippet:
 
-```{r,results = "hide", message = FALSE }
-
-if(!requireNamespace('rtika')){
-    install.packages('rtika', 
-        repos = 'https://cloud.r-project.org')
-}
+```{r, eval=FALSE}
+install.packages('rtika', repos = 'https://cloud.r-project.org')
 
 library('rtika')
 
- # You need to install the Apache Tika .jar once.
-if(is.na(tika_jar())){
- install_tika()
-}
+# You need to install the Apache Tika .jar once.
+install_tika()
 
 ```
 
@@ -84,7 +88,7 @@ Tika parses and extracts text or metadata from over one thousand digital formats
 * Crypto formats
 
 
-For a list of MIME types, see: https://tika.apache.org/1.18/formats.html
+For a list of MIME types, see: https://tika.apache.org/1.19/formats.html
 
 ## Get Plain Text
 
@@ -117,19 +121,24 @@ To learn more and find out how to extract structured text and metadata, read the
 
 ## Enhancements
 
-Tika also integrates with the Tesseract OCR program, which extracts plain text from images of text. If Tesseract is installed, Tika will automatically use it for images and PDFs that contain images of text. To get that installed, follow the Tesseract installation found in the [`tesseract`](https://github.com/ropensci/tesseract) package by @jeroen, which is an interface to the required program.
+Tika also integrates with the Tesseract OCR program, which extracts plain text from images of text. If Tesseract is installed, Tika will automatically use it for images and PDFs that contain images of text. To get that working, follow the [Tesseract installation instructions](https://github.com/tesseract-ocr/tesseract/wiki). The next time Tika is run, it  should detect Tesseract. Alternately, you may try the [`tesseract`](https://github.com/ropensci/tesseract) package by @jeroen, which is a R interface to the required program and has several installation methods.
 
-The Apache Tika community welcomes your feedback. Issues regarding the R interface should be raised at the `rTika` [Github Issue Tracker](https://github.com/ropensci/tesseract). If you are confident the issue concerns Tika or one of its underlying parsers, use the Tika [Bugtracking System](https://issues.apache.org/jira/projects/TIKA/issues). 
+The Apache Tika community welcomes your feedback. Issues regarding the R interface should be raised at the [`rTika` Github Issue Tracker](https://github.com/ropensci/tesseract). If you are confident the issue concerns Tika or one of its underlying parsers, use the [Tika Bugtracking System](https://issues.apache.org/jira/projects/TIKA/issues). 
+
+## Using the Tika App Directly
+
+If your project or package needs to use the Tika App `.jar`, you can include `rTika` as a dependency and call the `rtika::tika_jar()` function to get the path to the Tika app installed on the system. 
+
 
 ## Similar R Packages
 
-The [`pdftools`](https://github.com/ropensci/pdftools) package extracts metadata and text from PDF files, the [`antiword`](<https://github.com/ropensci/antiword) package extracts text from recent versions of Word, and the `epubr` package by @leonawicz processes `epub` files. These do not depend on Java. Listing all of the similar packages would be an undertaking, since Apache Tika processes over a thousand file types. 
+The [`pdftools`](https://github.com/ropensci/pdftools) package extracts metadata and text from PDF files, the [`antiword`](https://github.com/ropensci/antiword) package extracts text from recent versions of Word, and the [`epubr`](https://github.com/ropensci/epubr) package by @leonawicz processes `epub` files. These do not depend on Java. Listing all of the similar packages would be an undertaking, since Apache Tika processes over a thousand file types. 
 
 The big difference between Tika and a specialized parser is that Tika integrates dozens of specialist libraries maintained by the Apache Foundation. While Tika's unified approach offers a bit less control, it eases the processing of digital archives that contain unpredictable files. 
 
-For example, researchers use Tika to process archives from court cases, governments, or the Internet Archive that span multiple years. These archives frequently contain diverse formats and multiple versions of each format. Because Tika finds the matching parser for each file, is well suited. In general, the parsing quality is very good.
+For example, researchers use Tika to process archives from court cases, governments, or the Internet Archive that span multiple years. These archives frequently contain diverse formats and multiple versions of each format. Because Tika finds the matching parser for each file, is well suited to diverse documents. In general, the parsing quality is very good and consistently so. In contrast, certain specialized parsers only work with a particular version of a file, and require more tinkering. 
 
-On the other hand, a specialized library may offer more options. For example, the [`tabulizer`](https://github.com/ropensci/tabulizer) package by @leeper and @tpaskhalis includes bindings to the 'Tabula PDF Table Extractor Library'. Because PDF files store tables as a series of positions with no clear boundaries, extracting a `data.frame` or `matrix` requires heuristics and customization. On the other hand, Tika extracts PDF tables as plain text. For those formats that store tables semantically, like Word, Tika extracts them as XHTML that can be turned into a `data.frame` using `rvest::html_table()`. 
+On the other hand, a specialized library may offer certain advantages when it comes to structured data and formatting. For example, the [`tabulizer`](https://github.com/ropensci/tabulizer) package by @leeper and @tpaskhalis includes bindings to the 'Tabula PDF Table Extractor Library'. Because PDF files store tables as a series of positions with no clear boundaries between data cells, extracting a `data.frame` or `matrix` requires heuristics and customization. In the case of extracting tables, Tika is a bit less useful for PDFs and extracts plain text with various whitespaces between cells and new lines between rows. While it produces plain from this format, this is not always the case. Tika is still quite powerful and in fact there are formats where `rtika` will extract table-like XML. For example, with Word documents, Tika extracts XHTML that can be turned into a tabular `data.frame` using the `rvest::html_table()` function. 
 
 ## History
 
@@ -148,7 +157,8 @@ Connecting `R` to the Tika batch processor turned out to be relatively simple, b
 It uses the CLI to point Tika to the files. Simplicity, along with continuous testing, should ease integration.
 I anticipate that some researchers will need plain text output, while others will want `json` output.
 Some will want multiple processing threads to speed things up.
-These features are now implemented in `rtika`, although apparently not in `tikaR` yet. 
+These features are now implemented in `rtika`, although apparently not in `tikaR` yet.
+
 
 ## Code of Conduct
 Please note that this project is released with a [Contributor Code of Conduct](https://github.com/ropensci/rtika/blob/master/CONDUCT.md). By participating in this project you agree to abide by its terms.

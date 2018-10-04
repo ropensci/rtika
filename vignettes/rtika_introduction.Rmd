@@ -314,7 +314,7 @@ It may be surprising to learn that Word documents are containers (at least the m
 
 Out of the box, `rtika` uses all the available Tika Detectors and Parsers and runs with sensible defaults. For most, this will work well.
 
-In future versions, Tika uses a configuration file to customize parsing. This config file option is on hold in `rtika`, because Tika's batch module is still new and the config file format will likely change in Tika 1.18 and be backward incompatible with Tika 1.17. Please stay tuned.
+In future versions, Tika uses a configuration file to customize parsing. This config file option is on hold in `rtika`, because Tika's batch module is still new and the config file format will likely change and be backward incompatible. Please stay tuned.
 
 There is also room for improvement with the document formats common in the R community, especially Latex and Markdown. Tika currently reads and writes these formats just fine, captures metadata and recognizes the MIME type when downloading with `tika_fetch()`. However, Tika does not have parsers to fully understand the Latex or Markdown document structure, render it to XHTML, and extract the plain text while ignoring markup. For these cases, Pandoc will be more useful (See: https://pandoc.org/demos.html ). 
 

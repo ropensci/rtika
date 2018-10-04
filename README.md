@@ -18,18 +18,12 @@ Installation
 To start, you need R and `Java 8` or `OpenJDK 1.8`. Higher versions work. To check your version, run the command `java -version` from a terminal. Get Java installation tips at <https://www.java.com/en/download/> or <http://openjdk.java.net/install/>. Because the `rJava` package is ***not*** required, installation is simple. You can cut and paste the following:
 
 ``` r
-
-if(!requireNamespace('rtika')){
-    install.packages('rtika', 
-        repos = 'https://cloud.r-project.org')
-}
+install.packages('rtika', repos = 'https://cloud.r-project.org')
 
 library('rtika')
 
- # You need to install the Apache Tika .jar once.
-if(is.na(tika_jar())){
- install_tika()
-}
+# You need to install the Apache Tika .jar once.
+rtika::install_tika()
 ```
 
 Read an [introductory article](https://ropensci.github.io/rtika/articles/rtika_introduction.html) at <https://ropensci.github.io/rtika/articles/rtika_introduction.html>.
@@ -116,14 +110,19 @@ To learn more and find out how to extract structured text and metadata, read the
 Enhancements
 ------------
 
-Tika also integrates with the Tesseract OCR program, which extracts plain text from images of text. If Tesseract is installed, Tika will automatically use it for images and PDFs that contain images of text. To get that installed, follow the Tesseract installation found in the [`tesseract`](https://github.com/ropensci/tesseract) package by @jeroen, which is an interface to the required program.
+Tika also integrates with the Tesseract OCR program, which extracts plain text from images of text. If Tesseract is installed, Tika will automatically use it for images and PDFs that contain images of text. To get that working, follow the [Tesseract installation instructions](https://github.com/tesseract-ocr/tesseract/wiki). The next time Tika is run, it should detect Tesseract. Alternately, you may try the [`tesseract`](https://github.com/ropensci/tesseract) package by @jeroen, which is a R interface to the required program and has several installation methods.
 
-The Apache Tika community welcomes your feedback. Issues regarding the R interface should be raised at the `rTika` [Github Issue Tracker](https://github.com/ropensci/tesseract). If you are confident the issue concerns Tika or one of its underlying parsers, use the Tika [Bugtracking System](https://issues.apache.org/jira/projects/TIKA/issues).
+The Apache Tika community welcomes your feedback. Issues regarding the R interface should be raised at the [`rTika` Github Issue Tracker](https://github.com/ropensci/tesseract). If you are confident the issue concerns Tika or one of its underlying parsers, use the [Tika Bugtracking System](https://issues.apache.org/jira/projects/TIKA/issues).
+
+Using the Tika App Directly
+---------------------------
+
+If your project or package needs to use the Tika App `.jar`, you can include `rTika` as a dependency and call the `rtika::tika_jar()` function to get the path to the installed Tika app on the system.
 
 Similar R Packages
 ------------------
 
-The [`pdftools`](https://github.com/ropensci/pdftools) package extracts metadata and text from PDF files, the [`antiword`](%3Chttps://github.com/ropensci/antiword) package extracts text from recent versions of Word, and the `epubr` package by @leonawicz processes `epub` files. These do not depend on Java. Listing all of the similar packages would be an undertaking, since Apache Tika processes over a thousand file types.
+The [`pdftools`](https://github.com/ropensci/pdftools) package extracts metadata and text from PDF files, the [`antiword`](https://github.com/ropensci/antiword) package extracts text from recent versions of Word, and the [`epubr`](https://github.com/ropensci/epubr) package by @leonawicz processes `epub` files. These do not depend on Java. Listing all of the similar packages would be an undertaking, since Apache Tika processes over a thousand file types.
 
 The big difference between Tika and a specialized parser is that Tika integrates dozens of specialist libraries maintained by the Apache Foundation. While Tika's unified approach offers a bit less control, it eases the processing of digital archives that contain unpredictable files.
 
