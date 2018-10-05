@@ -167,12 +167,10 @@ tika <- function(input,
   # When updating the package, run these functions in order:
   # devtools::document() # sets up NAMESPACE and .Rd documentation files to match function
   # devtools::test(); 
-
-    # Sys.setenv(NOT_CRAN = TRUE) # for vignette
-    # devtools::build_vignettes() ;
+  # devtools::build()
+  
    
-    
-  # pkgdown::clean_site() ; pkgdown::build_site() # https://www.r-bloggers.com/building-a-website-with-pkgdown-a-short-guide/
+  # Sys.setenv(NOT_CRAN = TRUE); pkgdown::clean_site() ; pkgdown::build_site() # https://www.r-bloggers.com/building-a-website-with-pkgdown-a-short-guide/
     
    
   
