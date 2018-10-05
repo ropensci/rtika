@@ -308,7 +308,32 @@ thousands of documents to process.</p>
   <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"calculator.jpg"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
   <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"tika.apache.org.zip"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>)
 )
-<span class='no'>text</span> <span class='kw'>=</span> <span class='fu'>tika</span>(<span class='no'>batch</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: path[1]="/tmp/Rtmpz0ymkX/rtika_dir85a66ec14b4a/home/project/rtika/inst/extdata/jsonlite.pdf.txt": No such file or directory</span></div><div class='output co'>#&gt; <span class='warning'>Warning: path[2]="/tmp/Rtmpz0ymkX/rtika_dir85a66ec14b4a/home/project/rtika/inst/extdata/curl.pdf.txt": No such file or directory</span></div><div class='output co'>#&gt; <span class='warning'>Warning: path[3]="/tmp/Rtmpz0ymkX/rtika_dir85a66ec14b4a/home/project/rtika/inst/extdata/table.docx.txt": No such file or directory</span></div><div class='output co'>#&gt; <span class='warning'>Warning: path[4]="/tmp/Rtmpz0ymkX/rtika_dir85a66ec14b4a/home/project/rtika/inst/extdata/xml2.pdf.txt": No such file or directory</span></div><div class='output co'>#&gt; <span class='warning'>Warning: path[5]="/tmp/Rtmpz0ymkX/rtika_dir85a66ec14b4a/home/project/rtika/inst/extdata/R-FAQ.html.txt": No such file or directory</span></div><div class='output co'>#&gt; <span class='warning'>Warning: path[6]="/tmp/Rtmpz0ymkX/rtika_dir85a66ec14b4a/home/project/rtika/inst/extdata/calculator.jpg.txt": No such file or directory</span></div><div class='output co'>#&gt; <span class='warning'>Warning: path[7]="/tmp/Rtmpz0ymkX/rtika_dir85a66ec14b4a/home/project/rtika/inst/extdata/tika.apache.org.zip.txt": No such file or directory</span></div><div class='input'><span class='fu'>cat</span>(<span class='fu'>substr</span>(<span class='no'>text</span>[<span class='fl'>1</span>],<span class='fl'>45</span>,<span class='fl'>450</span>))</div><div class='output co'>#&gt; NA</div><div class='input'>
+<span class='no'>text</span> <span class='kw'>=</span> <span class='fu'>tika</span>(<span class='no'>batch</span>)
+<span class='fu'>cat</span>(<span class='fu'>substr</span>(<span class='no'>text</span>[<span class='fl'>1</span>],<span class='fl'>45</span>,<span class='fl'>450</span>))</div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; Package ‘jsonlite’
+#&gt; June 1, 2017
+#&gt; 
+#&gt; Version 1.5
+#&gt; Title A Robust, High Performance JSON Parser and Generator for R
+#&gt; License MIT + file LICENSE
+#&gt; NeedsCompilation yes
+#&gt; Depends methods
+#&gt; Author Jeroen Ooms, Duncan Temple Lang, Lloyd Hilaiel
+#&gt; 
+#&gt; URL https://arxiv.org/abs/1403.2805,
+#&gt; https://www.opencpu.org/posts/jsonlite-a-smarter-json-encoder
+#&gt; 
+#&gt; BugReports http://github.com/jeroen/jsonlite/issues
+#&gt; Maintainer Jero</div><div class='input'>
 <span class='co'>#more complex metadata</span>
 <span class='kw'>if</span>(<span class='fu'>requireNamespace</span>(<span class='st'>'jsonlite'</span>)){
 
@@ -323,7 +348,30 @@ thousands of documents to process.</p>
   <span class='fu'>lapply</span>(<span class='no'>metadata</span>, <span class='kw'>function</span>(<span class='no'>x</span>){ <span class='fu'>as.character</span>(<span class='no'>x</span>$<span class='st'>'Creation-Date'</span>) })
 
   <span class='fu'>lapply</span>(<span class='no'>metadata</span>, <span class='kw'>function</span>(<span class='no'>x</span>){  <span class='fu'>as.character</span>(<span class='no'>x</span>$<span class='st'>'X-TIKA:embedded_resource_path'</span>) })
-}</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: jsonlite</span></div><div class='output co'>#&gt; <span class='warning'>Warning: path[1]="/tmp/Rtmpz0ymkX/rtika_dir85a6744f7e13/home/project/rtika/inst/extdata/jsonlite.pdf.json": No such file or directory</span></div><div class='output co'>#&gt; <span class='warning'>Warning: path[2]="/tmp/Rtmpz0ymkX/rtika_dir85a6744f7e13/home/project/rtika/inst/extdata/curl.pdf.json": No such file or directory</span></div><div class='output co'>#&gt; <span class='warning'>Warning: path[3]="/tmp/Rtmpz0ymkX/rtika_dir85a6744f7e13/home/project/rtika/inst/extdata/table.docx.json": No such file or directory</span></div><div class='output co'>#&gt; <span class='warning'>Warning: path[4]="/tmp/Rtmpz0ymkX/rtika_dir85a6744f7e13/home/project/rtika/inst/extdata/xml2.pdf.json": No such file or directory</span></div><div class='output co'>#&gt; <span class='warning'>Warning: path[5]="/tmp/Rtmpz0ymkX/rtika_dir85a6744f7e13/home/project/rtika/inst/extdata/R-FAQ.html.json": No such file or directory</span></div><div class='output co'>#&gt; <span class='warning'>Warning: path[6]="/tmp/Rtmpz0ymkX/rtika_dir85a6744f7e13/home/project/rtika/inst/extdata/calculator.jpg.json": No such file or directory</span></div><div class='output co'>#&gt; <span class='warning'>Warning: path[7]="/tmp/Rtmpz0ymkX/rtika_dir85a6744f7e13/home/project/rtika/inst/extdata/tika.apache.org.zip.json": No such file or directory</span></div><div class='output co'>#&gt; <span class='error'>Error in if (is.character(txt) &amp;&amp; length(txt) == 1 &amp;&amp; nchar(txt, type = "bytes") &lt;     1000 &amp;&amp; !validate(txt)) {    if (grepl("^https?://", txt, useBytes = TRUE)) {        loadpkg("curl")        h &lt;- curl::new_handle(useragent = paste("jsonlite /",             R.version.string))        curl::handle_setheaders(h, Accept = "application/json, text/*, */*")        txt &lt;- curl::curl(txt, handle = h)    }    else if (file.exists(txt)) {        txt &lt;- file(txt)    }}: missing value where TRUE/FALSE needed</span></div></pre>
+}</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: jsonlite</span></div><div class='output co'>#&gt; [[1]]
+#&gt; character(0)
+#&gt; 
+#&gt; [[2]]
+#&gt; character(0)
+#&gt; 
+#&gt; [[3]]
+#&gt; [1] NA            "/image1.jpg"
+#&gt; 
+#&gt; [[4]]
+#&gt; character(0)
+#&gt; 
+#&gt; [[5]]
+#&gt; character(0)
+#&gt; 
+#&gt; [[6]]
+#&gt; character(0)
+#&gt; 
+#&gt; [[7]]
+#&gt;  [1] NA                       "/index.html"            "/site.css"             
+#&gt;  [4] "/external.png"          "/icon_info_sml.gif"     "/icon_warning_sml.gif" 
+#&gt;  [7] "/icon_error_sml.gif"    "/icon_success_sml.gif"  "/tika.png"             
+#&gt; [10] "/mattmann_cover150.jpg" "/asf-logo.gif"         
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
