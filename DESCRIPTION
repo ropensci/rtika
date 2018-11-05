@@ -11,7 +11,7 @@ Authors@R: c(
 Maintainer: Sasha Goodman <goodmansasha@gmail.com>
 Imports: 
     curl,
-    sys,
+    sys (>= 2.0),
     stats,
     utils, 
     rappdirs,

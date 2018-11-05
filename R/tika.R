@@ -344,23 +344,6 @@ tika <- function(input,
     maxFileSizeBytes <- c("-maxFileSizeBytes", as.character(as.integer(max_file_size)))
   }
 
-  if (.Platform$OS.type == "windows") {
-    # Windows java requires quoting for paths
-    # but OS X and Ubuntu java run into problems with shQuote.
-    java_args <- c(
-      "-Djava.awt.headless=true",
-      "-jar", shQuote(jar),
-      numConsumers,
-      maxRestarts,
-      timeoutThresholdMillis,
-      maxFileSizeBytes,
-      args,
-      output_flag,
-      "-i", shQuote(root),
-      "-o", shQuote(output_dir),
-      "-fileList", shQuote(fileList)
-    )
-  } else {
     java_args <- c(
       "-Djava.awt.headless=true",
       "-jar", jar,
@@ -372,7 +355,6 @@ tika <- function(input,
       "-o", output_dir,
       "-fileList", fileList
     )
-  }
 
   # Compared to system2, sys is somehow much quicker when making the call to java.
   # TODO: catch java errors better.
