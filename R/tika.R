@@ -361,7 +361,7 @@ tika <- function(input,
 
   sys::exec_wait(
     cmd = java[1], args = java_args, std_out = !quiet,
-    std_err = !quiet
+    std_err = !quiet, std_in = FALSE
   )
 
   # retrieve results  --------------------------------------------------------
