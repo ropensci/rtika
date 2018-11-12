@@ -1,6 +1,6 @@
 .onAttach <- function(libname, pkgname) {
   # IMPORTANT: this is the version check, the version tested to currently work.
-  tika_jar_tested_version <- 1.19
+  tika_jar_tested_version <- "1.19.1"
 
   # Check if Java is there -------------------
   
@@ -61,8 +61,9 @@ rtika::install_tika()
 ")
   } else {
     # Check if Tika .jar version from .txt file  -------------------
+      
     tika_version <- tryCatch(
-      as.numeric(readLines(
+      as.character(readLines(
         file.path(
           rappdirs::user_data_dir("rtika"),
           "tika-app-version.txt"
@@ -80,11 +81,30 @@ Try reinstalling with:
 rtika::install_tika()
 ")
     } else {
-      if (tika_version > tika_jar_tested_version) {
+        # semantic variable comparison
+        .semver_compare <- function(a, b) {
+             pa = strsplit(a, '.', fixed = TRUE)[[1]]
+             pb = strsplit(b,'.', fixed = TRUE)[[1]]
+            for (i in 1:3) {
+                
+                na = as.numeric(pa[i])
+                 nb = as.numeric(pb[i])
+                 if (is.na(na) && is.na(nb))  { return(0)}
+                if (!is.na(na) && is.na(nb)) { return(1) }
+                if (is.na(na) && !is.na(nb)) { return(-1)}
+               
+                if (na > nb) { return(1) }
+                if (nb > na) { return(-1)}
+            }
+            return(0);
+        }
+        
+        
+      if (.semver_compare(tika_version,tika_jar_tested_version) > 0) {
           packageStartupMessage("The installed Apache Tika version is higher than the version tested with 'rtika'.")
       }
 
-      if (tika_version < tika_jar_tested_version) {
+      if (.semver_compare(tika_version,tika_jar_tested_version) < 0) {
           packageStartupMessage("The installed Apache Tika .jar is outdated. To update, type:
 
 rtika::install_tika()

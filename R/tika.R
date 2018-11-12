@@ -41,9 +41,9 @@
 #' which can accumulate. Defaults to \code{TRUE}. They are in \code{tempdir()}. These
 #' files are automatically removed at the end of the R session even if set to
 #' FALSE.
-#' @param lib.loc Optional character vector describing the library paths
-#' containing the \code{data.table} package. Normally, it's best to
-#' install these and leave this parameter alone. The parameter is included
+#' @param lib.loc Optional character vector describing the library paths.
+#' Normally, it's best to
+#' leave this parameter alone. The parameter is included
 #' mainly for package testing.
 #' @return A character vector in the same order and with the same length as
 #' \code{input}. Unprocessed files are \code{as.character(NA)}.
@@ -141,9 +141,6 @@
 #' version, set the path in the \code{java} attribute of the \code{tika}
 #' function.
 #'
-#' Having the \code{data.table} package installed will slightly speed up the
-#' communication between R and Tika, but especially if there are hundreds of
-#' thousands of documents to process.
 #'
 #' @export
 tika <- function(input,
@@ -169,13 +166,14 @@ tika <- function(input,
   # devtools::test(); 
   # devtools::build()
   
-   
-  # Sys.setenv(NOT_CRAN = TRUE); pkgdown::clean_site() ; pkgdown::build_site() # https://www.r-bloggers.com/building-a-website-with-pkgdown-a-short-guide/
+  
+  # pkgdown::clean_site() ; pkgdown::build_site() # https://www.r-bloggers.com/building-a-website-with-pkgdown-a-short-guide/
     
    
   
   # Suggested functions to run occasionally:
   # goodpractice::gp()
+    # Sys.setenv(NOT_CRAN = TRUE); 
   # styler::style_dir() # note this has made some files break in the past, 
 
   # TODO:  memory setting with java -Xmx1024m -jar.
@@ -300,15 +298,15 @@ tika <- function(input,
   # File paths containing both commas and quote characters appear to work.
   fileList <- normalizePath(tempfile("rtika_file"), mustWork = FALSE, winslash = "/")
 
-  if (requireNamespace("data.table", quietly = TRUE, lib.loc = lib.loc)) {
-    data.table::fwrite(
-      data.table::data.table(inputFiles),
-      fileList, row.names = FALSE,
-      col.names = FALSE,
-      sep = ",",
-      quote = FALSE
-    )
-  } else {
+  # if (requireNamespace("data.table", quietly = TRUE, lib.loc = lib.loc)) {
+  #   data.table::fwrite(
+  #     data.table::data.table(inputFiles),
+  #     fileList, row.names = FALSE,
+  #     col.names = FALSE,
+  #     sep = ",",
+  #     quote = FALSE
+  #   )
+  # } else {
     utils::write.table(
       inputFiles,
       fileList, row.names = FALSE,
@@ -316,7 +314,8 @@ tika <- function(input,
       sep = ",",
       quote = FALSE
     )
-  }
+  # }
+    
   # After the file is created, make sure it exists
   if (!file.exists(fileList)) {
     stop('Could not write to the tempfile for "fileList": ', fileList)
@@ -343,24 +342,7 @@ tika <- function(input,
   if (length(maxFileSizeBytes) > 0) {
     maxFileSizeBytes <- c("-maxFileSizeBytes", as.character(as.integer(max_file_size)))
   }
-
-  if (.Platform$OS.type == "windows") {
-    # Windows java requires quoting for paths
-    # but OS X and Ubuntu java run into problems with shQuote.
-    java_args <- c(
-      "-Djava.awt.headless=true",
-      "-jar", shQuote(jar),
-      numConsumers,
-      maxRestarts,
-      timeoutThresholdMillis,
-      maxFileSizeBytes,
-      args,
-      output_flag,
-      "-i", shQuote(root),
-      "-o", shQuote(output_dir),
-      "-fileList", shQuote(fileList)
-    )
-  } else {
+  
     java_args <- c(
       "-Djava.awt.headless=true",
       "-jar", jar,
@@ -372,14 +354,10 @@ tika <- function(input,
       "-o", output_dir,
       "-fileList", fileList
     )
-  }
-
-  # Compared to system2, sys is somehow much quicker when making the call to java.
-  # TODO: catch java errors better.
 
   sys::exec_wait(
     cmd = java[1], args = java_args, std_out = !quiet,
-    std_err = !quiet
+    std_err = !quiet, std_in = FALSE
   )
 
   # retrieve results  --------------------------------------------------------

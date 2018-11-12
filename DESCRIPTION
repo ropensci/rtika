@@ -1,7 +1,7 @@
 Package: rtika
 Type: Package
 Title: R Interface to 'Apache Tika' 
-Version: 1.1.19
+Version: 1.19.1
 Authors@R: c(
     person(given = "Sasha", family = "Goodman", email="goodmansasha@gmail.com", role=c("aut","cre") ), 
     person(given = "The Apache Software Foundation", role=c("aut","cph") ),
@@ -11,7 +11,7 @@ Authors@R: c(
 Maintainer: Sasha Goodman <goodmansasha@gmail.com>
 Imports: 
     curl,
-    sys,
+    sys (>= 2.1),
     stats,
     utils, 
     rappdirs,

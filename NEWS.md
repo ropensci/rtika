@@ -1,3 +1,12 @@
+ rtika 1.19.1 (2018-07-08)
+========================= 
+
+### MINOR IMPROVEMENTS
+
+    * Updated Tika to 1.19.1.
+    * Updated the 'sys' package integration, and Jeroen informed the Tika team of an unexpected method of interprocess communication in the batch processor.
+
+
  rtika 1.1.19 (2018-07-08)
 ========================= 
 

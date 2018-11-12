@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
 if(NOT_CRAN){
   if(is.na(rtika::tika_jar())){ rtika::install_tika() }  
 }
@@ -48,11 +49,11 @@ Video, sound and images are important, and yet much meaningful data remains nume
 
 I recommend an analyst start with a directory on the computer and get a vector of paths to each file using `base::list.files()`. The commented code below has a recipe. Here, I use test files that are included with the package.
 
-```{r, eval=NOT_CRAN}
+```{r, eval=NOT_CRAN} 
 
-    
 library('rtika')
 library('magrittr')
+
 # Code to get ALL the files in my_path:
 
 # my_path <- "~"
@@ -230,7 +231,7 @@ Metadata can also accessed with `tika_json()` and `tika_json_text()`. Consider a
 
 ```{r, eval=NOT_CRAN}
 library('jsonlite')
-#batch <- system.file("extdata", "calculator.jpg", package = "rtika")
+# batch <- system.file("extdata", "calculator.jpg", package = "rtika")
 
 # a list of data.frames
 metadata <-
