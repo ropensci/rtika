@@ -35,3 +35,4 @@ RoxygenNote: 6.1.0
 URL: http://github.com/ropensci/rtika
 BugReports: http://github.com/ropensci/rtika/issues
 VignetteBuilder: knitr
+Remotes: jeroen/sys

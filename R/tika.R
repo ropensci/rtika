@@ -342,7 +342,11 @@ tika <- function(input,
   if (length(maxFileSizeBytes) > 0) {
     maxFileSizeBytes <- c("-maxFileSizeBytes", as.character(as.integer(max_file_size)))
   }
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> 239ce261a384690a58d8019db4cdf1efd8c3e7d4
     java_args <- c(
       "-Djava.awt.headless=true",
       "-jar", jar,
@@ -354,6 +358,12 @@ tika <- function(input,
       "-o", output_dir,
       "-fileList", fileList
     )
+<<<<<<< HEAD
+=======
+
+  # Compared to system2, sys is somehow much quicker when making the call to java.
+  # TODO: catch java errors better.
+>>>>>>> 239ce261a384690a58d8019db4cdf1efd8c3e7d4
 
   sys::exec_wait(
     cmd = java[1], args = java_args, std_out = !quiet,

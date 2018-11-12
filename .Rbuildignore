@@ -2,6 +2,7 @@
 ^\.Rproj\.user$
 ^java
 ^\.travis\.yml$
+^appveyor.yml$
 ^README\.Rmd$
 ^tika-example$
 ^codecov\.yml$
