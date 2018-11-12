@@ -4,7 +4,7 @@ rtika
 
 ***Extract text or metadata from over a thousand file types.***
 
-[![Travis-CI Build Status](https://travis-ci.org/ropensci/rtika.svg?branch=master)](https://travis-ci.org/ropensci/rtika) [![Coverage status](https://codecov.io/gh/ropensci/rtika/branch/master/graph/badge.svg)](https://codecov.io/github/ropensci/rtika?branch=master) [![](https://badges.ropensci.org/191_status.svg)](https://github.com/ropensci/onboarding/issues/191)
+[![](https://badges.ropensci.org/191_status.svg)](https://github.com/ropensci/onboarding/issues/191) [![Travis-CI Build Status](https://travis-ci.org/ropensci/rtika.svg?branch=master)](https://travis-ci.org/ropensci/rtika) [![Build status](https://ci.appveyor.com/api/projects/status/9aqxnm7ku3ame7a6/branch/master?svg=true)](https://ci.appveyor.com/project/goodmansasha/rtika/branch/master) [![Coverage status](https://codecov.io/gh/ropensci/rtika/branch/master/graph/badge.svg)](https://codecov.io/github/ropensci/rtika?branch=master)
 
 > Apache Tika is a content detection and analysis framework, written in Java, stewarded at the Apache Software Foundation. It detects and extracts metadata and text from over a thousand different file types, and as well as providing a Java library, has server and command-line editions suitable for use from other programming languages ...
 
@@ -15,7 +15,7 @@ This is an R interface to the Tika software.
 Installation
 ------------
 
-To start, you need R and `Java 8` or `OpenJDK 1.8`. Higher versions work. To check your version, run the command `java -version` from a terminal. Get Java installation tips at <https://www.java.com/en/download/> or <http://openjdk.java.net/install/>. Because the `rJava` package is ***not*** required, installation is simple. You can cut and paste the following:
+To start, you need R and `Java 8` or `OpenJDK 1.8`. Higher versions work. To check your version, run the command `java -version` from a terminal. Get Java installation tips at <https://www.java.com/en/download/> or <http://openjdk.java.net/install/>. Because the `rJava` package is ***not*** required, installation is simple. You can cut and paste the following snippet:
 
 ``` r
 install.packages('rtika', repos = 'https://cloud.r-project.org')
@@ -23,7 +23,7 @@ install.packages('rtika', repos = 'https://cloud.r-project.org')
 library('rtika')
 
 # You need to install the Apache Tika .jar once.
-rtika::install_tika()
+install_tika()
 ```
 
 Read an [introductory article](https://ropensci.github.io/rtika/articles/rtika_introduction.html) at <https://ropensci.github.io/rtika/articles/rtika_introduction.html>.
@@ -68,7 +68,7 @@ Tika parses and extracts text or metadata from over one thousand digital formats
 -   Executable programs and libraries
 -   Crypto formats
 
-For a list of MIME types, see: <https://tika.apache.org/1.18/formats.html>
+For a list of MIME types, see the list for a recent version of Tika: <https://tika.apache.org/1.19.1/formats.html>
 
 Get Plain Text
 --------------
@@ -117,18 +117,16 @@ The Apache Tika community welcomes your feedback. Issues regarding the R interfa
 Using the Tika App Directly
 ---------------------------
 
-If your project or package needs to use the Tika App `.jar`, you can include `rTika` as a dependency and call the `rtika::tika_jar()` function to get the path to the installed Tika app on the system.
+If your project or package needs to use the Tika App `.jar`, you can include `rTika` as a dependency and call the `rtika::tika_jar()` function to get the path to the Tika app installed on the system.
 
 Similar R Packages
 ------------------
 
-The [`pdftools`](https://github.com/ropensci/pdftools) package extracts metadata and text from PDF files, the [`antiword`](https://github.com/ropensci/antiword) package extracts text from recent versions of Word, and the [`epubr`](https://github.com/ropensci/epubr) package by @leonawicz processes `epub` files. These do not depend on Java. Listing all of the similar packages would be an undertaking, since Apache Tika processes over a thousand file types.
+The are a number of specialized parsers that overlap in functionality. For example, the [`pdftools`](https://github.com/ropensci/pdftools) package extracts metadata and text from PDF files, the [`antiword`](https://github.com/ropensci/antiword) package extracts text from recent versions of Word, and the [`epubr`](https://github.com/ropensci/epubr) package by @leonawicz processes `epub` files. These packages do not depend on Java, while `rTika` does.
 
-The big difference between Tika and a specialized parser is that Tika integrates dozens of specialist libraries maintained by the Apache Foundation. While Tika's unified approach offers a bit less control, it eases the processing of digital archives that contain unpredictable files.
+The big difference between Tika and a specialized parser is that Tika integrates dozens of specialist libraries maintained by the Apache Foundation. Apache Tika processes over a thousand file types and multiple versions of each. This eases the processing of digital archives that contain unpredictable files. For example, researchers use Tika to process archives from court cases, governments, or the Internet Archive that span multiple years. These archives frequently contain diverse formats and multiple versions of each format. Because Tika finds the matching parser for each individual file, is well suited to diverse sets of documents. In general, the parsing quality is good and consistently so. In contrast, specialized parsers may only work with a particular version of a file, or require extra tinkering.
 
-For example, researchers use Tika to process archives from court cases, governments, or the Internet Archive that span multiple years. These archives frequently contain diverse formats and multiple versions of each format. Because Tika finds the matching parser for each file, is well suited. In general, the parsing quality is very good.
-
-On the other hand, a specialized library may offer more options. For example, the [`tabulizer`](https://github.com/ropensci/tabulizer) package by @leeper and @tpaskhalis includes bindings to the 'Tabula PDF Table Extractor Library'. Because PDF files store tables as a series of positions with no clear boundaries, extracting a `data.frame` or `matrix` requires heuristics and customization. On the other hand, Tika extracts PDF tables as plain text. For those formats that store tables semantically, like Word, Tika extracts them as XHTML that can be turned into a `data.frame` using `rvest::html_table()`.
+On the other hand, a specialized library can offer more control and features when it comes to structured data and formatting. For example, the [`tabulizer`](https://github.com/ropensci/tabulizer) package by @leeper and @tpaskhalis includes bindings to the 'Tabula PDF Table Extractor Library'. Because PDF files store tables as a series of positions with no obvious boundaries between data cells, extracting a `data.frame` or `matrix` requires heuristics and customization which that package provides. To be fair to Tika, there are some formats where `rtika` will extract data as table-like XML. For example, with Word and Excel documents, Tika extracts simple tables as XHTML data that can be turned into a tabular `data.frame` using the `rvest::html_table()` function.
 
 History
 -------
