@@ -163,22 +163,24 @@ tika <- function(input,
 
   # When updating the package, run these functions in order:
   # devtools::document() # sets up NAMESPACE and .Rd documentation files to match function
+  # installing the package and restarting it seems to be necessary before running the next step...
   # devtools::test(); 
   # devtools::build()
-  
-  
+  # devtools::build_vignettes()
+ 
+  # install and restart so vignette is updated and necessary files are cached
+  # Sys.setenv(NOT_CRAN = TRUE); 
   # pkgdown::clean_site() ; pkgdown::build_site() # https://www.r-bloggers.com/building-a-website-with-pkgdown-a-short-guide/
     
    
   
   # Suggested functions to run occasionally:
   # goodpractice::gp()
-    # Sys.setenv(NOT_CRAN = TRUE); 
+    # 
   # styler::style_dir() # note this has made some files break in the past, 
 
   # TODO:  memory setting with java -Xmx1024m -jar.
   # Probably also adjust child process -JXmx4g
-
 
   # Parameter sanity check --------------------------------------------
 
@@ -333,11 +335,7 @@ tika <- function(input,
   if (length(maxFileSizeBytes) > 0) {
     maxFileSizeBytes <- c("-maxFileSizeBytes", as.character(as.integer(max_file_size)))
   }
-<<<<<<< HEAD
   
-=======
-
->>>>>>> 239ce261a384690a58d8019db4cdf1efd8c3e7d4
     java_args <- c(
       "-Djava.awt.headless=true",
       "-jar", jar,
@@ -349,12 +347,6 @@ tika <- function(input,
       "-o", output_dir,
       "-fileList", fileList
     )
-<<<<<<< HEAD
-=======
-
-  # Compared to system2, sys is somehow much quicker when making the call to java.
-  # TODO: catch java errors better.
->>>>>>> 239ce261a384690a58d8019db4cdf1efd8c3e7d4
 
   sys::exec_wait(
     cmd = java[1], args = java_args, std_out = !quiet,

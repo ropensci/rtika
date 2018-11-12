@@ -11,6 +11,7 @@ bibliography: bibliography.bib
 ---
 
 ```{r setup, include = FALSE}
+# only evaluate code if "NOT_CRAN"
 NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 
 knitr::opts_chunk$set(

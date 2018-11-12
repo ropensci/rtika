@@ -59,9 +59,9 @@ which can accumulate. Defaults to \code{TRUE}. They are in \code{tempdir()}. The
 files are automatically removed at the end of the R session even if set to
 FALSE.}
 
-\item{lib.loc}{Optional character vector describing the library paths
-containing the \code{data.table} package. Normally, it's best to
-install these and leave this parameter alone. The parameter is included
+\item{lib.loc}{Optional character vector describing the library paths.
+Normally, it's best to
+leave this parameter alone. The parameter is included
 mainly for package testing.}
 }
 \value{
@@ -144,10 +144,6 @@ By default, this R package internally invokes Java by calling the \code{java}
 command from the command line. To specify the path to a particular Java
 version, set the path in the \code{java} attribute of the \code{tika}
 function.
-
-Having the \code{data.table} package installed will slightly speed up the
-communication between R and Tika, but especially if there are hundreds of
-thousands of documents to process.
 }
 
 \examples{
