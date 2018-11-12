@@ -298,15 +298,7 @@ tika <- function(input,
   # File paths containing both commas and quote characters appear to work.
   fileList <- normalizePath(tempfile("rtika_file"), mustWork = FALSE, winslash = "/")
 
-  # if (requireNamespace("data.table", quietly = TRUE, lib.loc = lib.loc)) {
-  #   data.table::fwrite(
-  #     data.table::data.table(inputFiles),
-  #     fileList, row.names = FALSE,
-  #     col.names = FALSE,
-  #     sep = ",",
-  #     quote = FALSE
-  #   )
-  # } else {
+
     utils::write.table(
       inputFiles,
       fileList, row.names = FALSE,
@@ -314,7 +306,6 @@ tika <- function(input,
       sep = ",",
       quote = FALSE
     )
-  # }
     
   # After the file is created, make sure it exists
   if (!file.exists(fileList)) {
