@@ -6,9 +6,9 @@
 #'
 #' @param version The declared Tika version
 #' @param digest The sha15 checksum. Set to an empty string \code{""} to skip the check.
-#' @param mirrors A vector Apache mirror sites. One is picked randomly.
+#' @param mirrors A vector of Apache mirror sites. One is picked randomly.
 #' @param retries The number of times to try the download.
-#' @param url Optional url of a particular file to download. Will override downloading from random mirrors.
+#' @param url Optional url to a particular location of the tika app. Setting this to any character string overrides downloading from random mirrors.
 #'
 #' @return Logical if the installation was successful.
 #' @examples

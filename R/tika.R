@@ -296,7 +296,7 @@ tika <- function(input,
   root <- normalizePath("/", winslash = "/")
   inputFiles <- sub(root, "", inputFiles, fixed = TRUE)
 
-  # fileList is a delimited versiob if inputFiles that will be passed to Tika.
+  # fileList is a delimited version if inputFiles that will be passed to Tika.
   # File paths containing both commas and quote characters appear to work.
   fileList <- normalizePath(tempfile("rtika_file"), mustWork = FALSE, winslash = "/")
 
