@@ -8,7 +8,8 @@
 #'
 #' @param input Character vector describing the paths to the input documents.
 #' Strings starting with 'http://','https://', or 'ftp://' are downloaded to a
-#' temporary directory first. Each file will be read, but not modified.
+#' temporary directory. On Windows, the local paths cannot span
+#' drives because of a Windows convention.
 #' @param output Optional character vector of the output format. The default,
 #' \code{"text"}, gets plain text without metadata. \code{"xml"} and
 #' \code{"html"} get \code{XHTML} text with metadata. \code{"jsonRecursive"}
@@ -32,6 +33,7 @@
 #' before the process is killed and restarted. Defaults to 300000. 
 #' @param max_file_size Integer of the maximum bytes allowed.
 #' Do not process files larger than this. The default is unlimited.
+#' @param config Path to the XML config file. Defaults to \code{system.file("extdata", "ocr.xml", package = "rtika")}'. There is also a \code{no-ocr.xml} file available.
 #' @param args Optional character vector of additional arguments passed to Tika,
 #' that may not yet be implemented in this R interface, in the pattern of
 #' \code{c('-arg1','setting1','-arg2','setting2')}. 
@@ -153,6 +155,7 @@ tika <- function(input,
                  max_restarts = integer(),
                  timeout = 300000,
                  max_file_size = integer(),
+                 config = system.file("extdata", "ocr.xml", package = "rtika"),
                  args = character(),
                  quiet = TRUE,
                  cleanup = TRUE,
@@ -208,6 +211,8 @@ tika <- function(input,
     length(timeout) <= 1,
     class(max_file_size) %in% c("integer", "numeric"),
     length(max_file_size) <= 1,
+    class(config) == 'character',
+    nchar(config) > 0,
     class(args) == "character",
     class(quiet) == "logical",
     class(cleanup) == "logical",
@@ -293,7 +298,12 @@ tika <- function(input,
   inputFiles <- normalizePath(input[file_exists], winslash = "/")
   # Tika expects files to be relative to root
   # NB: These paths will be READ, NOT written to!
-  root <- normalizePath("/", winslash = "/")
+  # Original way to get root path:
+  # root <- normalizePath("/", winslash = "/")
+  # on Windows, files cannot span drives. Tika expects relative paths, and Windows does not
+  # allow relative paths to span drives!
+  root <- regmatches(inputFiles[1],regexpr("^([A-Za-z:]*/)",inputFiles[1]))[1]
+  # remove proceeding drive letter on Windows, proceeding forward slash on *nix and OS X.
   inputFiles <- sub(root, "", inputFiles, fixed = TRUE)
 
   # fileList is a delimited version if inputFiles that will be passed to Tika.
@@ -336,6 +346,8 @@ tika <- function(input,
     maxFileSizeBytes <- c("-maxFileSizeBytes", as.character(as.integer(max_file_size)))
   }
   
+  
+  
     java_args <- c(
       "-Djava.awt.headless=true",
       "-jar", jar,
@@ -343,6 +355,7 @@ tika <- function(input,
       maxRestarts,
       timeoutThresholdMillis,
       maxFileSizeBytes,
+      c('-c', config),
       args, output_flag, "-i", root,
       "-o", output_dir,
       "-fileList", fileList

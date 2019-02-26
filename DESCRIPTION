@@ -1,7 +1,7 @@
 Package: rtika
 Type: Package
 Title: R Interface to 'Apache Tika' 
-Version: 1.19.1
+Version: 1.20
 Authors@R: c(
     person(given = "Sasha", family = "Goodman", email="goodmansasha@gmail.com", role=c("aut","cre") ), 
     person(given = "The Apache Software Foundation", role=c("aut","cph") ),
@@ -30,7 +30,7 @@ Description: Extract text or metadata from over a thousand file types, using Apa
 Depends: R (>= 3.1.0)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 URL: http://github.com/ropensci/rtika
 BugReports: http://github.com/ropensci/rtika/issues
 VignetteBuilder: knitr

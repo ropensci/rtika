@@ -1,4 +1,16 @@
- rtika 1.19.1 (2018-07-08)
+ rtika 1.20 (2019-02-26)
+========================= 
+
+### MINOR IMPROVEMENTS
+
+    * Updated Tika to 1.20
+    * Includes two config files to either turn on or off OCR. This is only relevant on Linux variants that have the Tesseract OCR engine installed.
+    
+### BUG FIX
+
+    * Created a workaround because normalizePath() on Windows produced inconsistent results. 
+
+rtika 1.19.1 (2018-07-08)
 ========================= 
 
 ### MINOR IMPROVEMENTS

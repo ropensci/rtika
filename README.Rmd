@@ -89,7 +89,7 @@ Tika parses and extracts text or metadata from over one thousand digital formats
 * Crypto formats
 
 
-For a list of MIME types, see the list for a recent version of Tika: https://tika.apache.org/1.19.1/formats.html
+For a list of MIME types, look for the "Supported Formats" page here: https://tika.apache.org/
 
 ## Get Plain Text
 
@@ -122,7 +122,7 @@ To learn more and find out how to extract structured text and metadata, read the
 
 ## Enhancements
 
-Tika also integrates with the Tesseract OCR program, which extracts plain text from images of text. If Tesseract is installed, Tika will automatically use it for images and PDFs that contain images of text. To get that working, follow the [Tesseract installation instructions](https://github.com/tesseract-ocr/tesseract/wiki). The next time Tika is run, it  should detect Tesseract. Alternately, you may try the [`tesseract`](https://github.com/ropensci/tesseract) package by @jeroen, which is a R interface to the required program and has several installation methods.
+Tika also can interact with the Tesseract OCR program on some Linux variants, to extract plain text from images of text. If `tesseract-ocr` is installed, Tika should automatically locate and use it for images and PDFs that contain images of text. However, this does not seem to work on OS X or Windows. To try on Linux, first follow the [Tesseract installation instructions](https://github.com/tesseract-ocr/tesseract/wiki). The next time Tika is run, it should work. For a different approach, I suggest [`tesseract`](https://github.com/ropensci/tesseract) package by @jeroen, which is a specialized R interface.
 
 The Apache Tika community welcomes your feedback. Issues regarding the R interface should be raised at the [`rTika` Github Issue Tracker](https://github.com/ropensci/tesseract). If you are confident the issue concerns Tika or one of its underlying parsers, use the [Tika Bugtracking System](https://issues.apache.org/jira/projects/TIKA/issues). 
 

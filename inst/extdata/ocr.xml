@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+    <parsers>
+        <parser class="org.apache.tika.parser.DefaultParser"/>
+        <parser class="org.apache.tika.parser.pdf.PDFParser">
+            <params>
+                <param name="extractInlineImages" type="bool">true</param>
+            </params>
+        </parser>
+    </parsers>
+</properties>
