@@ -148,7 +148,8 @@ jpeg or tiff images. See the long list of supported file types:
       <th>input</th>
       <td><p>Character vector describing the paths to the input documents.
 Strings starting with 'http://','https://', or 'ftp://' are downloaded to a
-temporary directory first. Each file will be read, but not modified.</p></td>
+temporary directory. On Windows, the local paths cannot span
+drives because of a Windows convention.</p></td>
     </tr>
     <tr>
       <th>output</th>
@@ -202,7 +203,7 @@ Do not process files larger than this. The default is unlimited.</p></td>
     </tr>
     <tr>
       <th>config</th>
-      <td><p>Path to the XML config file. Defaults to <code><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file("extdata", "ocr.xml", package = "rtika")</a></code>'. There is a <code>no-ocr.xml</code> version.</p></td>
+      <td><p>Path to the XML config file. Defaults to <code><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file("extdata", "ocr.xml", package = "rtika")</a></code>'. There is also a <code>no-ocr.xml</code> file available.</p></td>
     </tr>
     <tr>
       <th>args</th>

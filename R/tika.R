@@ -212,7 +212,6 @@ tika <- function(input,
     class(max_file_size) %in% c("integer", "numeric"),
     length(max_file_size) <= 1,
     class(config) == 'character',
-    nchar(config) > 0,
     class(args) == "character",
     class(quiet) == "logical",
     class(cleanup) == "logical",
@@ -329,6 +328,7 @@ tika <- function(input,
   maxRestarts <- character()
   timeoutThresholdMillis <- character()
   maxFileSizeBytes <- character()
+  configTika <- character()
 
   if (length(threads) > 0) {
     numConsumers <- c("-numConsumers", as.character(as.integer(threads)))
@@ -346,6 +346,9 @@ tika <- function(input,
     maxFileSizeBytes <- c("-maxFileSizeBytes", as.character(as.integer(max_file_size)))
   }
   
+  if (length(config) > 0 && nchar(config[1]) > 0) {
+      configTika <- c("-c", config[1])
+  }
   
   
     java_args <- c(
@@ -355,7 +358,7 @@ tika <- function(input,
       maxRestarts,
       timeoutThresholdMillis,
       maxFileSizeBytes,
-      c('-c', config),
+      configTika,
       args, output_flag, "-i", root,
       "-o", output_dir,
       "-fileList", fileList
