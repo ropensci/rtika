@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">rtika</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.21</span>
       </span>
     </div>
 
@@ -183,11 +183,14 @@ text &lt;-<span class="st"> </span><span class="kw"><a href="reference/tika_text
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cat">cat</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/substr">substr</a></span>(text[<span class="dv">1</span>], <span class="dv">54</span>, <span class="dv">190</span>)) 
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Package ‘jsonlite’</span>
+<span class="co">#&gt; </span>
 <span class="co">#&gt; June 1, 2017</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Version 1.5</span>
+<span class="co">#&gt; </span>
 <span class="co">#&gt; Title A Robust, High Performance JSON Parser and Generator for R</span>
-<span class="co">#&gt; License MIT + file LICENSE</span></code></pre></div>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; License MIT + file LICE</span></code></pre></div>
 <p>To learn more and find out how to extract structured text and metadata, read the vignette: <a href="https://ropensci.github.io/rtika/articles/rtika_introduction.html" class="uri">https://ropensci.github.io/rtika/articles/rtika_introduction.html</a>.</p>
 </div>
 <div id="enhancements" class="section level2">
@@ -206,7 +209,7 @@ text &lt;-<span class="st"> </span><span class="kw"><a href="reference/tika_text
 <a href="#similar-r-packages" class="anchor"></a>Similar R Packages</h2>
 <p>The are a number of specialized parsers that overlap in functionality. For example, the <a href="https://github.com/ropensci/pdftools"><code>pdftools</code></a> package extracts metadata and text from PDF files, the <a href="https://github.com/ropensci/antiword"><code>antiword</code></a> package extracts text from recent versions of Word, and the <a href="https://github.com/ropensci/epubr"><code>epubr</code></a> package by <span class="citation">@leonawicz</span> processes <code>epub</code> files. These packages do not depend on Java, while <code>rTika</code> does.</p>
 <p>The big difference between Tika and a specialized parser is that Tika integrates dozens of specialist libraries maintained by the Apache Foundation. Apache Tika processes over a thousand file types and multiple versions of each. This eases the processing of digital archives that contain unpredictable files. For example, researchers use Tika to process archives from court cases, governments, or the Internet Archive that span multiple years. These archives frequently contain diverse formats and multiple versions of each format. Because Tika finds the matching parser for each individual file, is well suited to diverse sets of documents. In general, the parsing quality is good and consistently so. In contrast, specialized parsers may only work with a particular version of a file, or require extra tinkering.</p>
-<p>On the other hand, a specialized library can offer more control and features when it comes to structured data and formatting. For example, the <a href="https://github.com/ropensci/tabulizer"><code>tabulizer</code></a> package by <span class="citation">@leeper</span> and <span class="citation">@tpaskhalis</span> includes bindings to the ‘Tabula PDF Table Extractor Library’. Because PDF files store tables as a series of positions with no obvious boundaries between data cells, extracting a <code>data.frame</code> or <code>matrix</code> requires heuristics and customization which that package provides. To be fair to Tika, there are some formats where <code>rtika</code> will extract data as table-like XML. For example, with Word and Excel documents, Tika extracts simple tables as XHTML data that can be turned into a tabular <code>data.frame</code> using the <code>rvest::html_table()</code> function.</p>
+<p>On the other hand, a specialized library can offer more control and features when it comes to structured data and formatting. For example, the <a href="https://github.com/ropensci/tabulizer"><code>tabulizer</code></a> package by <span class="citation">@leeper</span> and <span class="citation">@tpaskhalis</span> includes bindings to the ‘Tabula PDF Table Extractor Library’. Because PDF files store tables as a series of positions with no obvious boundaries between data cells, extracting a <code>data.frame</code> or <code>matrix</code> requires heuristics and customization which that package provides. To be fair to Tika, there are some formats where <code>rtika</code> will extract data as table-like XML. For example, with Word and Excel documents, Tika extracts simple tables as XHTML data that can be turned into a tabular <code>data.frame</code> using the <code><a href="https://rvest.tidyverse.org/reference/html_table.html">rvest::html_table()</a></code> function.</p>
 </div>
 <div id="history" class="section level2">
 <h2 class="hasAnchor">
