@@ -1,7 +1,7 @@
 Package: rtika
 Type: Package
 Title: R Interface to 'Apache Tika' 
-Version: 1.21
+Version: 1.22
 Authors@R: c(
     person(given = "Sasha", family = "Goodman", email="goodmansasha@gmail.com", role=c("aut","cre") ), 
     person(given = "The Apache Software Foundation", role=c("aut","cph") ),

@@ -53,10 +53,10 @@
 #'
 #' @export
 
-install_tika <- function(version = "1.21",
-                         digest = paste0("7f1178dd522bfa77acda3e5e369eb6d7d4b21affee",
-                                         "20f966fc7d440a9be1d2f9b1a90332f3bf1c865590",
-                                         "75fdb365c308cd3c96b712626c5f1f2a89ab16ec28e1"),
+install_tika <- function(version = "1.22",
+                         digest = paste0("64975d79211bc5c37f866abb2f4077687eff55b7615",
+                                         "67f7ad0b36a221a2ae3457b748fac9b288a31a641f3",
+                                         "7dfc8679260413f972b5b60cf6deb6721329cad001"),
                          mirrors = c(
                            "http://mirrors.ocf.berkeley.edu/apache/tika/",
                            "http://apache.cs.utah.edu/tika/",

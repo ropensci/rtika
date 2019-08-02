@@ -1,4 +1,11 @@
- rtika 1.20 (2019-02-26)
+rtika 1.22 (2019-08-01)
+========================= 
+
+### MINOR IMPROVEMENTS
+
+    * Updated Tika to 1.22
+    
+rtika 1.20 (2019-02-26)
 ========================= 
 
 ### MINOR IMPROVEMENTS

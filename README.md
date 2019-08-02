@@ -4,7 +4,7 @@ rtika
 
 ***Extract text or metadata from over a thousand file types.***
 
-[![ROpenSci](https://badges.ropensci.org/191_status.svg)](https://github.com/ropensci/onboarding/issues/191) [![Travis-CI Build Status](https://travis-ci.org/ropensci/rtika.svg?branch=master)](https://travis-ci.org/ropensci/rtika) [![Build status](https://ci.appveyor.com/api/projects/status/9aqxnm7ku3ame7a6/branch/master?svg=true)](https://ci.appveyor.com/project/goodmansasha/rtika/branch/master) [![Coverage status](https://codecov.io/gh/ropensci/rtika/branch/master/graph/badge.svg)](https://codecov.io/github/ropensci/rtika?branch=master) [![Cranlogs Downloads](https://cranlogs.r-pkg.org/badges/rtika)](https://cran.rstudio.com/web/packages/rtika/index.html)
+[![ROpenSci](https://badges.ropensci.org/191_status.svg)](https://github.com/ropensci/onboarding/issues/191) [![Travis-CI Build Status](https://travis-ci.org/ropensci/rtika.svg?branch=master)](https://travis-ci.org/ropensci/rtika) [![Build status](https://ci.appveyor.com/api/projects/status/9aqxnm7ku3ame7a6/branch/master?svg=true)](https://ci.appveyor.com/project/goodmansasha/rtika/branch/master) [![Coverage status](https://codecov.io/gh/ropensci/rtika/branch/master/graph/badge.svg)](https://codecov.io/github/ropensci/rtika?branch=master) [![Cranlogs Downloads](https://cranlogs.r-pkg.org/badges/rtika)](https://CRAN.R-project.org/package=rtika)
 
 > Apache Tika is a content detection and analysis framework, written in Java, stewarded at the Apache Software Foundation. It detects and extracts metadata and text from over a thousand different file types, and as well as providing a Java library, has server and command-line editions suitable for use from other programming languages ...
 
@@ -98,11 +98,14 @@ length(text)
 cat(substr(text[1], 54, 190)) 
 #> 
 #> Package ‘jsonlite’
+#> 
 #> June 1, 2017
 #> 
 #> Version 1.5
+#> 
 #> Title A Robust, High Performance JSON Parser and Generator for R
-#> License MIT + file LICENSE
+#> 
+#> License MIT + file LICE
 ```
 
 To learn more and find out how to extract structured text and metadata, read the vignette: <https://ropensci.github.io/rtika/articles/rtika_introduction.html>.

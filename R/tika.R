@@ -168,6 +168,7 @@ tika <- function(input,
     # (1) the DESCRIPTION of the Version
     # (2) the zzz.R file variable: tika_jar_tested_version 
     # (3) the install_tika version and digest
+    # (4) the NEWS.md to the verision
 
   # When updating the package, run these functions in order:
   # devtools::document() # sets up NAMESPACE and .Rd documentation files to match function
