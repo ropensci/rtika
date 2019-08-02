@@ -3,8 +3,9 @@
 #' Extract text or metadata from over a thousand file types.
 #' Get either plain text or structured \code{XHTML}.
 #' Metadata includes \code{Content-Type}, character encoding, and Exif data from
-#' jpeg or tiff images. See the long list of supported file types:
-#' \url{https://tika.apache.org/1.19/formats.html}.
+#' jpeg or tiff images. See the long list of supported file types, 
+#' click the "Supported Formats" link on this page :
+#' \url{https://tika.apache.org/}.
 #'
 #' @param input Character vector describing the paths to the input documents.
 #' Strings starting with 'http://','https://', or 'ftp://' are downloaded to a

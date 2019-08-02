@@ -323,7 +323,7 @@ There is also room for improvement with the document formats common in the R com
 You may  find these resources useful:
 
 * Current Tika issues and progress can be seen here: https://issues.apache.org/jira/projects/TIKA
-* The Tika Wiki is here: https://wiki.apache.org/tika/FrontPage
+* The Tika Wiki is here: https://cwiki.apache.org/confluence/display/tika/
 * Tika sourcecode: https://github.com/apache/tika
 
 # References
