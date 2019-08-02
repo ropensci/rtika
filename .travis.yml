@@ -13,7 +13,7 @@ addons:
     packages:
     - libapparmor-dev
     - libcurl4-openssl-dev
-    - openjdk-7-jre
+    - openjdk-8-jre
     
 r_github_packages:
   - r-lib/covr
