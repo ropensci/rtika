@@ -26,7 +26,7 @@ library('rtika')
 install_tika()
 ```
 
-Read an [introductory article](https://ropensci.github.io/rtika/articles/rtika_introduction.html) at <https://ropensci.github.io/rtika/articles/rtika_introduction.html>.
+Read an [introductory article](https://docs.ropensci.org/rtika/articles/rtika_introduction.html) at <https://docs.ropensci.org/rtika/articles/rtika_introduction.html>.
 
 Key Features
 ------------
@@ -108,7 +108,7 @@ cat(substr(text[1], 54, 190))
 #> License MIT + file LICE
 ```
 
-To learn more and find out how to extract structured text and metadata, read the vignette: <https://ropensci.github.io/rtika/articles/rtika_introduction.html>.
+To learn more and find out how to extract structured text and metadata, read the vignette: <https://docs.ropensci.org/rtika/articles/rtika_introduction.html>.
 
 Enhancements
 ------------
