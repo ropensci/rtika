@@ -30,7 +30,12 @@ Description: Extract text or metadata from over a thousand file types, using Apa
 Depends: R (>= 3.1.0)
 Encoding: UTF-8
 LazyData: true
+<<<<<<< HEAD
 RoxygenNote: 7.0.2
 URL: http://github.com/ropensci/rtika
+=======
+RoxygenNote: 6.1.1
+URL: https://docs.ropensci.org/rtika, http://github.com/ropensci/rtika
+>>>>>>> 7e12c750ce857ac926770710255b2b21a4d436e3
 BugReports: http://github.com/ropensci/rtika/issues
 VignetteBuilder: knitr
