@@ -97,14 +97,14 @@ length(text)
 # A snippet:
 cat(substr(text[1], 54, 190)) 
 #> 
-#> Package ‘jsonlite’
 #> 
+#> 
+#> 
+#> Package ‘jsonlite’
 #> June 1, 2017
 #> 
 #> Version 1.5
-#> 
 #> Title A Robust, High Performance JSON Parser and Generator for R
-#> 
 #> License MIT + file LICE
 ```
 
