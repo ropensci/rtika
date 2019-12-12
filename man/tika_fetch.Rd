@@ -4,8 +4,13 @@
 \alias{tika_fetch}
 \title{Fetch Files with the Content-Type Preserved in the File Extension}
 \usage{
-tika_fetch(urls, download_dir = tempdir(), ssl_verifypeer = TRUE,
-  retries = 1, quiet = TRUE)
+tika_fetch(
+  urls,
+  download_dir = tempdir(),
+  ssl_verifypeer = TRUE,
+  retries = 1,
+  quiet = TRUE
+)
 }
 \arguments{
 \item{urls}{Character vector of one or more URLs to be downloaded.}

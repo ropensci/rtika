@@ -3,7 +3,6 @@
 \docType{package}
 \name{rtika}
 \alias{rtika}
-\alias{rtika-package}
 \title{rtika: R Interface to 'Apache Tika'}
 \description{
 Extract text or metadata from over a thousand file types. Get either plain text or structured XHTML content.

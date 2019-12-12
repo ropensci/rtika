@@ -8,21 +8,25 @@
 
 <title>Main R Interface to 'Apache Tika' — tika • rtika</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,14 +34,16 @@
 
 
 
-<meta property="og:title" content="Main R Interface to 'Apache Tika' — tika" />
 
+<meta property="og:title" content="Main R Interface to 'Apache Tika' — tika" />
 <meta property="og:description" content="Extract text or metadata from over a thousand file types.
 Get either plain text or structured XHTML.
 Metadata includes Content-Type, character encoding, and Exif data from
-jpeg or tiff images. See the long list of supported file types:
-https://tika.apache.org/1.19/formats.html." />
+jpeg or tiff images. See the long list of supported file types, 
+click the &quot;Supported Formats&quot; link on this page :
+https://tika.apache.org/." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -49,6 +55,7 @@ https://tika.apache.org/1.19/formats.html." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -67,7 +74,7 @@ https://tika.apache.org/1.19/formats.html." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rtika</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.22</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.23</span>
       </span>
     </div>
 
@@ -75,7 +82,7 @@ https://tika.apache.org/1.19/formats.html." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -98,11 +105,10 @@ https://tika.apache.org/1.19/formats.html." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/ropensci/rtika">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -113,6 +119,7 @@ https://tika.apache.org/1.19/formats.html." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -124,23 +131,32 @@ https://tika.apache.org/1.19/formats.html." />
     </div>
 
     <div class="ref-description">
-    
     <p>Extract text or metadata from over a thousand file types.
 Get either plain text or structured <code>XHTML</code>.
 Metadata includes <code>Content-Type</code>, character encoding, and Exif data from
-jpeg or tiff images. See the long list of supported file types:
-<a href='https://tika.apache.org/1.19/formats.html'>https://tika.apache.org/1.19/formats.html</a>.</p>
-    
+jpeg or tiff images. See the long list of supported file types, 
+click the "Supported Formats" link on this page :
+<a href='https://tika.apache.org/'>https://tika.apache.org/</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tika</span>(<span class='no'>input</span>, <span class='kw'>output</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"text"</span>, <span class='st'>"jsonRecursive"</span>, <span class='st'>"xml"</span>, <span class='st'>"html"</span>)[<span class='fl'>1</span>],
-  <span class='kw'>output_dir</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>java</span> <span class='kw'>=</span> <span class='kw pkg'>rtika</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rtika/topics/java'>java</a></span>(),
-  <span class='kw'>jar</span> <span class='kw'>=</span> <span class='kw pkg'>rtika</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rtika/topics/tika_jar'>tika_jar</a></span>(), <span class='kw'>threads</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>max_restarts</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer</a></span>(),
-  <span class='kw'>timeout</span> <span class='kw'>=</span> <span class='fl'>3e+05</span>, <span class='kw'>max_file_size</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer</a></span>(),
-  <span class='kw'>config</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"ocr.xml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
-  <span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>cleanup</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>lib.loc</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/libPaths'>.libPaths</a></span>())</pre>
-    
+    <pre class="usage"><span class='fu'>tika</span>(
+  <span class='no'>input</span>,
+  <span class='kw'>output</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"text"</span>, <span class='st'>"jsonRecursive"</span>, <span class='st'>"xml"</span>, <span class='st'>"html"</span>)[<span class='fl'>1</span>],
+  <span class='kw'>output_dir</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>return</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>java</span> <span class='kw'>=</span> <span class='kw pkg'>rtika</span><span class='kw ns'>::</span><span class='fu'><a href='https://docs.ropensci.org/rtika/reference/java.html'>java</a></span>(),
+  <span class='kw'>jar</span> <span class='kw'>=</span> <span class='kw pkg'>rtika</span><span class='kw ns'>::</span><span class='fu'><a href='https://docs.ropensci.org/rtika/reference/tika_jar.html'>tika_jar</a></span>(),
+  <span class='kw'>threads</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>max_restarts</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>integer</a></span>(),
+  <span class='kw'>timeout</span> <span class='kw'>=</span> <span class='fl'>3e+05</span>,
+  <span class='kw'>max_file_size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>integer</a></span>(),
+  <span class='kw'>config</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"ocr.xml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
+  <span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(),
+  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>cleanup</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>lib.loc</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/libPaths.html'>.libPaths</a></span>()
+)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -157,7 +173,7 @@ drives because of a Windows convention.</p></td>
 <code>"text"</code>, gets plain text without metadata. <code>"xml"</code> and
 <code>"html"</code> get <code>XHTML</code> text with metadata. <code>"jsonRecursive"</code>
 gets <code>XHTML</code> text and <code>json</code> metadata.
-<code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c("jsonRecursive","text")</a></code> or <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c("J","t")</a></code> get plain text and
+<code><a href='https://rdrr.io/r/base/c.html'>c("jsonRecursive","text")</a></code> or <code><a href='https://rdrr.io/r/base/c.html'>c("J","t")</a></code> get plain text and
 <code>json</code> metadata. See the 'Output Details' section.</p></td>
     </tr>
     <tr>
@@ -203,13 +219,13 @@ Do not process files larger than this. The default is unlimited.</p></td>
     </tr>
     <tr>
       <th>config</th>
-      <td><p>Path to the XML config file. Defaults to <code><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file("extdata", "ocr.xml", package = "rtika")</a></code>'. There is also a <code>no-ocr.xml</code> file available.</p></td>
+      <td><p>Path to the XML config file. Defaults to <code><a href='https://rdrr.io/r/base/system.file.html'>system.file("extdata", "ocr.xml", package = "rtika")</a></code>'. There is also a <code>no-ocr.xml</code> file available.</p></td>
     </tr>
     <tr>
       <th>args</th>
       <td><p>Optional character vector of additional arguments passed to Tika,
 that may not yet be implemented in this R interface, in the pattern of
-<code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c('-arg1','setting1','-arg2','setting2')</a></code>.</p></td>
+<code><a href='https://rdrr.io/r/base/c.html'>c('-arg1','setting1','-arg2','setting2')</a></code>.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
@@ -219,7 +235,7 @@ suppressed. Defaults to <code>TRUE</code>.</p></td>
     <tr>
       <th>cleanup</th>
       <td><p>Logical to clean up temporary files after running the command,
-which can accumulate. Defaults to <code>TRUE</code>. They are in <code><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir()</a></code>. These
+which can accumulate. Defaults to <code>TRUE</code>. They are in <code><a href='https://rdrr.io/r/base/tempfile.html'>tempdir()</a></code>. These
 files are automatically removed at the end of the R session even if set to
 FALSE.</p></td>
     </tr>
@@ -231,19 +247,19 @@ leave this parameter alone. The parameter is included
 mainly for package testing.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A character vector in the same order and with the same length as
-<code>input</code>. Unprocessed files are <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>as.character(NA)</a></code>.
+<code>input</code>. Unprocessed files are <code><a href='https://rdrr.io/r/base/character.html'>as.character(NA)</a></code>.
 If <code>return = FALSE</code>, then a <code>NULL</code> value is invisibly returned.
 See the Output Details section below.</p>
-    
     <h2 class="hasAnchor" id="output-details"><a class="anchor" href="#output-details"></a>Output Details</h2>
 
     
-    <p>If an input file did not exist, could not be downloaded, was a directory, or
-Tika could not process it, the result will be <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>as.character(NA)</a></code> for
+
+<p>If an input file did not exist, could not be downloaded, was a directory, or
+Tika could not process it, the result will be <code><a href='https://rdrr.io/r/base/character.html'>as.character(NA)</a></code> for
 that file.</p>
 <p>By default, <code>output = "text"</code> and this produces plain text with no
 metadata. Some formatting is preserved in this case using tabs, newlines and
@@ -255,14 +271,14 @@ Content retains more formatting with <code>"xml"</code>. For example, a Word or
 Excel table will become a HTML <code>table</code>, with table data as text in
 <code>td</code> elements. The <code>"html"</code> option and its shortcut <code>"h"</code>
 seem to produce the same result as <code>"xml"</code>.
-Parse XHTML output with <code><a href='https://www.rdocumentation.org/packages/xml2/topics/read_xml'>xml2::read_html</a></code>.</p>
+Parse XHTML output with <code><a href='http://xml2.r-lib.org/reference/read_xml.html'>xml2::read_html</a></code>.</p>
 <p>Setting <code>output</code> to <code>"jsonRecursive"</code> or its shortcut <code>"J"</code>
 produces a tree structure in `json`. Metadata fields are at the top level.
 The <code>XHTML</code> or plain text will be found in the <code>X-TIKA:content</code>
 field. By default the text is <code>XHTML</code>. This can be changed to plain
 text like this: <code>output=c("jsonRecursive","text")</code> or
 <code>output=c("J","t")</code>. This syntax is meant to mirror Tika's. Parse
-<code>json</code> with <code><a href='https://www.rdocumentation.org/packages/jsonlite/topics/fromJSON'>jsonlite::fromJSON</a></code>.</p>
+<code>json</code> with <code><a href='https://rdrr.io/pkg/jsonlite/man/fromJSON.html'>jsonlite::fromJSON</a></code>.</p>
 <p>If <code>output_dir</code> is specified, then the converted files will also be
  saved to this directory. It's best to use an empty directory because Tika
  may overwrite existing files. Tika seems to add an extra file extension to
@@ -275,47 +291,50 @@ text like this: <code>output=c("jsonRecursive","text")</code> or
  on the <code>output</code> setting. One way to get a list of the processed files
  is to use <code>list.files</code> with <code>recursive=TRUE</code>.
  If <code>output_dir</code> is not specified, files are saved to a volatile temp
- directory named by <code><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir()</a></code> and will be deleted when R shuts down.
+ directory named by <code><a href='https://rdrr.io/r/base/tempfile.html'>tempdir()</a></code> and will be deleted when R shuts down.
  If this function will be run on very large batches repeatedly, these
  temporary files can be cleaned up every time by adding
  <code>cleanup=TRUE</code>.</p>
-    
     <h2 class="hasAnchor" id="background"><a class="anchor" href="#background"></a>Background</h2>
 
     
-    <p>Tika is a foundational library for several Apache projects such as the Apache
+
+<p>Tika is a foundational library for several Apache projects such as the Apache
 Solr search engine. It has been in development since at least 2007. The most
 efficient way I've found to process many thousands of documents is Tika's
 'batch' mode, which is the only mode used in `rtika`. There are potentially
 more things that can be done, given enough time and attention, because
 Apache Tika includes many libraries and methods in its .jar file. The source is available at:
 <a href='https://tika.apache.org/'>https://tika.apache.org/</a>.</p>
-    
     <h2 class="hasAnchor" id="installation"><a class="anchor" href="#installation"></a>Installation</h2>
 
     
-    <p>Tika requires Java 8.</p>
+
+<p>Tika requires Java 8.</p>
 <p>Java installation instructions are at http://openjdk.java.net/install/
 or https://www.java.com/en/download/help/download_options.xml.</p>
 <p>By default, this R package internally invokes Java by calling the <code>java</code>
 command from the command line. To specify the path to a particular Java
 version, set the path in the <code>java</code> attribute of the <code>tika</code>
 function.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>#extract text</span>
-<span class='no'>batch</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"jsonlite.pdf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"curl.pdf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"table.docx"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"xml2.pdf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"R-FAQ.html"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"calculator.jpg"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"tika.apache.org.zip"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>)
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='co'>#extract text</span>
+<span class='no'>batch</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
+  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"jsonlite.pdf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
+  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"curl.pdf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
+  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"table.docx"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
+  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"xml2.pdf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
+  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"R-FAQ.html"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
+  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"calculator.jpg"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>),
+  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"tika.apache.org.zip"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtika"</span>)
 )
 <span class='no'>text</span> <span class='kw'>=</span> <span class='fu'>tika</span>(<span class='no'>batch</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cat'>cat</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substr'>substr</a></span>(<span class='no'>text</span>[<span class='fl'>1</span>],<span class='fl'>45</span>,<span class='fl'>450</span>))</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substr</a></span>(<span class='no'>text</span>[<span class='fl'>1</span>],<span class='fl'>45</span>,<span class='fl'>450</span>))</div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; 
+#&gt; 
 #&gt; 
 #&gt; 
 #&gt; 
@@ -339,21 +358,21 @@ function.</p>
 #&gt; https://www.opencpu.org/posts/jsonlite-a-smarter-json-encoder
 #&gt; 
 #&gt; BugReports http://github.com/jeroen/jsonlite/issues
-#&gt; Maintainer Jero</div><div class='input'>
+#&gt; Maintainer J</div><div class='input'>
 <span class='co'>#more complex metadata</span>
-<span class='kw'>if</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ns-load'>requireNamespace</a></span>(<span class='st'>'jsonlite'</span>)){
+<span class='kw'>if</span>(<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>'jsonlite'</span>)){
 
-  <span class='no'>json</span> <span class='kw'>=</span> <span class='fu'>tika</span>(<span class='no'>batch</span>,<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'J'</span>,<span class='st'>'t'</span>))
+  <span class='no'>json</span> <span class='kw'>=</span> <span class='fu'>tika</span>(<span class='no'>batch</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'J'</span>,<span class='st'>'t'</span>))
   <span class='co'># 'J' is shortcut for jsonRecursive</span>
   <span class='co'># 't' for text</span>
-  <span class='no'>metadata</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>lapply</a></span>(<span class='no'>json</span>, <span class='kw pkg'>jsonlite</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/jsonlite/topics/fromJSON'>fromJSON</a></span> )
+  <span class='no'>metadata</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>json</span>, <span class='kw pkg'>jsonlite</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/jsonlite/man/fromJSON.html'>fromJSON</a></span> )
 
   <span class='co'>#embedded resources</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>lapply</a></span>(<span class='no'>metadata</span>, <span class='kw'>function</span>(<span class='no'>x</span>){ <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>as.character</a></span>(<span class='no'>x</span>$<span class='st'>'Content-Type'</span>) })
+  <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>metadata</span>, <span class='kw'>function</span>(<span class='no'>x</span>){ <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span>(<span class='no'>x</span>$<span class='st'>'Content-Type'</span>) })
 
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>lapply</a></span>(<span class='no'>metadata</span>, <span class='kw'>function</span>(<span class='no'>x</span>){ <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>as.character</a></span>(<span class='no'>x</span>$<span class='st'>'Creation-Date'</span>) })
+  <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>metadata</span>, <span class='kw'>function</span>(<span class='no'>x</span>){ <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span>(<span class='no'>x</span>$<span class='st'>'Creation-Date'</span>) })
 
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>lapply</a></span>(<span class='no'>metadata</span>, <span class='kw'>function</span>(<span class='no'>x</span>){  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>as.character</a></span>(<span class='no'>x</span>$<span class='st'>'X-TIKA:embedded_resource_path'</span>) })
+  <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>metadata</span>, <span class='kw'>function</span>(<span class='no'>x</span>){  <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span>(<span class='no'>x</span>$<span class='st'>'X-TIKA:embedded_resource_path'</span>) })
 }</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: jsonlite</span></div><div class='output co'>#&gt; [[1]]
 #&gt; character(0)
 #&gt; 
@@ -377,26 +396,23 @@ function.</p>
 #&gt;  [4] "/external.png"          "/icon_info_sml.gif"     "/icon_warning_sml.gif" 
 #&gt;  [7] "/icon_error_sml.gif"    "/icon_success_sml.gif"  "/tika.png"             
 #&gt; [10] "/mattmann_cover150.jpg" "/asf-logo.gif"         
-#&gt; </div></pre>
+#&gt; </div><div class='input'># }
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#output-details">Output Details</a></li>
-
       <li><a href="#background">Background</a></li>
-
       <li><a href="#installation">Installation</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -404,13 +420,16 @@ function.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
