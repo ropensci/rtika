@@ -166,24 +166,25 @@ tika <- function(input,
   # http://r-pkgs.had.co.nz/git.html
     
   # To update tika version, update 
-    # (1) the DESCRIPTION of the Version
-    # (2) the R/zzz.R file variable: "tika_jar_tested_version"
-    # (3) the R/install_tika "version" and "digest"
-    # (4) the NEWS.md to the verision
+    # (1) DESCRIPTION of the Version
+    # (2) R/zzz.R file variable: "tika_jar_tested_version"
+    # (3) R/install_tika "version" and "digest" of tika-app at https://tika.apache.org/download.html
+    # (4) NEWS.md to the verision
 
   # When updating the package, run these functions in order:
     # make sure required packages are installed including: devtools, rapdirrs, knitr,rmarkdown, pkgdown
     # devtools::document() # sets up NAMESPACE and .Rd documentation files to match function
-    #  Use Rstudio's "install and restart" 
+    # Use Rstudio's "Build" > "Install and Restart" 
     # if necessary, run "rtika::install_tika()" to update the .jar
     # devtools::test(); 
     # devtools::build()
     # devtools::build_vignettes()
-    # Use Rstudio's "install and restart" 
+    # Use Rstudio's "Build" > "Install and Restart" 
     # Sys.setenv(NOT_CRAN = TRUE); 
     # pkgdown::clean_site() ; pkgdown::build_site() # https://www.r-bloggers.com/building-a-website-with-pkgdown-a-short-guide/
-    # Rstuio "More" > "Build Source Package"
-    # upload to github for tests
+    # Rstudio "Build" > "More" > "Build Source Package"
+    # upload to github for tests!!
+    # upload to CRAN
     
   
   # Suggested functions to run occasionally:

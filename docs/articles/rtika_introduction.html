@@ -6,19 +6,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Introduction to rtika • rtika</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to rtika">
-<meta property="og:description" content="">
-<meta name="twitter:card" content="summary">
+<meta property="og:description" content="rtika">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rtika</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.24.1</span>
       </span>
     </div>
 
@@ -64,7 +64,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ropensci/rtika">
+  <a href="http://github.com/ropensci/rtika/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -82,12 +82,12 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Introduction to rtika</h1>
+      <h1 data-toc-skip>Introduction to rtika</h1>
                         <h4 class="author">Sasha Goodman</h4>
             
-            <h4 class="date">2019-12-12</h4>
+            <h4 class="date">2020-04-24</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/ropensci/rtika/blob/master/vignettes/rtika_introduction.Rmd"><code>vignettes/rtika_introduction.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="http://github.com/ropensci/rtika/blob/master/vignettes/rtika_introduction.Rmd"><code>vignettes/rtika_introduction.Rmd</code></a></small>
       <div class="hidden name"><code>rtika_introduction.Rmd</code></div>
 
     </div>
@@ -115,9 +115,9 @@
 <a href="#extract-plain-text" class="anchor"></a>Extract Plain Text</h1>
 <p>Video, sound and images are important, and yet much meaningful data remains numeric or textual. Tika can parse many formats and extract alpha-numeric characters, along with a few characters to control the arrangement of text, like line breaks.</p>
 <p>I recommend an analyst start with a directory on the computer and get a vector of paths to each file using <code><a href="https://rdrr.io/r/base/list.files.html">base::list.files()</a></code>. The commented code below has a recipe. Here, I use test files that are included with the package.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">'rtika'</span>)
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">'magrittr'</span>)
+<div class="sourceCode"><html><body><pre class="r">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">'rtika'</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">'magrittr'</span>)
 
 <span class="co"># Code to get ALL the files in my_path:</span>
 
@@ -130,39 +130,39 @@
 <span class="co"># to get plain text</span>
 
 <span class="co"># test files</span>
-batch &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(
-  <span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"jsonlite.pdf"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>),
-  <span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"curl.pdf"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>),
-  <span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"table.docx"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>),
-  <span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"xml2.pdf"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>),
-  <span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"R-FAQ.html"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>),
-  <span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"calculator.jpg"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>),
-  <span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"tika.apache.org.zip"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>)
+<span class="no">batch</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(
+  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"jsonlite.pdf"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"rtika"</span>),
+  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"curl.pdf"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"rtika"</span>),
+  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"table.docx"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"rtika"</span>),
+  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"xml2.pdf"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"rtika"</span>),
+  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"R-FAQ.html"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"rtika"</span>),
+  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"calculator.jpg"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"rtika"</span>),
+  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"tika.apache.org.zip"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"rtika"</span>)
 )
 
-text &lt;-<span class="st">  </span>
-<span class="st">    </span>batch <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw"><a href="../reference/tika_text.html">tika_text</a></span>() 
+<span class="no">text</span> <span class="kw">&lt;-</span>
+    <span class="no">batch</span> <span class="kw">%&gt;%</span>
+    <span class="fu"><a href="../reference/tika_text.html">tika_text</a></span>()
 
 <span class="co"># normal syntax also works:</span>
-<span class="co"># text &lt;- tika_text(batch)</span></code></pre></div>
+<span class="co"># text &lt;- tika_text(batch)</span></pre></body></html></div>
 <p>The output is a R character vector of the same length and order as the input files.</p>
 <p>In the example above, there are several seconds of overhead to start up the Tika batch processor and then process the output. The most costly file was the first one. Large batches are parsed more quickly. For example, when parsing thousands of 1-5 page Word documents, I’ve measured 1/100th of a second per document on average.</p>
 <p>Occasionally, files are not parsable and the returned value for the file will be <code>NA</code>. The reasons include corrupt files, disk input/output issues, empty files, password protection, a unhandled format, the document structure is broken, or the document has an unexpected variation.</p>
 <p>These issues should be rare. Tika works well on most documents, but if an archive is very large there may be a small percentage of unparsable files, and you might want to handle those.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Find which files had an issue</span>
+<div class="sourceCode"><html><body><pre class="r"><span class="co"># Find which files had an issue</span>
 <span class="co"># Handle them if needed</span>
-batch[<span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(text))]
-<span class="co">#&gt; character(0)</span></code></pre></div>
+<span class="no">batch</span>[<span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="no">text</span>))]
+<span class="co">#&gt; character(0)</span></pre></body></html></div>
 <p>Plain text is easy to search using <code><a href="https://rdrr.io/r/base/grep.html">base::grep()</a></code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(text)
+<div class="sourceCode"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">text</span>)
 <span class="co">#&gt; [1] 7</span>
 
-search &lt;-
-<span class="st">    </span>text[<span class="kw"><a href="https://rdrr.io/r/base/grep.html">grep</a></span>(<span class="dt">pattern =</span> <span class="st">' is '</span>, <span class="dt">x =</span> text)]
+<span class="no">search</span> <span class="kw">&lt;-</span>
+    <span class="no">text</span>[<span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span>(<span class="kw">pattern</span> <span class="kw">=</span> <span class="st">' is '</span>, <span class="kw">x</span> <span class="kw">=</span> <span class="no">text</span>)]
 
-<span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(search)
-<span class="co">#&gt; [1] 6</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">search</span>)
+<span class="co">#&gt; [1] 6</span></pre></body></html></div>
 <p>With plain text, a variety of interesting analyses are possible, ranging from word counting to constructing matrices for deep learning. Much of this text processing is handled easily with the well documented <code>tidytext</code> package <span class="citation">(Silge and Robinson 2017)</span>. Among other things, it handles tokenization and creating term-document matrices.</p>
 </div>
 <div id="preserve-content-type-when-downloading" class="section level1">
@@ -170,21 +170,21 @@ search &lt;-
 <a href="#preserve-content-type-when-downloading" class="anchor"></a>Preserve Content-Type when Downloading</h1>
 <p>A general suggestion is to use <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> when downloading files from the Internet, to preserve the server Content-Type information in a file extension.</p>
 <p>Tika’s Content-Type detection is improved with file extensions (Tika also relies on other features such as Magic bytes, which are unique control bytes in the file header). The <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> function tries to preserves Content-Type information from the download server by finding the matching extension in Tika’s database.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">download_directory &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span>(<span class="st">'rtika_'</span>)
+<div class="sourceCode"><html><body><pre class="r"><span class="no">download_directory</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span>(<span class="st">'rtika_'</span>)
 
-<span class="kw"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span>(download_directory)
+<span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span>(<span class="no">download_directory</span>)
 
-urls &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'https://tika.apache.org/'</span>,
+<span class="no">urls</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'https://tika.apache.org/'</span>,
           <span class="st">'https://cran.rstudio.com/web/packages/keras/keras.pdf'</span>)
 
-downloaded &lt;-<span class="st"> </span>
-<span class="st">    </span>urls <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw"><a href="../reference/tika_fetch.html">tika_fetch</a></span>(download_directory)
+<span class="no">downloaded</span> <span class="kw">&lt;-</span>
+    <span class="no">urls</span> <span class="kw">%&gt;%</span>
+    <span class="fu"><a href="../reference/tika_fetch.html">tika_fetch</a></span>(<span class="no">download_directory</span>)
 
 <span class="co"># it will add the appropriate file extension to the downloads</span>
-downloaded
-<span class="co">#&gt; [1] "/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpYTGVco/rtika_308410aee4e8/rtika_file30844a3643e6.html"</span>
-<span class="co">#&gt; [2] "/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpYTGVco/rtika_308410aee4e8/rtika_file308430a3d71a.pdf"</span></code></pre></div>
+<span class="no">downloaded</span>
+<span class="co">#&gt; [1] "/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpTW30fD/rtika_a55a699a6f2a/rtika_filea55a19f86490.html"</span>
+<span class="co">#&gt; [2] "/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpTW30fD/rtika_a55a699a6f2a/rtika_filea55a2923742.pdf"</span></pre></body></html></div>
 <p>This <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> function is used internally by the <code><a href="../reference/tika.html">tika()</a></code> functions when processing URLs. By using <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> explicitly with a specified directory, you can also save the files and return to them later.</p>
 </div>
 <div id="settings-for-big-datasets" class="section level1">
@@ -193,64 +193,64 @@ downloaded
 <p>Large jobs are possible with <code>rtika</code>. However, with hundreds of thousands of documents, the R object returned by the <code><a href="../reference/tika.html">tika()</a></code> functions can be too big for RAM. In such cases, it is good to use the computer’s disk more, since running out of RAM slows the computer.</p>
 <p>I suggest changing two parameters in any of the <code><a href="../reference/tika.html">tika()</a></code> parsers. First, set <code>return = FALSE</code> to prevent returning a big R character vector of text. Second, specify an existing directory on the file system using <code>output_dir</code>, pointing to where the processed files will be saved. The files can be dealt with in smaller batches later on.</p>
 <p>Another option is to increase the number of threads, setting <code>threads</code> to something like the number of processors minus one.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># create a directory not already in use.</span>
-my_directory &lt;-
-<span class="st">   </span><span class="kw"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span>(<span class="st">'rtika_'</span>)
-                  
-<span class="kw"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span>(my_directory)
+<div class="sourceCode"><html><body><pre class="r"><span class="co"># create a directory not already in use.</span>
+<span class="no">my_directory</span> <span class="kw">&lt;-</span>
+   <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span>(<span class="st">'rtika_'</span>)
+
+<span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span>(<span class="no">my_directory</span>)
 
 <span class="co"># pipe the batch to tika_text()</span>
-batch <span class="op">%&gt;%</span>
-<span class="kw"><a href="../reference/tika_text.html">tika_text</a></span>(<span class="dt">threads =</span> <span class="dv">4</span>,
-          <span class="dt">return =</span> <span class="ot">FALSE</span>,
-          <span class="dt">output_dir =</span> my_directory) 
+<span class="no">batch</span> <span class="kw">%&gt;%</span>
+<span class="fu"><a href="../reference/tika_text.html">tika_text</a></span>(<span class="kw">threads</span> <span class="kw">=</span> <span class="fl">4</span>,
+          <span class="kw">return</span> <span class="kw">=</span> <span class="fl">FALSE</span>,
+          <span class="kw">output_dir</span> <span class="kw">=</span> <span class="no">my_directory</span>)
 
 <span class="co"># list all the file locations </span>
-processed_files &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(
-                <span class="kw"><a href="https://rdrr.io/r/base/normalizePath.html">normalizePath</a></span>(my_directory),
-                <span class="kw"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span>(<span class="dt">path =</span> my_directory,
-                <span class="dt">recursive =</span> <span class="ot">TRUE</span>)
-                )</code></pre></div>
+<span class="no">processed_files</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(
+                <span class="fu"><a href="https://rdrr.io/r/base/normalizePath.html">normalizePath</a></span>(<span class="no">my_directory</span>),
+                <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span>(<span class="kw">path</span> <span class="kw">=</span> <span class="no">my_directory</span>,
+                <span class="kw">recursive</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+                )</pre></body></html></div>
 <p>The location of each file in <code>output_dir</code> follows a convention from the Apache Tika batch processor: the full path to each file mirrors the original file’s path, only within the <code>output_dir</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">processed_files
-<span class="co">#&gt; [1] "/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpYTGVco/rtika_30845f1b46ae/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpEaqUjy/temp_libpath2faa658318e6/rtika/extdata/calculator.jpg.txt"     </span>
-<span class="co">#&gt; [2] "/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpYTGVco/rtika_30845f1b46ae/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpEaqUjy/temp_libpath2faa658318e6/rtika/extdata/curl.pdf.txt"           </span>
-<span class="co">#&gt; [3] "/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpYTGVco/rtika_30845f1b46ae/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpEaqUjy/temp_libpath2faa658318e6/rtika/extdata/jsonlite.pdf.txt"       </span>
-<span class="co">#&gt; [4] "/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpYTGVco/rtika_30845f1b46ae/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpEaqUjy/temp_libpath2faa658318e6/rtika/extdata/R-FAQ.html.txt"         </span>
-<span class="co">#&gt; [5] "/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpYTGVco/rtika_30845f1b46ae/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpEaqUjy/temp_libpath2faa658318e6/rtika/extdata/table.docx.txt"         </span>
-<span class="co">#&gt; [6] "/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpYTGVco/rtika_30845f1b46ae/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpEaqUjy/temp_libpath2faa658318e6/rtika/extdata/tika.apache.org.zip.txt"</span>
-<span class="co">#&gt; [7] "/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpYTGVco/rtika_30845f1b46ae/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpEaqUjy/temp_libpath2faa658318e6/rtika/extdata/xml2.pdf.txt"</span></code></pre></div>
+<div class="sourceCode"><html><body><pre class="r"><span class="no">processed_files</span>
+<span class="co">#&gt; [1] "/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpTW30fD/rtika_a55a5dad8dad/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpIowEYT/temp_libpatha45f6b688aaa/rtika/extdata/calculator.jpg.txt"     </span>
+<span class="co">#&gt; [2] "/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpTW30fD/rtika_a55a5dad8dad/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpIowEYT/temp_libpatha45f6b688aaa/rtika/extdata/curl.pdf.txt"           </span>
+<span class="co">#&gt; [3] "/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpTW30fD/rtika_a55a5dad8dad/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpIowEYT/temp_libpatha45f6b688aaa/rtika/extdata/jsonlite.pdf.txt"       </span>
+<span class="co">#&gt; [4] "/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpTW30fD/rtika_a55a5dad8dad/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpIowEYT/temp_libpatha45f6b688aaa/rtika/extdata/R-FAQ.html.txt"         </span>
+<span class="co">#&gt; [5] "/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpTW30fD/rtika_a55a5dad8dad/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpIowEYT/temp_libpatha45f6b688aaa/rtika/extdata/table.docx.txt"         </span>
+<span class="co">#&gt; [6] "/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpTW30fD/rtika_a55a5dad8dad/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpIowEYT/temp_libpatha45f6b688aaa/rtika/extdata/tika.apache.org.zip.txt"</span>
+<span class="co">#&gt; [7] "/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpTW30fD/rtika_a55a5dad8dad/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/RtmpIowEYT/temp_libpatha45f6b688aaa/rtika/extdata/xml2.pdf.txt"</span></pre></body></html></div>
 <p>Note that <code><a href="../reference/tika_text.html">tika_text()</a></code> produces <code>.txt</code> files, <code><a href="../reference/tika_xml.html">tika_xml()</a></code> produces <code>.xml</code> files, <code><a href="../reference/tika_html.html">tika_html()</a></code> produces <code>.html</code> files, and both <code><a href="../reference/tika_json.html">tika_json()</a></code> and <code><a href="../reference/tika_json_text.html">tika_json_text()</a></code> produce <code>.json</code> files.</p>
 </div>
 <div id="get-a-structured-xhtml-rendition" class="section level1">
 <h1 class="hasAnchor">
 <a href="#get-a-structured-xhtml-rendition" class="anchor"></a>Get a Structured XHTML Rendition</h1>
 <p>Plain text falls short for some purposes. For example, pagination might be important for selecting a particular page in a PDF. The Tika authors chose HTML as a universal format because it offers semantic elements that are common or familiar. For example, the hyperlink is represented in HTML as the anchor element <code>&lt;a&gt;</code> with the attribute <code>href</code>. The HTML in Tika preserves this metadata:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">'xml2'</span>)
+<div class="sourceCode"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">'xml2'</span>)
 
 <span class="co"># get XHTML text</span>
-html &lt;-<span class="st"> </span>
-<span class="st">    </span>batch <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw"><a href="../reference/tika_html.html">tika_html</a></span>() <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(xml2<span class="op">::</span>read_html)
+<span class="no">html</span> <span class="kw">&lt;-</span>
+    <span class="no">batch</span> <span class="kw">%&gt;%</span>
+    <span class="fu"><a href="../reference/tika_html.html">tika_html</a></span>() <span class="kw">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw pkg">xml2</span><span class="kw ns">::</span><span class="no"><a href="http://xml2.r-lib.org/reference/read_xml.html">read_html</a></span>)
 
 <span class="co"># parse links from documents</span>
-links &lt;-
-<span class="st">    </span>html <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(xml2<span class="op">::</span>xml_find_all, <span class="st">'//a'</span>) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(xml2<span class="op">::</span>xml_attr, <span class="st">'href'</span>)
+<span class="no">links</span> <span class="kw">&lt;-</span>
+    <span class="no">html</span> <span class="kw">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw pkg">xml2</span><span class="kw ns">::</span><span class="no"><a href="http://xml2.r-lib.org/reference/xml_find_all.html">xml_find_all</a></span>, <span class="st">'//a'</span>) <span class="kw">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw pkg">xml2</span><span class="kw ns">::</span><span class="no"><a href="http://xml2.r-lib.org/reference/xml_attr.html">xml_attr</a></span>, <span class="st">'href'</span>)
 
-<span class="kw"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(links[[<span class="dv">1</span>]],<span class="dv">10</span>)
-<span class="co">#&gt;  [1] "https://arxiv.org/abs/1403.2805"                                               </span>
-<span class="co">#&gt;  [2] "http://en.wikipedia.org/wiki/Singleton_(mathematics)"                          </span>
-<span class="co">#&gt;  [3] "https://arxiv.org/abs/1403.2805"                                               </span>
-<span class="co">#&gt;  [4] "http://github.com/jeroen/jsonlite/issues"                                      </span>
-<span class="co">#&gt;  [5] "https://github.com/maxogden/dat"                                               </span>
-<span class="co">#&gt;  [6] "http://ndjson.org"                                                             </span>
-<span class="co">#&gt;  [7] "http://en.wikipedia.org/wiki/Singleton_(mathematics)"                          </span>
-<span class="co">#&gt;  [8] "http://jsonlines.org/"                                                         </span>
-<span class="co">#&gt;  [9] "https://www.opencpu.org/posts/jsonlite-a-smarter-json-encoder"                 </span>
-<span class="co">#&gt; [10] "http://docs.mongodb.org/manual/reference/program/mongoexport/#cmdoption--query"</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="no">links</span><span class="kw">[[</span><span class="fl">1</span>]],<span class="fl">10</span>)
+<span class="co">#&gt;  [1] "http://en.wikipedia.org/wiki/Singleton_(mathematics)"                          </span>
+<span class="co">#&gt;  [2] "https://arxiv.org/abs/1403.2805"                                               </span>
+<span class="co">#&gt;  [3] "http://ndjson.org"                                                             </span>
+<span class="co">#&gt;  [4] "https://www.opencpu.org/posts/jsonlite-a-smarter-json-encoder"                 </span>
+<span class="co">#&gt;  [5] "http://en.wikipedia.org/wiki/Singleton_(mathematics)"                          </span>
+<span class="co">#&gt;  [6] "http://docs.mongodb.org/manual/reference/program/mongoexport/#cmdoption--query"</span>
+<span class="co">#&gt;  [7] "http://docs.mongodb.org/manual/reference/program/mongoexport/#cmdoption--query"</span>
+<span class="co">#&gt;  [8] "https://arxiv.org/abs/1403.2805"                                               </span>
+<span class="co">#&gt;  [9] "http://github.com/jeroen/jsonlite/issues"                                      </span>
+<span class="co">#&gt; [10] "https://arxiv.org/abs/1403.2805"</span></pre></body></html></div>
 <p>Each type of file has different information preserved by Tika’s internal parsers. The particular aspects vary. Some notes:</p>
 <ul>
 <li>PDF files retain pagination, with each page starting with the XHTML element <code>&lt;div class="page"&gt;</code>.</li>
@@ -264,11 +264,11 @@ links &lt;-
 <h1 class="hasAnchor">
 <a href="#access-metadata-in-the-xhtml" class="anchor"></a>Access Metadata in the XHTML</h1>
 <p>The <code><a href="../reference/tika_html.html">tika_html()</a></code> and <code><a href="../reference/tika_xml.html">tika_xml()</a></code> functions are focused on extracting strict, structured HTML as XHTML. In addition, metadata can be accessed in the <code>meta</code> tags of the XHTML. Common metadata fields include <code>Content-Type</code>, <code>Content-Length</code>, <code>Creation-Date</code>, and <code>Content-Encoding</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Content-Type</span>
-html <span class="op">%&gt;%</span>
-<span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(xml2<span class="op">::</span>xml_find_first, <span class="st">'//meta[@name="Content-Type"]'</span>) <span class="op">%&gt;%</span>
-<span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(xml2<span class="op">::</span>xml_attr, <span class="st">'content'</span>) <span class="op">%&gt;%</span>
-<span class="kw"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>()
+<div class="sourceCode"><html><body><pre class="r"><span class="co"># Content-Type</span>
+<span class="no">html</span> <span class="kw">%&gt;%</span>
+<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw pkg">xml2</span><span class="kw ns">::</span><span class="no"><a href="http://xml2.r-lib.org/reference/xml_find_all.html">xml_find_first</a></span>, <span class="st">'//meta[@name="Content-Type"]'</span>) <span class="kw">%&gt;%</span>
+<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw pkg">xml2</span><span class="kw ns">::</span><span class="no"><a href="http://xml2.r-lib.org/reference/xml_attr.html">xml_attr</a></span>, <span class="st">'content'</span>) <span class="kw">%&gt;%</span>
+<span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>()
 <span class="co">#&gt; [1] "application/pdf"                                                        </span>
 <span class="co">#&gt; [2] "application/pdf"                                                        </span>
 <span class="co">#&gt; [3] "application/vnd.openxmlformats-officedocument.wordprocessingml.document"</span>
@@ -278,29 +278,29 @@ html <span class="op">%&gt;%</span>
 <span class="co">#&gt; [7] "application/zip"</span>
 
 <span class="co"># Creation-Date</span>
-html <span class="op">%&gt;%</span>
-<span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(xml2<span class="op">::</span>xml_find_first, <span class="st">'//meta[@name="Creation-Date"]'</span>) <span class="op">%&gt;%</span>
-<span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(xml2<span class="op">::</span>xml_attr, <span class="st">'content'</span>) <span class="op">%&gt;%</span>
-<span class="kw"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>()
+<span class="no">html</span> <span class="kw">%&gt;%</span>
+<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw pkg">xml2</span><span class="kw ns">::</span><span class="no"><a href="http://xml2.r-lib.org/reference/xml_find_all.html">xml_find_first</a></span>, <span class="st">'//meta[@name="Creation-Date"]'</span>) <span class="kw">%&gt;%</span>
+<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw pkg">xml2</span><span class="kw ns">::</span><span class="no"><a href="http://xml2.r-lib.org/reference/xml_attr.html">xml_attr</a></span>, <span class="st">'content'</span>) <span class="kw">%&gt;%</span>
+<span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>()
 <span class="co">#&gt; [1] "2017-06-01T12:03:38Z" "2017-12-12T22:21:00Z" "2018-03-02T20:40:00Z"</span>
 <span class="co">#&gt; [4] "2018-01-23T14:02:32Z" NA                     "2014-07-01T02:49:22" </span>
-<span class="co">#&gt; [7] NA</span></code></pre></div>
+<span class="co">#&gt; [7] NA</span></pre></body></html></div>
 </div>
 <div id="get-metadata-in-json-format" class="section level1">
 <h1 class="hasAnchor">
 <a href="#get-metadata-in-json-format" class="anchor"></a>Get Metadata in JSON Format</h1>
 <p>Metadata can also accessed with <code><a href="../reference/tika_json.html">tika_json()</a></code> and <code><a href="../reference/tika_json_text.html">tika_json_text()</a></code>. Consider all that can be found from a single image:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">'jsonlite'</span>)
+<div class="sourceCode"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">'jsonlite'</span>)
 <span class="co"># batch &lt;- system.file("extdata", "calculator.jpg", package = "rtika")</span>
 
 <span class="co"># a list of data.frames</span>
-metadata &lt;-
-<span class="st">    </span>batch <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw"><a href="../reference/tika_json.html">tika_json</a></span>() <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(jsonlite<span class="op">::</span>fromJSON)
+<span class="no">metadata</span> <span class="kw">&lt;-</span>
+    <span class="no">batch</span> <span class="kw">%&gt;%</span>
+    <span class="fu"><a href="../reference/tika_json.html">tika_json</a></span>() <span class="kw">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw pkg">jsonlite</span><span class="kw ns">::</span><span class="no"><a href="https://jeroen.cran.dev/jsonlite/reference/fromJSON.html">fromJSON</a></span>)
 
 <span class="co"># look at metadata for an image</span>
-<span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(metadata[[<span class="dv">6</span>]])
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">metadata</span><span class="kw">[[</span><span class="fl">6</span>]])
 <span class="co">#&gt; 'data.frame':    1 obs. of  119 variables:</span>
 <span class="co">#&gt;  $ Application Record Version          : chr "2"</span>
 <span class="co">#&gt;  $ Caption Digest                      : chr "158 218 29 133 38 133 242 158 59 205 21 44 236 23 180 123"</span>
@@ -325,7 +325,7 @@ metadata &lt;-
 <span class="co">#&gt;  $ Exif IFD0:X Resolution              : chr "72 dots per inch"</span>
 <span class="co">#&gt;  $ Exif IFD0:Y Resolution              : chr "72 dots per inch"</span>
 <span class="co">#&gt;  $ Exif SubIFD:Aperture Value          : chr "f/2.2"</span>
-<span class="co">#&gt;  $ Exif SubIFD:Brightness Value        : chr "5825/1686"</span>
+<span class="co">#&gt;  $ Exif SubIFD:Brightness Value        : chr "3.455"</span>
 <span class="co">#&gt;  $ Exif SubIFD:Color Space             : chr "sRGB"</span>
 <span class="co">#&gt;  $ Exif SubIFD:Components Configuration: chr "YCbCr"</span>
 <span class="co">#&gt;  $ Exif SubIFD:Date/Time Digitized     : chr "2014:07:01 09:49:22"</span>
@@ -355,7 +355,7 @@ metadata &lt;-
 <span class="co">#&gt;  $ Exif SubIFD:Subject Location        : chr "1956 873 610 612"</span>
 <span class="co">#&gt;  $ Exif SubIFD:Unique Image ID         : chr "bdeb111183eae36c0000000000000000"</span>
 <span class="co">#&gt;  $ Exif SubIFD:White Balance Mode      : chr "Auto white balance"</span>
-<span class="co">#&gt;  $ File Modified Date                  : chr "Thu Dec 12 12:40:06 -08:00 2019"</span>
+<span class="co">#&gt;  $ File Modified Date                  : chr "Fri Apr 24 11:03:34 -07:00 2020"</span>
 <span class="co">#&gt;  $ File Name                           : chr "calculator.jpg"</span>
 <span class="co">#&gt;  $ File Size                           : chr "83654 bytes"</span>
 <span class="co">#&gt;  $ GPS:GPS Altitude                    : chr "95 metres"</span>
@@ -392,7 +392,7 @@ metadata &lt;-
 <span class="co">#&gt;  $ X-TIKA:content_handler              : chr "ToXMLContentHandler"</span>
 <span class="co">#&gt;  $ X-TIKA:digest:MD5                   : chr "1d6e398a96f058db680b7249beb8eeda"</span>
 <span class="co">#&gt;  $ X-TIKA:embedded_depth               : chr "0"</span>
-<span class="co">#&gt;  $ X-TIKA:parse_time_millis            : chr "36"</span>
+<span class="co">#&gt;  $ X-TIKA:parse_time_millis            : chr "79"</span>
 <span class="co">#&gt;  $ XMP Value Count                     : chr "4"</span>
 <span class="co">#&gt;  $ Y Resolution                        : chr "72 dots"</span>
 <span class="co">#&gt;  $ date                                : chr "2014-07-01T02:49:22"</span>
@@ -402,49 +402,49 @@ metadata &lt;-
 <span class="co">#&gt;  $ exif:ExposureTime                   : chr "0.03333333333333333"</span>
 <span class="co">#&gt;  $ exif:FNumber                        : chr "2.2"</span>
 <span class="co">#&gt;  $ exif:Flash                          : chr "false"</span>
-<span class="co">#&gt;   [list output truncated]</span></code></pre></div>
+<span class="co">#&gt;   [list output truncated]</span></pre></body></html></div>
 <p>In addition, each specific format can have its own specialized metadata fields. For example, photos sometimes store latitude and longitude:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">metadata[[<span class="dv">6</span>]]<span class="op">$</span><span class="st">'geo:lat'</span>
+<div class="sourceCode"><html><body><pre class="r"><span class="no">metadata</span><span class="kw">[[</span><span class="fl">6</span>]]$<span class="st">'geo:lat'</span>
 <span class="co">#&gt; [1] "34.072006"</span>
-metadata[[<span class="dv">6</span>]]<span class="op">$</span><span class="st">'geo:long'</span>
-<span class="co">#&gt; [1] "-118.449578"</span></code></pre></div>
+<span class="no">metadata</span><span class="kw">[[</span><span class="fl">6</span>]]$<span class="st">'geo:long'</span>
+<span class="co">#&gt; [1] "-118.449578"</span></pre></body></html></div>
 </div>
 <div id="get-metadata-from-container-documents" class="section level1">
 <h1 class="hasAnchor">
 <a href="#get-metadata-from-container-documents" class="anchor"></a>Get Metadata from “Container” Documents</h1>
 <p>Some types of documents can have multiple objects within them. For example, a <code>.gzip</code> file may contain many other files. The <code><a href="../reference/tika_json.html">tika_json()</a></code> and <code><a href="../reference/tika_json_text.html">tika_json_text()</a></code> functions have a special ability that others do not. They will recurse into a container and examine each file within. The Tika authors call the format <code>jsonRecursive</code> for this reason.</p>
 <p>In the following example, I created a compressed archive of the Apache Tika homepage, using the command line programs <code>wget</code> and <code>zip</code>. The small archive includes the HTML page, its images, and required files.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># wget gets a webpage and other files. </span>
+<div class="sourceCode"><html><body><pre class="r"><span class="co"># wget gets a webpage and other files. </span>
 <span class="co"># sys::exec_wait('wget', c('--page-requisites', 'https://tika.apache.org/'))</span>
 <span class="co"># Put it all into a .zip file </span>
 <span class="co"># sys::exec_wait('zip', c('-r', 'tika.apache.org.zip' ,'tika.apache.org'))</span>
-batch &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"tika.apache.org.zip"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>)
+<span class="no">batch</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"tika.apache.org.zip"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"rtika"</span>)
 
 <span class="co"># a list of data.frames</span>
-metadata &lt;-
-<span class="st">    </span>batch <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw"><a href="../reference/tika_json.html">tika_json</a></span>() <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(jsonlite<span class="op">::</span>fromJSON)
+<span class="no">metadata</span> <span class="kw">&lt;-</span>
+    <span class="no">batch</span> <span class="kw">%&gt;%</span>
+    <span class="fu"><a href="../reference/tika_json.html">tika_json</a></span>() <span class="kw">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw pkg">jsonlite</span><span class="kw ns">::</span><span class="no"><a href="https://jeroen.cran.dev/jsonlite/reference/fromJSON.html">fromJSON</a></span>)
 
-<span class="co"># The structure is very long. See it on your own with: str(metadata)</span></code></pre></div>
+<span class="co"># The structure is very long. See it on your own with: str(metadata)</span></pre></body></html></div>
 <p>Here are some of the main metadata fields of the recursive <code>json</code> output:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the 'X-TIKA:embedded_resource_path' field</span>
-embedded_resource_path &lt;-<span class="st"> </span>
-<span class="st">    </span>metadata <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="cf">function</span>(x){ x<span class="op">$</span><span class="st">'X-TIKA:embedded_resource_path'</span> }) 
+<div class="sourceCode"><html><body><pre class="r"><span class="co"># the 'X-TIKA:embedded_resource_path' field</span>
+<span class="no">embedded_resource_path</span> <span class="kw">&lt;-</span>
+    <span class="no">metadata</span> <span class="kw">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw">function</span>(<span class="no">x</span>){ <span class="no">x</span>$<span class="st">'X-TIKA:embedded_resource_path'</span> })
 
-embedded_resource_path
+<span class="no">embedded_resource_path</span>
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt;  [1] NA                       "/index.html"            "/site.css"             </span>
 <span class="co">#&gt;  [4] "/external.png"          "/icon_info_sml.gif"     "/icon_warning_sml.gif" </span>
 <span class="co">#&gt;  [7] "/icon_error_sml.gif"    "/icon_success_sml.gif"  "/tika.png"             </span>
-<span class="co">#&gt; [10] "/mattmann_cover150.jpg" "/asf-logo.gif"</span></code></pre></div>
+<span class="co">#&gt; [10] "/mattmann_cover150.jpg" "/asf-logo.gif"</span></pre></body></html></div>
 <p>The <code>X-TIKA:embedded_resource_path</code> field tells you where in the document hierarchy each object resides. The first item in the character vector is the root, which is the container itself. The other items are embedded one layer down, as indicated by the forward slash <code><a href="https://rdrr.io/r/base/Arithmetic.html">/</a></code>. In the context of the <code>X-TIKA:embedded_resource_path</code> field, paths are not literally directory paths like in a file system. In reality, the image <code>icon_info_sml.gif</code> is within a folder called <code>images</code>. Rather, the number of forward slashes indicates the level of recursion within the document. One slash <code><a href="https://rdrr.io/r/base/Arithmetic.html">/</a></code> reveals a first set of embedded documents. Additional slashes <code><a href="https://rdrr.io/r/base/Arithmetic.html">/</a></code> indicate that the parser has recursed into an embedded document within an embedded document.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">content_type &lt;-
-<span class="st">    </span>metadata <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="cf">function</span>(x){ x<span class="op">$</span><span class="st">'Content-Type'</span> }) 
+<div class="sourceCode"><html><body><pre class="r"><span class="no">content_type</span> <span class="kw">&lt;-</span>
+    <span class="no">metadata</span> <span class="kw">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw">function</span>(<span class="no">x</span>){ <span class="no">x</span>$<span class="st">'Content-Type'</span> })
 
-content_type
+<span class="no">content_type</span>
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt;  [1] "application/zip"                     </span>
 <span class="co">#&gt;  [2] "application/xhtml+xml; charset=UTF-8"</span>
@@ -456,15 +456,15 @@ content_type
 <span class="co">#&gt;  [8] "image/gif"                           </span>
 <span class="co">#&gt;  [9] "image/png"                           </span>
 <span class="co">#&gt; [10] "image/jpeg"                          </span>
-<span class="co">#&gt; [11] "image/gif"</span></code></pre></div>
+<span class="co">#&gt; [11] "image/gif"</span></pre></body></html></div>
 <p>The <code>Content-Type</code> metadata reveals the first item is the container and has the type <code>application/zip</code>. The items after that are deeper and include web formats such as <code>application/xhtml+xml</code>, <code>image/png</code>, and <code>text/css</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">content &lt;-<span class="st"> </span>
-<span class="st">     </span>metadata <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="cf">function</span>(x){ x<span class="op">$</span><span class="st">'X-TIKA:content'</span> })
+<div class="sourceCode"><html><body><pre class="r"><span class="no">content</span> <span class="kw">&lt;-</span>
+     <span class="no">metadata</span> <span class="kw">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw">function</span>(<span class="no">x</span>){ <span class="no">x</span>$<span class="st">'X-TIKA:content'</span> })
 
-<span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(content)
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">content</span>)
 <span class="co">#&gt; List of 1</span>
-<span class="co">#&gt;  $ : chr [1:11] "&lt;html xmlns=\"http://www.w3.org/1999/xhtml\"&gt;\n&lt;head&gt;\n&lt;meta name=\"X-Parsed-By\" content=\"org.apache.tika.par"| __truncated__ "&lt;html xmlns=\"http://www.w3.org/1999/xhtml\"&gt;\n&lt;head&gt;\n&lt;link rel=\"icon\" type=\"image/png\" href=\"./tikaNoTex"| __truncated__ "&lt;html xmlns=\"http://www.w3.org/1999/xhtml\"&gt;\n&lt;head&gt;\n&lt;meta name=\"date\" content=\"2014-12-20T07:36:10Z\" /&gt;\"| __truncated__ "&lt;html xmlns=\"http://www.w3.org/1999/xhtml\"&gt;\n&lt;head&gt;\n&lt;meta name=\"date\" content=\"2010-08-05T13:48:24Z\" /&gt;\"| __truncated__ ...</span></code></pre></div>
+<span class="co">#&gt;  $ : chr [1:11] "&lt;html xmlns=\"http://www.w3.org/1999/xhtml\"&gt;\n&lt;head&gt;\n&lt;meta name=\"X-Parsed-By\" content=\"org.apache.tika.par"| __truncated__ "&lt;html xmlns=\"http://www.w3.org/1999/xhtml\"&gt;\n&lt;head&gt;\n&lt;link rel=\"icon\" type=\"image/png\" href=\"./tikaNoTex"| __truncated__ "&lt;html xmlns=\"http://www.w3.org/1999/xhtml\"&gt;\n&lt;head&gt;\n&lt;meta name=\"date\" content=\"2014-12-20T07:36:10Z\" /&gt;\"| __truncated__ "&lt;html xmlns=\"http://www.w3.org/1999/xhtml\"&gt;\n&lt;head&gt;\n&lt;meta name=\"date\" content=\"2010-08-05T13:48:24Z\" /&gt;\"| __truncated__ ...</span></pre></body></html></div>
 <p>The <code>X-TIKA:content</code> field includes the XHTML rendition of an object. It is possible to extract plain text in the <code>X-TIKA:content</code> field by calling <code><a href="../reference/tika_json_text.html">tika_json_text()</a></code> instead. That is the only difference between <code><a href="../reference/tika_json.html">tika_json()</a></code> and <code><a href="../reference/tika_json_text.html">tika_json_text()</a></code>.</p>
 <p>It may be surprising to learn that Word documents are containers (at least the modern <code>.docx</code> variety are). By parsing them with <code><a href="../reference/tika_json.html">tika_json()</a></code> or <code><a href="../reference/tika_json_text.html">tika_json_text()</a></code>, the various images and embedded objects can be analyzed. However, there is an added complexity, because each document may produce a long vector of <code>Content-Types</code> for each embedded file, instead of a single <code>Content-Type</code> for the container like <code><a href="../reference/tika_xml.html">tika_xml()</a></code> and <code><a href="../reference/tika_html.html">tika_html()</a></code>.</p>
 </div>
@@ -501,25 +501,11 @@ content_type
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <div id="tocnav">
-      <h2 class="hasAnchor">
-<a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#a-digital-babel-fish">A Digital Babel Fish</a></li>
-      <li><a href="#extract-plain-text">Extract Plain Text</a></li>
-      <li><a href="#preserve-content-type-when-downloading">Preserve Content-Type when Downloading</a></li>
-      <li><a href="#settings-for-big-datasets">Settings for Big Datasets</a></li>
-      <li><a href="#get-a-structured-xhtml-rendition">Get a Structured XHTML Rendition</a></li>
-      <li><a href="#access-metadata-in-the-xhtml">Access Metadata in the XHTML</a></li>
-      <li><a href="#get-metadata-in-json-format">Get Metadata in JSON Format</a></li>
-      <li><a href="#get-metadata-from-container-documents">Get Metadata from “Container” Documents</a></li>
-      <li><a href="#extending-rtika">Extending rtika</a></li>
-      <li><a href="#references">References</a></li>
-      </ul>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
 </div>
-      </div>
 
 </div>
 
@@ -530,7 +516,7 @@ content_type
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

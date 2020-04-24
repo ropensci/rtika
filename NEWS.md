@@ -1,3 +1,10 @@
+rtika 1.23 (2020-04-24)
+========================= 
+
+### MINOR IMPROVEMENTS
+
+  * Updated Tika to 1.24.1. Details are found at https://tika.apache.org/1.24.1/index.html .
+
 rtika 1.23 (2019-12-12)
 ========================= 
 

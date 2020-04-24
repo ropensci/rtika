@@ -6,19 +6,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>R Interface to Apache Tika  • rtika</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
+<script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="R Interface to Apache Tika ">
 <meta property="og:description" content="Extract text or metadata from over a thousand file types, using Apache Tika &lt;https://tika.apache.org/&gt;. Get either plain text or structured XHTML content. ">
-<meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">rtika</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.24.1</span>
       </span>
     </div>
 
@@ -64,7 +64,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ropensci/rtika">
+  <a href="http://github.com/ropensci/rtika/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -97,13 +97,13 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>To start, you need R and <code>Java 8</code> or <code>OpenJDK 1.8</code>. Higher versions work. To check your version, run the command <code>java -version</code> from a terminal. Get Java installation tips at <a href="https://www.java.com/en/download/" class="uri">https://www.java.com/en/download/</a> or <a href="http://openjdk.java.net/install/" class="uri">http://openjdk.java.net/install/</a>. Because the <code>rJava</code> package is <strong><em>not</em></strong> required, installation is simple. You can cut and paste the following snippet:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'rtika'</span>, <span class="dt">repos =</span> <span class="st">'https://cloud.r-project.org'</span>)
+<div class="sourceCode"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'rtika'</span>, <span class="kw">repos</span> <span class="kw">=</span> <span class="st">'https://cloud.r-project.org'</span>)
 
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">'rtika'</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">'rtika'</span>)
 
 <span class="co"># You need to install the Apache Tika .jar once.</span>
-<span class="kw"><a href="reference/install_tika.html">install_tika</a></span>()</code></pre></div>
-<p>Read an <a href="https://ropensci.github.io/rtika/articles/rtika_introduction.html">introductory article</a> at <a href="https://ropensci.github.io/rtika/articles/rtika_introduction.html" class="uri">https://ropensci.github.io/rtika/articles/rtika_introduction.html</a>.</p>
+<span class="fu"><a href="reference/install_tika.html">install_tika</a></span>()</pre></div>
+<p>Read an <a href="https://docs.ropensci.org/rtika/articles/rtika_introduction.html">introductory article</a> at <a href="https://docs.ropensci.org/rtika/articles/rtika_introduction.html" class="uri">https://docs.ropensci.org/rtika/articles/rtika_introduction.html</a>.</p>
 </div>
 <div id="key-features" class="section level2">
 <h2 class="hasAnchor">
@@ -159,37 +159,37 @@
 <h2 class="hasAnchor">
 <a href="#get-plain-text" class="anchor"></a>Get Plain Text</h2>
 <p><strong>The <code>rtika</code> package processes batches of documents efficiently</strong>, so I recommend batches. Currently, the <code><a href="reference/tika.html">tika()</a></code> parsers take a tiny bit of time to spin up, and that will get annoying with hundreds of separate calls to the functions.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Test files</span>
-batch &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(
-  <span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"jsonlite.pdf"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>),
-  <span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"curl.pdf"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>),
-  <span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"table.docx"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>),
-  <span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"xml2.pdf"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>),
-  <span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"R-FAQ.html"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>),
-  <span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"calculator.jpg"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>),
-  <span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"tika.apache.org.zip"</span>, <span class="dt">package =</span> <span class="st">"rtika"</span>)
+<div class="sourceCode"><pre class="r"><span class="co"># Test files</span>
+<span class="no">batch</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(
+  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"jsonlite.pdf"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"rtika"</span>),
+  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"curl.pdf"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"rtika"</span>),
+  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"table.docx"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"rtika"</span>),
+  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"xml2.pdf"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"rtika"</span>),
+  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"R-FAQ.html"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"rtika"</span>),
+  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"calculator.jpg"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"rtika"</span>),
+  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"tika.apache.org.zip"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"rtika"</span>)
 )
 
 <span class="co"># batches are best, and can also be piped with magrittr.</span>
-text &lt;-<span class="st"> </span><span class="kw"><a href="reference/tika_text.html">tika_text</a></span>(batch)
+<span class="no">text</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/tika_text.html">tika_text</a></span>(<span class="no">batch</span>)
 
 <span class="co"># text has one string for each document:</span>
-<span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(text)
+<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">text</span>)
 <span class="co">#&gt; [1] 7</span>
 
 <span class="co"># A snippet:</span>
-<span class="kw"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/substr.html">substr</a></span>(text[<span class="dv">1</span>], <span class="dv">54</span>, <span class="dv">190</span>)) 
+<span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/substr.html">substr</a></span>(<span class="no">text</span>[<span class="fl">1</span>], <span class="fl">54</span>, <span class="fl">190</span>))
+<span class="co">#&gt; </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Package ‘jsonlite’</span>
-<span class="co">#&gt; </span>
 <span class="co">#&gt; June 1, 2017</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Version 1.5</span>
-<span class="co">#&gt; </span>
 <span class="co">#&gt; Title A Robust, High Performance JSON Parser and Generator for R</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; License MIT + file LICE</span></code></pre></div>
-<p>To learn more and find out how to extract structured text and metadata, read the vignette: <a href="https://ropensci.github.io/rtika/articles/rtika_introduction.html" class="uri">https://ropensci.github.io/rtika/articles/rtika_introduction.html</a>.</p>
+<span class="co">#&gt; License MIT + file LICE</span></pre></div>
+<p>To learn more and find out how to extract structured text and metadata, read the vignette: <a href="https://docs.ropensci.org/rtika/articles/rtika_introduction.html" class="uri">https://docs.ropensci.org/rtika/articles/rtika_introduction.html</a>.</p>
 </div>
 <div id="enhancements" class="section level2">
 <h2 class="hasAnchor">
@@ -225,13 +225,13 @@ text &lt;-<span class="st"> </span><span class="kw"><a href="reference/tika_text
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=rtika">https://​cloud.r-project.org/​package=rtika</a>
 </li>
-<li>Browse source code at <br><a href="https://github.com/ropensci/rtika">https://​github.com/​ropensci/​rtika</a>
+<li>Browse source code at <br><a href="http://github.com/ropensci/rtika/">http://​github.com/​ropensci/​rtika/​</a>
 </li>
 <li>Report a bug at <br><a href="http://github.com/ropensci/rtika/issues">http://​github.com/​ropensci/​rtika/​issues</a>
 </li>
@@ -262,7 +262,7 @@ text &lt;-<span class="st"> </span><span class="kw"><a href="reference/tika_text
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
