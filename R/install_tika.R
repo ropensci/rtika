@@ -5,7 +5,7 @@
 #' The default settings should work fine.
 #'
 #' @param version The declared Tika version
-#' @param digest The sha15 checksum. Set to an empty string \code{""} to skip the check.
+#' @param digest The sha512 checksum. Set to an empty string \code{""} to skip the check.
 #' @param mirrors A vector of Apache mirror sites. One is picked randomly.
 #' @param retries The number of times to try the download.
 #' @param url Optional url to a particular location of the tika app. Setting this to any character string overrides downloading from random mirrors.
@@ -53,11 +53,12 @@
 #'
 #' @export
 
-install_tika <- function(version = "1.24.1",
-                         digest = paste0("17e3125cf5a3b29829dc9a7a679716bcb49728dd514",
-                                         "679838f3905032eb750393b46a8d42312def02a8e69",
-                                         "6d0dd95fcb203acde11d634c713f98057110641270"),
+install_tika <- function(version = "2.0.0",
+                         digest = paste0("8479aa41611add4f6ffa4917991ee0a74d9f1ece12a",
+                                         "65133368567e35ef91648142279e6981f09820e1658",
+                                         "04d051aa8406d376ed382b17cfe2f691d30e365b9f"),
                          mirrors = c(
+                           "https://ftp.wayne.edu/apache/tika/",
                            "http://mirrors.ocf.berkeley.edu/apache/tika/",
                            "http://apache.cs.utah.edu/tika/",
                            "http://mirror.cc.columbia.edu/pub/software/apache/tika/"
@@ -89,7 +90,7 @@ install_tika <- function(version = "1.24.1",
 
     url <- paste0(
       random_mirror,
-      paste0("tika-app-", version, ".jar")
+      paste0( version, "/", "tika-app-", version, ".jar")
     )
   }
 

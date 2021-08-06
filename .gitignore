@@ -7,3 +7,5 @@ tika.Rproj
 .Rhistory
 tika-example
 .RData
+/doc/
+/Meta/

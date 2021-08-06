@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Install or Update the Apache Tika <code>jar</code> — install_tika • rtika</title>
+<title>Install or Update the Apache Tika jar — install_tika • rtika</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="Install or Update the Apache Tika <code>jar</code> — install_tika" />
+<meta property="og:title" content="Install or Update the Apache Tika jar — install_tika" />
 <meta property="og:description" content="This downloads and installs the Tika App jar (~60 MB) into a user directory,
 and verifies the integrity of the file using a checksum.
 The default settings should work fine." />
@@ -74,7 +74,7 @@ The default settings should work fine." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rtika</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.24.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0</span>
       </span>
     </div>
 
@@ -82,7 +82,7 @@ The default settings should work fine." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -108,7 +108,7 @@ The default settings should work fine." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="http://github.com/ropensci/rtika/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -136,17 +136,17 @@ and verifies the integrity of the file using a checksum.
 The default settings should work fine.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>install_tika</span>(
-  <span class='kw'>version</span> <span class='kw'>=</span> <span class='st'>"1.24.1"</span>,
-  <span class='kw'>digest</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"17e3125cf5a3b29829dc9a7a679716bcb49728dd514"</span>,
-    <span class='st'>"679838f3905032eb750393b46a8d42312def02a8e69"</span>,
-    <span class='st'>"6d0dd95fcb203acde11d634c713f98057110641270"</span>),
-  <span class='kw'>mirrors</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"http://mirrors.ocf.berkeley.edu/apache/tika/"</span>,
-    <span class='st'>"http://apache.cs.utah.edu/tika/"</span>,
-    <span class='st'>"http://mirror.cc.columbia.edu/pub/software/apache/tika/"</span>),
-  <span class='kw'>retries</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>url</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>()
-)</pre>
+    <pre class="usage"><span class='fu'>install_tika</span><span class='op'>(</span>
+  version <span class='op'>=</span> <span class='st'>"2.0.0"</span>,
+  digest <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"8479aa41611add4f6ffa4917991ee0a74d9f1ece12a"</span>,
+    <span class='st'>"65133368567e35ef91648142279e6981f09820e1658"</span>,
+    <span class='st'>"04d051aa8406d376ed382b17cfe2f691d30e365b9f"</span><span class='op'>)</span>,
+  mirrors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"https://ftp.wayne.edu/apache/tika/"</span>,
+    <span class='st'>"http://mirrors.ocf.berkeley.edu/apache/tika/"</span>, <span class='st'>"http://apache.cs.utah.edu/tika/"</span>,
+    <span class='st'>"http://mirror.cc.columbia.edu/pub/software/apache/tika/"</span><span class='op'>)</span>,
+  retries <span class='op'>=</span> <span class='fl'>2</span>,
+  url <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -157,7 +157,7 @@ The default settings should work fine.</p>
     </tr>
     <tr>
       <th>digest</th>
-      <td><p>The sha15 checksum. Set to an empty string <code>""</code> to skip the check.</p></td>
+      <td><p>The sha512 checksum. Set to an empty string <code>""</code> to skip the check.</p></td>
     </tr>
     <tr>
       <th>mirrors</th>
@@ -188,7 +188,7 @@ If the mirror fails,
 it tries the archive at <code>http://archive.apache.org/dist/tika/</code>.
 You can also enter a value for <code>url</code> directly to override this.</p>
 <p>It will download into a directory determined
-by the <code><a href='https://rdrr.io/pkg/rappdirs/man/user_data_dir.html'>rappdirs::user_data_dir()</a></code> function,
+by the <code><a href='https://rappdirs.r-lib.org/reference/user_data_dir.html'>rappdirs::user_data_dir()</a></code> function,
 specific to the operating system.</p>
 <p>If <code><a href='tika.html'>tika()</a></code> is stopping with an error compalining about the <code>jar</code>,
 try running <code>install_tika()</code> again.</p>
@@ -201,7 +201,7 @@ and want to remove the Tika App <code>jar</code> also,
 run:</p>
 <p><code><a href='https://rdrr.io/r/base/unlink.html'>unlink(rappdirs::user_data_dir('rtika'), recursive = TRUE)</a></code></p>
 <p>Alternately, navigate to the install folder and delete it manually.
-It is the file path returned by <code><a href='https://rdrr.io/pkg/rappdirs/man/user_data_dir.html'>rappdirs::user_data_dir('rtika')</a></code>.
+It is the file path returned by <code><a href='https://rappdirs.r-lib.org/reference/user_data_dir.html'>rappdirs::user_data_dir('rtika')</a></code>.
 The path is OS specific, and explained here:
 https://github.com/r-lib/rappdirs .</p>
     <h2 class="hasAnchor" id="distribution"><a class="anchor" href="#distribution"></a>Distribution</h2>
@@ -215,7 +215,8 @@ You can fetch (clone) the large source from GitHub ( https://github.com/apache/t
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'>install_tika</span>()</div><div class='output co'>#&gt; <span class='message'>Downloading the Tika App .jar version 1.24.1 into "/Users/sasha/Library/Application Support/rtika". The file is approximately 60 MB - this may take a while.</span></div><div class='output co'>#&gt; <span class='message'>The download is successful.</span></div><div class='output co'>#&gt; <span class='message'>The file integrity is good.</span></div><div class='output co'>#&gt; <span class='message'>The installation is successful.</span></div><div class='input'># }
+<span class='fu'>install_tika</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Downloading the Tika App .jar version 2.0.0 into "/Users/sasha/Library/Application Support/rtika". The file is approximately 60 MB - this may take a while.</span></div><div class='output co'>#&gt; <span class='message'>The download is successful.</span></div><div class='output co'>#&gt; <span class='message'>The file integrity is good.</span></div><div class='output co'>#&gt; <span class='message'>The installation is successful.</span></div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -232,7 +233,7 @@ You can fetch (clone) the large source from GitHub ( https://github.com/apache/t
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

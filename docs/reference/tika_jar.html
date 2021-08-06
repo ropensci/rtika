@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rtika</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.24.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -106,7 +106,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="http://github.com/ropensci/rtika/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -132,7 +132,7 @@
     <p>Gets the path to the Tika App <code>.jar</code> installed by <code>tika_install()</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tika_jar</span>()</pre>
+    <pre class="usage"><span class='fu'>tika_jar</span><span class='op'>(</span><span class='op'>)</span></pre>
 
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -155,9 +155,10 @@ which has caused erratic, intermittent errors with Tika.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='no'>jar</span> <span class='kw'>&lt;-</span> <span class='fu'>tika_jar</span>()
+<span class='va'>jar</span> <span class='op'>&lt;-</span> <span class='fu'>tika_jar</span><span class='op'>(</span><span class='op'>)</span>
 <span class='co'># see help</span>
-<span class='kw pkg'>sys</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sys/man/exec.html'>exec_wait</a></span>(<span class='st'>'java'</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'-jar'</span>,<span class='no'>jar</span>, <span class='st'>'--help'</span>))</div><div class='output co'>#&gt; usage: java -jar tika-app.jar [option...] [file|port...]
+<span class='fu'>sys</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sys/man/exec.html'>exec_wait</a></span><span class='op'>(</span><span class='st'>'java'</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'-jar'</span>,<span class='va'>jar</span>, <span class='st'>'--help'</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; usage: java -jar tika-app.jar [option...] [file...]
 #&gt; 
 #&gt; Options:
 #&gt;     -?  or --help          Print this usage message
@@ -165,7 +166,6 @@ which has caused erratic, intermittent errors with Tika.</p>
 #&gt;     -V  or --version       Print the Apache Tika version number
 #&gt; 
 #&gt;     -g  or --gui           Start the Apache Tika GUI
-#&gt;     -s  or --server        Start the Apache Tika server
 #&gt;     -f  or --fork          Use Fork Mode for out-of-process extraction
 #&gt; 
 #&gt;     --config=&lt;tika-config.xml&gt;
@@ -177,14 +177,16 @@ which has caused erratic, intermittent errors with Tika.</p>
 #&gt; 
 #&gt;     -x  or --xml           Output XHTML content (default)
 #&gt;     -h  or --html          Output HTML content
-#&gt;     -t  or --text          Output plain text content
-#&gt;     -T  or --text-main     Output plain text content (main content only)
+#&gt;     -t  or --text          Output plain text content (body)
+#&gt;     -T  or --text-main     Output plain text content (main content only via boilerpipe handler)
+#&gt;     -A  or --text-all      Output all text content
 #&gt;     -m  or --metadata      Output only metadata
 #&gt;     -j  or --json          Output metadata in JSON
 #&gt;     -y  or --xmp           Output metadata in XMP
 #&gt;     -J  or --jsonRecursive Output metadata and content from all
 #&gt;                            embedded files (choose content type
 #&gt;                            with -x, -h, -t or -m; default is -x)
+#&gt;     -a  or --async         Run Tika in async mode; must specify details in a tikaConfig file
 #&gt;     -l  or --language      Output only language
 #&gt;     -d  or --detect        Detect document type
 #&gt;            --digest=X      Include digest X (md2, md5, sha1,
@@ -232,12 +234,6 @@ which has caused erratic, intermittent errors with Tika.</p>
 #&gt;     a normal file explorer to the GUI window to extract
 #&gt;     text content and metadata from the files.
 #&gt; 
-#&gt; - Server mode
-#&gt; 
-#&gt;     Use the "--server" (or "-s") option to start the
-#&gt;     Apache Tika server. The server will listen to the
-#&gt;     ports you specify as one or more arguments.
-#&gt; 
 #&gt; - Batch mode
 #&gt; 
 #&gt;     Simplest method.
@@ -250,9 +246,9 @@ which has caused erratic, intermittent errors with Tika.</p>
 #&gt;     -numConsumers              Number of processing threads
 #&gt;     -bc                        Batch config file
 #&gt;     -maxRestarts               Maximum number of times the 
-#&gt;                                watchdog process will restart the child process.
+#&gt;                                watchdog process will restart the forked process.
 #&gt;     -timeoutThresholdMillis    Number of milliseconds allowed to a parse
-#&gt;                                before the process is killed and restarted
+#&gt;                                before the process is terminated and restarted
 #&gt;     -fileList                  List of files to process, with
 #&gt;                                paths relative to the input directory
 #&gt;     -includeFilePat            Regular expression to determine which
@@ -263,9 +259,10 @@ which has caused erratic, intermittent errors with Tika.</p>
 #&gt; 
 #&gt;     Control the type of output with -x, -h, -t and/or -J.
 #&gt; 
-#&gt;     To modify child process jvm args, prepend "J" as in:
+#&gt;     To modify forked process jvm args, prepend "J" as in:
 #&gt;     -JXmx4g or -JDlog4j.configuration=file:log4j.xml.</div><div class='output co'>#&gt; [1] 0</div><div class='input'><span class='co'># detect language of web page</span>
-<span class='kw pkg'>sys</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sys/man/exec.html'>exec_wait</a></span>(<span class='st'>'java'</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'-jar'</span>,<span class='no'>jar</span>, <span class='st'>'--language'</span>,<span class='st'>'https://tika.apache.org/'</span>))</div><div class='output co'>#&gt; en</div><div class='output co'>#&gt; [1] 0</div><div class='input'># }
+<span class='fu'>sys</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sys/man/exec.html'>exec_wait</a></span><span class='op'>(</span><span class='st'>'java'</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'-jar'</span>,<span class='va'>jar</span>, <span class='st'>'--language'</span>,<span class='st'>'https://tika.apache.org/'</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; en</div><div class='output co'>#&gt; [1] 0</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -282,7 +279,7 @@ which has caused erratic, intermittent errors with Tika.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

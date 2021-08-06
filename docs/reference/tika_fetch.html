@@ -81,7 +81,7 @@ from Tika's database." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rtika</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.24.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0</span>
       </span>
     </div>
 
@@ -89,7 +89,7 @@ from Tika's database." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -115,7 +115,7 @@ from Tika's database." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="http://github.com/ropensci/rtika/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -141,7 +141,7 @@ from Tika's database." />
     <p>On the Internet, Content-Type information is mainly communicated via the server's headers.
 This is an issue if a file is saved to disk without examining the headers.
 The file can have a missing or incorrect file extension.
-For example, a URL ending in a slash (<code>/</code>) can produce file with the Content-Type of  <code>text/html</code>.
+For example, a URL ending in a slash (<code><a href='https://rdrr.io/r/base/Arithmetic.html'>/</a></code>) can produce file with the Content-Type of  <code>text/html</code>.
 The same URL might also produce a <code>image/jpeg</code> or <code>application/pdf</code> file.
 URLs ending in <code>.php</code>, <code>.cfm</code> can produce any Content-Type.
 The downloaded file will lose the server's declared Content-Type unless its appended as a file extension.
@@ -150,13 +150,13 @@ and appends the matching file extension
 from Tika's database.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tika_fetch</span>(
-  <span class='no'>urls</span>,
-  <span class='kw'>download_dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(),
-  <span class='kw'>ssl_verifypeer</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>retries</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>tika_fetch</span><span class='op'>(</span>
+  <span class='va'>urls</span>,
+  download_dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span>,
+  ssl_verifypeer <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  retries <span class='op'>=</span> <span class='fl'>1</span>,
+  quiet <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -189,8 +189,9 @@ from Tika's database.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'>tika_fetch</span>(<span class='st'>'https://tika.apache.org/'</span>)</div><div class='output co'>#&gt; [1] "/private/var/folders/nr/74rgb64s3n98yccxwbv6vsxw0000gn/T/Rtmprhdw0p/rtika_filea4b41025304d.html"</div><div class='input'># a unique file name with .html appended to it
-# }
+<span class='fu'>tika_fetch</span><span class='op'>(</span><span class='st'>'https://tika.apache.org/'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "/private/var/folders/qm/mdgjtmkj0g56rh6wqygglzfh0000gn/T/RtmpYAxun3/rtika_file56cb3cc05da3.html"</div><div class='input'><span class='co'># a unique file name with .html appended to it</span>
+<span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -207,7 +208,7 @@ from Tika's database.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
