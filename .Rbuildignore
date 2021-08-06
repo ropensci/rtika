@@ -17,3 +17,5 @@
 ^docs
 \.RData
 \.DS_Store
+^appveyor\.yml$
+^\.github$
