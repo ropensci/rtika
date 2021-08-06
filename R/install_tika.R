@@ -112,7 +112,7 @@ Trying the Apache archive.')
 
     url <- paste0(
       "http://archive.apache.org/dist/tika/",
-      paste0("tika-app-", version, ".jar")
+      paste0( version, "/", "tika-app-", version, ".jar")
     )
 
     download <- tika_fetch(
