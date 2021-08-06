@@ -58,5 +58,5 @@ tika_mimetype_sysdata <- function(){
   # devtools::use_data(tika_mimetype, internal=TRUE, overwrite=TRUE)
   
   # save over the R/sysdata.rda in the package
-  save(tika_mimetype, file = "data/sysdata.rda")
+  save(tika_mimetype, file = "R/sysdata.rda")
 }
