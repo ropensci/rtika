@@ -5,10 +5,6 @@
 
 [![R-CMD-check](https://github.com/ropensci/rtika/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/rtika/actions)
 [![ROpenSci](https://badges.ropensci.org/191_status.svg)](https://github.com/ropensci/onboarding/issues/191)
-[![Travis-CI Build
-Status](https://travis-ci.com/ropensci/rtika.svg?branch=master)](https://travis-ci.com/ropensci/rtika)
-[![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/ropensci/rtika?branch=master&svg=true)](https://ci.appveyor.com/project/goodmansasha/rtika)
 [![Coverage
 status](https://codecov.io/gh/ropensci/rtika/branch/master/graph/badge.svg)](https://codecov.io/github/ropensci/rtika?branch=master)
 [![Cranlogs
