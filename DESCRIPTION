@@ -31,6 +31,6 @@ Depends: R (>= 3.1.0)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
-URL: https://docs.ropensci.org/rtika, http://github.com/ropensci/rtika
-BugReports: http://github.com/ropensci/rtika/issues
+URL: https://docs.ropensci.org/rtika, https://github.com/ropensci/rtika
+BugReports: https://github.com/ropensci/rtika/issues
 VignetteBuilder: knitr
