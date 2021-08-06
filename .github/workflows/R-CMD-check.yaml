@@ -76,6 +76,10 @@ jobs:
           options(crayon.enabled = TRUE)
           rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
+        
+      - name: Test coverage
+        run: covr::codecov()
+        shell: Rscript {0}
 
       - name: Upload check results
         if: failure()
