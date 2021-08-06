@@ -3,8 +3,8 @@
 
 ***Extract text or metadata from over a thousand file types.***
 
-[![R-CMD-check](https://github.com/ropensci/rtika/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/rtika/actions)
-[![ROpenSci](https://badges.ropensci.org/191_status.svg)](https://github.com/ropensci/onboarding/issues/191)
+[![R-CMD-check](https://github.com/ropensci/rtika/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/rtika/actions/)
+[![ROpenSci](https://badges.ropensci.org/191_status.svg)](https://github.com/ropensci/software-review/issues/191/)
 [![Coverage
 status](https://codecov.io/gh/ropensci/rtika/branch/master/graph/badge.svg)](https://codecov.io/github/ropensci/rtika?branch=master)
 [![Cranlogs

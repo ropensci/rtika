@@ -71,7 +71,7 @@ install_tika <- function(version = "2.0.0",
     normalizePath(
       rappdirs::user_data_dir("rtika"),
       mustWork = FALSE
-    )
+    ) # tools::R_user_dir works on R > 4
 
 
   if (!dir.exists(user_data_dir)) {
