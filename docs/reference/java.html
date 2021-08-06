@@ -108,7 +108,7 @@ This can be persisted over sessions (see the Details below)." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="http://github.com/ropensci/rtika/">
+  <a href="https://github.com/ropensci/rtika/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -127,7 +127,7 @@ This can be persisted over sessions (see the Details below)." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>System Command to Run Java</h1>
-    <small class="dont-index">Source: <a href='http://github.com/ropensci/rtika/blob/master/R/java.R'><code>R/java.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/rtika/blob/master/R/java.R'><code>R/java.R</code></a></small>
     <div class="hidden name"><code>java.Rd</code></div>
     </div>
 
@@ -149,22 +149,23 @@ This can be persisted over sessions (see the Details below).</p>
     
 
 <p>This function is used by all of the <code><a href='tika.html'>tika()</a></code> functions internally as the default value to its <code>java</code> parameter.</p>
-<p>This function tries to find an environmental variable using <code><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv("JAVA_HOME")</a></code>.
+<p>This function tries to find an environmental variable using <code>Sys.getenv("JAVA_HOME")</code>.
 It looks for the <code>java</code> executable inside the <code>bin</code> directory in the <code>JAVA_HOME</code> directory.</p>
-<p>If you want to use a specific version of Java, set the <code>JAVA_HOME</code> variable using <code><a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.setenv(JAVA_HOME = 'my path')</a></code>,
+<p>If you want to use a specific version of Java, set the <code>JAVA_HOME</code> variable using <code>Sys.setenv(JAVA_HOME = 'my path')</code>,
 where 'my path' is the path to a folder that has a <code>bin</code> directory with a <code>java</code> executable.</p>
 <p>For example, on Windows 10 <code>JAVA_HOME</code> might be <code>C:/Program Files (x86)/Java/jre1.8.0_171</code>. 
 On Ubuntu and OS X, it might be the <code>/usr</code> directory.</p>
 <p>The <code>JAVA_HOME</code> variable can also be set to persist over sessions.
-Add the path to the <code>.Rprofile</code> by adding <code><a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.setenv(JAVA_HOME = 'my path')</a></code>, and it will use that every time R is started.</p>
+Add the path to the <code>.Rprofile</code> by adding <code>Sys.setenv(JAVA_HOME = 'my path')</code>, and it will use that every time R is started.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='co'># Typically, this function returns the string 'java'.</span>
-<span class='co'># If JAVA_HOME is set, it's a path to java in a 'bin' folder.</span>
-<span class='fu'>java</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "java"</div><div class='input'><span class='co'># }</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='co'># Typically, this function returns the string 'java'.</span></span>
+<span class='r-in'><span class='co'># If JAVA_HOME is set, it's a path to java in a 'bin' folder.</span></span>
+<span class='r-in'><span class='fu'>java</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "java"</span>
+<span class='r-in'><span class='co'># }</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

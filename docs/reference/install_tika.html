@@ -107,7 +107,7 @@ The default settings should work fine." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="http://github.com/ropensci/rtika/">
+  <a href="https://github.com/ropensci/rtika/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -126,7 +126,7 @@ The default settings should work fine." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Install or Update the Apache Tika <code>jar</code></h1>
-    <small class="dont-index">Source: <a href='http://github.com/ropensci/rtika/blob/master/R/install_tika.R'><code>R/install_tika.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/rtika/blob/master/R/install_tika.R'><code>R/install_tika.R</code></a></small>
     <div class="hidden name"><code>install_tika.Rd</code></div>
     </div>
 
@@ -199,9 +199,9 @@ try running <code>install_tika()</code> again.</p>
 <p>If you are uninstalling the entire <code>rtika</code> package
 and want to remove the Tika App <code>jar</code> also,
 run:</p>
-<p><code><a href='https://rdrr.io/r/base/unlink.html'>unlink(rappdirs::user_data_dir('rtika'), recursive = TRUE)</a></code></p>
+<p><code>unlink(rappdirs::user_data_dir('rtika'), recursive = TRUE)</code></p>
 <p>Alternately, navigate to the install folder and delete it manually.
-It is the file path returned by <code><a href='https://rappdirs.r-lib.org/reference/user_data_dir.html'>rappdirs::user_data_dir('rtika')</a></code>.
+It is the file path returned by <code>rappdirs::user_data_dir('rtika')</code>.
 The path is OS specific, and explained here:
 https://github.com/r-lib/rappdirs .</p>
     <h2 class="hasAnchor" id="distribution"><a class="anchor" href="#distribution"></a>Distribution</h2>
@@ -214,10 +214,14 @@ The master copy of the Apache Tika source code is held in GIT.
 You can fetch (clone) the large source from GitHub ( https://github.com/apache/tika ).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'>install_tika</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Downloading the Tika App .jar version 2.0.0 into "/Users/sasha/Library/Application Support/rtika". The file is approximately 60 MB - this may take a while.</span></div><div class='output co'>#&gt; <span class='message'>The download is successful.</span></div><div class='output co'>#&gt; <span class='message'>The file integrity is good.</span></div><div class='output co'>#&gt; <span class='message'>The installation is successful.</span></div><div class='input'><span class='co'># }</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='fu'>install_tika</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Downloading the Tika App .jar version 2.0.0 into "/Users/sasha/Library/Application Support/rtika". The file is approximately 60 MB - this may take a while.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The download is successful.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The file integrity is good.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The installation is successful.</span>
+<span class='r-in'><span class='co'># }</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

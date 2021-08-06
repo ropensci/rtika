@@ -114,7 +114,7 @@ from Tika's database." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="http://github.com/ropensci/rtika/">
+  <a href="https://github.com/ropensci/rtika/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -133,7 +133,7 @@ from Tika's database." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Fetch Files with the Content-Type Preserved in the File Extension</h1>
-    <small class="dont-index">Source: <a href='http://github.com/ropensci/rtika/blob/master/R/tika_fetch.R'><code>R/tika_fetch.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/rtika/blob/master/R/tika_fetch.R'><code>R/tika_fetch.R</code></a></small>
     <div class="hidden name"><code>tika_fetch.Rd</code></div>
     </div>
 
@@ -141,7 +141,7 @@ from Tika's database." />
     <p>On the Internet, Content-Type information is mainly communicated via the server's headers.
 This is an issue if a file is saved to disk without examining the headers.
 The file can have a missing or incorrect file extension.
-For example, a URL ending in a slash (<code><a href='https://rdrr.io/r/base/Arithmetic.html'>/</a></code>) can produce file with the Content-Type of  <code>text/html</code>.
+For example, a URL ending in a slash (<code>/</code>) can produce file with the Content-Type of  <code>text/html</code>.
 The same URL might also produce a <code>image/jpeg</code> or <code>application/pdf</code> file.
 URLs ending in <code>.php</code>, <code>.cfm</code> can produce any Content-Type.
 The downloaded file will lose the server's declared Content-Type unless its appended as a file extension.
@@ -188,11 +188,12 @@ from Tika's database.</p>
     <p>Character vector of the same length and order as input with the paths describing the locations of the downloaded files. Errors are returned as NA.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'>tika_fetch</span><span class='op'>(</span><span class='st'>'https://tika.apache.org/'</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "/private/var/folders/qm/mdgjtmkj0g56rh6wqygglzfh0000gn/T/RtmpYAxun3/rtika_file56cb3cc05da3.html"</div><div class='input'><span class='co'># a unique file name with .html appended to it</span>
-<span class='co'># }</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='fu'>tika_fetch</span><span class='op'>(</span><span class='st'>'https://tika.apache.org/'</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "/private/var/folders/qm/mdgjtmkj0g56rh6wqygglzfh0000gn/T/Rtmpi4p5C0/rtika_file95c611645304.html"</span>
+<span class='r-in'><span class='co'># a unique file name with .html appended to it</span></span>
+<span class='r-in'><span class='co'># }</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -105,7 +105,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="http://github.com/ropensci/rtika/">
+  <a href="https://github.com/ropensci/rtika/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -124,7 +124,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Path to Apache Tika</h1>
-    <small class="dont-index">Source: <a href='http://github.com/ropensci/rtika/blob/master/R/tika_jar.R'><code>R/tika_jar.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/rtika/blob/master/R/tika_jar.R'><code>R/tika_jar.R</code></a></small>
     <div class="hidden name"><code>tika_jar.Rd</code></div>
     </div>
 
@@ -154,116 +154,120 @@ as shown in the examples here.</p>
 which has caused erratic, intermittent errors with Tika.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='va'>jar</span> <span class='op'>&lt;-</span> <span class='fu'>tika_jar</span><span class='op'>(</span><span class='op'>)</span>
-<span class='co'># see help</span>
-<span class='fu'>sys</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sys/man/exec.html'>exec_wait</a></span><span class='op'>(</span><span class='st'>'java'</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'-jar'</span>,<span class='va'>jar</span>, <span class='st'>'--help'</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; usage: java -jar tika-app.jar [option...] [file...]
-#&gt; 
-#&gt; Options:
-#&gt;     -?  or --help          Print this usage message
-#&gt;     -v  or --verbose       Print debug level messages
-#&gt;     -V  or --version       Print the Apache Tika version number
-#&gt; 
-#&gt;     -g  or --gui           Start the Apache Tika GUI
-#&gt;     -f  or --fork          Use Fork Mode for out-of-process extraction
-#&gt; 
-#&gt;     --config=&lt;tika-config.xml&gt;
-#&gt;         TikaConfig file. Must be specified before -g, -s, -f or the dump-x-config !
-#&gt;     --dump-minimal-config  Print minimal TikaConfig
-#&gt;     --dump-current-config  Print current TikaConfig
-#&gt;     --dump-static-config   Print static config
-#&gt;     --dump-static-full-config  Print static explicit config
-#&gt; 
-#&gt;     -x  or --xml           Output XHTML content (default)
-#&gt;     -h  or --html          Output HTML content
-#&gt;     -t  or --text          Output plain text content (body)
-#&gt;     -T  or --text-main     Output plain text content (main content only via boilerpipe handler)
-#&gt;     -A  or --text-all      Output all text content
-#&gt;     -m  or --metadata      Output only metadata
-#&gt;     -j  or --json          Output metadata in JSON
-#&gt;     -y  or --xmp           Output metadata in XMP
-#&gt;     -J  or --jsonRecursive Output metadata and content from all
-#&gt;                            embedded files (choose content type
-#&gt;                            with -x, -h, -t or -m; default is -x)
-#&gt;     -a  or --async         Run Tika in async mode; must specify details in a tikaConfig file
-#&gt;     -l  or --language      Output only language
-#&gt;     -d  or --detect        Detect document type
-#&gt;            --digest=X      Include digest X (md2, md5, sha1,
-#&gt;                                sha256, sha384, sha512
-#&gt;     -eX or --encoding=X    Use output encoding X
-#&gt;     -pX or --password=X    Use document password X
-#&gt;     -z  or --extract       Extract all attachements into current directory
-#&gt;     --extract-dir=&lt;dir&gt;    Specify target directory for -z
-#&gt;     -r  or --pretty-print  For JSON, XML and XHTML outputs, adds newlines and
-#&gt;                            whitespace, for better readability
-#&gt; 
-#&gt;     --list-parsers
-#&gt;          List the available document parsers
-#&gt;     --list-parser-details
-#&gt;          List the available document parsers and their supported mime types
-#&gt;     --list-parser-details-apt
-#&gt;          List the available document parsers and their supported mime types in apt format.
-#&gt;     --list-detectors
-#&gt;          List the available document detectors
-#&gt;     --list-met-models
-#&gt;          List the available metadata models, and their supported keys
-#&gt;     --list-supported-types
-#&gt;          List all known media types and related information
-#&gt; 
-#&gt; 
-#&gt;     --compare-file-magic=&lt;dir&gt;
-#&gt;          Compares Tika's known media types to the File(1) tool's magic directory
-#&gt; Description:
-#&gt;     Apache Tika will parse the file(s) specified on the
-#&gt;     command line and output the extracted text content
-#&gt;     or metadata to standard output.
-#&gt; 
-#&gt;     Instead of a file name you can also specify the URL
-#&gt;     of a document to be parsed.
-#&gt; 
-#&gt;     If no file name or URL is specified (or the special
-#&gt;     name "-" is used), then the standard input stream
-#&gt;     is parsed. If no arguments were given and no input
-#&gt;     data is available, the GUI is started instead.
-#&gt; 
-#&gt; - GUI mode
-#&gt; 
-#&gt;     Use the "--gui" (or "-g") option to start the
-#&gt;     Apache Tika GUI. You can drag and drop files from
-#&gt;     a normal file explorer to the GUI window to extract
-#&gt;     text content and metadata from the files.
-#&gt; 
-#&gt; - Batch mode
-#&gt; 
-#&gt;     Simplest method.
-#&gt;     Specify two directories as args with no other args:
-#&gt;          java -jar tika-app.jar &lt;inputDirectory&gt; &lt;outputDirectory&gt;
-#&gt; 
-#&gt; Batch Options:
-#&gt;     -i  or --inputDir          Input directory
-#&gt;     -o  or --outputDir         Output directory
-#&gt;     -numConsumers              Number of processing threads
-#&gt;     -bc                        Batch config file
-#&gt;     -maxRestarts               Maximum number of times the 
-#&gt;                                watchdog process will restart the forked process.
-#&gt;     -timeoutThresholdMillis    Number of milliseconds allowed to a parse
-#&gt;                                before the process is terminated and restarted
-#&gt;     -fileList                  List of files to process, with
-#&gt;                                paths relative to the input directory
-#&gt;     -includeFilePat            Regular expression to determine which
-#&gt;                                files to process, e.g. "(?i)\.pdf"
-#&gt;     -excludeFilePat            Regular expression to determine which
-#&gt;                                files to avoid processing, e.g. "(?i)\.pdf"
-#&gt;     -maxFileSizeBytes          Skip files longer than this value
-#&gt; 
-#&gt;     Control the type of output with -x, -h, -t and/or -J.
-#&gt; 
-#&gt;     To modify forked process jvm args, prepend "J" as in:
-#&gt;     -JXmx4g or -JDlog4j.configuration=file:log4j.xml.</div><div class='output co'>#&gt; [1] 0</div><div class='input'><span class='co'># detect language of web page</span>
-<span class='fu'>sys</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sys/man/exec.html'>exec_wait</a></span><span class='op'>(</span><span class='st'>'java'</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'-jar'</span>,<span class='va'>jar</span>, <span class='st'>'--language'</span>,<span class='st'>'https://tika.apache.org/'</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; en</div><div class='output co'>#&gt; [1] 0</div><div class='input'><span class='co'># }</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='va'>jar</span> <span class='op'>&lt;-</span> <span class='fu'>tika_jar</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># see help</span></span>
+<span class='r-in'><span class='fu'>sys</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sys/man/exec.html'>exec_wait</a></span><span class='op'>(</span><span class='st'>'java'</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'-jar'</span>,<span class='va'>jar</span>, <span class='st'>'--help'</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> usage: java -jar tika-app.jar [option...] [file...]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Options:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -?  or --help          Print this usage message</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -v  or --verbose       Print debug level messages</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -V  or --version       Print the Apache Tika version number</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -g  or --gui           Start the Apache Tika GUI</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -f  or --fork          Use Fork Mode for out-of-process extraction</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     --config=&lt;tika-config.xml&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         TikaConfig file. Must be specified before -g, -s, -f or the dump-x-config !</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     --dump-minimal-config  Print minimal TikaConfig</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     --dump-current-config  Print current TikaConfig</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     --dump-static-config   Print static config</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     --dump-static-full-config  Print static explicit config</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -x  or --xml           Output XHTML content (default)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -h  or --html          Output HTML content</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -t  or --text          Output plain text content (body)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -T  or --text-main     Output plain text content (main content only via boilerpipe handler)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -A  or --text-all      Output all text content</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -m  or --metadata      Output only metadata</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -j  or --json          Output metadata in JSON</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -y  or --xmp           Output metadata in XMP</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -J  or --jsonRecursive Output metadata and content from all</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                            embedded files (choose content type</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                            with -x, -h, -t or -m; default is -x)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -a  or --async         Run Tika in async mode; must specify details in a tikaConfig file</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -l  or --language      Output only language</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -d  or --detect        Detect document type</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            --digest=X      Include digest X (md2, md5, sha1,</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                sha256, sha384, sha512</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -eX or --encoding=X    Use output encoding X</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -pX or --password=X    Use document password X</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -z  or --extract       Extract all attachements into current directory</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     --extract-dir=&lt;dir&gt;    Specify target directory for -z</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -r  or --pretty-print  For JSON, XML and XHTML outputs, adds newlines and</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                            whitespace, for better readability</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     --list-parsers</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          List the available document parsers</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     --list-parser-details</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          List the available document parsers and their supported mime types</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     --list-parser-details-apt</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          List the available document parsers and their supported mime types in apt format.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     --list-detectors</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          List the available document detectors</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     --list-met-models</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          List the available metadata models, and their supported keys</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     --list-supported-types</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          List all known media types and related information</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     --compare-file-magic=&lt;dir&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          Compares Tika's known media types to the File(1) tool's magic directory</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Description:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     Apache Tika will parse the file(s) specified on the</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     command line and output the extracted text content</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     or metadata to standard output.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     Instead of a file name you can also specify the URL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     of a document to be parsed.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     If no file name or URL is specified (or the special</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     name "-" is used), then the standard input stream</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     is parsed. If no arguments were given and no input</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     data is available, the GUI is started instead.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - GUI mode</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     Use the "--gui" (or "-g") option to start the</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     Apache Tika GUI. You can drag and drop files from</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     a normal file explorer to the GUI window to extract</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     text content and metadata from the files.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - Batch mode</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     Simplest method.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     Specify two directories as args with no other args:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          java -jar tika-app.jar &lt;inputDirectory&gt; &lt;outputDirectory&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Batch Options:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -i  or --inputDir          Input directory</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -o  or --outputDir         Output directory</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -numConsumers              Number of processing threads</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -bc                        Batch config file</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -maxRestarts               Maximum number of times the </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                watchdog process will restart the forked process.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -timeoutThresholdMillis    Number of milliseconds allowed to a parse</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                before the process is terminated and restarted</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -fileList                  List of files to process, with</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                paths relative to the input directory</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -includeFilePat            Regular expression to determine which</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                files to process, e.g. "(?i)\.pdf"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -excludeFilePat            Regular expression to determine which</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                files to avoid processing, e.g. "(?i)\.pdf"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -maxFileSizeBytes          Skip files longer than this value</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     Control the type of output with -x, -h, -t and/or -J.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     To modify forked process jvm args, prepend "J" as in:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     -JXmx4g or -JDlog4j.configuration=file:log4j.xml.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0</span>
+<span class='r-in'><span class='co'># detect language of web page</span></span>
+<span class='r-in'><span class='fu'>sys</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sys/man/exec.html'>exec_wait</a></span><span class='op'>(</span><span class='st'>'java'</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'-jar'</span>,<span class='va'>jar</span>, <span class='st'>'--language'</span>,<span class='st'>'https://tika.apache.org/'</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> en</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0</span>
+<span class='r-in'><span class='co'># }</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

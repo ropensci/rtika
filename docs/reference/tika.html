@@ -110,7 +110,7 @@ https://tika.apache.org/." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="http://github.com/ropensci/rtika/">
+  <a href="https://github.com/ropensci/rtika/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -129,7 +129,7 @@ https://tika.apache.org/." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Main R Interface to 'Apache Tika'</h1>
-    <small class="dont-index">Source: <a href='http://github.com/ropensci/rtika/blob/master/R/tika.R'><code>R/tika.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/rtika/blob/master/R/tika.R'><code>R/tika.R</code></a></small>
     <div class="hidden name"><code>tika.Rd</code></div>
     </div>
 
@@ -176,7 +176,7 @@ drives because of a Windows convention.</p></td>
 <code>"text"</code>, gets plain text without metadata. <code>"xml"</code> and
 <code>"html"</code> get <code>XHTML</code> text with metadata. <code>"jsonRecursive"</code>
 gets <code>XHTML</code> text and <code>json</code> metadata.
-<code><a href='https://rdrr.io/r/base/c.html'>c("jsonRecursive","text")</a></code> or <code><a href='https://rdrr.io/r/base/c.html'>c("J","t")</a></code> get plain text and
+<code>c("jsonRecursive","text")</code> or <code>c("J","t")</code> get plain text and
 <code>json</code> metadata. See the 'Output Details' section.</p></td>
     </tr>
     <tr>
@@ -222,13 +222,13 @@ Do not process files larger than this. The default is unlimited.</p></td>
     </tr>
     <tr>
       <th>config</th>
-      <td><p>Path to the XML config file. Defaults to <code><a href='https://rdrr.io/r/base/system.file.html'>system.file("extdata", "ocr.xml", package = "rtika")</a></code>'. There is also a <code>no-ocr.xml</code> file available.</p></td>
+      <td><p>Path to the XML config file. Defaults to <code>system.file("extdata", "ocr.xml", package = "rtika")</code>'. There is also a <code>no-ocr.xml</code> file available.</p></td>
     </tr>
     <tr>
       <th>args</th>
       <td><p>Optional character vector of additional arguments passed to Tika,
 that may not yet be implemented in this R interface, in the pattern of
-<code><a href='https://rdrr.io/r/base/c.html'>c('-arg1','setting1','-arg2','setting2')</a></code>.</p></td>
+<code>c('-arg1','setting1','-arg2','setting2')</code>.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
@@ -254,7 +254,7 @@ mainly for package testing.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A character vector in the same order and with the same length as
-<code>input</code>. Unprocessed files are <code><a href='https://rdrr.io/r/base/character.html'>as.character(NA)</a></code>.
+<code>input</code>. Unprocessed files are <code>as.character(NA)</code>.
 If <code>return = FALSE</code>, then a <code>NULL</code> value is invisibly returned.
 See the Output Details section below.</p>
     <h2 class="hasAnchor" id="output-details"><a class="anchor" href="#output-details"></a>Output Details</h2>
@@ -262,7 +262,7 @@ See the Output Details section below.</p>
     
 
 <p>If an input file did not exist, could not be downloaded, was a directory, or
-Tika could not process it, the result will be <code><a href='https://rdrr.io/r/base/character.html'>as.character(NA)</a></code> for
+Tika could not process it, the result will be <code>as.character(NA)</code> for
 that file.</p>
 <p>By default, <code>output = "text"</code> and this produces plain text with no
 metadata. Some formatting is preserved in this case using tabs, newlines and
@@ -322,88 +322,91 @@ version, set the path in the <code>java</code> attribute of the <code>tika</code
 function.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='co'>#extract text</span>
-<span class='va'>batch</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"jsonlite.pdf"</span>, package <span class='op'>=</span> <span class='st'>"rtika"</span><span class='op'>)</span>,
-  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"curl.pdf"</span>, package <span class='op'>=</span> <span class='st'>"rtika"</span><span class='op'>)</span>,
-  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"table.docx"</span>, package <span class='op'>=</span> <span class='st'>"rtika"</span><span class='op'>)</span>,
-  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"xml2.pdf"</span>, package <span class='op'>=</span> <span class='st'>"rtika"</span><span class='op'>)</span>,
-  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"R-FAQ.html"</span>, package <span class='op'>=</span> <span class='st'>"rtika"</span><span class='op'>)</span>,
-  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"calculator.jpg"</span>, package <span class='op'>=</span> <span class='st'>"rtika"</span><span class='op'>)</span>,
-  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"tika.apache.org.zip"</span>, package <span class='op'>=</span> <span class='st'>"rtika"</span><span class='op'>)</span>
-<span class='op'>)</span>
-<span class='va'>text</span> <span class='op'>=</span> <span class='fu'>tika</span><span class='op'>(</span><span class='va'>batch</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substr</a></span><span class='op'>(</span><span class='va'>text</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>,<span class='fl'>45</span>,<span class='fl'>450</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; 
-#&gt; 
-#&gt; 
-#&gt; 
-#&gt; 
-#&gt; Package ‘jsonlite’
-#&gt; June 1, 2017
-#&gt; 
-#&gt; Version 1.5
-#&gt; 
-#&gt; Title A Robust, High Performance JSON Parser and Generator for R
-#&gt; 
-#&gt; License MIT + file LICENSE
-#&gt; 
-#&gt; NeedsCompilation yes
-#&gt; 
-#&gt; Depends methods
-#&gt; 
-#&gt; Author Jeroen Ooms, Duncan Temple Lang, Lloyd Hilaiel
-#&gt; 
-#&gt; URL https://arxiv.org/abs/1403.2805,
-#&gt; 
-#&gt; https://www.opencpu.org/posts/jsonlite-a-smarter-json-encoder
-#&gt; 
-#&gt; BugReports http://github.com/jeroen/jsonlite/issues
-#&gt; 
-#&gt; Maintainer </div><div class='input'>
-<span class='co'>#more complex metadata</span>
-<span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>'jsonlite'</span><span class='op'>)</span><span class='op'>)</span><span class='op'>{</span>
-
-  <span class='va'>json</span> <span class='op'>=</span> <span class='fu'>tika</span><span class='op'>(</span><span class='va'>batch</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'J'</span>,<span class='st'>'t'</span><span class='op'>)</span><span class='op'>)</span>
-  <span class='co'># 'J' is shortcut for jsonRecursive</span>
-  <span class='co'># 't' for text</span>
-  <span class='va'>metadata</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>json</span>, <span class='fu'>jsonlite</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/jsonlite/man/fromJSON.html'>fromJSON</a></span> <span class='op'>)</span>
-
-  <span class='co'>#embedded resources</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>metadata</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>{</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='st'>'Content-Type'</span><span class='op'>)</span> <span class='op'>}</span><span class='op'>)</span>
-
-  <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>metadata</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>{</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='st'>'Creation-Date'</span><span class='op'>)</span> <span class='op'>}</span><span class='op'>)</span>
-
-  <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>metadata</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>{</span>  <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='st'>'X-TIKA:embedded_resource_path'</span><span class='op'>)</span> <span class='op'>}</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: jsonlite</span></div><div class='output co'>#&gt; [[1]]
-#&gt; character(0)
-#&gt; 
-#&gt; [[2]]
-#&gt; character(0)
-#&gt; 
-#&gt; [[3]]
-#&gt; [1] NA            "/image1.jpg"
-#&gt; 
-#&gt; [[4]]
-#&gt; character(0)
-#&gt; 
-#&gt; [[5]]
-#&gt; character(0)
-#&gt; 
-#&gt; [[6]]
-#&gt; character(0)
-#&gt; 
-#&gt; [[7]]
-#&gt;  [1] NA                       "/index.html"            "/site.css"             
-#&gt;  [4] "/external.png"          "/icon_info_sml.gif"     "/icon_warning_sml.gif" 
-#&gt;  [7] "/icon_error_sml.gif"    "/icon_success_sml.gif"  "/tika.png"             
-#&gt; [10] "/mattmann_cover150.jpg" "/asf-logo.gif"         
-#&gt; </div><div class='input'><span class='co'># }</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='co'>#extract text</span></span>
+<span class='r-in'><span class='va'>batch</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"jsonlite.pdf"</span>, package <span class='op'>=</span> <span class='st'>"rtika"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"curl.pdf"</span>, package <span class='op'>=</span> <span class='st'>"rtika"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"table.docx"</span>, package <span class='op'>=</span> <span class='st'>"rtika"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"xml2.pdf"</span>, package <span class='op'>=</span> <span class='st'>"rtika"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"R-FAQ.html"</span>, package <span class='op'>=</span> <span class='st'>"rtika"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"calculator.jpg"</span>, package <span class='op'>=</span> <span class='st'>"rtika"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"tika.apache.org.zip"</span>, package <span class='op'>=</span> <span class='st'>"rtika"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>text</span> <span class='op'>=</span> <span class='fu'>tika</span><span class='op'>(</span><span class='va'>batch</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substr</a></span><span class='op'>(</span><span class='va'>text</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>,<span class='fl'>45</span>,<span class='fl'>450</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Package ‘jsonlite’</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> June 1, 2017</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Version 1.5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Title A Robust, High Performance JSON Parser and Generator for R</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> License MIT + file LICENSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NeedsCompilation yes</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Depends methods</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Author Jeroen Ooms, Duncan Temple Lang, Lloyd Hilaiel</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> URL https://arxiv.org/abs/1403.2805,</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> https://www.opencpu.org/posts/jsonlite-a-smarter-json-encoder</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> BugReports http://github.com/jeroen/jsonlite/issues</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Maintainer </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#more complex metadata</span></span>
+<span class='r-in'><span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>'jsonlite'</span><span class='op'>)</span><span class='op'>)</span><span class='op'>{</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='va'>json</span> <span class='op'>=</span> <span class='fu'>tika</span><span class='op'>(</span><span class='va'>batch</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'J'</span>,<span class='st'>'t'</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='co'># 'J' is shortcut for jsonRecursive</span></span>
+<span class='r-in'>  <span class='co'># 't' for text</span></span>
+<span class='r-in'>  <span class='va'>metadata</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>json</span>, <span class='fu'>jsonlite</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/jsonlite/man/fromJSON.html'>fromJSON</a></span> <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='co'>#embedded resources</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>metadata</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>{</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='st'>'Content-Type'</span><span class='op'>)</span> <span class='op'>}</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>metadata</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>{</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='st'>'Creation-Date'</span><span class='op'>)</span> <span class='op'>}</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>metadata</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>{</span>  <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='st'>'X-TIKA:embedded_resource_path'</span><span class='op'>)</span> <span class='op'>}</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required namespace: jsonlite</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> character(0)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> character(0)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[3]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] NA            "/image1.jpg"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[4]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> character(0)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[5]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> character(0)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[6]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> character(0)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[7]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] NA                       "/index.html"            "/site.css"             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [4] "/external.png"          "/icon_info_sml.gif"     "/icon_warning_sml.gif" </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [7] "/icon_error_sml.gif"    "/icon_success_sml.gif"  "/tika.png"             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [10] "/mattmann_cover150.jpg" "/asf-logo.gif"         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='co'># }</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
