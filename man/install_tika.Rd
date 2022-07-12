@@ -77,7 +77,7 @@ You can fetch (clone) the large source from GitHub ( https://github.com/apache/t
 }
 
 \examples{
-\donttest{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 install_tika()
-}
+\dontshow{\}) # examplesIf}
 }

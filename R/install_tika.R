@@ -11,10 +11,9 @@
 #' @param url Optional url to a particular location of the tika app. Setting this to any character string overrides downloading from random mirrors.
 #'
 #' @return Logical if the installation was successful.
-#' @examples
-#' \donttest{
+#' @examplesIf interactive()
 #' install_tika()
-#' }
+#' 
 #' @section Details:
 #' The default settings of \code{install_tika()} should typically be left as they are.
 #'
