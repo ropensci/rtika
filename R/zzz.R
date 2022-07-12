@@ -65,7 +65,7 @@ rtika::install_tika()
     tika_version <- tryCatch(
       as.character(readLines(
         file.path(
-          rappdirs::user_data_dir("rtika"),
+          R_user_dir("rtika", which = "data"),
           "tika-app-version.txt"
         )
       )),
@@ -112,4 +112,8 @@ rtika::install_tika()
       }
     }
   }
+}
+
+.onLoad <- function(libname, pkgname) {
+  backports::import(pkgname, c("R_user_dir"), force = TRUE)
 }

@@ -1,5 +1,7 @@
 # rtika (development version)
 
+* Use tools::R_user_dir() instead of rappdirs.
+
 rtika 2.0.0 (2021-08-05)
 ========================= 
 

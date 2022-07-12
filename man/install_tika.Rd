@@ -48,7 +48,7 @@ it tries the archive at \code{http://archive.apache.org/dist/tika/}.
 You can also enter a value for \code{url} directly to override this.
 
 It will download into a directory determined
-by the \code{rappdirs::user_data_dir()} function,
+by \code{tools::R_user_dir("rtika", which = "data")},
 specific to the operating system.
 
 If \code{tika()} is stopping with an error compalining about the \code{jar},
@@ -61,12 +61,11 @@ If you are uninstalling the entire \code{rtika} package
 and want to remove the Tika App \code{jar} also,
 run:
 
- \code{unlink(rappdirs::user_data_dir('rtika'), recursive = TRUE)}
+ \code{unlink(tools::R_user_dir("rtika", which = "data"), recursive = TRUE)}
 
 Alternately, navigate to the install folder and delete it manually.
-It is the file path returned by \code{rappdirs::user_data_dir('rtika')}.
-The path is OS specific, and explained here:
-https://github.com/r-lib/rappdirs .
+It is the file path returned by \code{tools::R_user_dir("rtika", which = "data")}.
+The path is OS specific.
 }
 
 \section{Distribution}{
