@@ -25,7 +25,7 @@
 #' @export
 tika_jar <- function() {
   path <- file.path(
-    rappdirs::user_data_dir("rtika"),
+    R_user_dir("rtika", which = "data"),
     paste0("tika-app.jar")
   )
 

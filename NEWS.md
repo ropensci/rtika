@@ -1,3 +1,7 @@
+# rtika (development version)
+
+* Use tools::R_user_dir() instead of rappdirs.
+
 rtika 2.0.0 (2021-08-05)
 ========================= 
 
@@ -63,8 +67,7 @@ rtika 1.19.1 (2018-07-08)
 ### MINOR IMPROVEMENTS
 
   * The install_tika() function now gets the Tika 1.18 release that came out 2018-04-24, instead of the 1.18 development version.
-  
-  rtika 0.1.7 (2018-03-08)
+rtika 0.1.7 (2018-03-08)
 ========================= 
 
 ### MINOR IMPROVEMENTS

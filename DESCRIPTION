@@ -1,35 +1,41 @@
-Package: rtika
 Type: Package
-Title: R Interface to 'Apache Tika' 
-Version: 2.0.0
+Package: rtika
+Title: R Interface to 'Apache Tika'
+Version: 2.0.0.9000
 Authors@R: c(
-    person(given = "Sasha", family = "Goodman", email="goodmansasha@gmail.com", role=c("aut","cre") ), 
-    person(given = "The Apache Software Foundation", role=c("aut","cph") ),
-    person(given = "Julia", family = "Silge", role = c("rev"), comment = "Reviewed the package for rOpenSci, see https://github.com/ropensci/software-review/issues/191/"),
-    person(given = "David",family = "Gohel", role = c("rev"), comment = "Reviewed the package for rOpenSci, see https://github.com/ropensci/software-review/issues/191/")
- )
+    person("Sasha", "Goodman", , "goodmansasha@gmail.com", role = c("aut", "cre")),
+    person("The Apache Software Foundation", role = c("aut", "cph")),
+    person("Julia", "Silge", role = "rev",
+           comment = "Reviewed the package for rOpenSci, see https://github.com/ropensci/software-review/issues/191/"),
+    person("David", "Gohel", role = "rev",
+           comment = "Reviewed the package for rOpenSci, see https://github.com/ropensci/software-review/issues/191/")
+  )
 Maintainer: Sasha Goodman <goodmansasha@gmail.com>
-Imports: 
-    curl,
-    sys (>= 2.1),
-    stats,
-    utils, 
-    rappdirs,
-    digest
-Suggests: 
-    jsonlite,
-    xml2,
-    testthat,
-    knitr,
-    rmarkdown,
-    covr,
-    magrittr
+Description: Extract text or metadata from over a thousand file types,
+    using Apache Tika <https://tika.apache.org/>. Get either plain text or
+    structured XHTML content.
 License: Apache License 2.0 | file LICENSE
-SystemRequirements: Java (>=8)
-Description: Extract text or metadata from over a thousand file types, using Apache Tika <https://tika.apache.org/>. Get either plain text or structured XHTML content. 
-Depends: R (>= 3.5.0)
-Encoding: UTF-8
-RoxygenNote: 7.1.1
 URL: https://docs.ropensci.org/rtika/, https://github.com/ropensci/rtika/
 BugReports: https://github.com/ropensci/rtika/issues/
-VignetteBuilder: knitr
+Depends: 
+    R (>= 3.5.0)
+Imports: 
+    backports,
+    curl,
+    digest,
+    stats,
+    sys (>= 2.1),
+    utils
+Suggests: 
+    covr,
+    jsonlite,
+    knitr,
+    magrittr,
+    rmarkdown,
+    testthat,
+    xml2
+VignetteBuilder: 
+    knitr
+Encoding: UTF-8
+RoxygenNote: 7.2.0.9000
+SystemRequirements: Java (>=8)
