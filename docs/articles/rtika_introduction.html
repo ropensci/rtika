@@ -231,8 +231,8 @@ server by finding the matching extension in Tika’s database.</p>
 <span></span>
 <span><span class="co"># it will add the appropriate file extension to the downloads</span></span>
 <span><span class="va">downloaded</span></span>
-<span><span class="co">#&gt; [1] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpUlEew5/rtika_46ca66e2e1f1/rtika_file46ca395fc9fc.html"</span></span>
-<span><span class="co">#&gt; [2] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpUlEew5/rtika_46ca66e2e1f1/rtika_file46ca3fc5dcd1.pdf"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmpwq4LyC/rtika_4fca5f13e19/rtika_file4fca2123de5b.html"</span></span>
+<span><span class="co">#&gt; [2] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmpwq4LyC/rtika_4fca5f13e19/rtika_file4fca39db395c.pdf"</span></span></code></pre></div>
 <p>This <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> function is used internally by the
 <code><a href="../reference/tika.html">tika()</a></code> functions when processing URLs. By using
 <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> explicitly with a specified directory, you can
@@ -280,13 +280,13 @@ file mirrors the original file’s path, only within the
 <code>output_dir</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">processed_files</span></span>
-<span><span class="co">#&gt; [1] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpUlEew5/rtika_46cac65b286/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmps1niBE/temp_libpath460d1b8195ff/rtika/extdata/calculator.jpg.txt"     </span></span>
-<span><span class="co">#&gt; [2] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpUlEew5/rtika_46cac65b286/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmps1niBE/temp_libpath460d1b8195ff/rtika/extdata/curl.pdf.txt"           </span></span>
-<span><span class="co">#&gt; [3] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpUlEew5/rtika_46cac65b286/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmps1niBE/temp_libpath460d1b8195ff/rtika/extdata/jsonlite.pdf.txt"       </span></span>
-<span><span class="co">#&gt; [4] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpUlEew5/rtika_46cac65b286/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmps1niBE/temp_libpath460d1b8195ff/rtika/extdata/R-FAQ.html.txt"         </span></span>
-<span><span class="co">#&gt; [5] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpUlEew5/rtika_46cac65b286/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmps1niBE/temp_libpath460d1b8195ff/rtika/extdata/table.docx.txt"         </span></span>
-<span><span class="co">#&gt; [6] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpUlEew5/rtika_46cac65b286/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmps1niBE/temp_libpath460d1b8195ff/rtika/extdata/tika.apache.org.zip.txt"</span></span>
-<span><span class="co">#&gt; [7] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpUlEew5/rtika_46cac65b286/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmps1niBE/temp_libpath460d1b8195ff/rtika/extdata/xml2.pdf.txt"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmpwq4LyC/rtika_4fca5ce413ef/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmp35YwVd/temp_libpath4eb07216fcf4/rtika/extdata/calculator.jpg.txt"     </span></span>
+<span><span class="co">#&gt; [2] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmpwq4LyC/rtika_4fca5ce413ef/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmp35YwVd/temp_libpath4eb07216fcf4/rtika/extdata/curl.pdf.txt"           </span></span>
+<span><span class="co">#&gt; [3] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmpwq4LyC/rtika_4fca5ce413ef/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmp35YwVd/temp_libpath4eb07216fcf4/rtika/extdata/jsonlite.pdf.txt"       </span></span>
+<span><span class="co">#&gt; [4] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmpwq4LyC/rtika_4fca5ce413ef/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmp35YwVd/temp_libpath4eb07216fcf4/rtika/extdata/R-FAQ.html.txt"         </span></span>
+<span><span class="co">#&gt; [5] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmpwq4LyC/rtika_4fca5ce413ef/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmp35YwVd/temp_libpath4eb07216fcf4/rtika/extdata/table.docx.txt"         </span></span>
+<span><span class="co">#&gt; [6] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmpwq4LyC/rtika_4fca5ce413ef/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmp35YwVd/temp_libpath4eb07216fcf4/rtika/extdata/tika.apache.org.zip.txt"</span></span>
+<span><span class="co">#&gt; [7] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmpwq4LyC/rtika_4fca5ce413ef/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmp35YwVd/temp_libpath4eb07216fcf4/rtika/extdata/xml2.pdf.txt"</span></span></code></pre></div>
 <p>Note that <code><a href="../reference/tika_text.html">tika_text()</a></code> produces <code>.txt</code> files,
 <code><a href="../reference/tika_xml.html">tika_xml()</a></code> produces <code>.xml</code> files,
 <code><a href="../reference/tika_html.html">tika_html()</a></code> produces <code>.html</code> files, and both
@@ -320,15 +320,15 @@ metadata:</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">links</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,<span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] "https://www.opencpu.org/posts/jsonlite-a-smarter-json-encoder"                 </span></span>
-<span><span class="co">#&gt;  [2] "http://en.wikipedia.org/wiki/Singleton_(mathematics)"                          </span></span>
+<span><span class="co">#&gt;  [2] "https://arxiv.org/abs/1403.2805"                                               </span></span>
 <span><span class="co">#&gt;  [3] "https://arxiv.org/abs/1403.2805"                                               </span></span>
-<span><span class="co">#&gt;  [4] "https://arxiv.org/abs/1403.2805"                                               </span></span>
-<span><span class="co">#&gt;  [5] "https://arxiv.org/abs/1403.2805"                                               </span></span>
+<span><span class="co">#&gt;  [4] "http://jsonlines.org/"                                                         </span></span>
+<span><span class="co">#&gt;  [5] "http://ndjson.org"                                                             </span></span>
 <span><span class="co">#&gt;  [6] "http://docs.mongodb.org/manual/reference/program/mongoexport/#cmdoption--query"</span></span>
-<span><span class="co">#&gt;  [7] "http://docs.mongodb.org/manual/reference/program/mongoexport/#cmdoption--query"</span></span>
-<span><span class="co">#&gt;  [8] "https://github.com/maxogden/dat"                                               </span></span>
-<span><span class="co">#&gt;  [9] "https://arxiv.org/abs/1403.2805"                                               </span></span>
-<span><span class="co">#&gt; [10] "http://en.wikipedia.org/wiki/Singleton_(mathematics)"</span></span></code></pre></div>
+<span><span class="co">#&gt;  [7] "http://en.wikipedia.org/wiki/Singleton_(mathematics)"                          </span></span>
+<span><span class="co">#&gt;  [8] "http://ndjson.org"                                                             </span></span>
+<span><span class="co">#&gt;  [9] "http://docs.mongodb.org/manual/reference/program/mongoexport/#cmdoption--query"</span></span>
+<span><span class="co">#&gt; [10] "http://github.com/jeroen/jsonlite/issues"</span></span></code></pre></div>
 <p>Each type of file has different information preserved by Tika’s
 internal parsers. The particular aspects vary. Some notes:</p>
 <ul>
@@ -439,7 +439,7 @@ single image:</p>
 <span><span class="co">#&gt;  $ Exif SubIFD:Sub-Sec Time Digitized  : chr "854"</span></span>
 <span><span class="co">#&gt;  $ Unknown tag (0x0007)                : chr "1"</span></span>
 <span><span class="co">#&gt;  $ Resolution Units                    : chr "none"</span></span>
-<span><span class="co">#&gt;  $ File Modified Date                  : chr "Sun Sep 25 15:03:28 -07:00 2022"</span></span>
+<span><span class="co">#&gt;  $ File Modified Date                  : chr "Sun Sep 25 16:27:44 -07:00 2022"</span></span>
 <span><span class="co">#&gt;  $ Exif SubIFD:Sensing Method          : chr "One-chip color area sensor"</span></span>
 <span><span class="co">#&gt;  $ Epoch                               : chr "0"</span></span>
 <span><span class="co">#&gt;  $ Flags                               : chr "Valid"</span></span>
@@ -453,7 +453,7 @@ single image:</p>
 <span><span class="co">#&gt;  $ Exif SubIFD:Exposure Program        : chr "Program normal"</span></span>
 <span><span class="co">#&gt;  $ Exif IFD0:Make                      : chr "Apple"</span></span>
 <span><span class="co">#&gt;  $ GPS:GPS Altitude Ref                : chr "Sea level"</span></span>
-<span><span class="co">#&gt;  $ X-TIKA:parse_time_millis            : chr "108"</span></span>
+<span><span class="co">#&gt;  $ X-TIKA:parse_time_millis            : chr "133"</span></span>
 <span><span class="co">#&gt;  $ Exif SubIFD:Aperture Value          : chr "f/2.2"</span></span>
 <span><span class="co">#&gt;  $ Exif SubIFD:Date/Time Digitized     : chr "2014:07:01 09:49:22"</span></span>
 <span><span class="co">#&gt;  $ Run Time                            : chr "[104 values]"</span></span>
@@ -491,7 +491,7 @@ single image:</p>
 <span><span class="co">#&gt;  $ Exif SubIFD:Scene Capture Type      : chr "Standard"</span></span>
 <span><span class="co">#&gt;  $ geo:lat                             : chr "34.072006"</span></span>
 <span><span class="co">#&gt;  $ Data Precision                      : chr "8 bits"</span></span>
-<span><span class="co">#&gt;  $ tika_batch_fs:relative_path         : chr "private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmps1niBE/temp_libpath460d1b8195ff/rtika/extdata/calculator.jpg"</span></span>
+<span><span class="co">#&gt;  $ tika_batch_fs:relative_path         : chr "private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmp35YwVd/temp_libpath4eb07216fcf4/rtika/extdata/calculator.jpg"</span></span>
 <span><span class="co">#&gt;  $ tiff:ImageLength                    : chr "800"</span></span>
 <span><span class="co">#&gt;  $ Exif SubIFD:Lens Specification      : chr "4.12mm f/2.2"</span></span>
 <span><span class="co">#&gt;  $ Exif IFD0:Model                     : chr "iPhone 5s"</span></span>

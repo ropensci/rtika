@@ -29,7 +29,7 @@ To start, you need R and `Java 8` or `OpenJDK 1.8`. Higher versions
 work. To check your version, run the command `java -version` from a
 terminal. Get Java installation tips at
 <https://www.java.com/en/download/> or
-<http://openjdk.java.net/install/>. Because the `rJava` package is
+<https://openjdk.org/install/>. Because the `rJava` package is
 ***not*** required, installation is simple. You can cut and paste the
 following snippet:
 
