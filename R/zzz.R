@@ -38,6 +38,7 @@ Type ?tika for Java installation tips.")
     # Open-JDK dropped the initial 1 since version 9
     # See http://openjdk.java.net/projects/jdk9/
     # See http://openjdk.java.net/jeps/223
+     # now at https://openjdk.org/
    
       
     java_version_check <- (
