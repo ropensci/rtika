@@ -5,10 +5,10 @@
 \title{Install or Update the Apache Tika \code{jar}}
 \usage{
 install_tika(
-  version = "2.0.0",
-  digest = paste0("8479aa41611add4f6ffa4917991ee0a74d9f1ece12a",
-    "65133368567e35ef91648142279e6981f09820e1658",
-    "04d051aa8406d376ed382b17cfe2f691d30e365b9f"),
+  version = "2.4.1",
+  digest = paste0("bdeb793e068a7e109e87c0418e0efc41fd2394d0156",
+    "725f855b427c419c8d23c378329f1169c0f58bf1ee",
+    "36b2c980daca32f62e047dd7bc3959652b21bfe4fb7"),
   mirrors = c("https://ftp.wayne.edu/apache/tika/",
     "http://mirrors.ocf.berkeley.edu/apache/tika/", "http://apache.cs.utah.edu/tika/",
     "http://mirror.cc.columbia.edu/pub/software/apache/tika/"),
@@ -48,7 +48,7 @@ it tries the archive at \code{http://archive.apache.org/dist/tika/}.
 You can also enter a value for \code{url} directly to override this.
 
 It will download into a directory determined
-by the \code{rappdirs::user_data_dir()} function,
+by \code{tools::R_user_dir("rtika", which = "data")},
 specific to the operating system.
 
 If \code{tika()} is stopping with an error compalining about the \code{jar},
@@ -61,12 +61,12 @@ If you are uninstalling the entire \code{rtika} package
 and want to remove the Tika App \code{jar} also,
 run:
 
- \code{unlink(rappdirs::user_data_dir('rtika'), recursive = TRUE)}
+ \code{unlink(tools::R_user_dir("rtika", which = "data"), recursive = TRUE)}
 
 Alternately, navigate to the install folder and delete it manually.
-It is the file path returned by \code{rappdirs::user_data_dir('rtika')}.
-The path is OS specific, and explained here:
-https://github.com/r-lib/rappdirs .
+It is the file path returned by 
+\code{tools::R_user_dir("rtika", which = "data")}.
+The path is OS specific.
 }
 
 \section{Distribution}{

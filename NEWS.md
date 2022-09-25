@@ -1,6 +1,12 @@
 rtika 2.0.0 (2021-08-05)
 ========================= 
 
+    * Updated Tika to 2.1.1. Details are found at https://tika.apache.org/2.4.1/index.html .
+    * Use tools::R_user_dir() instead of rappdirs.
+
+rtika 2.0.0 (2021-08-05)
+========================= 
+
     * Updated Tika to 2.0.0. Details are found at https://tika.apache.org/2.0.0/index.html .
 
 rtika 1.23 (2020-04-24)
