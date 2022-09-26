@@ -28,10 +28,9 @@ This is an R interface to the Tika software.
 To start, you need R and `Java 8` or `OpenJDK 1.8`. Higher versions
 work. To check your version, run the command `java -version` from a
 terminal. Get Java installation tips at
-<https://www.java.com/en/download/> or
-<https://openjdk.org/install/>. Because the `rJava` package is
-***not*** required, installation is simple. You can cut and paste the
-following snippet:
+<https://www.java.com/en/download/> or <https://openjdk.org/install/>.
+Because the `rJava` package is ***not*** required, installation is
+simple. You can cut and paste the following snippet:
 
 ``` r
 install.packages('rtika', repos = 'https://cloud.r-project.org')
@@ -48,44 +47,44 @@ at <https://docs.ropensci.org/rtika/articles/rtika_introduction.html>.
 
 ## Key Features
 
--   `tika_text()` to extract plain text.
--   `tika_xml()` and `tika_html()` to get a structured XHMTL rendition.
--   `tika_json()` to get metadata as `.json`, with XHMTL content.
--   `tika_json_text()` to get metadata as `.json`, with plain text
-    content.
--   `tika()` is the main function the others above inherit from.
--   `tika_fetch()` to download files with a file extension matching the
-    Content-Type.
+- `tika_text()` to extract plain text.
+- `tika_xml()` and `tika_html()` to get a structured XHMTL rendition.
+- `tika_json()` to get metadata as `.json`, with XHMTL content.
+- `tika_json_text()` to get metadata as `.json`, with plain text
+  content.
+- `tika()` is the main function the others above inherit from.
+- `tika_fetch()` to download files with a file extension matching the
+  Content-Type.
 
 ## Supported File Types
 
 Tika parses and extracts text or metadata from over one thousand digital
 formats, including:
 
--   Portable Document Format (`.pdf`)
--   Microsoft Office document formats (Word, PowerPoint, Excel, etc.)
--   Rich Text Format (`.rtf`)
--   Electronic Publication Format (`.epub`)
--   Image formats (`.jpeg`, `.png`, etc.)
--   Mail formats (`.mbox`, Outlook)
--   HyperText Markup Language (`.html`)
--   XML and derived formats (`.xml`, etc.)
--   Compression and packaging formats (`.gzip`, `.rar`, etc.)
--   OpenDocument Format
--   iWorks document formats
--   WordPerfect document formats
--   Text formats
--   Feed and Syndication formats
--   Help formats
--   Audio formats
--   Video formats
--   Java class files and archives
--   Source code
--   CAD formats
--   Font formats
--   Scientific formats
--   Executable programs and libraries
--   Crypto formats
+- Portable Document Format (`.pdf`)
+- Microsoft Office document formats (Word, PowerPoint, Excel, etc.)
+- Rich Text Format (`.rtf`)
+- Electronic Publication Format (`.epub`)
+- Image formats (`.jpeg`, `.png`, etc.)
+- Mail formats (`.mbox`, Outlook)
+- HyperText Markup Language (`.html`)
+- XML and derived formats (`.xml`, etc.)
+- Compression and packaging formats (`.gzip`, `.rar`, etc.)
+- OpenDocument Format
+- iWorks document formats
+- WordPerfect document formats
+- Text formats
+- Feed and Syndication formats
+- Help formats
+- Audio formats
+- Video formats
+- Java class files and archives
+- Source code
+- CAD formats
+- Font formats
+- Scientific formats
+- Executable programs and libraries
+- Crypto formats
 
 For a list of MIME types, look for the “Supported Formats” page here:
 <https://tika.apache.org/>
@@ -118,7 +117,7 @@ length(text)
 
 # A snippet:
 cat(substr(text[1], 54, 190)) 
-#> ckage ‘jsonlite’
+#> lite’
 #> June 1, 2017
 #> 
 #> Version 1.5
@@ -126,6 +125,8 @@ cat(substr(text[1], 54, 190))
 #> Title A Robust, High Performance JSON Parser and Generator for R
 #> 
 #> License MIT + file LICENSE
+#> 
+#> NeedsCompi
 ```
 
 To learn more and find out how to extract structured text and metadata,
