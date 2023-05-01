@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rtika</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.7.0</span>
       </span>
     </div>
 
@@ -82,7 +82,7 @@
                         <h4 data-toc-skip class="author">Sasha
 Goodman</h4>
             
-            <h4 data-toc-skip class="date">2022-09-25</h4>
+            <h4 data-toc-skip class="date">2023-04-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/rtika/blob/HEAD/vignettes/rtika_introduction.Rmd" class="external-link"><code>vignettes/rtika_introduction.Rmd</code></a></small>
       <div class="hidden name"><code>rtika_introduction.Rmd</code></div>
@@ -231,8 +231,8 @@ server by finding the matching extension in Tika’s database.</p>
 <span></span>
 <span><span class="co"># it will add the appropriate file extension to the downloads</span></span>
 <span><span class="va">downloaded</span></span>
-<span><span class="co">#&gt; [1] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmp7yR3g5/rtika_57223883c812/rtika_file572253c432ba.html"</span></span>
-<span><span class="co">#&gt; [2] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmp7yR3g5/rtika_57223883c812/rtika_file572275de7c4c.pdf"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpC8BsLV/rtika_156e818e13d3d/rtika_file156e86b7b7c8d.html"</span></span>
+<span><span class="co">#&gt; [2] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpC8BsLV/rtika_156e818e13d3d/rtika_file156e8782e441b.pdf"</span></span></code></pre></div>
 <p>This <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> function is used internally by the
 <code><a href="../reference/tika.html">tika()</a></code> functions when processing URLs. By using
 <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> explicitly with a specified directory, you can
@@ -280,13 +280,13 @@ file mirrors the original file’s path, only within the
 <code>output_dir</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">processed_files</span></span>
-<span><span class="co">#&gt; [1] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmp7yR3g5/rtika_572215a55154/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpVx3LQU/temp_libpath56584241b4e/rtika/extdata/calculator.jpg.txt"     </span></span>
-<span><span class="co">#&gt; [2] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmp7yR3g5/rtika_572215a55154/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpVx3LQU/temp_libpath56584241b4e/rtika/extdata/curl.pdf.txt"           </span></span>
-<span><span class="co">#&gt; [3] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmp7yR3g5/rtika_572215a55154/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpVx3LQU/temp_libpath56584241b4e/rtika/extdata/jsonlite.pdf.txt"       </span></span>
-<span><span class="co">#&gt; [4] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmp7yR3g5/rtika_572215a55154/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpVx3LQU/temp_libpath56584241b4e/rtika/extdata/R-FAQ.html.txt"         </span></span>
-<span><span class="co">#&gt; [5] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmp7yR3g5/rtika_572215a55154/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpVx3LQU/temp_libpath56584241b4e/rtika/extdata/table.docx.txt"         </span></span>
-<span><span class="co">#&gt; [6] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmp7yR3g5/rtika_572215a55154/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpVx3LQU/temp_libpath56584241b4e/rtika/extdata/tika.apache.org.zip.txt"</span></span>
-<span><span class="co">#&gt; [7] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/Rtmp7yR3g5/rtika_572215a55154/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpVx3LQU/temp_libpath56584241b4e/rtika/extdata/xml2.pdf.txt"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpC8BsLV/rtika_156e84d5d289f/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpJhCaZJ/temp_libpath15615325b918e/rtika/extdata/calculator.jpg.txt"     </span></span>
+<span><span class="co">#&gt; [2] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpC8BsLV/rtika_156e84d5d289f/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpJhCaZJ/temp_libpath15615325b918e/rtika/extdata/curl.pdf.txt"           </span></span>
+<span><span class="co">#&gt; [3] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpC8BsLV/rtika_156e84d5d289f/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpJhCaZJ/temp_libpath15615325b918e/rtika/extdata/jsonlite.pdf.txt"       </span></span>
+<span><span class="co">#&gt; [4] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpC8BsLV/rtika_156e84d5d289f/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpJhCaZJ/temp_libpath15615325b918e/rtika/extdata/R-FAQ.html.txt"         </span></span>
+<span><span class="co">#&gt; [5] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpC8BsLV/rtika_156e84d5d289f/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpJhCaZJ/temp_libpath15615325b918e/rtika/extdata/table.docx.txt"         </span></span>
+<span><span class="co">#&gt; [6] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpC8BsLV/rtika_156e84d5d289f/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpJhCaZJ/temp_libpath15615325b918e/rtika/extdata/tika.apache.org.zip.txt"</span></span>
+<span><span class="co">#&gt; [7] "/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpC8BsLV/rtika_156e84d5d289f/private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpJhCaZJ/temp_libpath15615325b918e/rtika/extdata/xml2.pdf.txt"</span></span></code></pre></div>
 <p>Note that <code><a href="../reference/tika_text.html">tika_text()</a></code> produces <code>.txt</code> files,
 <code><a href="../reference/tika_xml.html">tika_xml()</a></code> produces <code>.xml</code> files,
 <code><a href="../reference/tika_html.html">tika_html()</a></code> produces <code>.html</code> files, and both
@@ -319,16 +319,16 @@ metadata:</p>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu">xml2</span><span class="fu">::</span><span class="va"><a href="http://xml2.r-lib.org/reference/xml_attr.html" class="external-link">xml_attr</a></span>, <span class="st">'href'</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">links</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,<span class="fl">10</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "https://github.com/maxogden/dat"                                               </span></span>
-<span><span class="co">#&gt;  [2] "http://github.com/jeroen/jsonlite/issues"                                      </span></span>
-<span><span class="co">#&gt;  [3] "http://ndjson.org"                                                             </span></span>
-<span><span class="co">#&gt;  [4] "https://arxiv.org/abs/1403.2805"                                               </span></span>
-<span><span class="co">#&gt;  [5] "https://arxiv.org/abs/1403.2805"                                               </span></span>
-<span><span class="co">#&gt;  [6] "http://docs.mongodb.org/manual/reference/program/mongoexport/#cmdoption--query"</span></span>
-<span><span class="co">#&gt;  [7] "http://en.wikipedia.org/wiki/Singleton_(mathematics)"                          </span></span>
-<span><span class="co">#&gt;  [8] "https://www.opencpu.org/posts/jsonlite-a-smarter-json-encoder"                 </span></span>
-<span><span class="co">#&gt;  [9] "http://ndjson.org"                                                             </span></span>
-<span><span class="co">#&gt; [10] "http://jsonlines.org/"</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] "http://github.com/jeroen/jsonlite/issues"                                      </span></span>
+<span><span class="co">#&gt;  [2] "http://en.wikipedia.org/wiki/Singleton_(mathematics)"                          </span></span>
+<span><span class="co">#&gt;  [3] "https://arxiv.org/abs/1403.2805"                                               </span></span>
+<span><span class="co">#&gt;  [4] "http://ndjson.org"                                                             </span></span>
+<span><span class="co">#&gt;  [5] "https://github.com/maxogden/dat"                                               </span></span>
+<span><span class="co">#&gt;  [6] "http://ndjson.org"                                                             </span></span>
+<span><span class="co">#&gt;  [7] "https://arxiv.org/abs/1403.2805"                                               </span></span>
+<span><span class="co">#&gt;  [8] "https://arxiv.org/abs/1403.2805"                                               </span></span>
+<span><span class="co">#&gt;  [9] "http://jsonlines.org/"                                                         </span></span>
+<span><span class="co">#&gt; [10] "http://docs.mongodb.org/manual/reference/program/mongoexport/#cmdoption--query"</span></span></code></pre></div>
 <p>Each type of file has different information preserved by Tika’s
 internal parsers. The particular aspects vary. Some notes:</p>
 <ul>
@@ -339,7 +339,7 @@ with the attribute <code>href</code>.</li>
 <li>Word and Excel documents retain tabular data as a
 <code>&lt;table&gt;</code> element. The <code>rvest</code> package has a
 function to get tables of data with
-<code><a href="https://rvest.tidyverse.org/reference/html_table.html" class="external-link">rvest::html_table()</a></code>.</li>
+<code>rvest::html_table()</code>.</li>
 <li>Multiple Excel sheets are preserved as multiple XHTML tables. Ragged
 tables, where rows have differing numbers of cells, are not
 supported.</li>
@@ -439,7 +439,7 @@ single image:</p>
 <span><span class="co">#&gt;  $ Exif SubIFD:Sub-Sec Time Digitized  : chr "854"</span></span>
 <span><span class="co">#&gt;  $ Unknown tag (0x0007)                : chr "1"</span></span>
 <span><span class="co">#&gt;  $ Resolution Units                    : chr "none"</span></span>
-<span><span class="co">#&gt;  $ File Modified Date                  : chr "Sun Sep 25 17:03:03 -07:00 2022"</span></span>
+<span><span class="co">#&gt;  $ File Modified Date                  : chr "Sun Apr 30 12:47:14 -07:00 2023"</span></span>
 <span><span class="co">#&gt;  $ Exif SubIFD:Sensing Method          : chr "One-chip color area sensor"</span></span>
 <span><span class="co">#&gt;  $ Epoch                               : chr "0"</span></span>
 <span><span class="co">#&gt;  $ Flags                               : chr "Valid"</span></span>
@@ -453,7 +453,7 @@ single image:</p>
 <span><span class="co">#&gt;  $ Exif SubIFD:Exposure Program        : chr "Program normal"</span></span>
 <span><span class="co">#&gt;  $ Exif IFD0:Make                      : chr "Apple"</span></span>
 <span><span class="co">#&gt;  $ GPS:GPS Altitude Ref                : chr "Sea level"</span></span>
-<span><span class="co">#&gt;  $ X-TIKA:parse_time_millis            : chr "106"</span></span>
+<span><span class="co">#&gt;  $ X-TIKA:parse_time_millis            : chr "197"</span></span>
 <span><span class="co">#&gt;  $ Exif SubIFD:Aperture Value          : chr "f/2.2"</span></span>
 <span><span class="co">#&gt;  $ Exif SubIFD:Date/Time Digitized     : chr "2014:07:01 09:49:22"</span></span>
 <span><span class="co">#&gt;  $ Run Time                            : chr "[104 values]"</span></span>
@@ -491,12 +491,12 @@ single image:</p>
 <span><span class="co">#&gt;  $ Exif SubIFD:Scene Capture Type      : chr "Standard"</span></span>
 <span><span class="co">#&gt;  $ geo:lat                             : chr "34.072006"</span></span>
 <span><span class="co">#&gt;  $ Data Precision                      : chr "8 bits"</span></span>
-<span><span class="co">#&gt;  $ tika_batch_fs:relative_path         : chr "private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpVx3LQU/temp_libpath56584241b4e/rtika/extdata/calculator.jpg"</span></span>
+<span><span class="co">#&gt;  $ tika_batch_fs:relative_path         : chr "private/var/folders/r9/svkzrjgd2b550nl7cs6rdxph0000gn/T/RtmpJhCaZJ/temp_libpath15615325b918e/rtika/extdata/calculator.jpg"</span></span>
 <span><span class="co">#&gt;  $ tiff:ImageLength                    : chr "800"</span></span>
 <span><span class="co">#&gt;  $ Exif SubIFD:Lens Specification      : chr "4.12mm f/2.2"</span></span>
 <span><span class="co">#&gt;  $ Exif IFD0:Model                     : chr "iPhone 5s"</span></span>
-<span><span class="co">#&gt;  $ dcterms:created                     : chr "2014-07-01T02:49:22"</span></span>
-<span><span class="co">#&gt;  $ dcterms:modified                    : chr "2014-07-01T02:49:22"</span></span>
+<span><span class="co">#&gt;  $ dcterms:created                     : chr "2014-07-01T09:49:22"</span></span>
+<span><span class="co">#&gt;  $ dcterms:modified                    : chr "2014-07-01T09:49:22"</span></span>
 <span><span class="co">#&gt;  $ exif:Flash                          : chr "false"</span></span>
 <span><span class="co">#&gt;   [list output truncated]</span></span></code></pre></div>
 <p>In addition, each specific format can have its own specialized
@@ -671,7 +671,7 @@ Approach</em>. O’Reilly Media, Inc. <a href="https://www.tidytextmining.com/" 
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

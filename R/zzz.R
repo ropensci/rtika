@@ -1,6 +1,6 @@
 .onAttach <- function(libname, pkgname) {
   # IMPORTANT: this is the version check, the version tested to currently work.
-  tika_jar_tested_version <- "2.4.1" 
+  tika_jar_tested_version <- "2.7.0" 
 
   # Check if Java is there -------------------
   

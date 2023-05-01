@@ -168,7 +168,7 @@ tika <- function(input,
   # To update tika version, update 
     # (1) DESCRIPTION of the Version
     # (2) R/zzz.R file variable: "tika_jar_tested_version"
-    # (3) R/install_tika "version" and "digest" of tika-app at https://tika.apache.org/download.html
+    # (3) R/install_tika "version" and sha512 "digest" of tika-app at https://tika.apache.org/download.html
     # (4) NEWS.md to the verision
 
   # When updating the package, run these functions in order:

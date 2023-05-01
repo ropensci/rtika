@@ -5,10 +5,10 @@
 \title{Install or Update the Apache Tika \code{jar}}
 \usage{
 install_tika(
-  version = "2.4.1",
-  digest = paste0("bdeb793e068a7e109e87c0418e0efc41fd2394d0156",
-    "725f855b427c419c8d23c378329f1169c0f58bf1ee",
-    "36b2c980daca32f62e047dd7bc3959652b21bfe4fb7"),
+  version = "2.7.0",
+  digest = paste0("7fefbe5570a95900d39193134e8277aec99e5450a8",
+    "cecbb5787b3d6651ebf735e460ccccddb49bdc2990",
+    "8a9058fc36e4689aed6da6d63a1cf70ca09ccf26bcca"),
   mirrors = c("https://ftp.wayne.edu/apache/tika/",
     "http://mirrors.ocf.berkeley.edu/apache/tika/", "http://apache.cs.utah.edu/tika/",
     "http://mirror.cc.columbia.edu/pub/software/apache/tika/"),

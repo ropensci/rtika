@@ -1,4 +1,10 @@
-rtika 2.4.1 (2021-08-05)
+rtika 2.7.0 (2023-04-30)
+========================= 
+
+    * Updated Tika to 2.4.1. Details are found at https://tika.apache.org/2.4.1/index.html .
+    * Use tools::R_user_dir() instead of rappdirs, thanks to Maëlle Salmon (rOpenSci)
+    
+rtika 2.4.1 (2022-08-25)
 ========================= 
 
     * Updated Tika to 2.4.1. Details are found at https://tika.apache.org/2.4.1/index.html .
