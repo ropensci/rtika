@@ -41,14 +41,30 @@ Type ?tika for Java installation tips.")
      # now at https://openjdk.org/
    
       
-    java_version_check <- grepl(
-      'version "(1\\.8|[89]|[1-9][0-9])',
-      response
-    )
+    extract_major <- function(x) {
+      match <- regmatches(x, regexpr('version "[0-9]+(\\.[0-9]+)?', x))
+      if (!length(match)) {
+        return(NA_integer_)
+      }
+      ver <- sub('version "', '', match)
+      ver <- sub('"$', '', ver)
+      parts <- strsplit(ver, '\\.')[[1]]
+      major <- suppressWarnings(as.integer(parts[1]))
+      if (!length(parts)) {
+        return(NA_integer_)
+      }
+      if (!is.na(major) && major == 1 && length(parts) > 1) {
+        major <- suppressWarnings(as.integer(parts[2]))
+      }
+      major
+    }
 
-    if (!java_version_check) {
+    java_major <- extract_major(response)
+    java_version_ok <- (!is.na(java_major) && java_major >= 11)
+
+    if (!java_version_ok) {
         packageStartupMessage("Found Java, but not the correct version.
-Type ?tika for Java installation tips.")
+Type ?tika for Java installation tips (Java 11 or later is required).")
     }
   }
 

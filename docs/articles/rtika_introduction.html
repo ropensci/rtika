@@ -230,8 +230,8 @@ server by finding the matching extension in Tika’s database.</p>
 <span></span>
 <span><span class="co"># it will add the appropriate file extension to the downloads</span></span>
 <span><span class="va">downloaded</span></span>
-<span><span class="co">#&gt; [1] "/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpLYPi4V/rtika_66ba27be66fc/rtika_file66ba455b3ec6.html"</span></span>
-<span><span class="co">#&gt; [2] "/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpLYPi4V/rtika_66ba27be66fc/rtika_file66ba69765cbc.pdf"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpBBLnqg/rtika_90e22e660601/rtika_file90e22c144373.html"</span></span>
+<span><span class="co">#&gt; [2] "/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpBBLnqg/rtika_90e22e660601/rtika_file90e2665849a0.pdf"</span></span></code></pre></div>
 <p>This <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> function is used internally by the
 <code><a href="../reference/tika.html">tika()</a></code> functions when processing URLs. By using
 <code><a href="../reference/tika_fetch.html">tika_fetch()</a></code> explicitly with a specified directory, you can
@@ -279,13 +279,13 @@ file mirrors the original file’s path, only within the
 <code>output_dir</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">processed_files</span></span>
-<span><span class="co">#&gt; [1] "/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpLYPi4V/rtika_66ba5b7068c/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpwyOaAi/temp_libpath3aa828277bba/rtika/extdata/calculator.jpg.txt"     </span></span>
-<span><span class="co">#&gt; [2] "/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpLYPi4V/rtika_66ba5b7068c/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpwyOaAi/temp_libpath3aa828277bba/rtika/extdata/curl.pdf.txt"           </span></span>
-<span><span class="co">#&gt; [3] "/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpLYPi4V/rtika_66ba5b7068c/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpwyOaAi/temp_libpath3aa828277bba/rtika/extdata/jsonlite.pdf.txt"       </span></span>
-<span><span class="co">#&gt; [4] "/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpLYPi4V/rtika_66ba5b7068c/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpwyOaAi/temp_libpath3aa828277bba/rtika/extdata/R-FAQ.html.txt"         </span></span>
-<span><span class="co">#&gt; [5] "/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpLYPi4V/rtika_66ba5b7068c/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpwyOaAi/temp_libpath3aa828277bba/rtika/extdata/table.docx.txt"         </span></span>
-<span><span class="co">#&gt; [6] "/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpLYPi4V/rtika_66ba5b7068c/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpwyOaAi/temp_libpath3aa828277bba/rtika/extdata/tika.apache.org.zip.txt"</span></span>
-<span><span class="co">#&gt; [7] "/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpLYPi4V/rtika_66ba5b7068c/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpwyOaAi/temp_libpath3aa828277bba/rtika/extdata/xml2.pdf.txt"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpBBLnqg/rtika_90e2102fc46/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpL2y1Rb/temp_libpath901a50206d29/rtika/extdata/calculator.jpg.txt"     </span></span>
+<span><span class="co">#&gt; [2] "/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpBBLnqg/rtika_90e2102fc46/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpL2y1Rb/temp_libpath901a50206d29/rtika/extdata/curl.pdf.txt"           </span></span>
+<span><span class="co">#&gt; [3] "/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpBBLnqg/rtika_90e2102fc46/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpL2y1Rb/temp_libpath901a50206d29/rtika/extdata/jsonlite.pdf.txt"       </span></span>
+<span><span class="co">#&gt; [4] "/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpBBLnqg/rtika_90e2102fc46/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpL2y1Rb/temp_libpath901a50206d29/rtika/extdata/R-FAQ.html.txt"         </span></span>
+<span><span class="co">#&gt; [5] "/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpBBLnqg/rtika_90e2102fc46/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpL2y1Rb/temp_libpath901a50206d29/rtika/extdata/table.docx.txt"         </span></span>
+<span><span class="co">#&gt; [6] "/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpBBLnqg/rtika_90e2102fc46/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpL2y1Rb/temp_libpath901a50206d29/rtika/extdata/tika.apache.org.zip.txt"</span></span>
+<span><span class="co">#&gt; [7] "/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpBBLnqg/rtika_90e2102fc46/private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpL2y1Rb/temp_libpath901a50206d29/rtika/extdata/xml2.pdf.txt"</span></span></code></pre></div>
 <p>Note that <code><a href="../reference/tika_text.html">tika_text()</a></code> produces <code>.txt</code> files,
 <code><a href="../reference/tika_xml.html">tika_xml()</a></code> produces <code>.xml</code> files,
 <code><a href="../reference/tika_html.html">tika_html()</a></code> produces <code>.html</code> files, and both
@@ -438,7 +438,7 @@ single image:</p>
 <span><span class="co">#&gt;  $ Exif SubIFD:Sub-Sec Time Digitized  : chr "854"</span></span>
 <span><span class="co">#&gt;  $ Unknown tag (0x0007)                : chr "1"</span></span>
 <span><span class="co">#&gt;  $ Resolution Units                    : chr "none"</span></span>
-<span><span class="co">#&gt;  $ File Modified Date                  : chr "Fri Oct 10 20:12:44 -07:00 2025"</span></span>
+<span><span class="co">#&gt;  $ File Modified Date                  : chr "Fri Oct 10 21:38:07 -07:00 2025"</span></span>
 <span><span class="co">#&gt;  $ Exif SubIFD:Sensing Method          : chr "One-chip color area sensor"</span></span>
 <span><span class="co">#&gt;  $ Epoch                               : chr "0"</span></span>
 <span><span class="co">#&gt;  $ Flags                               : chr "Valid"</span></span>
@@ -452,7 +452,7 @@ single image:</p>
 <span><span class="co">#&gt;  $ Exif SubIFD:Exposure Program        : chr "Program normal"</span></span>
 <span><span class="co">#&gt;  $ Exif IFD0:Make                      : chr "Apple"</span></span>
 <span><span class="co">#&gt;  $ GPS:GPS Altitude Ref                : chr "Sea level"</span></span>
-<span><span class="co">#&gt;  $ X-TIKA:parse_time_millis            : chr "57"</span></span>
+<span><span class="co">#&gt;  $ X-TIKA:parse_time_millis            : chr "60"</span></span>
 <span><span class="co">#&gt;  $ Exif SubIFD:Aperture Value          : chr "f/2.2"</span></span>
 <span><span class="co">#&gt;  $ Exif SubIFD:Date/Time Digitized     : chr "2014:07:01 09:49:22"</span></span>
 <span><span class="co">#&gt;  $ tiff:ImageWidth                     : chr "600"</span></span>
@@ -489,7 +489,7 @@ single image:</p>
 <span><span class="co">#&gt;  $ Exif SubIFD:Scene Capture Type      : chr "Standard"</span></span>
 <span><span class="co">#&gt;  $ geo:lat                             : chr "34.072006"</span></span>
 <span><span class="co">#&gt;  $ Data Precision                      : chr "8 bits"</span></span>
-<span><span class="co">#&gt;  $ tika_batch_fs:relative_path         : chr "private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpwyOaAi/temp_libpath3aa828277bba/rtika/extdata/calculator.jpg"</span></span>
+<span><span class="co">#&gt;  $ tika_batch_fs:relative_path         : chr "private/var/folders/sj/8p00p7fn3k756bm37lmc40z40000gn/T/RtmpL2y1Rb/temp_libpath901a50206d29/rtika/extdata/calculator.jpg"</span></span>
 <span><span class="co">#&gt;  $ tiff:ImageLength                    : chr "800"</span></span>
 <span><span class="co">#&gt;  $ Exif SubIFD:Lens Specification      : chr "4.12mm f/2.2"</span></span>
 <span><span class="co">#&gt;  $ geo:timestamp                       : chr "2014-07-01T16:49:21Z"</span></span>

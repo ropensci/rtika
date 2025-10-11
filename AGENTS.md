@@ -1,3 +1,7 @@
+---
+pkgdown: false
+---
+
 # Repository Guidelines
 
 ## Project Structure & Module Organization
@@ -18,6 +22,7 @@
 - Recommend `devtools::document()` and `devtools::test()` for incremental updates; remind the maintainer to execute them in their console.
 - For release validation, have the maintainer run `devtools::check()` interactively. If a tarball is needed, suggest `devtools::build()` afterwards.
 - When docs change, prompt the maintainer to set `Sys.setenv(NOT_CRAN = "true")` and run `pkgdown::clean_site(); pkgdown::build_site()` themselves, ensuring Pandoc is available.
+- After rebuilding pkgdown, remind the maintainer to delete `docs/AGENTS.html`; the contributor guide should not be published on the site.
 
 ## Coding Style & Naming Conventions
 - Use base R/roxygen style: two-space indents, no tabs, ~80 character lines, snake_case helpers, exported APIs prefixed `tika_`.
@@ -37,5 +42,5 @@
 - Confirm CI passes and call out any required follow-up before requesting review.
 
 ## Security & Environment Notes
-- Requires Java ≥ 8; confirm with `java -version` before invoking Tika helpers.
+- Requires Java ≥ 11; confirm with `java -version` before invoking Tika helpers.
 - Prefer `tika_fetch()` over manual jar downloads to ensure checksums match and updates propagate to the cache.

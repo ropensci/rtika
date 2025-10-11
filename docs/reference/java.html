@@ -85,8 +85,8 @@ This can be persisted over sessions (see the Details below).</p>
 It looks for the <code>java</code> executable inside the <code>bin</code> directory in the <code>JAVA_HOME</code> directory.</p>
 <p>If you want to use a specific version of Java, set the <code>JAVA_HOME</code> variable using <code>Sys.setenv(JAVA_HOME = 'my path')</code>,
 where 'my path' is the path to a folder that has a <code>bin</code> directory with a <code>java</code> executable.</p>
-<p>For example, on Windows 10 <code>JAVA_HOME</code> might be <code>C:/Program Files (x86)/Java/jre1.8.0_171</code>.
-On Ubuntu and OS X, it might be the <code>/usr</code> directory.</p>
+<p>For example, on Windows 11 <code>JAVA_HOME</code> might be <code>C:/Program Files/Java/jdk-21</code>.
+On Ubuntu and macOS, it might be something like <code>/usr/lib/jvm/temurin-21-jdk</code>.</p>
 <p>The <code>JAVA_HOME</code> variable can also be set to persist over sessions.
 Add the path to the <code>.Rprofile</code> by adding <code>Sys.setenv(JAVA_HOME = 'my path')</code>, and it will use that every time R is started.</p>
     </div>

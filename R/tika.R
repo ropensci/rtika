@@ -134,7 +134,7 @@
 #' Apache Tika includes many libraries and methods in its .jar file. The source is available at:
 #' \url{https://tika.apache.org/}.
 #' @section Installation:
-#'  Tika requires Java 8.
+#'  Tika requires Java 11 or later.
 #'
 #'  Java installation instructions are at https://openjdk.org/install/
 #' or https://www.java.com/en/download/help/download_options.xml.

@@ -21,8 +21,8 @@
 #' If you want to use a specific version of Java, set the \code{JAVA_HOME} variable using \code{Sys.setenv(JAVA_HOME = 'my path')},
 #' where 'my path' is the path to a folder that has a \code{bin} directory with a \code{java} executable. 
 #' 
-#' For example, on Windows 10 \code{JAVA_HOME} might be \code{C:/Program Files (x86)/Java/jre1.8.0_171}. 
-#' On Ubuntu and OS X, it might be the \code{/usr} directory.  
+#' For example, on Windows 11 \code{JAVA_HOME} might be \code{C:/Program Files/Java/jdk-21}. 
+#' On Ubuntu and macOS, it might be something like \code{/usr/lib/jvm/temurin-21-jdk}.  
 #' 
 #' The \code{JAVA_HOME} variable can also be set to persist over sessions.
 #' Add the path to the \code{.Rprofile} by adding \code{Sys.setenv(JAVA_HOME = 'my path')}, and it will use that every time R is started.
