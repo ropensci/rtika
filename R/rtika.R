@@ -19,6 +19,6 @@
 #'  
 #' Use \code{\link{tika_fetch}} to download files with a file extension matching the Content-Type.
 #'
-#' @docType package
 #' @name rtika
-NULL
+#' @keywords internal
+"_PACKAGE"

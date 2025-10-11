@@ -2,6 +2,7 @@
 % Please edit documentation in R/rtika.R
 \docType{package}
 \name{rtika}
+\alias{rtika-package}
 \alias{rtika}
 \title{rtika: R Interface to 'Apache Tika'}
 \description{
@@ -28,3 +29,28 @@ The \code{\link{tika_json_text}} function gets metadata as `.json`, with plain t
 Use \code{\link{tika_fetch}} to download files with a file extension matching the Content-Type.
 }
 
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://docs.ropensci.org/rtika/}
+  \item \url{https://github.com/ropensci/rtika/}
+  \item Report bugs at \url{https://github.com/ropensci/rtika/issues/}
+}
+
+}
+\author{
+\strong{Maintainer}: Sasha Goodman \email{goodmansasha@gmail.com}
+
+Authors:
+\itemize{
+  \item The Apache Software Foundation [copyright holder]
+}
+
+Other contributors:
+\itemize{
+  \item Julia Silge (Reviewed the package for rOpenSci, see https://github.com/ropensci/software-review/issues/191/) [reviewer]
+  \item David Gohel (Reviewed the package for rOpenSci, see https://github.com/ropensci/software-review/issues/191/) [reviewer]
+}
+
+}
+\keyword{internal}

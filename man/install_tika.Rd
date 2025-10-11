@@ -5,10 +5,9 @@
 \title{Install or Update the Apache Tika \code{jar}}
 \usage{
 install_tika(
-  version = "2.7.0",
-  digest = paste0("7fefbe5570a95900d39193134e8277aec99e5450a8",
-    "cecbb5787b3d6651ebf735e460ccccddb49bdc2990",
-    "8a9058fc36e4689aed6da6d63a1cf70ca09ccf26bcca"),
+  version = "3.2.3",
+  digest = paste0("5908760c8506d6d1f2c37b59b21b513c2451960b471dde0b353d0ac825a3ea6a",
+    "809714e0651de9883f8257444b2a8c56c6982a55fed74b5e5840261aa893b650"),
   mirrors = c("https://ftp.wayne.edu/apache/tika/",
     "http://mirrors.ocf.berkeley.edu/apache/tika/", "http://apache.cs.utah.edu/tika/",
     "http://mirror.cc.columbia.edu/pub/software/apache/tika/"),
@@ -31,7 +30,7 @@ install_tika(
 Logical if the installation was successful.
 }
 \description{
-This downloads and installs the Tika App \code{jar} (~60 MB) into a user directory,
+This downloads and installs the Tika App \code{jar} (~55 MB) into a user directory,
 and verifies the integrity of the file using a checksum.
 The default settings should work fine.
 }
@@ -79,6 +78,8 @@ You can fetch (clone) the large source from GitHub ( https://github.com/apache/t
 
 \examples{
 \donttest{
-install_tika()
+if (interactive()) {
+  install_tika()
+}
 }
 }

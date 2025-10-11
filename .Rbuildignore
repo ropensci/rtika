@@ -19,3 +19,5 @@
 \.DS_Store
 ^appveyor\.yml$
 ^\.github$
+^\.vscode$
+^AGENTS\.md$

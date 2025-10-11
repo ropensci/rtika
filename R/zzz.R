@@ -1,6 +1,6 @@
 .onAttach <- function(libname, pkgname) {
   # IMPORTANT: this is the version check, the version tested to currently work.
-  tika_jar_tested_version <- "2.7.0" 
+  tika_jar_tested_version <- "3.2.3"
 
   # Check if Java is there -------------------
   
@@ -41,9 +41,9 @@ Type ?tika for Java installation tips.")
      # now at https://openjdk.org/
    
       
-    java_version_check <- (
-      grepl('version "1\\.8', response)
-      | grepl('version "(8|9|1[0-9])', response)
+    java_version_check <- grepl(
+      'version "(1\\.8|[89]|[1-9][0-9])',
+      response
     )
 
     if (!java_version_check) {
@@ -118,4 +118,3 @@ rtika::install_tika()
 .onLoad <- function(libname, pkgname) {
     backports::import(pkgname, c("R_user_dir"), force = TRUE)
 }
-

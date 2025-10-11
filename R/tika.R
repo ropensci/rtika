@@ -172,19 +172,16 @@ tika <- function(input,
     # (4) NEWS.md to the verision
 
   # When updating the package, run these functions in order:
-    # make sure required packages are installed including: devtools, knitr,rmarkdown, pkgdown
-    # devtools::document() # sets up NAMESPACE and .Rd documentation files to match function
-    # Use Rstudio's "Build" > "Install and Restart" 
-    # if necessary, run "rtika::install_tika()" to update the .jar
-    # devtools::test(); 
-    # devtools::build()
-    # devtools::build_vignettes()
-    # Use Rstudio's "Build" > "Install and Restart" 
-    # Sys.setenv(NOT_CRAN = TRUE); 
-    # pkgdown::clean_site() ; pkgdown::build_site() # https://www.r-bloggers.com/building-a-website-with-pkgdown-a-short-guide/
-    # Rstudio "Build" > "More" > "Build Source Package"
-    # upload to github for tests!!
-    # upload to CRAN
+    # install.packages(c("devtools","knitr","rmarkdown","pkgdown","covr","testthat"))
+    # devtools::document()             # refresh NAMESPACE and Rd files
+    # devtools::load_all()             # reload the package in the session
+    # if needed, rtika::install_tika() # pick up new jar + checksum
+    # devtools::test()
+    # devtools::check()                # full CRAN-style validation (builds vignettes)
+    # Sys.setenv(NOT_CRAN = "true")
+    # ensure pandoc is on PATH, then pkgdown::clean_site(); pkgdown::build_site()
+    # devtools::build()                # create source tarball for release
+    # push to GitHub for CI; then follow rOpenSci/CRAN submission steps
     
   
   # Suggested functions to run occasionally:

@@ -1,3 +1,9 @@
+rtika 3.2.3 (2025-10-10)
+======================== 
+
+    * Updated the bundled Apache Tika configuration to use the 3.2.3 release. Details are at https://tika.apache.org/3.2.3/index.html .
+    * Refreshed the default SHA512 checksum that `install_tika()` uses to validate the download.
+
 rtika 2.7.0 (2023-04-30)
 ========================= 
 
@@ -176,7 +182,6 @@ rtika 0.1.0 (2018-01-19)
   * R interface to Apache Tika batch processing CLI, found to be the most efficient CLI option.
   * tika function returns processing results as a character vector.
   * includes the Tika App .jar. Tika source is available at: https://github.com/apache/tika
-
 
 
 
