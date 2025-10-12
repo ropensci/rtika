@@ -185,7 +185,7 @@ version of a file, or require extra tinkering.
 
 On the other hand, a specialized library can offer more control and
 features when it comes to structured data and formatting. For example,
-the [`tabulizer`](https://github.com/ropensci/tabulizer) package by
+the [`tabulapdf`](https://github.com/ropensci/tabulapdf) package by
 @leeper and @tpaskhalis includes bindings to the ‘Tabula PDF Table
 Extractor Library’. Because PDF files store tables as a series of
 positions with no obvious boundaries between data cells, extracting a
